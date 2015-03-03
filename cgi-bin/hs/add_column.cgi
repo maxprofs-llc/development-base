@@ -10,7 +10,7 @@ use lib dirname(rel2abs($0)),'.','/usr/local/www/vhosts/managed2/modules/pdf', '
 
 use vars qw( $Debug $production $cook $config_file %ORACLE_CVRT %setup_tables %field_info %Tables %Fields $nph);
 
-if (!do('common.inc')) {
+if (!do('common.inc')){
    my $error = $@ ? $@
              : $! ? $!
              : 'did not return a true value';
