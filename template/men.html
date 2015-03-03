@@ -1,0 +1,12 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( $directory . $input_variables, PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $header_file, PACKAGE => __PACKAGE__ );
+}
+			{$menu_body}
+{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $footer_file, PACKAGE => __PACKAGE__ );
+}

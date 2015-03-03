@@ -1,0 +1,92 @@
+{
+# this part fills in a file that sets language variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}language.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}hra_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE => __PACKAGE__ );
+}    <!-- Template: hra_1.tmpl -->
+	<!-- Templates called: hra_variables.tmpl, hra_links.tmpl, {$footer_file}, {$config{variables_template}},  {$header_file} -->
+	       <div class="HSstyle">
+		<table class="HSassessments">
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td align=left><img src="images/global/trans.gif" width="1" height="22"><br>
+            {$hra_title}<br>
+            &nbsp;<br>
+            <img src="images/global/trans.gif" width="1" height="18"><br>
+            <span class="HStitle">{$lang{$current_language}{hra_msg6}}</span>
+            <img src="images/global/trans.gif" width="1" height="10"></td>
+        </tr>
+        <tr>
+          <td width="12"></td>
+          <td align=right>{if ($config{report_print} && $status ne 'retake'){$OUT .= qq|<a href="$review?status=retake&assessment=$assessment&xnum=$db_record&output_format=PDF" class="HSbodytext2" target="_blank"><img src="images/global/print_friendly.gif" border=0></a><img src="images/global/trans.gif" width="8" height="22">|;}'';}{if ($config{report_email}){$OUT .= qq|<a href="$review?status=retake&assessment=$assessment&xnum=$db_record&output_format=PDFE" class="HSbodytext2" target="_blank"><img src="images/global/email_report.gif" border=0></a><img src="images/global/trans.gif" width="8" height="22">|;}'';}{if ($config{report_member} && $status ne 'retake'){$OUT .= qq|<a href=$member><img src="images/global/member_page.gif" border=0></a>|;}'';}<br>
+        </tr>
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td valign="top"><form method="post" action="{$pager}">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td colspan="2" class="HSbodytext">
+                  <p><span class="HSbodytext1">{$date} {$lang{$current_language}{for}} {$name}</span></p>
+                  <p>{$lang{$current_language}{hra_msg8}} {$wellness}. {$lang{$current_language}{hra_msg9}}</p>
+      			<img src="{$wellness_bar}" border=0 align=center><br>
+         		  <p>{$lang{$current_language}{hra_msg10}}</p>
+      		  <p>{$Wellness}</p>
+		  <table width=456 align=top border=0 cellspacing="0" cellpadding="0">
+		      <tr>
+			<td valign=top class="HSbodytext" colspan="2" ><p><span class="HSsubtitle">{$lang{$current_language}{hra_msg11}}</span>
+					  <UL>{$hs_at_points_out}</UL><br>
+			</td>
+		      </tr>
+		      <tr>
+        		<td valign=top class="HSbodytext"><p><span class="HSsubtitle">{$lang{$current_language}{hra_msg12}}</span>
+					  <UL>{ foreach $i (@bad_habits) {
+							$OUT .= "<li>$i</li>";
+							}
+						}</UL></td>
+		      </tr>
+		      <tr>
+        		<td valign=top class="HSbodytext"><p><span class="HSsubtitle">{$lang{$current_language}{hra_msg13}}</span>
+					  <UL>{ foreach $i (@ready_2_change) {
+							$OUT .= "<li>$i</li>";
+							}
+						}</UL></td>
+		      </tr>
+		  </table>
+	      </tr>
+              <tr>
+                <td valign="middle" colspan="2" height="30" ><span class="HSbodytext1">{$lang{$current_language}{hra_msg14}}</span></td>
+              </tr>
+              <tr>
+          	<td class="HSassessmentsGap"></td>
+              </tr>
+              <tr valign="bottom">
+                <td height="50" align="left"></td>
+                <td align="right" height="50"><input type="image" border=0 name="hra_3.tmpl" value="hra_3.tmpl" {$next}>
+			{ $hidden_cgi_fields }
+		</td>
+              </tr>
+            </table></form>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td class="HSassessmentsGap"></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td class="HScopyright">{$copyright}</td>
+        </tr>
+      </table>
+      </div>
+    <!-- Template: hra_1.tmpl End -->
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$footer_file", PACKAGE => __PACKAGE__ );
+}

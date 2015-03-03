@@ -1,0 +1,51 @@
+{
+	my ($smlev, $suslev, $smtar, $scale, $scope, $rate, $level_desc, $layout) ;
+	
+	$smlev = $vars{my_score};
+	$suslev = $vars{avg_score};
+	$smtar = $vars{target_score};
+	$scale = $vars{bar_scale};
+	$scope = $vars{scope_text};
+	$rate = $vars{rate_text};
+	$level_desc = $vars{level};
+	$layout =$vars{format};
+	my ($mlev, $uslev, $mtar, $otar, $t, $t2, $tx);
+	if(!$rate){
+		$rate = "U.S. Average";
+	}
+	if($layout ne 'bullet' && $layout ne 'bar'){ $layout= 'full' }
+	$mlev = int($smlev * $scale);
+	$uslev = int($suslev * $scale);
+	if($smtar < 0 || $level_desc eq '-'){
+		$smtar = $smtar * -1;
+		$mtar = int($smtar * $scale);
+		$otar = "below $smtar";
+	}elsif($level_desc eq '+'){
+		$mtar = int($smtar * $scale);
+		$otar = "above $smtar";
+	}else{
+		$mtar = int($smtar * $scale);
+		$otar = $smtar;
+	}		
+	my $xml = '';
+	$xml .= qq|<MoveTo X="17" Y="10"/><Set LineWidth="3.5"/><Set Color="darkgray" Ground="0" ColorSpace=""/><DrawRect Width="300" Height="20" Round="9" Centered="0" Fill="0" Reverse="0"/>|;
+	$xml .= qq|<ShowText Text="u" X="1" Y="43" FontSize="09" FontFace="ZapfDingbats" Color="black"/>| if($layout eq 'bullet' || $layout eq 'full');
+	$xml .= qq|<ShowText Text="Your current $scope is $smlev." X="15" Y="43" FontSize="09" FontFace="Arial" Color="black"/>| if($layout eq 'full');
+	if ($mlev > 0){
+		$t = $mlev/2;
+		$xml .= qq|<MoveTo X="20" Y="13"/><Set Color="yellow" Ground="1" ColorSpace=""/><DrawRect Width="$mlev" Height="14" Round="9" Centered="0" Fill="1" Reverse="0"/>|;
+	}
+	$t= $uslev+14;
+	$t2 = $uslev+19;
+	$tx = 0;
+	$tx = 6 if ($uslev == 0);
+	$xml .= qq|<Set LineWidth="0.5"/><MoveTo X="$t" Y="13"/><Set Color="darkblue" Ground="1" ColorSpace=""/><DrawRect Width="9" Height="14" Round="$tx" Centered="0" Fill="1" Reverse="0"/>|;
+	$t= $mtar+15;
+	$t2= $mtar+19;	
+	$tx = 0;
+	$tx = 6 if ($mtar == 0);
+	$xml .= qq|<ShowText Text="$targ is $otar." X="15" Y="8" FontSize="09" FontFace="Helvetica" Color="black"/>| if($layout eq 'full');;
+	$xml .= qq|<MoveTo X="$t" Y="13"/><Set Color="green" Ground="1" ColorSpace=""/><DrawRect Width="7" Height="14" Round="$tx" Centered="0" Fill="1" Reverse="0"/>|;
+	
+$xml;
+}

@@ -1,0 +1,267 @@
+{
+use vars qw( $weight_target $weight_desc @weight_habits $exer_target $exer_desc $disp_desc
+		$female_desc $body_graphic $weight_graphic $exer_graphic $baby_graphic 
+		$drc_cover_letter $fact);
+
+require HealthStatus::Constants;
+
+my %drc_cover_letters;
+$drc_cover_letters{'html'} = $config{drc_cover_letter_html} || '/drc_cover_letter_html.tmpl';
+$drc_cover_letters{'pdf'} = $config{drc_cover_letter_pdf} || '/drc_cover_letter_pdf.tmpl';
+$drc_cover_letters{'pdfe'} = $config{drc_cover_letter_pdf} || '/drc_cover_letter_pdf.tmpl';
+
+$output_format = 'HTML' if ($output_format ne 'HTML' && $output_format ne 'PDF' && $output_format ne 'PDFE' && $output_format ne 'XML' && $output_format ne 'TEXT' );
+$drc_cover_letter = $drc_cover_letters{lc $output_format} || '/drc_cover_letter_html.tmpl';
+
+$current_title = $drc_title;
+$current_subtitle = $drc_subtitle;
+$current_subtitle_in = $drc_subtitle_in;
+$current_desc = qq|This Diabetes Risk Appraisal is not a substitute for a check-up or physical exam that you get from a doctor or a nurse.&nbsp; It only gives you an idea if you have characteristics similar to those known to have diabetes. |;
+
+my $race_out	= $race;
+if ( $race eq HISPANIC ) { $race_out = "Latino"; }
+
+@weight_habits 	= ( 'within', 'slightly over', 'over', 'significantly over', 'under' );
+
+#### Predisposition paragraph
+my $disp_num = 0;
+my @messages = ("Predispositions are risk factors you cannot control - like ");
+
+if ($age > DIABETES_LOWER_AGE_LIMIT)		{ push @messages, "that you are $age";++$disp_num; }
+
+if ((($race eq NATIVE_AMERICAN ||
+	$race eq AFRICAN_AMERICAN ||
+	$race eq HISPANIC ) &&
+	$siblings_have_diabetes eq NO &&
+	$parents_have_diabetes eq NO &&
+	$big_kid eq NO ) &&
+	$disp_num ) 			{ push @messages, " or " }
+elsif (($siblings_have_diabetes eq YES ||
+	$parents_have_diabetes eq YES ||
+	$big_kid eq YES ) &&
+	$disp_num )			{ push @messages, ", " }
+
+if ( $race eq NATIVE_AMERICAN ||
+	$race eq AFRICAN_AMERICAN ||
+	$race eq HISPANIC ) {
+					push @messages, "that you are $race_out";++$disp_num;
+}
+
+if ((( $siblings_have_diabetes eq YES ||
+	$parents_have_diabetes eq YES )
+	&& $big_kid eq NO )
+	&& $disp_num ) 			{ push @messages, " or " }
+elsif ( $big_kid eq YES
+	&& $disp_num )			{ push @messages, ", " }
+
+if ( $siblings_have_diabetes eq YES ||
+	$parents_have_diabetes eq YES ) {
+					push @messages, "your family history of diabetes";++$disp_num;
+}
+if ( $big_kid eq YES &&
+	$disp_num ) {
+					push @messages, " or " if ($disp_num);
+					push @messages, "your birthing a large baby";++$disp_num;
+}
+push @messages, ". ";
+
+if ( $disp_num ) {
+	push @messages, "This one factor makes it more important that you keep exercising and watch your weight. " if($disp_num == 1);
+	push @messages, "These $disp_num factors makes it more important that you keep exercising and watch your weight. " if($disp_num > 1);
+	$disp_desc = join "", @messages;
+	$predisp_graphic = $yellow_risk if( $disp_num == 1 );
+	$predisp_graphic = $red_risk if( $disp_num > 1 );
+	}
+else
+	{
+	$disp_desc = "At this time, you do not have any predispostions to having diabetes.";
+	$predisp_graphic = $green_risk;
+	}
+
+
+my $weight_flag = do
+	{
+	if(    $bmi < BMI_LOW ) 	{ 4 }
+	elsif( $bmi > BMI_OBESE ) 	{ 3 }
+	elsif( $bmi > BMI_OVERWEIGHT ) 	{ 2 }
+	elsif( $bmi > BMI_GOOD   ) 	{ 1 }
+	else                       	{ 0 }
+	};
+
+$weight_desc = "Your weight of $weight is $weight_habits[$weight_flag] the recommended range for people $height_imperial tall. Your body mass index is $bmi. A healthy BMI is between 19.5 and 25. The healthy weight range for your height is $low_weight and $high_weight pounds.";
+
+$weight_graphic = do
+		{
+			if (    $weight_flag >= 3 ) 	{ $red_risk }
+			elsif ( $weight_flag == 2 ) 	{ $yellow_risk }
+			elsif ( $weight_flag == 1 ) 	{ $yellow_risk }
+			else				{ $green_risk }
+		};
+
+
+$weight_target = do
+		{
+			if(    $weight_flag == 0 ) { "Your target: Keep your weight between $low_weight and $high_weight pounds." }
+			elsif( $weight_flag == 1 ) { "Your target: Reduce your weight to between  $low_weight and $high_weight pounds." }
+			elsif( $weight_flag == 2 ) { "Your target: Get your weight to between $low_weight and $high_weight pounds." }
+			elsif( $weight_flag == 3 ) { "Your target: Reduce your weight." }
+			elsif( $weight_flag == 4 ) { "Your target: Get your weight between $low_weight and $high_weight pounds." }
+		};
+
+
+$exer_target = do
+		{
+			if ( $exercise eq YES )		{ "Your target: Keep your current level of exercise." }
+			else  				{ "Your target: Get some exercise every week." }
+		};
+
+$exer_desc = do
+		{
+			if (    $exercise eq YES &&
+				$weight_flag == 0 ) 	{ "Continue to exercise regularly, 3-5 times per week, to maintain ideal body weight and optimal health. Ideally, take a walk or get some aerobic exercise at least 30 minutes a day." }
+			elsif ( $exercise eq YES ) 	{ "Continue to exercise regularly, 3-5 times per week, to maintain optimal health. Ideally, take a walk or get some aerobic exercise at least 30 minutes a day." }
+			else  				{ "Fitness experts recommend exercising 3 to 5 times a week. Ideally, take a walk or get some aerobic exercise at least 30 minutes a day. But before embarking on an exercise program, consult your health care provider." }
+		};
+
+$exer_graphic = do
+		{
+			if ( $exercise eq YES )	{ $green_risk }
+			else  			{ $red_risk }
+		};
+
+$female_desc = do
+		{
+			if ( $diabetes_gdm eq YES &&
+				$big_kid ne YES &&
+				$sex eq FEMALE )
+					{ "Gestational diabetes mellitus (GDM) is high blood sugar diagnosed during pregnancy. Up to 60% of women who have GDM will develop Type 2 Diabetes Mellitus within 10 years. Maintaining weight in a normal range and exercising regularly can reduce this risk. Women who have had GDM should have their blood sugar checked regularly and before they become pregnant again." }
+			elsif ( $diabetes_gdm ne YES &&
+				$big_kid eq YES &&
+				$sex eq FEMALE )
+					{ "Macrosomia (very large baby) occurs when the mother's blood sugar level is high. This allows too much sugar to go to the fetus and can cause the fetus to grow too large.  This could indicate you may have had gestational diabetes mellitus (GDM), HIGH BLOOD SUGAR, while pregnant.  Maintaining weight in a normal range and exercising regularly can reduce this risk. Women who have had GDM should have their blood  sugar checked regularly and before they become pregnant again." }
+			elsif ( $diabetes_gdm eq YES &&
+				$big_kid eq YES &&
+				$sex eq FEMALE )
+					{ "Macrosomia (very large baby) occurs when the mother's blood sugar level is high. This allows too much sugar to go to the fetus and can cause the fetus to grow too large.  This coincides with your diagnosed gestational diabetes mellitus (GDM).  Up to 60% of women who have GDM will develop Type 2 Diabetes Mellitus within 10 years. Maintaining weight in a normal range and exercising regularly can reduce this risk. Women who have had GDM should have their blood sugar checked regularly and before they become pregnant again." }
+			elsif ( $diabetes_points > 9 &&
+				$sex eq FEMALE &&
+				$age < 55 )
+					{ "With your risk level being high, you should have your blood sugar checked before you become pregnant and during any pregnancies. " }
+			elsif ( $diabetes_points > 5 &&
+				$sex eq FEMALE &&
+				$age < 55 )
+					{ "With your risk level being moderate, you should have your blood sugar checked before you become pregnant and during any pregnancies. " }
+			else
+					{ "" }
+		};
+
+$baby_graphic = do
+		{
+			if ( 	$diabetes_gdm eq YES &&
+				$big_kid ne YES)
+							{ $red_risk }
+			elsif (	$diabetes_gdm ne YES &&
+				$big_kid eq YES )
+							{ $yellow_risk }
+			elsif (	$diabetes_gdm eq YES &&
+				$big_kid ne YES )
+							{ $yellow_risk }
+			elsif (	$diabetes_gdm eq YES &&
+				$big_kid eq YES )
+							{ $red_risk }
+			else
+							{ "" }
+		};
+$body_graphic = do {
+	if(    $diabetes_points > 9 ) { $red_risk }
+	elsif( $diabetes_points > 6 ) { $yellow_risk }
+	else                          { $green_risk }
+	};
+	
+my $race_risk = 0;
+   $race_risk = 1 if
+	$race eq NATIVE_AMERICAN ||
+	$race eq AFRICAN_AMERICAN ||
+	$race eq HISPANIC;
+
+my $mid_life = $age > 44 && $age < 65 ? 1 : 0;
+
+my $drc_flag = do {
+	if(    $diabetes_points > 9 ) { 2 }
+	elsif( $diabetes_points > 6 ) { 1 }
+	else                          { 0 }
+	};
+
+my $risk = ( 'LOW', 'MODERATE', 'HIGH' )[ $drc_flag ] . " RISK";
+
+$risk = do {
+	if( $format eq 'pdf' ) { "^b $risk ^B" }
+	else                   { "<b>$risk</b>" }
+	};
+
+my $symptoms         = "(Symptoms include unusual thirst, extreme fatigue, unusual weight changes, and increased urination, especially at night.)";
+my $regular_exercise = "A regular habit of exercise will help decrease your risk.";
+my $tested_regularly = "You should be tested regularly for the disease, as recommended by the American Diabetes Association.";
+my $tested_3years    = "You should be tested every three years for the disease, as recommended by the American Diabetes Association. But with your risk factors, you should ask your physician about getting tested more frequently.";
+my $more_frequently  = "But with your risk factors, you should ask your physician about getting tested more frequently.";
+my $over_45          = "Typically, people over 45 are tested every three years for the disease, as recommended by the American Diabetes Association.";
+my $not_routine      = "Testing for diabetes at your age is not routine.";
+my $getting_older    = "Your risk will increase as you get older, so watch for the symptoms.";
+my $check_with_doc   = 'Check with your doctor on how often you should be tested, and watch for symptoms.';
+my $race_message     = "Keep in mind that being $race increases your chances for having diabetes.";
+
+my @messages_1 = ( "$name, you are at $risk for having diabetes." );
+
+if(    $drc_flag == 2 )
+	{
+	push @messages_1, "Only your physician can determine if you have the disease. See your physician and get tested promptly. Share the findings of this report with your doctor and talk about a regular diabetes testing schedule.";
+	}
+elsif( $drc_flag == 1 )
+	{
+
+	if( $age < 45 )
+		{
+		push @messages_1, $over_45, $not_routine, $more_frequently,
+			$symptoms;
+		}
+	elsif( $mid_life )
+		{
+		push @messages_1, $tested_3years, $more_frequently,
+			$symptoms;
+		}
+	else
+		{
+		push @messages_1, $tested_regularly;
+		}
+
+	push @messages_1, $regular_exercise
+		if $exercise_drc eq NO;
+	push @messages_1, $race_message if $race_risk;
+	}
+else
+	{
+	if( $age < 45 )
+		{
+		push @messages_1, $not_routine, $over_45, $getting_older,
+			$symptoms;
+		}
+	elsif( $mid_life )
+		{
+		push @messages_1, $tested_3years, $symptoms;
+		}
+	else
+		{
+		push @messages_1, $tested_regularly, $check_with_doc,
+			$symptoms;
+		}
+
+	push @messages_1, $regular_exercise
+		if $exercise_drc eq NO;
+	push @messages_1, $race_message if $race_risk;
+	}
+
+
+$fact = join " ", @messages_1;
+
+'';
+}

@@ -1,0 +1,290 @@
+﻿<?xml version="1.0" standalone="yes" ?>
+
+ 
+
+<PDF PageMode="UseNone" PageLayout="SinglePage" PageSize="Letter" FindHyperlink="1" Author="HealthStatus.com, Inc.">
+<Image Width="137" Height="105" File="/usr/local/www/vhosts/managed2/base_lang/htdocs/images/global/hs_logo_77.jpg" Name="Im0" />
+<Image Width="15" Height="14" File="/usr/local/www/vhosts/managed2/base_lang/htdocs/images/global/risk_green.jpg" Name="Im1" />
+<Image Width="15" Height="14" File="/usr/local/www/vhosts/managed2/base_lang/htdocs/images/global/risk_yellow.jpg" Name="Im2" />
+<Image Width="15" Height="14" File="/usr/local/www/vhosts/managed2/base_lang/htdocs/images/global/risk_red.jpg" Name="Im3" />
+<Image Width="303" Height="16" File="/usr/local/www/vhosts/managed2/base_lang/htdocs/images/global/color_guide.jpg" Name="Im9" />
+<Image Width="2550" Height="3300" File="/usr/local/www/vhosts/managed2/base_lang/htdocs/pdf-background-256.png" Name="ImBack" />
+<Page Name="Pg0" Width="612" Height="792" Bookmark="Cover Letter">
+<Graph Rect="0, 0, 612, 792" Name="Gr0">
+<ShowImage Name="ImBack" Left="0" Bottom="0" Flip="0" />
+<ShowImage Name="Im0" Left="460" Bottom="680" Width="137"  Flip="0" />
+<ShowText X="60" Y="685" Text="Your Personalized Health Risk Assessment" FontFace="Helvetica-Bold" Color="3333cc" BorderColor="3333cc" Width="320" Height="12" />
+<ShowText X="580" Y="60" Text="Health Risk Assessment" FontFace="Helvetica" Color="E0E0E0" Width="350" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+<ShowText X="60" Y="20" Text="Copyright (c) 1998-2013 HealthStatus.com, Inc. all rights reserved." FontFace="Arial" FontSize="8" Leading="8" Color="AAAAAA" />
+</Graph>
+<Text Name="Txt0" Rect="60, 60, 552, 670" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+
+
+^P ^a:align=Right As of 04/29/2013 ^P
+
+Male, 51 years old ^P ^A
+
+^P
+
+^P
+
+Dear John Doe, ^P
+
+^P
+
+The following report is an educational tool designed to identify health risk factors you can control and provide you with suggestions for making positive lifestyle changes. ^P
+
+^P
+
+However, this evaluation is not a substitute for a health exam from a physician, and it can't identify a specific medical problem. It can only show you how you can avoid the most common causes of illnesses and injuries for a person of your age and gender. Please see a health professional for further advice. ^P
+
+^P
+
+John Doe, .
+This report will stress the things that you can control.^P
+
+^P
+
+Average rates for illnesses and conditions are based on data gathered from the Centers for Disease Control and Prevention. They reflect current health patterns, medical practices, and environmental conditions and are adjusted based on personal information you entered. These risks are based on data and formulas from researchers at the Carter Center of Emory University's Healthier People Project, with technical support from 25 other major health agencies. ^P
+
+^P
+
+Read your report carefully, and if you have questions, contact your doctor or a health professional who can help you understand the results. If you want to show the results to your doctor, print out the page titled "Chart Report." ^P
+
+^P
+
+Thank you, ^P
+
+^P
+
+^P
+
+Language EN ^P
+
+
+
+  ]]>
+</Text>
+</Page>
+<Page Name="Pg0a" Width="612" Height="792">
+	<Graph Rect="0, 0, 612, 792" Name="Gr0a">
+	<ShowImage Name="Im0" Left="460" Bottom="680" Width="137"  Flip="0" />
+	<ShowText X="580" Y="60" Text="Health Risk Assessment" FontFace="Helvetica" Color="E0E0E0" Width="475" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+	<ShowText X="60" Y="685" Text="Your Personalized Health Risk Assessment" FontFace="Helvetica-Bold" Color="3333cc" BorderColor="3333cc" Width="320" Height="12" />
+	<ShowText X="60" Y="20" Text="Copyright (c) 1998-2013 HealthStatus.com, Inc. all rights reserved." FontFace="Arial" FontSize="8" Leading="8" Color="AAAAAA" />
+	<ShowText X="520" Y="20" Text="Page 2" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
+	</Graph>
+	<Text Name="Txt0" Rect="60, 448, 552, 660" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
+		<![CDATA[
+
+			^f:size=14&color=3333cc ^b Your personal wellness score is 96. ^B ^F  ^P
+
+			^P
+
+			^t ^f:size=12&color=BLACK $risk_level: $Low ^F 
+
+			^P
+
+			Congratulations, your wellness score of 96 shows that you are making good decisions about your health.  Keep up the good work! By looking at the responses you gave we are able to compute an appraised age, your appraised age is 48, it is the same as your actual age. If you modify your habits you could reach an appraised age of 47, wouldn't that be great? 
+	        ]]>
+	</Text>
+	<Text Name="Txt0aa" Rect="60, 265, 295, 515" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" BorderColor="White" BgColor="White" TextJustify="Left" VerticalAlign="Top"  ExtraParaSpacing="0" TabPosition="0.3in">
+		<![CDATA[
+
+			^f:size=12&color=3333cc  Habits to Maintain  ^F ^P ^p      ^P
+
+			^f:size=8&face=ZapfDingbats u ^F ^f:face=Arial&size=10 You don't use tobacco products. ^F ^P ^p      ^P ^f:size=8&face=ZapfDingbats u ^F ^f:face=Arial&size=10 Your blood pressure is good. ^F ^P ^p      ^P ^f:size=8&face=ZapfDingbats u ^F ^f:face=Arial&size=10 You wear your seatbelt. ^F ^P ^p      ^P ^f:size=8&face=ZapfDingbats u ^F ^f:face=Arial&size=10 You have low risk from alcohol. ^F ^P ^p      ^P ^f:size=8&face=ZapfDingbats u ^F ^f:face=Arial&size=10 Your total cholesterol level is within the healthy range. ^F ^P ^p      ^P ^f:size=8&face=ZapfDingbats u ^F ^f:face=Arial&size=10 You get regular exercise. ^F ^P ^p      ^P ^f:size=8&face=ZapfDingbats u ^F ^f:face=Arial&size=10 There is not too much fat in your diet. ^F ^P ^p      ^P 
+		]]>
+	</Text>
+	<Text Name="Txt0ab" Rect="295, 265, 530, 515" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" BorderColor="White" BgColor="White" TextJustify="Left" VerticalAlign="Top"  ExtraParaSpacing="0" TabPosition="0.3in">
+		<![CDATA[
+
+			^f:size=12&color=3333cc  Things to Change  ^F ^P ^p      ^P
+
+			^f:size=8&face=ZapfDingbats u ^F ^f:face=Arial&size=10 You need to lose a few pounds. ^F ^P ^p      ^P ^f:size=8&face=ZapfDingbats u ^F ^f:face=Arial&size=10 Drive within the speed limit. ^F ^P ^p      ^P ^f:size=8&face=ZapfDingbats u ^F ^f:face=Arial&size=10 Add more fibre to your diet. ^F ^P ^p      ^P 
+		]]>
+	</Text>
+	<Text Name="Txt0ad" Rect="60, 75, 530, 312" FontFace="Arial" FontSize="9" Leading="12" FontColor="666666" BorderColor="White" BgColor="White" TextJustify="Left" VerticalAlign="Top" PaddingRight="5" ExtraParaSpacing="0" TabPosition="0.3in">
+		<![CDATA[
+
+			^f:size=14&color=3333cc ^b Most common causes of death for 51 year old men. ^B ^F  ^P
+
+			^P
+
+			1.  Heart attack  ^P ^p  ^P 2.  Lung Cancer  ^P ^p  ^P 3.  Stroke  ^P ^p  ^P 4.  Liver Cirrhosis  ^P ^p  ^P 5.  Diabetes Mellitus  ^P ^p  ^P 6.  Emphysema/Chronic Bronchitis  ^P ^p  ^P 7.  Colon Cancer  ^P ^p  ^P 8.  Suicide  ^P ^p  ^P 
+
+		]]>
+	</Text>
+</Page>
+<Page Name="Pg1" Width="612" Height="792">
+	<Graph Rect="0, 0, 612, 792" Name="Gr1">
+	<ShowImage Name="Im0" Left="460" Bottom="680" Width="137"  Flip="0" />
+	
+	<ShowText X="580" Y="60" Text="Health Risk Assessment" FontFace="Helvetica" Color="E0E0E0" Width="475" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+	<ShowText X="60" Y="685" Text="Your Personalized Health Risk Assessment" FontFace="Helvetica-Bold" Color="3333cc" BorderColor="3333cc" Width="320" Height="12" />
+	<ShowText X="60" Y="20" Text="Copyright (c) 1998-2013 HealthStatus.com, Inc. all rights reserved." FontFace="Arial" FontSize="8" Leading="8" Color="AAAAAA" />
+	<ShowText X="520" Y="20" Text="Page 3" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
+	</Graph>
+	<Text Name="Txt0" Rect="60, 60, 552, 635" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
+	<![CDATA[
+		^f:size=14&color=3333cc ^b Your Biggest Health Risks ^B ^F ^P
+
+		Most likely causes of your death for the next 10 years. ^P  
+
+		Lower numbers are better.
+	]]>
+	</Text>
+	<Graph Rect="90, 535, 622, 580" Name="bar0">Program fragment delivered error ``Undefined subroutine &Text::Template::GEN0::create_chart called at /usr/local/www/vhosts/managed2/base_lang/template/pdf_bar_risk_3bars.tmpl line 62.
+''
+</Graph><Graph Rect="90, 480, 622, 525" Name="bar1">Program fragment delivered error ``Undefined subroutine &Text::Template::GEN0::create_chart called at /usr/local/www/vhosts/managed2/base_lang/template/pdf_bar_risk_3bars.tmpl line 62.
+''
+</Graph><Graph Rect="90, 425, 622, 470" Name="bar2">Program fragment delivered error ``Undefined subroutine &Text::Template::GEN0::create_chart called at /usr/local/www/vhosts/managed2/base_lang/template/pdf_bar_risk_3bars.tmpl line 62.
+''
+</Graph><Graph Rect="90, 370, 622, 415" Name="bar3">Program fragment delivered error ``Undefined subroutine &Text::Template::GEN0::create_chart called at /usr/local/www/vhosts/managed2/base_lang/template/pdf_bar_risk_3bars.tmpl line 62.
+''
+</Graph><Graph Rect="90, 315, 622, 360" Name="bar4">Program fragment delivered error ``Undefined subroutine &Text::Template::GEN0::create_chart called at /usr/local/www/vhosts/managed2/base_lang/template/pdf_bar_risk_3bars.tmpl line 62.
+''
+</Graph><Graph Rect="90, 260, 622, 305" Name="bar5">Program fragment delivered error ``Undefined subroutine &Text::Template::GEN0::create_chart called at /usr/local/www/vhosts/managed2/base_lang/template/pdf_bar_risk_3bars.tmpl line 62.
+''
+</Graph><Graph Rect="90, 205, 622, 250" Name="bar6">Program fragment delivered error ``Undefined subroutine &Text::Template::GEN0::create_chart called at /usr/local/www/vhosts/managed2/base_lang/template/pdf_bar_risk_3bars.tmpl line 62.
+''
+</Graph><Graph Rect="90, 150, 622, 195" Name="bar7">Program fragment delivered error ``Undefined subroutine &Text::Template::GEN0::create_chart called at /usr/local/www/vhosts/managed2/base_lang/template/pdf_bar_risk_3bars.tmpl line 62.
+''
+</Graph>
+	<Text Name="Txt0" Rect="60, 60, 552, 80" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
+	<![CDATA[
+		A score of 31 would indicate that 31 out of every 1000 people with your age, sex, race and similar habits will die in the next ten years from this risk.  The U.S. average is the number of U.S. citizens per thousand your age, race and sex with average habits that will die from this risk in the next ten years.
+	]]>
+	</Text>
+</Page>
+<Page Name="Pg2" Width="612" Height="792">
+	<Graph Rect="0, 0, 612, 792" Name="Gr3a">
+	<ShowImage Name="Im0" Left="460" Bottom="680" Width="137"  Flip="0" />
+	<ShowText X="580" Y="60" Text="Health Risk Assessment" FontFace="Helvetica" Color="E0E0E0" Width="475" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+	<ShowText X="60" Y="685" Text="Your Personalized Health Risk Assessment" FontFace="Helvetica-Bold" Color="3333cc" BorderColor="3333cc" Width="320" Height="12" />
+	<ShowText X="60" Y="20" Text="Copyright (c) 1998-2013 HealthStatus.com, Inc. all rights reserved." FontFace="Arial" FontSize="8" Leading="8" Color="AAAAAA" />
+	<ShowText X="520" Y="20" Text="Page 4" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
+	</Graph>
+	<Text Name="Txt0" Rect="60, 60, 552, 670" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
+	<![CDATA[
+
+^f:size=14&color=3333cc ^b Basic Measures ^B ^F ^f:size=12 Self reported ^F ^P
+		^p Weight: 181 ^P   ^p Height: 5' 10" ^P   ^p BMI:  26 ^P   ^p Blood Pressure: Normal or low ^P ^p Total Cholesterol: Normal or low ^P ^p  ^P 
+
+^P
+
+^P
+
+^f:size=14&color=3333cc ^b Risk Assessment ^B ^F ^P
+
+^P
+^p By not smoking you have avoided the habit that causes significant illness and death in the country. ^P ^p  ^P ^p Your weight of 181 pounds is over the recommended range for people 5' 10" tall. Your Body Mass Index (BMI) is  26; most professionals agree it should be between 19.5 and 25.  The healthy weight range for your height is 136 to 174. ^P ^p  ^P ^p  Your driving at dangerous speeds has put you at higher risk for dying in an automobile accident.  Don't become a statistic. ^P ^p  ^P ^p  ^P 
+
+]]>
+</Text>
+</Page>
+<Page Name="Pg3" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr10">
+	<ShowImage Name="Im0" Left="460" Bottom="680" Width="137"  Flip="0" />
+	<ShowText X="580" Y="60" Text="Health Risk Assessment" FontFace="Helvetica" Color="E0E0E0" Width="475" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+	<ShowText X="60" Y="685" Text="Your Personalized Health Risk Assessment" FontFace="Helvetica-Bold" Color="3333cc" BorderColor="3333cc" Width="320" Height="12" />
+	<ShowText X="60" Y="20" Text="Copyright (c) 1998-2013 HealthStatus.com, Inc. all rights reserved." FontFace="Arial" FontSize="8" Leading="8" Color="AAAAAA" />
+	<ShowText X="520" Y="20" Text="Page 5" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
+</Graph>
+	<Text Name="Txt0" Rect="60, 60, 560, 670" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
+	<![CDATA[
+
+Your blood pressure (you checked normal or low) is within the recommended range.  High blood pressure (hypertension) can be serious.  It puts extra stress on your heart and blood vessels, which could result in heart disease or stroke. ^P ^p  ^P ^p Normal or low was entered for your total cholesterol, but you do not know the value. Normal or low cholesterol is when your total cholesterol is less than 200.  Knowing your score can help you make better decisions about your health. You did not enter a value for your HDL cholesterol (good cholesterol).  The recommended level is above 40. ^P ^p  ^P ^p Continue to exercise regularly, 5 times per week for 30 minutes is recommended, to maintain  optimal health. ^P ^p  ^P ^p  ^P 
+
+]]>
+</Text>
+</Page>
+<Page Name="Pg4" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr10">
+	<ShowImage Name="Im0" Left="460" Bottom="680" Width="137"  Flip="0" />
+	<ShowText X="580" Y="60" Text="Health Risk Assessment" FontFace="Helvetica" Color="E0E0E0" Width="475" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+	<ShowText X="60" Y="685" Text="Your Personalized Health Risk Assessment" FontFace="Helvetica-Bold" Color="3333cc" BorderColor="3333cc" Width="320" Height="12" />
+	<ShowText X="60" Y="20" Text="Copyright (c) 1998-2013 HealthStatus.com, Inc. all rights reserved." FontFace="Arial" FontSize="8" Leading="8" Color="AAAAAA" />
+	<ShowText X="520" Y="20" Text="Page 6" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
+</Graph>
+	<Text Name="Txt0" Rect="60, 60, 552, 670" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
+	<![CDATA[
+
+Your consumption of 3 drinks in a week is considered low to moderate.  Any consumption of alcohol increases your risk for liver disease and some cancers.  By limiting your drinking to a low level, you remain in control and reduce your risks. ^P ^p  ^P ^p You do not eat high fibre foods every day.  High fibre foods include fruits, cereals, beans, and breads.  These foods can help reduce some cancers. ^P ^p  ^P ^p You are keeping your diet low in saturated fats.  This is reducing your risk for heart disease and hardening of the arteries.  Keep up the good work! ^P ^p  ^P ^p  ^P 
+
+]]>
+</Text>
+</Page>
+<Page Name="Pg5" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr10">
+	<ShowImage Name="Im0" Left="460" Bottom="680" Width="137"  Flip="0" />
+	<ShowText X="580" Y="60" Text="Health Risk Assessment" FontFace="Helvetica" Color="E0E0E0" Width="475" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+	<ShowText X="60" Y="685" Text="Your Personalized Health Risk Assessment" FontFace="Helvetica-Bold" Color="3333cc" BorderColor="3333cc" Width="320" Height="12" />
+	<ShowText X="60" Y="20" Text="Copyright (c) 1998-2013 HealthStatus.com, Inc. all rights reserved." FontFace="Arial" FontSize="8" Leading="8" Color="AAAAAA" />
+	<ShowText X="520" Y="20" Text="Page 7" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
+</Graph>
+	<Text Name="Txt0" Rect="60, 60, 552, 670" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
+	<![CDATA[
+
+^p ^f:size=14&color=3333cc ^b Guide to Preventative Services ^B ^F ^f:size=12 Recommended for men your age. ^F ^P ^p      ^P
+Exercise 3 to 5 times a week. ^P  ^p      ^P Dental exam ^P  ^p      ^P Blood pressure check ^P  ^p      ^P Cholesterol test ^P  ^p      ^P Prostate exam (or sigmoidoscopy) ^P  ^p      ^P Tetanus-Diptheria booster shot (every 10 years) ^P  ^p      ^P Eye exam for glaucoma ^P  ^p      ^P 
+
+^P
+
+^P
+
+^f:size=14&color=3333cc ^b Internet resources for more information: ^B ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=9&face=Arial https://lang-en.hra.net/resource/men50.pdf -- Staying Healthy ^F ^P  ^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=9&face=Arial https://lang-en.hra.net/resource/high_cholesterol_what_you_need_to_know.pdf  -- High Cholesterol; What you need to know ^F ^P  ^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=9&face=Arial http://www.amhrt.org -- American Heart Association ^F ^P  ^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=9&face=Arial https://lang-en.hra.net/resource/dietaryguidelines.pdf -- Dietary Guidelines ^F ^P  ^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=9&face=Arial https://lang-en.hra.net/resource/nutrition_for_healthier_you.pdf -- Nutrition for Healthier You  ^F ^P  ^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=9&face=Arial https://lang-en.hra.net/resource/OTC_Medicines_Family_Healthy.pdf -- Over the Counter Meds: Family Health ^F ^P  ^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=9&face=Arial https://lang-en.hra.net/resource/Family_Self_Care_Handbook.pdf -- Family Self Care Handbook  ^F ^P  
+
+ ^P
+
+]]>
+</Text>
+</Page>
+<Page Name="Pg6" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr12">
+	<ShowImage Name="Im0" Left="460" Bottom="680" Width="137"  Flip="0" />
+	<ShowText X="580" Y="60" Text="Health Risk Assessment" FontFace="Helvetica" Color="E0E0E0" Width="475" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+	<ShowText X="60" Y="685" Text="Your Personalized Health Risk Assessment" FontFace="Helvetica-Bold" Color="3333cc" BorderColor="3333cc" Width="320" Height="12" />
+	<ShowText X="60" Y="20" Text="Copyright (c) 1998-2013 HealthStatus.com, Inc. all rights reserved." FontFace="Arial" FontSize="8" Leading="8" Color="AAAAAA" />
+	<ShowText X="520" Y="20" Text="Page 8" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
+</Graph>
+	<Text Name="Txt0" Rect="60, 60, 552, 670" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
+	<![CDATA[
+
+^p ^f:size=14&color=3333cc ^b Doctor's Chart Report  ^B ^F ^P
+^p Date of Birth: 2/1/1962 ^P ^p Age: 51 ^P ^p Male ^P ^p      ^P
+
+^p ^f:size=14&color=3333cc ^b Self Reported Measures and Habits  ^B ^F ^P
+^p Weight: ^b 181 ^B ^P
+^p Height: ^b 5' 10" ^B ^P
+^p Calculated body mass index: ^b  26 ^B ^P
+^p Blood Pressure: ^b 
+	Do not know exact numbers but selected normal or low ^B ^P
+^p On blood pressure medicine: ^b No ^B ^P 
+^p Cholesterol: ^b Do not know exact numbers but selected normal or low ^B ^P
+^p HDL: ^b No value entered. ^B ^P  
+^p Diabetes: ^b No ^B ^P
+^p Tobacco use: ^b None ^B ^P
+^p Alcohol use: ^b 3 per week ^B ^P
+^p Physical activity: ^b Three or four times per week ^B ^P
+^p Overall health: ^b Excellent ^B ^P
+^p Life satisfaction: ^b Mostly satisfied ^B ^P
+^p Personal loss: ^b No ^B
+^p Fiber in diet daily: ^b No^B ^P
+^p Fat in diet daily: ^b No ^B ^P
+
+
+^P
+
+^p ^f:size=14&color=3333cc ^b Self Reported Preventitive Services  ^B ^F ^P
+ ^p Last rectal exam: ^b Two years ago ^B ^P 
+
+^P
+
+^p ^f:size=14&color=3333cc ^b Readiness to Change  ^B ^F ^P
+ ^p Drive more safely: ^b No ^B ^P  ^p Regular examinations: ^b No ^B ^P 
+]]>
+</Text>
+</Page></PDF>

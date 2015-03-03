@@ -1,0 +1,19 @@
+{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $header_file, PACKAGE => __PACKAGE__ );
+}
+<!--Form and form table START here. Table max width no more than 560 pixels.-->
+				<div class="col-md-13 col-lg-13 col-xs-13 text_justify">
+					{$calc_results}
+				</div>
+				<div class="col-md-12 col-lg-12 col-xs-12">
+					<form action="{$cgi}adv_reload.cgi" method="POST">
+						<input type="submit" class="HSButton c_button orange-bg-white-col" name="submit" value="Back">
+						{$hiddens}
+					</form>
+				</div>
+			</div>
+{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $footer_file, PACKAGE => __PACKAGE__ );
+}

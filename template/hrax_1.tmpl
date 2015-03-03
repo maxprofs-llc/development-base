@@ -1,0 +1,585 @@
+{
+# this part fills in a file that sets language variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}language.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( $config{template_directory} .$config{variables_template}, PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}hra_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}hra_links.tmpl", PACKAGE => __PACKAGE__ );
+}<PDF PageMode="UseNone" PageLayout="SinglePage" PageSize="Letter" FindHyperlink="1" Author="HealthStatus.com, Inc.">
+<Image Width="{$brand_logo_pdf_width}" Height="{$brand_logo_pdf_height}" File="{$config{pdf_base}}/{$brand_logo_pdf}" Name="Im0" />
+<Image Width="200" Height="135" File="{$config{pdf_base}}/{$wellness_bar}" Name="Im1" />
+<Image Width="75" Height="75" File="{$config{pdf_base}}/images/hra/hra_body_mass.jpg" Name="hra1" />
+<Image Width="75" Height="75" File="{$config{pdf_base}}/images/hra/hra_smoking.jpg" Name="hra2" />
+<Image Width="75" Height="75" File="{$config{pdf_base}}/images/hra/hra_bld_pressure.jpg" Name="hra3" />
+<Image Width="75" Height="75" File="{$config{pdf_base}}/images/hra/hra_cholest.jpg" Name="hra4" />
+<Image Width="75" Height="75" File="{$config{pdf_base}}/images/hra/hra_alcohol.jpg" Name="hra5" />
+<Image Width="75" Height="75" File="{$config{pdf_base}}/images/hra/hra_nutrition.jpg" Name="hra6" />
+<Image Width="75" Height="75" File="{$config{pdf_base}}/images/hra/hra_{$lc_sex}.jpg" Name="hra7" />
+<Image Width="75" Height="75" File="{$config{pdf_base}}/images/hra/hra_family.jpg" Name="hra8" />
+<Image Width="75" Height="75" File="{$config{pdf_base}}/images/hra/hra_injury.jpg" Name="hra9" />
+<Image Width="75" Height="75" File="{$config{pdf_base}}/images/hra/hra_fitness.jpg" Name="hra10" />
+<Image Width="75" Height="75" File="{$config{pdf_base}}/images/hra/hra_wellbeing.jpg" Name="hra11" />
+<Page Name="Pg0" Width="612" Height="792" Bookmark="Cover Letter">
+<Graph Rect="0, 0, 612, 792" Name="Gr0">
+<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
+<ShowText X="60" Y="725" Text="Your Personalized General Health Assessment" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
+<ShowText X="580" Y="60" Text="General Health Assessment" FontFace="Helvetica" Color="gray" Width="535" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+<ShowImage Name="Im1" Left="60" Bottom="460" Width="200" Flip="0" />
+<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="Slategray" />
+</Graph>
+
+	<Text Name="Txt0" Rect="60, 630, 460, 700" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
+
+		<![CDATA[
+
+		^p ^f:size=14&color={$config{brand_title_color}} ^b Your Personal Wellness Score  ^B ^F ^P
+
+		^p {$date} for {$name} ^P
+
+		^p Your personal wellness score is {$wellness}.  Your achievable wellness score is 100. ^P
+
+		]]>
+
+	</Text>
+
+	<Text Name="Txt0aa" Rect="60, 100, 530, 460" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BorderColor="White" BgColor="White" TextJustify="Left" VerticalAlign="Top"  ExtraParaSpacing="0" TabPosition="0.3in">
+
+		<![CDATA[
+
+			^p The results of the assessment are based on your answers compared with U.S. average scores for people of the same sex, age and lifestyle habits.  This is then compared to your highest possible score to arrive at your wellness score. ^P
+
+			^p {$Wellness} ^P
+
+			^p  ^f:size=10&color={$config{brand_subtitle_color}}&face=Arial ^b Habits that affect your score  ^B ^F ^P 
+			^f:size=10&face=Arial {$hs_at_points_out} ^F
+
+			^p      ^P
+
+			^f:size=10&color={$config{brand_subtitle_color}}&face=Arial ^b Ways to improve  ^B ^F ^P 
+			^f:size=10&face=Arial 	{ foreach $i (@bad_habits)
+							{
+							$OUT .= "^p ^t ^f:face=ZapfDingbats u ^F ^f:size=8&face=Arial $i ^P  ";
+							}
+					} ^F
+
+			^p      ^P
+
+			 ^f:size=10&color={$config{brand_subtitle_color}}&face=Arial ^b Your plans for improvement  ^B ^F ^P 
+			^f:size=10&face=Arial 	{ foreach $i (@ready_2_change)
+							{
+							$OUT .= "^p ^t ^f:face=ZapfDingbats u ^F ^f:size=8&face=Arial $i ^P  ";
+							}
+					} ^F
+		]]>
+
+	</Text>
+
+
+</Page>
+
+<Page Name="Pg1" Width="612" Height="792">
+
+	<Graph Rect="0, 0, 612, 792" Name="Gr1">
+
+	<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
+
+<ShowText X="60" Y="725" Text="Your Personalized General Health Assessment" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
+
+	<ShowText X="580" Y="60" Text="General Health Risk Assessment" FontFace="Helvetica" Color="Gray" Width="535" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+
+	<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="AAAAAA" />
+
+	</Graph>
+
+	<Text Name="Txt0" Rect="60, 670, 460, 700" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
+
+		<![CDATA[^p ^f:size=14&color={$config{brand_title_color}} ^b Health Risk Profile  ^B ^F ^P
+
+		^p {$date} for {$name} ^P ]]>
+
+	</Text>
+<Text Name="Txt1" Rect="60, 565, 210, 620" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" PaddingRight="5" ExtraParaSpacing="0">
+<![CDATA[ ^f:size=12&color={$config{brand_subtitle_color}} ^b Weight ^B ^F ^P
+
+^p ^f:color=Black {$WeightLine} ^P ]]>
+</Text>
+<Graph Rect="0, 0, 612, 792" Name="Gr2">
+<ShowImage Name="hra1" Left="98" Bottom="460" Flip="0" />
+</Graph>
+<Text Name="Txt2" Rect="240, 450, 579, 620" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0" Bookmark="Body Composition">
+<![CDATA[
+^f:size=10&color=Black ^b Preventive Steps  ^B ^F ^P
+
+{$weight_short} ^P
+
+^P
+
+^f:size=10&color=Black ^b Online help  ^B ^F ^P
+{$bmi_links_pdf} ^P
+
+^f:size=10&color=Black&face=Arial ^b Other assessments  ^B ^F ^P
+
+^f:size=10&face=Arial Cardiac assessment ^P
+^p Diabetes assessment ^P
+^p Fitness assessment ^P ^F
+
+ ^P
+ ]]>
+</Text>
+<Text Name="Txt3" Rect="60, 340, 210, 430" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" PaddingRight="5" ExtraParaSpacing="0">
+<![CDATA[ ^f:size=12&color={$config{brand_subtitle_color}} ^b Tobacco ^B ^F ^P
+
+^p ^f:color=Black {$smk_short_risk} ^P  ]]>
+</Text>
+<Graph Rect="0, 0, 612, 792" Name="Gr3">
+<ShowImage Name="hra2" Left="98" Bottom="270" Flip="0" />
+</Graph>
+<Text Name="Txt4" Rect="240, 260, 579, 430" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0" Bookmark="Cardiorespitory Endurance">
+<![CDATA[
+^f:size=10&color=Black ^b Preventive steps  ^B ^F ^P
+
+{$smoke_message} {$other_smoke_message} ^P
+
+^P
+
+^f:size=10&color=Black ^b Online help  ^B ^F ^P
+{$smoke_links_pdf} ^P
+
+^f:size=10&color=Black&face=Arial ^b Other assessments  ^B ^F ^P
+
+^f:size=10&face=Arial Cardiac assessment ^P ^F 
+
+  ]]>
+</Text>
+
+<Text Name="Txt5" Rect="60, 70, 210, 240" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" PaddingRight="5" ExtraParaSpacing="0">
+<![CDATA[ ^f:size=12&color={$config{brand_subtitle_color}} ^b Blood Pressure ^B ^F ^P
+
+^p ^f:color=Black {$bp_short} ^P  ]]>
+</Text>
+<Graph Rect="0, 0, 612, 792" Name="Gr3">
+<ShowImage Name="hra3" Left="98" Bottom="80" Flip="0" />
+</Graph>
+<Text Name="Txt6" Rect="240, 70, 579, 240" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0" Bookmark="Cardiorespitory Endurance">
+<![CDATA[
+^f:size=10&color=Black ^b Preventive steps  ^B ^F ^P
+
+{$bp_message} ^P
+
+^P
+
+^f:size=10&color=Black ^b Online help  ^B ^F ^P
+{$bp_links_pdf} ^P
+
+^f:size=10&color=Black&face=Arial ^b Other assessments  ^B ^F ^P
+
+^f:size=10&face=Arial Cardiac assessment ^P ^F
+
+  ]]>
+</Text>
+</Page>
+
+<Page Name="Pg2" Width="612" Height="792">
+
+	<Graph Rect="0, 0, 612, 792" Name="Gr1">
+
+	<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
+
+<ShowText X="60" Y="725" Text="Your Personalized General Health Assessment" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
+<ShowText X="580" Y="60" Text="General Health Assessment" FontFace="Helvetica" Color="gray" Width="535" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+
+	<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="AAAAAA" />
+
+	</Graph>
+
+	<Text Name="Txt0" Rect="60, 670, 460, 700" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
+
+		<![CDATA[^p ^f:size=14&color={$config{brand_title_color}} ^b Health Risk Profile  ^B ^F ^P
+
+		^p {$date} for {$name} ^P ]]>
+
+	</Text>
+<Text Name="Txt1" Rect="60, 565, 210, 620" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" PaddingRight="5" ExtraParaSpacing="0">
+<![CDATA[ ^f:size=12&color={$config{brand_subtitle_color}} ^b Cholesterol ^B ^F ^P
+
+^p ^f:color=Black {$cholesterol_short} ^P ]]>
+</Text>
+<Graph Rect="0, 0, 612, 792" Name="Gr2">
+<ShowImage Name="hra4" Left="98" Bottom="460" Flip="0" />
+</Graph>
+<Text Name="Txt2" Rect="240, 450, 579, 620" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0" Bookmark="Body Composition">
+<![CDATA[
+^f:size=10&color=Black ^b Preventive Steps  ^B ^F ^P
+
+{$cholesterol_message} ^P
+
+^P
+
+^f:size=10&color=Black ^b Online help  ^B ^F ^P
+{$cholesterol_links_pdf} ^P
+
+^f:size=10&color=Black&face=Arial ^b Other assessments  ^B ^F ^P
+
+^f:size=10&face=Arial Cardiac assessment ^P ^F
+ ]]>
+</Text>
+<Text Name="Txt3" Rect="60, 340, 210, 430" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" PaddingRight="5" ExtraParaSpacing="0">
+<![CDATA[ ^f:size=12&color={$config{brand_subtitle_color}} ^b Alcohol ^B ^F ^P
+
+^p ^f:color=Black {$alcohol_short_risk} ^P  ]]>
+</Text>
+<Graph Rect="0, 0, 612, 792" Name="Gr3">
+<ShowImage Name="hra5" Left="98" Bottom="270" Flip="0" />
+</Graph>
+<Text Name="Txt4" Rect="240, 260, 579, 430" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0" Bookmark="Cardiorespitory Endurance">
+<![CDATA[
+^f:size=10&color=Black ^b Preventive steps  ^B ^F ^P
+
+{$alcohol_message} ^P
+
+^P
+
+^f:size=10&color=Black&face=Arial ^b Online help  ^B ^F ^P
+{$alcohol_links_pdf} ^P
+
+  ]]>
+</Text>
+
+<Text Name="Txt5" Rect="60, 70, 210, 240" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" PaddingRight="5" ExtraParaSpacing="0">
+<![CDATA[ ^f:size=12&color={$config{brand_subtitle_color}} ^b Nutrition ^B ^F ^P
+
+^p ^f:color=Black {$nutrition_short_risk} ^P  ]]>
+</Text>
+<Graph Rect="0, 0, 612, 792" Name="Gr3">
+<ShowImage Name="hra6" Left="98" Bottom="80" Flip="0" />
+</Graph>
+<Text Name="Txt6" Rect="240, 70, 579, 240" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0" Bookmark="Cardiorespitory Endurance">
+<![CDATA[
+^f:size=10&color=Black ^b Preventive steps  ^B ^F ^P
+
+{$fiber_message} ^P
+
+{$fat_message} ^P
+
+^P
+
+^f:size=10&color=Black&face=Arial ^b Online help  ^B ^F ^P
+{$nutrition_links_pdf} ^P
+
+  ]]>
+</Text>
+</Page>
+
+<Page Name="Pg3" Width="612" Height="792">
+
+	<Graph Rect="0, 0, 612, 792" Name="Gr1">
+
+	<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
+
+<ShowText X="60" Y="725" Text="Your Personalized General Health Assessment" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
+<ShowText X="580" Y="60" Text="General Health Assessment" FontFace="Helvetica" Color="gray" Width="535" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+
+	<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="AAAAAA" />
+
+	</Graph>
+
+	<Text Name="Txt0" Rect="60, 670, 460, 700" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
+
+		<![CDATA[^p ^f:size=14&color={$config{brand_title_color}} ^b Health Risk Profile  ^B ^F ^P
+
+		^p {$date} for {$name} ^P ]]>
+
+	</Text>
+<Text Name="Txt1" Rect="60, 565, 210, 620" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" PaddingRight="5" ExtraParaSpacing="0">
+<![CDATA[ ^f:size=12&color={$config{brand_subtitle_color}} ^b My Health ^B ^F ^P
+
+^p ^f:color=Black {$my_short} ^P ]]>
+</Text>
+<Graph Rect="0, 0, 612, 792" Name="Gr2">
+<ShowImage Name="hra7" Left="98" Bottom="460" Flip="0" />
+</Graph>
+<Text Name="Txt2" Rect="240, 450, 579, 620" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0" Bookmark="Body Composition">
+<![CDATA[
+^f:size=10&color=Black ^b Preventive Steps  ^B ^F ^P
+
+{$sex_check} ^P
+
+^P
+
+^f:size=10&color=Black&face=Arial ^b Online help  ^B ^F ^P
+{$sex_links_pdf} {$my_links_pdf} ^P
+ ]]>
+</Text>
+<Text Name="Txt3" Rect="60, 340, 210, 430" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" PaddingRight="5" ExtraParaSpacing="0">
+<![CDATA[ ^f:size=12&color={$config{brand_subtitle_color}} ^b Family Health ^B ^F ^P
+
+^p ^f:color=Black {$family_short} ^P  ]]>
+</Text>
+<Graph Rect="0, 0, 612, 792" Name="Gr3">
+<ShowImage Name="hra8" Left="98" Bottom="270" Flip="0" />
+</Graph>
+<Text Name="Txt4" Rect="240, 260, 579, 430" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0" Bookmark="Cardiorespitory Endurance">
+<![CDATA[
+^f:size=10&color=Black ^b Preventive steps  ^B ^F ^P
+
+{$family_check} ^P
+
+^P
+
+^f:size=10&color=Black&face=Arial ^b Online help  ^B ^F ^P
+{$family_links_pdf} ^P
+
+  ]]>
+</Text>
+
+<Text Name="Txt5" Rect="60, 70, 210, 240" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" PaddingRight="5" ExtraParaSpacing="0">
+<![CDATA[ ^f:size=12&color={$config{brand_subtitle_color}} ^b Injury ^B ^F ^P
+
+^p ^f:color=Black {$injury_short_risk} ^P  ]]>
+</Text>
+<Graph Rect="0, 0, 612, 792" Name="Gr3">
+<ShowImage Name="hra9" Left="98" Bottom="80" Flip="0" />
+</Graph>
+<Text Name="Txt6" Rect="240, 70, 579, 240" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0" Bookmark="Cardiorespitory Endurance">
+<![CDATA[
+^f:size=10&color=Black ^b Preventive steps  ^B ^F ^P
+
+^f:size=10&face=Arial {$seat_belt_message} {$speed_message} {$drink_and_drive_message} {$helmet_message} ^F ^P
+
+^P
+
+^f:size=10&color=Black&face=Arial ^b Online help  ^B ^F ^P
+{$injury_links_pdf} ^P
+
+  ]]>
+</Text>
+</Page>
+
+<Page Name="Pg5" Width="612" Height="792">
+
+	<Graph Rect="0, 0, 612, 792" Name="Gr1">
+
+	<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
+
+<ShowText X="60" Y="725" Text="Your Personalized General Health Assessment" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
+<ShowText X="580" Y="60" Text="General Health Assessment" FontFace="Helvetica" Color="gray" Width="535" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+
+	<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="AAAAAA" />
+
+	</Graph>
+
+	<Text Name="Txt0" Rect="60, 670, 460, 700" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
+
+		<![CDATA[^p ^f:size=14&color={$config{brand_title_color}} ^b Health Risk Profile  ^B ^F ^P
+
+		^p {$date} for {$name} ^P ]]>
+
+	</Text>
+<Text Name="Txt1" Rect="60, 585, 210, 620" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" PaddingRight="5" ExtraParaSpacing="0">
+<![CDATA[ ^f:size=12&color={$config{brand_subtitle_color}} ^b Fitness ^B ^F ^P
+
+^p ^f:color=Black {$fitness_short_risk} ^P ]]>
+</Text>
+<Graph Rect="0, 0, 612, 792" Name="Gr2">
+<ShowImage Name="hra10" Left="98" Bottom="450" Flip="0" />
+</Graph>
+<Text Name="Txt2" Rect="240, 460, 579, 620" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0" Bookmark="Body Composition">
+<![CDATA[
+^f:size=10&color=Black ^b Preventive Steps  ^B ^F ^P
+
+{$exercise_message} ^P
+
+^P
+
+^f:size=10&color=Black&face=Arial ^b Online help  ^B ^F ^P
+{$fitness_links_pdf} ^P
+
+^P
+
+^f:size=10&color=Black&face=Arial ^b Other assessments  ^B ^F ^P
+
+^f:size=10&face=Arial Fitness assessment ^P ^F
+
+ ^P
+ ]]>
+</Text>
+<Text Name="Txt3" Rect="60, 290, 210, 380" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" PaddingRight="5" ExtraParaSpacing="0">
+<![CDATA[
+^f:size=12&color={$config{brand_subtitle_color}} ^b Well Being ^B ^F ^P
+
+^p ^f:color=Black {$wellbeing_short_risk} ^P  ]]>
+</Text>
+<Graph Rect="0, 0, 612, 792" Name="Gr3">
+<ShowImage Name="hra11" Left="98" Bottom="230" Flip="0" />
+</Graph>
+<Text Name="Txt4" Rect="240, 130, 579, 380" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0" Bookmark="Cardiorespitory Endurance">
+<![CDATA[
+^f:size=10&color=Black ^b Preventive steps  ^B ^F ^P
+
+{$anxiety_message} ^P
+{$mood_message} ^P
+
+^P
+
+^P
+
+^f:size=10&color=Black&face=Arial This concludes the General Health Risk Assessment. ^P
+
+^P
+
+^f:size=10&color={$config{brand_subtitle_color}}&face=Arial The next page is a chart report to share with your physician.^P
+
+ ]]>
+</Text>
+
+</Page>
+
+<Page Name="Pg6" Width="612" Height="792">
+
+<Graph Rect="0, 0, 612, 792" Name="Gr12">
+
+	<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
+
+<ShowText X="60" Y="725" Text="Your Personalized General Health Assessment" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
+<ShowText X="580" Y="60" Text="General Health Assessment" FontFace="Helvetica" Color="gray" Width="535" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+
+<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="AAAAAA" />
+
+</Graph>
+
+	<Text Name="Txt0" Rect="60, 670, 460, 700" FontFace="Arial" FontSize="10" Leading="11" FontColor="Black" BgColor="White" TextJustify="Left" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
+
+		<![CDATA[^p ^f:size=14&color={$config{brand_title_color}} ^b Results  ^B ^F ^P
+
+		^p {$date} for {$name} ^P  ]]>
+
+	</Text>
+	<Text Name="Txt1" Rect="60, 100, 530, 630" FontFace="Arial" FontSize="10" Leading="11" FontColor="Slategray" BgColor="White" TextJustify="Left" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
+
+	<![CDATA[ ^p ^f:size=14&color={$config{brand_title_color}} ^b Doctor's Chart Report  ^B ^F ^P
+
+^p ^f:size=10&color=Black {$sex} - Age: {$actual_age} - DOB: {$birth_month}/{$birth_date}/{$birth_year} ^F ^P ^p      ^P
+
+^p ^f:size=12&color={$config{brand_subtitle_color}} ^b ^i Self Reported Measures and Habits  ^I ^B ^F ^P
+
+^p Weight: ^f:size=10&color=Black  {$weight}  ^F ^P
+^p Height: ^f:size=10&color=Black  {$height_imperial}  ^F ^P
+^p Calculated body mass index: ^f:size=10&color=Black  {$bmi}  ^F ^P
+^p Blood Pressure: ^f:size=10&color=Black  
+	{my $html;
+	if($bp_sys) {$html = $bp_sys."/".$bp_dias;}else{$html= "Do not know exact numbers but selected ". lc($bp_check)}
+	$html .= " ^F ^P ";
+
+	$html;
+	}
+^p On blood pressure medicine: ^f:size=10&color=Black   {$bp_meds || "No"}  ^F ^P 
+^p Cholesterol: ^f:size=10&color=Black   {my $html;
+	if($cholesterol) {$html = $cholesterol;}else{$html= "Do not know exact numbers but selected ". lc($chol_check)}
+	$html .= " ^F ^P";
+		    
+	$html;
+	}
+^p HDL: ^f:size=10&color=Black   {$hdl || "No value entered."} ^F ^P  {if($hdl && $cholesterol){ '^p Cholesterol Ratio: ^f:size=10&color=Black '. sprintf("%.1f",$cholesterol/$hdl). '  ^F ^P ' }}
+^p Diabetes: ^f:size=10&color=Black  {$diabetes}  ^F ^P
+^p Tobacco use: ^f:size=10&color=Black  { $sm='';
+
+	     if ($smoke_flag == 0){
+
+		$sm="None";
+
+	     }elsif($smoke_flag == 1){
+
+		$sm="Ex-smoker for $cigarette_years_quit years";
+
+	     }elsif($smoke_flag == 2){
+
+		$sm="Smoke $cigs_a_day cigarettes a day";
+
+	     }else{
+
+	     	$sm='';
+
+	     }
+
+	     if ($smoke_other == 2){
+		if($chews_flag){$sm.= "; Chew tobacco"}
+		if($pipes_flag){$sm.= "; Smoke a pipe"}
+		if($cigars_flag){$sm.= "; Smoke cigars"}
+	     }
+	$sm;
+	}  ^F ^P
+^p Alcohol use:  ^f:size=10&color=Black {$drinks_week || '0 drinks '} per week  ^F ^P
+^p Physical activity: ^f:size=10&color=Black  {$exercise}  ^F ^P
+^p Overall health: ^f:size=10&color=Black  {$overall_health}  ^F ^P
+^p Life satisfaction: ^f:size=10&color=Black  {$life_satisfaction}  ^F ^P
+^p Fiber in diet daily: ^f:size=10&color=Black  {$fiber} ^F  ^P
+^p Fat in diet daily: ^f:size=10&color=Black  {$fat}  ^F ^P
+^p Personal loss: ^f:size=10&color=Black  {$loss} ^F ^P
+{ $mh='';
+
+	if($vars{'Sex'} eq 'Female'){
+
+		$mh=qq|^p Hysterectomy: ^f:size=10&color=Black  $hyst_female  ^F ^P|;
+
+		$mh.=qq|^p Family breast cancer: ^f:size=10&color=Black  $fam_breast_cancer  ^F ^P|;
+
+		$mh.=qq|^p Age of menarch: ^f:size=10&color=Black  $menarche_female  ^F ^P|;
+
+	}
+
+	'';
+
+}{$mh}
+^p      ^P
+^p ^f:size=14&color={$config{brand_subtitle_color}} ^b ^i Self Reported Preventitive Services  ^I ^B ^F ^P
+
+{ $pm='';
+
+	if ($sex eq MALE){
+
+		$pm = qq| ^p Last rectal exam: ^f:size=10&color=Black  $rectal_male  ^F ^P \n|;
+
+	}else{
+
+		$pm = qq| ^p Last Pap exam: ^f:size=10&color=Black  $pap_female  ^F ^P \n|;
+
+		$pm .= qq| ^p Last mammogram: ^f:size=10&color=Black  $mammogram_female  ^F ^P \n|;
+
+		$pm .= qq| ^p Last rectal exam:  ^f:size=10&color=Black $rectal_female  ^F ^P \n|;
+
+		$pm .=  qq| ^p Last clinical breast exam: ^f:size=10&color=Black  $clinic_breast_exam  ^F ^P \n|;
+
+		$pm .= qq| ^p Self breast exam: ^f:size=10&color=Black  $self_breast_exam  ^F ^P \n|;
+
+	}
+
+	'';
+
+}{$pm}
+^p      ^P
+^p ^f:size=14&color={$config{brand_subtitle_color}} ^b  ^i Readiness to Change  ^I ^B ^F ^P
+
+{ my $html='';
+
+	if ($r2c_autosafety){$html .= qq| ^p Drive more safely: ^f:size=10&color=Black   $r2c_autosafety ^F ^P |;}
+	if ($r2c_bp){$html .= qq| ^p Lower Blood pressure: ^f:size=10&color=Black   $r2c_bp ^F ^P |;}
+	if ($r2c_checkups){$html .= qq| ^p Regular examinations: ^f:size=10&color=Black   $r2c_checkups ^F ^P |;}
+	if ($r2c_cholesterol){$html .= qq| ^p Lower Cholesterol: ^f:size=10&color=Black   $r2c_cholesterol ^F ^P |;}
+	if ($r2c_exercise){$html .= qq| ^p Exercise more: ^f:size=10&color=Black   $r2c_exercise ^F ^P |;}
+	if ($r2c_fat){$html .= qq| ^p Reduce dietary fat: ^f:size=10&color=Black   $r2c_fat ^F ^P |;}
+	if ($r2c_smoking){$html .= qq| ^p Stop smoking: ^f:size=10&color=Black   $r2c_smoking ^F ^P |;}
+	if ($html eq ''){$html = " ^p Major habits meet standard recommendations. ^F ^P "}
+
+	$html;
+	}
+
+]]> 	</Text>
+
+</Page>
+
+</PDF>

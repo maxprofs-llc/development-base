@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" standalone="yes" ?>
+
+
+
+<PDF PageMode="UseNone" PageLayout="SinglePage" PageSize="Letter" FindHyperlink="1" Author="HealthStatus.com, Inc.">
+<Font UNI="serif" />
+<Image Width="137" Height="105" File="/usr/local/www/vhosts/managed2/base_mod/htdocs/images/global/hs_logo_77.jpg" Name="Im0" />
+<Image Width="15" Height="14" File="/usr/local/www/vhosts/managed2/base_mod/htdocs/images/global/risk_green.jpg" Name="Im1" />
+<Image Width="15" Height="14" File="/usr/local/www/vhosts/managed2/base_mod/htdocs/images/global/risk_yellow.jpg" Name="Im2" />
+<Image Width="15" Height="14" File="/usr/local/www/vhosts/managed2/base_mod/htdocs/images/global/risk_red.jpg" Name="Im3" />
+<Page Name="Pg0" Width="612" Height="792" Bookmark="Cover Letter">
+<Graph Rect="0, 0, 612, 792" Name="Gr0">
+<ShowImage Name="Im0" Left="460" Bottom="680" Width="137"  Flip="0" />
+<ShowText X="60" Y="685" Text="Your Personalized Fitness Assessment" FontFace="Helvetica-Bold" Color="3333cc" BorderColor="3333cc" Height="12"  />
+<ShowText X="580" Y="60" Text="Fitness Assessment" FontFace="NNN2" Color="E0E0E0" Width="350" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+</Graph>
+<Text Name="Txt0" Rect="60, 60, 552, 670" FontFace="NNN2" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+
+ ^P ^p  ^P 
+ ^P ^p  ^P  ^b As of 04/29/2013 ^B  ^P ^p  ^P 
+ 
+^P ^p  ^P 
+ ^P ^p  ^P 
+ Dear  ^b James Smith: ^B  ^P ^p  ^P 
+ 
+ ^P ^p  ^P 
+  ^P ^p  ^P 
+ ^P ^p  ^P 
+ ^P ^p  ^P 
+  ^P ^p  ^P 
+ ^P ^p  ^P 
+ ^P ^p  ^P 
+  ^P ^p  ^P 
+ ^P ^p  ^P 
+ ^P ^p  ^P 
+ TeSTR_351ekkSTR_252rler, ^P ^p  ^P 
+ ^P ^p  ^P  ^P ^p  ^P 
+  ^b base-mod ^B  ^P ^p  ^P 
+ 
+ ^P ^p  ^P 
+   ^P ^p  ^P 
+ 
+
+  ]]>
+</Text>
+</Page>
+<Page Name="Pg1" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr1">
+<ShowImage Name="Im0" Left="460" Bottom="680" Width="137"  Flip="0" />
+<ShowText X="60" Y="685" Text="Your Personalized Fitness Assessment" FontFace="Helvetica-Bold" Color="3333cc" BorderColor="3333cc" Height="12"  />
+<ShowText X="580" Y="60" Text="Fitness Assessment" FontFace="NNN2" Color="E0E0E0" Width="350" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+<ShowText X="520" Y="20" Text="Page 2" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
+</Graph>
+<Text Name="Txt1" Rect="60, 565, 210, 650" FontFace="NNN2" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Bottom" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^f:size=12&color=3333cc ^b Body Composition ^B ^F ^P
+
+^P
+
+^P
+
+^P
+
+^P ^f:size=9&color=3333cc ^b ^B ^F  ]]>
+</Text>
+<Graph Rect="0, 0, 612, 792" Name="Gr2">
+<ShowImage Name="Im2" Left="180" Bottom="565" Flip="0" />
+</Graph>
+<Text Name="Txt2" Rect="240, 430, 552, 650" FontFace="NNN2" FontSize="10" Leading="11" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" Bookmark="Body Composition">
+<![CDATA[
+^P
+
+^P
+
+Height = 5' 11" ^P
+
+Waist = 34.0 ^P
+
+Frame size = small ^P
+
+Weight = 192 - Ideal = 140 to 179 ^P
+
+Body Mass Index =  27 ^P
+
+Estimated Body Fat % = 14.03 ^P
+
+Daily energy expenditure = 2716.71 calories ^P
+
+^P
+
+^f:size=9&color=3333cc ^b Details  ^B ^F ^P
+
+Your body composition is based on your body measurements. Although you can't change your frame size or height, you can change your weight and waist measurements. Your body fat percentage is estimated to be 14.03%. Men are typically lower in body fat percentage than women, averaging around 23%, with the ideal being 15%. Highly fit male athletes are
+between 5 to 10%.  Your body mass index is  27. The recommended BMI is between 19.5 and 25, people with a low body fat % may score slightly higher.  The healthy weight range for your height is 140 to 179. ^P
+
+  ]]>
+</Text>
+<Text Name="Txt3" Rect="60, 290, 210, 380" FontFace="NNN2" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Bottom" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^f:size=12&color=3333cc ^b  ^B ^F ^P
+
+^P
+
+^P
+
+^P
+
+^P ^f:size=9&color=3333cc ^b  ^B ^F ]]>
+</Text>
+<Graph Rect="0, 0, 612, 792" Name="Gr3">
+<ShowImage Name="Im1" Left="180" Bottom="290" Flip="0" />
+</Graph>
+<Text Name="Txt4" Rect="240, 130, 552, 380" FontFace="NNN2" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0" Bookmark="Cardiorespitory Endurance">
+<![CDATA[
+^P
+
+^P
+
+30 second pulse rate = 33 ^P
+
+Fitness Level = Very High ^P
+
+^P
+
+Your target: Keep up your current level of heart fitness. ^P
+
+^P
+
+^f:size=9&color=3333cc ^b Details  ^B ^F ^P
+
+Heart fitness tests measure your heart's ability to support moderately strenuous activity over an extended period of time. The term aerobic fitness is often used instead. ^P
+
+  ]]>
+</Text>
+</Page>
+<Page Name="Pg2" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr3a">
+<ShowImage Name="Im0" Left="460" Bottom="680" Width="137"  Flip="0" />
+<ShowText X="60" Y="685" Text="Your Personalized Fitness Assessment" FontFace="Helvetica-Bold" Color="3333cc" BorderColor="3333cc" Height="12"  />
+<ShowText X="580" Y="60" Text="Fitness Assessment" FontFace="NNN2" Color="E0E0E0" Width="350" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+<ShowText X="520" Y="20" Text="Page 3" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
+</Graph>
+<Text Name="Txt1" Rect="60, 560, 210, 650" FontFace="NNN2" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Bottom" PaddingRight="5" ExtraParaSpacing="0">
+<![CDATA[
+^f:size=12&color=3333cc ^b Muscular Endurance ^P
+
+(Sit-ups)  ^B ^F ^P
+
+^P
+
+^P
+
+^P
+
+^P ^f:size=9&color=3333cc ^b  ^B ^F   ]]>
+</Text>
+<Graph Rect="0, 0, 612, 792" Name="Gr4">
+<ShowImage Name="Im1" Left="180" Bottom="560" Flip="0" />
+</Graph>
+<Text Name="Txt2" Rect="240, 500, 552, 650" FontFace="NNN2" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0" Bookmark="Muscular Endurance - Situps">
+<![CDATA[
+^P
+
+^P
+
+Sit-ups performed = 25 ^P
+
+Fitness Level = Very High ^P
+
+^P
+
+Your target: Keep up your current level of muscular endurance. ^P
+
+^P
+
+^f:size=9&color=3333cc ^b Details  ^B ^F ^P
+
+Muscular endurance is the measure of strength over a period of time.  ^P
+
+  ]]>
+</Text>
+<Text Name="Txt7" Rect="60, 380, 210, 470" FontFace="NNN2" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Bottom" PaddingRight="5" ExtraParaSpacing="0">
+<![CDATA[
+^f:size=12&color=3333cc ^b Muscular Endurance ^P
+
+(Push-ups) ^B ^F ^P
+
+^P
+
+^P
+
+^P
+
+^P ^f:size=9&color=3333cc ^b  ^B ^F  ]]>
+</Text>
+<Graph Rect="0, 0, 612, 792" Name="Gr5">
+<ShowImage Name="Im2" Left="180" Bottom="380" Flip="0" />
+</Graph>
+<Text Name="Txt8" Rect="240, 320, 552, 470" FontFace="NNN2" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0" Bookmark="Muscular Endurance - Pushups">
+<![CDATA[
+^P
+
+^P
+
+Push-ups performed = 20 ^P
+
+Fitness Level = Moderate ^P
+
+^P
+
+Your target: Increase your level of muscular endurance.  ^P
+
+  ]]>
+</Text>
+<Text Name="Txt9" Rect="60, 190, 210, 280" FontFace="NNN2" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Bottom" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^f:size=12&color=3333cc ^b Flexibility ^B ^F ^P
+
+^P
+
+^P
+
+^P
+
+^P ^f:size=9&color=3333cc ^b  ^B ^F ]]>
+</Text>
+<Graph Rect="0, 0, 612, 792" Name="Gr6">
+<ShowImage Name="Im3" Left="180" Bottom="190" Flip="0" />
+</Graph>
+<Text Name="Txt10" Rect="240, 105, 552, 280" FontFace="NNN2" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0" Bookmark="Flexibility">
+<![CDATA[
+^P
+
+^P
+
+Reach = 10 cm ^P
+
+Fitness Level = Very Low ^P
+
+^P
+
+Your target: Increase your level of flexibility. ^P
+
+^P
+
+^f:size=9&color=3333cc ^b Details  ^B ^F ^P
+
+Flexibility allows you to have a full range of motion. Good trunk flexibility may protect you from lower back pain.
+  ]]>
+</Text>
+</Page>
+<Page Name="Pg3" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr10">
+<ShowImage Name="Im0" Left="460" Bottom="680" Width="137"  Flip="0" />
+<ShowText X="60" Y="685" Text="Your Personalized Fitness Assessment" FontFace="Helvetica-Bold" Color="3333cc" BorderColor="3333cc" Height="12"  />
+<ShowText X="580" Y="60" Text="Fitness Assessment" FontFace="NNN2" Color="E0E0E0" Width="350" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+<ShowText X="520" Y="20" Text="Page 4" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
+</Graph>
+<Text Name="Txt11" Rect="60, 60, 552, 660" FontFace="NNN2" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" Bookmark="Resources">
+<![CDATA[
+^P
+
+^P
+
+^f:size=14&color=3333cc ^b  ^B ^F ^P
+
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=9&face=Arial https://base-mod.hra.net/resource/Physical_activity_olderad.pdf -- Fiziksel aktivite ^F ^P  ^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=9&face=Arial https://base-mod.hra.net/resource/tips_men.pdf -- Erkekler için İpuçları ^F ^P  ^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=9&face=Arial https://base-mod.hra.net/resource/keytohealthfulfood.pdf --  ^F ^P  
+  ]]>
+</Text>
+</Page>
+</PDF>

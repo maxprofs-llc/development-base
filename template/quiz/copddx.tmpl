@@ -1,0 +1,367 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( $directory . $input_variables, PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $header_file, PACKAGE => __PACKAGE__ );
+}
+<div class="switch-change-cont">
+			<div class="switch-imperial-cont"><!--Form and form table START here. Table max width no more than 560 pixels.-->
+					<form id="quiz" method="POST" action="{$cgi}adv_calculator.cgi">
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{copddx}{$current_lang}{$current_lang."_1"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<input name="age" class="c_input" placeholder="{$question{copddx}{$current_lang}{$current_lang.'_2'}}" type="number" min="18" max="95"  />
+						</div>
+						
+						<div class="form-group">
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{copddx}{$current_lang}{$current_lang."_3"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<input name="weight" class="c_input" placeholder="{$question{copddx}{$current_lang}{$current_lang.'_4'}}" type="number" min="65" max="695" />
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{copddx}{$current_lang}{$current_lang."_5"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="height" class="c_select" required>
+									<option value="48">4' 1"</option>
+									<option value="49">4' 2"</option>
+									<option value="51">4' 3"</option>
+									<option value="52">4' 4"</option>
+									<option value="53">4' 5"</option>
+									<option value="54">4' 6"</option>
+									<option value="55">4' 7"</option>
+									<option value="56">4' 8"</option>
+									<option value="57">4' 9"</option>
+									<option value="58">4' 10"</option>
+									<option value="59">4' 11"</option>
+									<option value="60">5'</option>
+									<option value="61">5' 1"</option>
+									<option value="62">5' 2"</option>
+									<option value="63">5' 3"</option>
+									<option value="64">5' 4"</option>
+									<option value="65">5' 5"</option>
+									<option value="66">5' 6"</option>
+									<option value="0" selected>{$question{copddx}{$current_lang}{$current_lang."_22"}}</option>
+									<option value="67">5' 7"</option>
+									<option value="68">5' 8"</option>
+									<option value="69">5' 9"</option>
+									<option value="70">5' 10"</option>
+									<option value="71">5' 11"</option>
+									<option value="72">6'</option>
+									<option value="73">6' 1"</option>
+									<option value="74">6' 2"</option>
+									<option value="75">6' 3"</option>
+									<option value="76">6' 4"</option>
+									<option value="77">6' 5"</option>
+									<option value="78">6' 6"</option>
+									<option value="79">6' 7"</option>
+									<option value="80">6' 8"</option>
+									<option value="81">6' 9"</option>
+									<option value="82">6' 10"</option>
+									<option value="83">6' 11"</option>
+									<option value="84">7'</option>
+									<option value="85">7' 1"</option>
+									<option value="86">7' 2"</option>
+									<option value="87">7' 3"</option>
+									<option value="88">7' 4"</option>
+									<option value="89">7' 5"</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{copddx}{$current_lang}{$current_lang."_6"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<input name="years" class="c_input" placeholder="{$question{copddx}{$current_lang}{$current_lang.'_2'}}"	type="number" min="0" max="95" />
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{copddx}{$current_lang}{$current_lang."_7"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<input type="number" name="packsperday" class="c_input" placeholder="{$question{copddx}{$current_lang}{$current_lang.'_8'}}" type="number" min="0" max="6" />
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{copddx}{$current_lang}{$current_lang."_9"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="cold" class="c_select" required>
+									<option selected="selected"></option>
+									<option value="3">{$question{copddx}{$current_lang}{$current_lang."_20"}}</option>
+									<option value="0">{$question{copddx}{$current_lang}{$current_lang."_21"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{copddx}{$current_lang}{$current_lang."_10"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="morning" class="c_select" required>
+									<option selected="selected"></option>
+									<option value="0">{$question{copddx}{$current_lang}{$current_lang."_20"}}</option>
+									<option value="3">{$question{copddx}{$current_lang}{$current_lang."_21"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{copddx}{$current_lang}{$current_lang."_11"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="allergies" class="c_select" required>
+									<option selected="selected"></option>
+									<option value="0">{$question{copddx}{$current_lang}{$current_lang."_20"}}</option>
+									<option value="3">{$question{copddx}{$current_lang}{$current_lang."_21"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{copddx}{$current_lang}{$current_lang."_12"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="cough" class="c_select" required>
+									<option selected="selected"></option>
+									<option value="0">{$question{copddx}{$current_lang}{$current_lang."13"}}</option>
+									<option value="0">{$question{copddx}{$current_lang}{$current_lang."_14"}}</option>
+                    				<option value="3">{$question{copddx}{$current_lang}{$current_lang."_15"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{copddx}{$current_lang}{$current_lang."_16"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="wheezing" class="c_select" required>
+									<option selected="selected"></option>
+									<option value="0">{$question{copddx}{$current_lang}{$current_lang."_17"}}</option>
+									<option value="4">{$question{copddx}{$current_lang}{$current_lang."_18"}}</option>
+                    				<option value="4">{$question{copddx}{$current_lang}{$current_lang."_19"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<input type="submit" name="submit" class="c_button orange-bg-white-col f_right" value="Calculate" />
+							<input value="Imperial" name="measure" type="hidden" />
+							<input value="copddx" name="calculator" type="hidden" />
+							<input type="hidden" name="snum" value="{$snum}" />
+							<input type="hidden" name="lang" value="{$lang}"/>
+						</div>
+						<div class="clear"></div>						
+					</form>
+				</div>				
+				<div class="clear"></div>
+				</div>
+			<div class="switch-metric-cont">
+					<form id="quizm" method="POST" action="{$cgi}adv_calculator.cgi">
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{copddx}{$current_lang}{$current_lang."_1"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<input name="age" class="c_input" placeholder="{$question{copddx}{$current_lang}{$current_lang.'_2'}}" type="number" min="18" max="95"  />
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{copddx}{$current_lang}{$current_lang."_3"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<input type="number" name="weight" class="c_input" placeholder="{$question{copddx}{$current_lang}{$current_lang.'_23'}}" type="number" min="30" max="695" />
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{copddx}{$current_lang}{$current_lang."_5"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select size="1" name="mheight" class="c_select" required>
+									<option value="55.16">1.4 meters</option>
+									<option value="55.554">1.41 meters</option>
+									<option value="55.948">1.42 meters</option>
+									<option value="56.342">1.43 meters</option>
+									<option value="56.736">1.44 meters</option>
+									<option value="57.13">1.45 meters</option>
+									<option value="57.524">1.46 meters</option>
+									<option value="57.918">1.47 meters</option>
+									<option value="58.312">1.48 meters</option>
+									<option value="58.706">1.49 meters</option>
+									<option value="59.1">1.5 meters</option>
+									<option value="59.494">1.51 meters</option>
+									<option value="59.888">1.52 meters</option>
+									<option value="60.282">1.53 meters</option>
+									<option value="60.676">1.54 meters</option>
+									<option value="61.07">1.55 meters</option>
+									<option value="61.464">1.56 meters</option>
+									<option value="61.858">1.57 meters</option>
+									<option value="62.252">1.58 meters</option>
+									<option value="62.646">1.59 meters</option>
+									<option value="63.04">1.6 meters</option>
+									<option value="63.434">1.61 meters</option>
+									<option value="63.828">1.62 meters</option>
+									<option value="64.222">1.63 meters</option>
+									<option value="64.616">1.64 meters</option>
+									<option value="65.01">1.65 meters</option>
+									<option value="65.404">1.66 meters</option>
+									<option value="65.798">1.67 meters</option>
+									<option value="66.192">1.68 meters</option>
+									<option value="66.586">1.69 meters</option>
+									<option value="" selected>{$question{copddx}{$current_lang}{$current_lang."_24"}}</option>
+									<option value="66.98">1.7 meters</option>
+									<option value="67.374">1.71 meters</option>
+									<option value="67.768">1.72 meters</option>
+									<option value="68.162">1.73 meters</option>
+									<option value="68.556">1.74 meters</option>
+									<option value="68.95">1.75 meters</option>
+									<option value="69.344">1.76 meters</option>
+									<option value="69.738">1.77 meters</option>
+									<option value="70.132">1.78 meters</option>
+									<option value="70.526">1.79 meters</option>
+									<option value="70.92">1.8 meters</option>
+									<option value="71.314">1.81 meters</option>
+									<option value="71.708">1.82 meters</option>
+									<option value="72.102">1.83 meters</option>
+									<option value="72.496">1.84 meters</option>
+									<option value="72.89">1.85 meters</option>
+									<option value="73.284">1.86 meters</option>
+									<option value="73.678">1.87 meters</option>
+									<option value="74.072">1.88 meters</option>
+									<option value="74.466">1.89 meters</option>
+									<option value="74.86">1.9 meters</option>
+									<option value="75.254">1.91 meters</option>
+									<option value="75.648">1.92 meters</option>
+									<option value="76.042">1.93 meters</option>
+									<option value="76.436">1.94 meters</option>
+									<option value="76.83">1.95 meters</option>
+									<option value="77.224">1.96 meters</option>
+									<option value="77.618">1.97 meters</option>
+									<option value="78.012">1.98 meters</option>
+									<option value="78.406">1.99 meters</option>
+									<option value="78.8">2 meters</option>
+									<option value="79.194">2.01 meters</option>
+									<option value="79.588">2.02 meters</option>
+									<option value="79.982">2.03 meters</option>
+									<option value="80.376">2.04 meters</option>
+									<option value="80.77">2.05 meters</option>
+									<option value="81.164">2.06 meters</option>
+									<option value="81.558">2.07 meters</option>
+									<option value="81.952">2.08 meters</option>
+									<option value="82.346">2.09 meters</option>
+									<option value="82.74">2.1 meters</option>
+									<option value="83.134">2.11 meters</option>
+									<option value="83.528">2.12 meters</option>
+									<option value="83.922">2.13 meters</option>
+									<option value="84.316">2.14 meters</option>
+									<option value="84.71">2.15 meters</option>
+									<option value="85.104">2.16 meters</option>
+									<option value="85.498">2.17 meters</option>
+									<option value="85.892">2.18 meters</option>
+									<option value="86.286">2.19 meters</option>
+									<option value="86.68">2.2 meters</option>
+									<option value="87.074">2.21 meters</option>
+									<option value="87.468">2.22 meters</option>
+									<option value="87.862">2.23 meters</option>
+									<option value="88.256">2.24 meters</option>
+									<option value="88.65">2.25 meters</option>
+									<option value="89.044">2.26 meters</option>
+								  </select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{copddx}{$current_lang}{$current_lang."_6"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<input name="years" class="c_input" placeholder="{$question{copddx}{$current_lang}{$current_lang.'_2'}}" type="number" min="0" max="95" />
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{copddx}{$current_lang}{$current_lang."_7"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<input type="number" name="packsperday" class="c_input" placeholder="{$question{copddx}{$current_lang}{$current_lang.'_8'}}" type="number" min="0" max="6" />
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{copddx}{$current_lang}{$current_lang."_9"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="cold" class="c_select" required>
+									<option selected="selected"></option>
+									<option value="3">{$question{copddx}{$current_lang}{$current_lang."_20"}}</option>
+									<option value="0">{$question{copddx}{$current_lang}{$current_lang."_21"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{copddx}{$current_lang}{$current_lang."_10"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="morning" class="c_select" required>
+									<option selected="selected"></option>
+									<option value="0">{$question{copddx}{$current_lang}{$current_lang."_20"}}</option>
+									<option value="3">{$question{copddx}{$current_lang}{$current_lang."_21"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{copddx}{$current_lang}{$current_lang."_11"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="allergies" class="c_select" required>
+									<option selected="selected"></option>
+									<option value="0">{$question{copddx}{$current_lang}{$current_lang."_20"}}</option>
+									<option value="3">{$question{copddx}{$current_lang}{$current_lang."_21"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{copddx}{$current_lang}{$current_lang."_12"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="cough" class="c_select" required>
+									<option selected="selected"></option>
+									<option value="0">{$question{copddx}{$current_lang}{$current_lang."_13"}}</option>
+									<option value="0">{$question{copddx}{$current_lang}{$current_lang."_14"}}</option>
+                    				<option value="3">{$question{copddx}{$current_lang}{$current_lang."_15"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{copddx}{$current_lang}{$current_lang."_16"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="wheezing" class="c_select" required>
+									<option selected="selected"></option>
+									<option value="0">{$question{copddx}{$current_lang}{$current_lang."_17"}}</option>
+									<option value="4">{$question{copddx}{$current_lang}{$current_lang."_18"}}</option>
+                    				<option value="4">{$question{copddx}{$current_lang}{$current_lang."_19"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<input type="submit" name="submit" class="c_button orange-bg-white-col f_right" value="Calculate" />
+							<input value="Metric" name="measure" type="hidden" />
+							<input value="copddx" name="calculator" type="hidden" />
+							<input type="hidden" name="snum" value="{$snum}" />
+							<input type="hidden" name="lang" value="{$lang}"/>
+						</div>
+					<div class="clear"></div>
+					</form>
+				</div>
+	</div>					
+	<p>HealthStatus.com health quizzes and calculators and tools do not provide medical advice and do not replace the advice of a medical professional. Care has been taken to make sure the calculators and tools are generating correct results, but no guarantee is made that the results are accurate. The health tools use professionally accepted and peer reviewed algorithms to calculate their results or simple mathematical equations.</p>
+<!--Form and form table END here.-->
+{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $footer_file, PACKAGE => __PACKAGE__ );
+}

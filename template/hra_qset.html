@@ -1,0 +1,2615 @@
+{
+# this part fills in a file that sets language variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}language.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}hra_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$header_in_file", PACKAGE => __PACKAGE__ );
+}   <!-- Template: hra_qset.tmpl -->
+	<!-- Templates called: hra_variables.tmpl, {$footer_file}, {$config{variables_template}},  {$header_in_file} -->
+	   <div id="HSqsets">
+	       <div class="HSstyle">
+		<table class="HSassessments">
+{
+my $html_page;
+if ($curr_page == 1) {
+	$html_page = qq|<tr>
+          <td width="12">&nbsp;</td>
+          <td align=left><img src="images/global/trans.gif" width="1" height="22"><br>
+            $hra_title<br>
+            <img src="images/global/trans.gif" width="1" height="8"><br>
+            <span class="HSintro">$lang{$current_language}{hra_intro}<br>
+            </span><br>
+            <img src="images/global/trans.gif" width="1" height="18"><br>
+            $hra_subtitle_in<br>
+             &nbsp;<br><div align="center"><span class="HSbodytext1">
+			 $lang{$current_language}{use_button_msg}</span></div><br>
+           <img src="images/global/trans.gif" width="1" height="10"></td>
+        </tr>
+		<tr>
+          <td width="12">&nbsp;</td>
+          <td align="center" valign="top">
+            <!--Form and form table START here. Table max width no more than 560 pixels.-->
+            <form METHOD="POST" action="$collector" name="theForm" onSubmit="return checkWholeForm(this)">
+              <table border="0" cellspacing="0" cellpadding="0" width="550">
+				<tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{first_name}:</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+                    <input NAME="first_name" SIZE="28" value="" class="HSquestion"  onKeyup="if(this.value.match(/[^A-Za-z \.]/))this.value=this.value.replace(/[^A-Za-z \.]/g,'')"> <span id="firstnameStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{last_name}:</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+                    <input NAME="last_name" SIZE="28" value="" class="HSquestion" onKeyup="if(this.value.match(/[^A-Za-z \.\-]/))this.value=this.value.replace(/[^A-Za-z \.\-]/g,'')"> <span id="lastnameStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{date_of_birth}:</td>
+                  <td><img src="images/global/trans.gif" width="10" height="1"></td>
+                  <td class="HSbodytextQ" align="left">
+                    <select class="HSquestion" name="birth_month" size="1">
+							<option value="1">$lang{$current_language}{jan}</option>
+							<option value="2">$lang{$current_language}{feb}</option>
+							<option value="3">$lang{$current_language}{mar}</option>
+							<option value="4">$lang{$current_language}{apr}</option>
+							<option value="5">$lang{$current_language}{may}</option>
+							<option value="6">$lang{$current_language}{jun}</option>
+							<option value="7">$lang{$current_language}{jul}</option>
+							<option value="8">$lang{$current_language}{aug}</option>
+							<option value="9">$lang{$current_language}{sep}</option>
+							<option value="10">$lang{$current_language}{oct}</option>
+							<option value="11">$lang{$current_language}{nov}</option>
+							<option value="12">$lang{$current_language}{dec}</option>
+					</select>
+					<select class="HSquestion" name="birth_date" size="1">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+							<option value="12">12</option>
+							<option value="13">13</option>
+							<option value="14">14</option>
+							<option value="15">15</option>
+							<option value="16">16</option>
+							<option value="17">17</option>
+							<option value="18">18</option>
+							<option value="19">19</option>
+							<option value="20">20</option>
+							<option value="21">21</option>
+							<option value="22">22</option>
+							<option value="23">23</option>
+							<option value="24">24</option>
+							<option value="25">25</option>
+							<option value="26">26</option>
+							<option value="27">27</option>
+							<option value="28">28</option>
+							<option value="29">29</option>
+							<option value="30">30</option>
+							<option value="31">31</option>
+		  			</select>
+		  			<input class="HSquestion" NAME="birth_year" SIZE="4" maxlength="4" value="19xx" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> <span id="birthStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{sex}:</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" NAME="sex">
+						<option value="">&nbsp;</option>
+						<option value="Female">$lang{$current_language}{female}</option>
+						<option value="Male">$lang{$current_language}{male}</option>
+					</select> <span id="genderStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{question_weight}<br>
+                    ($lang{$current_language}{weight_imp_unit})</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+                    <input class="HSquestion" NAME="weight" SIZE="5" maxlength="3" onKeyup="if(this.value.match(/[^0-9\.]/))this.value=this.value.replace(/[^0-9\.]/g,'')"> <span id="weightStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{question_height}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" size="1" name="height">
+						<option value="48">4' 1&quot;</option>
+						<option value="49">4' 2&quot;</option>
+						<option value="51">4' 3&quot;</option>
+						<option value="52">4' 4&quot;</option>
+						<option value="53">4' 5&quot;</option>
+						<option value="54">4' 6&quot;</option>
+						<option value="55">4' 7&quot;</option>
+						<option value="56">4' 8&quot;</option>
+						<option value="57">4' 9&quot;</option>
+						<option value="58">4' 10&quot;</option>
+						<option value="59">4' 11&quot;</option>
+						<option value="60">5'</option>
+						<option value="61">5' 1&quot;</option>
+						<option value="62">5' 2&quot;</option>
+						<option value="63">5' 3&quot;</option>
+						<option value="64">5' 4&quot;</option>
+						<option value="65">5' 5&quot;</option>
+						<option value="66" selected>5' 6&quot;</option>
+						<option value="67">5' 7&quot;</option>
+						<option value="68">5' 8&quot;</option>
+						<option value="69">5' 9&quot;</option>
+						<option value="70">5' 10&quot;</option>
+						<option value="71">5' 11&quot;</option>
+						<option value="72">6'</option>
+						<option value="73">6' 1&quot;</option>
+						<option value="74">6' 2&quot;</option>
+						<option value="75">6' 3&quot;</option>
+						<option value="76">6' 4&quot;</option>
+						<option value="77">6' 5&quot;</option>
+						<option value="78">6' 6&quot;</option>
+						<option value="79">6' 7&quot;</option>
+						<option value="80">6' 8&quot;</option>
+						<option value="81">6' 9&quot;</option>
+						<option value="82">6' 10&quot;</option>
+						<option value="83">6' 11&quot;</option>
+						<option value="84">7'</option>
+						<option value="85">7' 1&quot;</option>
+						<option value="86">7' 2&quot;</option>
+						<option value="87">7' 3&quot;</option>
+						<option value="88">7' 4&quot;</option>
+						<option value="89">7' 5&quot;</option>
+					</select> <span id="heightStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{question_body_frame_size}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" NAME="frame_size">
+						<option value="">&nbsp;</option>
+						<option value="Small">$lang{$current_language}{small}</option>
+						<option value="Medium">$lang{$current_language}{medium}</option>
+						<option value="Large">$lang{$current_language}{large}</option>
+					</select> <span id="bodyframeStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{question_race}:</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" size="1" NAME="race">
+						<option value="">&nbsp;</option>
+						<option VALUE="African American">$lang{$current_language}{african_american}</option>
+						<option VALUE="Aleutian, Eskimo or American Indian">$lang{$current_language}{aleutian}</option>
+						<option VALUE="Aleutian, Eskimo or American Indian">$lang{$current_language}{american_indian}</option>
+						<option VALUE="Asian"> $lang{$current_language}{asian}</option>
+						<option VALUE="Caucasian">$lang{$current_language}{caucasian}</option>
+						<option VALUE="Aleutian, Eskimo or American Indian">$lang{$current_language}{eskimo}</option>
+						<option VALUE="Hispanic">$lang{$current_language}{hispanic_latino}</option>
+						<option VALUE="Other">$lang{$current_language}{other} </option>
+						<option VALUE="Don't know">$lang{$current_language}{do_not_know}</option>
+					</select> <span id="raceStatus" ></span>
+                  </td>
+                </tr>
+               <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr valign="top">
+                  <td align="left" height="50"></td>
+                  <td align="right" height="50">&nbsp;</td>
+                  <td align="right" height="50"><input type="image" border=0 name="next" value="next" $next onmousedown="doValidate=true;">
+					<input type=hidden name="page" value="1">
+                  </td>
+                </tr>|;
+	}
+elsif ($curr_page == 2) {
+	$html_page = qq|        <tr>
+          <td width="12">&nbsp;</td>
+          <td align=left><img src="images/global/trans.gif" width="1" height="22"><br>
+            $hra_title<br>
+            <img src="images/global/trans.gif" width="1" height="8"><br>
+            <br><div align='center'>
+            <table width="274" border="0" cellspacing="0" cellpadding="0">
+				  <tr>
+					<td colspan="3"><img src="images/assessbar/assessbar_title.gif" width="274" height="22"></td>
+				  </tr>
+				  <tr>
+					<td><img src="images/assessbar/assessbar0.gif" width="27" height="22"></td>
+					<td><img src="images/assessbar/assessbar_start.gif" width="9" height="22"><img src="images/assessbar/assessbar_completed.gif" width="26" height="22"><img src="images/assessbar/assessbar_void.gif" width="161" height="22"><img src="images/assessbar/assessbar_end.gif" width="9" height="22"></td>
+					<td><img src="images/assessbar/assessbar100.gif" width="42" height="22"></td>
+				  </tr>
+			</table></div>
+            <img src="images/global/trans.gif" width="1" height="18"><br>
+            <span class="HStitle">$lang{$current_language}{personal_information}</span><br><div align='center'>
+            <table width="480" border="1" bordercolor="$top_bar_color" cellspacing=0 cellpadding=0>
+            	<tr>
+            		<td>
+            			<table width="478" border="1" cellspacing=0 cellpadding=4 bordercolor="#666666">
+            				<tr>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{bmi}
+            					</td>
+            					<td align="center" valign="top" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{gender_specific_health}
+            					</td>
+            					<td align="center" valign="top" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{my_health}
+            					</td>
+            					<td align="center" valign="top" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{my_family_history}
+            					</td>
+            				</tr>
+            				<tr>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">BMI = $bmi<br>$weight_short
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="115" height="20">
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="115" height="20">
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="115" height="20">
+            					</td>
+            				</tr>
+            				<tr>
+            					<td align="left" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="50">$bmi_links
+            					</td>
+            					<td align="left" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="50">
+            					</td>
+            					<td align="left" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="50">
+            					</td>
+            					<td align="left" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="50">
+            					</td>
+            				</tr>
+            			</table>
+            		</td>
+            	</tr>
+            </table></div><br>
+             <div align="center"><span class="HSbodytext1">$lang{$current_language}{use_button_msg}</span></div><br>
+           &nbsp;<br><span class="HStitle">$lang{$current_language}{gender_specific_info}</span><br><img src="images/global/trans.gif" width="1" height="10"></td>
+        </tr>
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td align="center" valign="top">
+            <!--Form and form table START here. Table max width no more than 560 pixels.-->
+            <form METHOD="POST" action="$collector" name="theForm" onSubmit="return checkWholeForm(this)">
+              <table border="0" cellspacing="0" cellpadding="0" width="550">
+                <tr>|;
+	$html_page .=  qq|<td align="right" class="HSbodytext">$lang{$current_language}{hra_question1}</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ" align="left">
+							<select class="HSquestion" name="rectal_male">
+								<option value="">&nbsp;</option>
+								<option value="Less than one year ago">$lang{$current_language}{less_than_one_year_ago}</option>
+								<option value="One year ago">$lang{$current_language}{one_year_ago}</option>
+								<option value="Two years ago">$lang{$current_language}{two_years_ago}</option>
+								<option value="Three or more years ago">$lang{$current_language}{three_or_more_years_ago}</option>
+								<option value="Never">$lang{$current_language}{never}</option>
+							</select> <span id="rectalmaleStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>| if ($sex eq MALE);
+	$html_page .=  qq|<tr>
+						  <td align="right" class="HSbodytext">$lang{$current_language}{hra_question2}</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ" align="left">
+							<select class="HSquestion" name="menarche_female">
+								<option value="">&nbsp;</option>
+								<option value="11 or under">11 $lang{$current_language}{or_under}</option>
+								<option value="12-13">12-13</option>
+								<option value="14 or older">14 $lang{$current_language}{or_older}</option>
+							</select> <span id="menarcheStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>
+						<tr>
+						  <td align="right" class="HSbodytext">$lang{$current_language}{hra_question3}</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ" align="left">
+							<select class="HSquestion" name="birth_age_female">
+								<option value="">&nbsp;</option>
+								<option value="No children">$lang{$current_language}{no_children}</option>
+								<option value="Under 20">$lang{$current_language}{under} 20</option>
+								<option value="20-24">20-24</option>
+								<option value="25-29">25-29</option>
+								<option value="Over 30">$lang{$current_language}{over} 30</option>
+							</select> <span id="birthageStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>
+						<tr>
+						  <td align="right" class="HSbodytext">$lang{$current_language}{hra_question4}</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ" align="left">
+							<select class="HSquestion" name="mammogram_female">
+								<option value="">&nbsp;</option>
+								<option value="Less than one year ago">$lang{$current_language}{less_than_one_year_ago}</option>
+								<option value="One year ago">$lang{$current_language}{one_year_ago}</option>
+								<option value="Two years ago">$lang{$current_language}{two_years_ago}</option>
+								<option value="Three or more years ago">$lang{$current_language}{three_or_more_years_ago}</option>
+								<option value="Never">$lang{$current_language}{never}</option>
+							</select> <span id="mammogramStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>|if ($sex eq FEMALE);
+	$html_page .=  qq|						<tr>
+						  <td align="right" class="HSbodytext">$lang{$current_language}{hra_question5}</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ" align="left">
+							<select class="HSquestion" name="fam_breast_cancer">
+								<option value="">&nbsp;</option>
+								<option value="None">$lang{$current_language}{none}</option>
+								<option value="One">$lang{$current_language}{one}</option>
+								<option value="Two or more">$lang{$current_language}{two_or_more}</option>
+								<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+							</select> <span id="fambreastStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>| if ($sex eq FEMALE && !$no_gina_question);
+	$html_page .=  qq|						<tr>
+						  <td align="right" class="HSbodytext">$lang{$current_language}{hra_question6}</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ" align="left">
+							<select class="HSquestion" name="self_breast_exam">
+								<option value="">&nbsp;</option>
+								<option value="Monthly">$lang{$current_language}{monthly}</option>
+								<option value="Once every few months">$lang{$current_language}{once_every_few_months}</option>
+								<option value="Rarely or never">$lang{$current_language}{rarely_or_never}</option>
+							</select> <span id="selfbreastStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>
+						<tr>
+						  <td align="right" class="HSbodytext">$lang{$current_language}{hra_question7}</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ" align="left">
+							<select class="HSquestion" name="clinic_breast_exam">
+								<option value="">&nbsp;</option>
+								<option value="Less than one year ago">$lang{$current_language}{less_than_one_year_ago}</option>
+								<option value="One year ago">$lang{$current_language}{one_year_ago}</option>
+								<option value="Two years ago">$lang{$current_language}{two_years_ago}</option>
+								<option value="Three or more years ago">$lang{$current_language}{three_or_more_years_ago}</option>
+								<option value="Never">$lang{$current_language}{never}</option>
+							</select> <span id="clinicbreastStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>
+						<tr>
+						  <td align="right" class="HSbodytext">$lang{$current_language}{hra_question8}</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ" align="left">
+							<select class="HSquestion" name="hyst_female">
+								<option value="">&nbsp;</option>
+								<option value="No">$lang{$current_language}{no}</option>
+								<option value="Yes">$lang{$current_language}{yes}</option>
+							</select> <span id="hystStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>
+						<tr>
+						  <td align="right" class="HSbodytext">$lang{$current_language}{hra_question9}</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ" align="left">
+							<select class="HSquestion" name="pap_female">
+								<option value="">&nbsp;</option>
+								<option value="Less than one year ago">$lang{$current_language}{less_than_one_year_ago}</option>
+								<option value="One year ago">$lang{$current_language}{one_year_ago}</option>
+								<option value="Two years ago">$lang{$current_language}{two_years_ago}</option>
+								<option value="Three or more years ago">$lang{$current_language}{three_or_more_years_ago}</option>
+								<option value="Never">$lang{$current_language}{never}</option>
+							</select> <span id="papStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>
+						<tr>
+						  <td align="right" class="HSbodytext">$lang{$current_language}{hra_question10}</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ" align="left">
+							<select class="HSquestion" name="rectal_female">
+								<option value="">&nbsp;</option>
+								<option value="Less than one year ago">$lang{$current_language}{less_than_one_year_ago}</option>
+								<option value="One year ago">$lang{$current_language}{one_year_ago}</option>
+								<option value="Two years ago">$lang{$current_language}{two_years_ago}</option>
+								<option value="Three or more years ago">$lang{$current_language}{three_or_more_years_ago}</option>
+								<option value="Never">$lang{$current_language}{never}</option>
+							</select> <span id="rectalfemaleStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>| if ($sex eq FEMALE);
+	$html_page .=  qq|<tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr valign="top">
+                  <td align="left" height="50"><input type="image" border=0 name="prev" value="prev" $back onmousedown="doValidate=false;"></td>
+                  <td align="right" height="50">&nbsp;</td>
+                  <td align="right" height="50"><input type="image" border=0 name="next" value="next" $next onmousedown="doValidate=true;">
+					<input type=hidden name="page" value="2">
+                  </td>
+                </tr>|;
+	}
+elsif ($curr_page == 3) {
+	$html_page = qq|        <tr>
+          <td width="12">&nbsp;</td>
+          <td align=left><img src="images/global/trans.gif" width="1" height="22"><br>
+            $hra_title<br>
+            <img src="images/global/trans.gif" width="1" height="8"><br>
+            <br><div align='center'>
+            <table width="274" border="0" cellspacing="0" cellpadding="0">
+				  <tr>
+					<td colspan="3"><img src="images/assessbar/assessbar_title.gif" width="274" height="22"></td>
+				  </tr>
+				  <tr>
+					<td><img src="images/assessbar/assessbar0.gif" width="27" height="22"></td>
+					<td><img src="images/assessbar/assessbar_start.gif" width="9" height="22"><img src="images/assessbar/assessbar_completed.gif" width="39" height="22"><img src="images/assessbar/assessbar_void.gif" width="148" height="22"><img src="images/assessbar/assessbar_end.gif" width="9" height="22"></td>
+					<td><img src="images/assessbar/assessbar100.gif" width="42" height="22"></td>
+				  </tr>
+			</table></div><img src="images/global/trans.gif" width="1" height="18"><br>
+            <span class="HStitle">$lang{$current_language}{personal_information}</span><br><div align='center'>
+            <table width="480" border="1" bordercolor="$top_bar_color" cellspacing=0 cellpadding=0>
+            	<tr>
+            		<td>
+            			<table width="478" border="1" cellspacing=0 cellpadding=4 bordercolor="#666666">
+            				<tr>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{bmi}
+            					</td>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{gender_specific_health}
+            					</td>
+            					<td align="center" valign="top" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{my_health}
+            					</td>
+            					<td align="center" valign="top" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{my_family_history}
+            					</td>
+            				</tr>
+            				<tr>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">BMI = $bmi<br>$weight_short
+            					</td>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$sex_check
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="115" height="20">
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="115" height="20">
+            					</td>
+            				</tr>
+            				<tr>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$bmi_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$sex_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">&nbsp;
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">&nbsp;
+            					</td>
+            				</tr>
+            			</table>
+            		</td>
+            	</tr>
+            </table></div><br>
+             <div align="center"><span class="HSbodytext1">$lang{$current_language}{use_button_msg}</span></div><br>
+           <img src="images/global/trans.gif" width="1" height="10"></td>
+        </tr>
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td align="center" valign="top">
+            <!--Form and form table START here. Table max width no more than 560 pixels.-->
+            <form METHOD="POST" action="$collector" name="theForm" onSubmit="return checkWholeForm(this)">
+              <table border="0" cellspacing="0" cellpadding="0" width="550">
+               <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr valign="top">
+                  <td align="left" height="50"><input type="image" border=0 name="prev" value="prev" $back onmousedown="doValidate=false;"></td>
+                  <td align="right" height="50">&nbsp;</td>
+                  <td align="right" height="50"><input type="image" border=0 name="next" value="next" $next onmousedown="doValidate=true;">
+					<input type=hidden name="page" value="3">
+                  </td>
+                </tr>|;
+	}
+elsif ($curr_page == 4) {
+	$html_page = qq|        <tr>
+          <td width="12">&nbsp;</td>
+          <td align=left><img src="images/global/trans.gif" width="1" height="22"><br>
+            $hra_title<br>
+            <img src="images/global/trans.gif" width="1" height="8"><br>
+            <br><div align='center'>
+            <table width="274" border="0" cellspacing="0" cellpadding="0">
+				  <tr>
+					<td colspan="3"><img src="images/assessbar/assessbar_title.gif" width="274" height="22"></td>
+				  </tr>
+				  <tr>
+					<td><img src="images/assessbar/assessbar0.gif" width="27" height="22"></td>
+					<td><img src="images/assessbar/assessbar_start.gif" width="9" height="22"><img src="images/assessbar/assessbar_completed.gif" width="52" height="22"><img src="images/assessbar/assessbar_void.gif" width="135" height="22"><img src="images/assessbar/assessbar_end.gif" width="9" height="22"></td>
+					<td><img src="images/assessbar/assessbar100.gif" width="42" height="22"></td>
+				  </tr>
+			</table></div><img src="images/global/trans.gif" width="1" height="18"><br>
+            <div align="center"><span class="HSbodytext1">$lang{$current_language}{use_button_msg}</span></div><br>
+           &nbsp;<br><span class="HStitle">$lang{$current_language}{disease_specific_info}</span><br><img src="images/global/trans.gif" width="1" height="10"></td>
+        </tr>
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td align="center" valign="top">
+            <!--Form and form table START here. Table max width no more than 560 pixels.-->
+            <form METHOD="POST" action="$collector" name="theForm" onSubmit="return checkWholeForm(this)">
+              <table border="0" cellspacing="0" cellpadding="0" width="550">
+                <tr>
+                  <td align="right" class="HSbodytext" valign="top">
+                  $lang{$current_language}{hra_msg1}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+                    <img src="images/global/trans.gif" width="20" height="10"><span class="HSbodytext1">$lang{$current_language}{you}<img src="images/global/trans.gif" width="75" height="10">|;
+                    $html_page .= $lang{$current_language}{hra_msg2} unless $no_gina_question;
+                    $html_page .= qq|<br>
+					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="cancer_chk" value=1><img src="images/hra/cancer_chk.gif" width="123" height="18">|;
+                    $html_page .= qq|<input type=checkbox name="fh_cancer_chk" value=1>| unless $no_gina_question;
+                    $html_page .= qq|<br>
+					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="diabetes_chk" value=1><img src="images/hra/diabetes_chk.gif" width="123" height="18">|;
+                    $html_page .= qq|<input type=checkbox name="fh_diabetes_chk" value=1>| unless $no_gina_question;
+                    $html_page .= qq|<br>
+					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="heart_attack_chk" value=1><img src="images/hra/hrtattack_chk.gif" width="123" height="18">|;
+                    $html_page .= qq|<input type=checkbox name="fh_heart_attack_chk" value=1>| unless $no_gina_question;
+                    $html_page .= qq|<br>
+					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="heart_disease_chk" value=1><img src="images/hra/hrtdisease_chk.gif" width="123" height="18">|;
+                    $html_page .= qq|<input type=checkbox name="fh_heart_disease_chk" value=1>| unless $no_gina_question;
+                    $html_page .= qq|<br>
+					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="high_bp_chk" value=1><img src="images/hra/bloodpressure_chk.gif" width="123" height="18">|;
+                    $html_page .= qq|<input type=checkbox name="fh_high_bp_chk" value=1>| unless $no_gina_question;
+                    $html_page .= qq|<br>
+					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="high_cholesterol_chk" value=1><img src="images/hra/cholesterol_chk.gif" width="123" height="18">|;
+                    $html_page .= qq|<input type=checkbox name="fh_high_cholesterol_chk" value=1>| unless $no_gina_question;
+                    $html_page .= qq|<br>
+					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="stroke_chk" value=1><img src="images/hra/stroke_chk.gif" width="123" height="18">|;
+                    $html_page .= qq|<input type=checkbox name="fh_stroke_chk" value=1>| unless $no_gina_question;
+                    $html_page .= qq|<br>
+					&nbsp;<br>|;
+                    $html_page .= $lang{$current_language}{hra_msg3} unless $no_gina_question;
+                    $html_page .= qq|
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{common_question12}:</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">&nbsp;<br>
+                    <input type="TEXT"  class="HSquestion" name="bp_sys" SIZE="3" MAXLENGTH="3"  onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> <span id="bpsysStatus" ></span><br>
+					<input type="TEXT"  class="HSquestion" name="bp_dias" SIZE="3" MAXLENGTH="3"  onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> <span id="bpdiasStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{common_question13}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="bp_check">
+						<option value="">&nbsp;</option>
+						<option value="High">$lang{$current_language}{high}</option>
+						<option value="Normal or low">$lang{$current_language}{normal_or_low}</option>
+						<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+					</select> <span id="bpcheckStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{common_question11}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<input type="TEXT"  class="HSquestion" name="glucose" SIZE="3" MAXLENGTH="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> <span class="HSbodytext">mg/dl</span> <span id="glucoseStatus" ></span>
+                  </td>
+                </tr>
+               <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{common_question14}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<input type="TEXT"  class="HSquestion" name="cholesterol" SIZE="3" MAXLENGTH="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> <span class="HSbodytext">mg/dl</span> <span id="cholStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{common_question15}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<input type="TEXT"  class="HSquestion" name="ldl" SIZE="3" MAXLENGTH="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> <span class="HSbodytext">mg/dl</span> <span id="ldlStatus" ></span>
+                  </td>
+                </tr>
+               <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{common_question16}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<input type="TEXT"  class="HSquestion" name="hdl" SIZE="3" MAXLENGTH="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> <span class="HSbodytext">mg/dl</span> <span id="hdlStatus" ></span>
+                  </td>
+                </tr>
+               <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{hra_question11}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="cholesterol_check">
+						<option value="">&nbsp;</option>
+						<option value="High">$lang{$current_language}{high}</option>
+						<option value="Normal or low">$lang{$current_language}{normal_or_low}</option>
+						<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+					</select> <span id="cholcheckStatus" ></span>
+                  </td>
+                </tr>
+               <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr valign="top">
+                  <td align="left" height="50"><input type="image" border=0 name="prev" value="prev" $back onmousedown="doValidate=false;"></td>
+                  <td align="right" height="50">&nbsp;</td>
+                  <td align="right" height="50"><input type="image" border=0 name="next" value="next" $next onmousedown="doValidate=true;">
+					<input type=hidden name="page" value="4">
+                  </td>
+                </tr>|;
+	}
+elsif ($curr_page == 5) {
+	$html_page = qq|        <tr>
+          <td width="12">&nbsp;</td>
+          <td align=left><img src="images/global/trans.gif" width="1" height="22"><br>
+            $hra_title<br>
+            <img src="images/global/trans.gif" width="1" height="8"><br>
+            <br><div align='center'>
+            <table width="274" border="0" cellspacing="0" cellpadding="0">
+				  <tr>
+					<td colspan="3"><img src="images/assessbar/assessbar_title.gif" width="274" height="22"></td>
+				  </tr>
+				  <tr>
+					<td><img src="images/assessbar/assessbar0.gif" width="27" height="22"></td>
+					<td><img src="images/assessbar/assessbar_start.gif" width="9" height="22"><img src="images/assessbar/assessbar_completed.gif" width="65" height="22"><img src="images/assessbar/assessbar_void.gif" width="122" height="22"><img src="images/assessbar/assessbar_end.gif" width="9" height="22"></td>
+					<td><img src="images/assessbar/assessbar100.gif" width="42" height="22"></td>
+				  </tr>
+			</table></div>
+            <img src="images/global/trans.gif" width="1" height="18"><br>
+            <span class="HStitle">$lang{$current_language}{personal_information}</span><br><div align='center'>
+            <table width="480" border="1" bordercolor="$top_bar_color" cellspacing=0 cellpadding=0>
+            	<tr>
+            		<td>
+            			<table width="478" border="1" cellspacing=0 cellpadding=4 bordercolor="#666666">
+            				<tr>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{bmi}
+            					</td>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{gender_specific_health}
+            					</td>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{my_health}
+            					</td>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{my_family_history}
+            					</td>
+            				</tr>
+            				<tr>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">BMI = $bmi<br>$weight_short
+            					</td>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$sex_check
+            					</td>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$my_short
+            					</td>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$family_short
+            					</td>
+            				</tr>
+            				<tr>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$bmi_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$sex_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$my_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$family_links
+            					</td>
+            				</tr>
+            			</table>
+            		</td>
+            	</tr>
+            </table></div><br>
+             <div align="center"><span class="HSbodytext1">$lang{$current_language}{use_button_msg}</span></div><br>
+             &nbsp;<br><span class="HSbodytext">$lang{$current_language}{hra_msg4}</span><br>&nbsp;<br>
+           &nbsp;<br><span class="HStitle">$lang{$current_language}{hra_msg5}</span><br><img src="images/global/trans.gif" width="1" height="10"></td>
+        </tr>        <tr>
+          <td width="12">&nbsp;</td>
+          <td align="center" valign="top">
+            <!--Form and form table START here. Table max width no more than 560 pixels.-->
+            <form METHOD="POST" action="$collector" name="theForm" onSubmit="return checkWholeForm(this)">
+              <table border="0" cellspacing="0" cellpadding="0" width="550">
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{hra_question12}:</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" NAME="smoke_status" onChange="disable_smokeHRA()">
+						<option value="">&nbsp;</option>
+						<option value="Never smoked">$lang{$current_language}{never_used_tobacco}<br>
+						<option value="Used to smoke">$lang{$current_language}{used_to_smoke} <br>
+						<option value="Still smoke">$lang{$current_language}{still_smoke}</option>
+					</select> <span id="smokeStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+				  <td align="right" class="HSbodytext">$lang{$current_language}{common_question17}</td>
+				  <td>&nbsp;</td>
+				  <td class="HSbodytextQ" align="left">&nbsp;<br>
+					<input type="TEXT"  class="HSquestion" name="cigarette_years_quit" SIZE="3" value="" onKeyup="if(this.value.match(/[^0-9\.]/))this.value=this.value.replace(/[^0-9\.]/g,'')"><span class="HSbodytext"> $lang{$current_language}{years} </span><span id="cigyearsquitStatus" ></span>
+				  </td>
+				</tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+				  <td align="right" class="HSbodytext">$lang{$current_language}{common_question18}</td>
+				  <td>&nbsp;</td>
+				  <td class="HSbodytextQ" align="left">
+					<input type="TEXT"  class="HSquestion" name="cigs_a_day" SIZE="3" value=""  onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"><span class="HSbodytext"> $lang{$current_language}{cigarettes} </span><span id="cigsdayStatus" ></span>
+				  </td>
+				</tr>
+				<tr>
+				  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+				  <td></td>
+				  <td></td>
+				</tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{common_question19}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="cigars_day">
+						<option value="">&nbsp;</option>
+						<option value="None">$lang{$current_language}{none}</option>
+						<option value="One">$lang{$current_language}{one}</option>
+						<option value="Two or More">$lang{$current_language}{two_or_more}</option>
+					</select> <span id="cigarStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{common_question20}</td>
+                  <td><img src="images/global/trans.gif" width="10" height="1"></td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="pipes_day">
+						<option value="">&nbsp;</option>
+						<option value="None">$lang{$current_language}{none}</option>
+						<option value="One">$lang{$current_language}{one}</option>
+						<option value="Two or More">$lang{$current_language}{two_or_more}</option>
+					</select> <span id="pipeStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{common_question21}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="chews_day">
+						<option value="">&nbsp;</option>
+						<option value="None">$lang{$current_language}{none}</option>
+						<option value="One">$lang{$current_language}{one}</option>
+						<option value="Two or More">$lang{$current_language}{two_or_more}</option>
+					</select> <span id="chewStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr valign="top">
+                  <td align="left" height="50"><input type="image" border=0 name="prev" value="prev" $back onmousedown="doValidate=false;"></td>
+                  <td align="right" height="50">&nbsp;</td>
+                  <td align="right" height="50"><input type="image" border=0 name="next" value="next" $next onmousedown="doValidate=true;">
+					<input type=hidden name="page" value="5">
+                  </td>
+                </tr>|;
+	}
+elsif ($curr_page == 6) {
+	$html_page = qq|        <tr>
+          <td width="12">&nbsp;</td>
+          <td align=left><img src="images/global/trans.gif" width="1" height="22"><br>
+            $hra_title<br>
+            <img src="images/global/trans.gif" width="1" height="8"><br>
+            <br><div align='center'>
+            <table width="274" border="0" cellspacing="0" cellpadding="0">
+				  <tr>
+					<td colspan="3"><img src="images/assessbar/assessbar_title.gif" width="274" height="22"></td>
+				  </tr>
+				  <tr>
+					<td><img src="images/assessbar/assessbar0.gif" width="27" height="22"></td>
+					<td><img src="images/assessbar/assessbar_start.gif" width="9" height="22"><img src="images/assessbar/assessbar_completed.gif" width="78" height="22"><img src="images/assessbar/assessbar_void.gif" width="109" height="22"><img src="images/assessbar/assessbar_end.gif" width="9" height="22"></td>
+					<td><img src="images/assessbar/assessbar100.gif" width="42" height="22"></td>
+				  </tr>
+			</table></div><img src="images/global/trans.gif" width="1" height="18"><br>
+            <span class="HStitle">$lang{$current_language}{health_risks}</span><br><div align='center'>
+            <table width="550" border="1" bordercolor="$top_bar_color" cellspacing=0 cellpadding=0>
+            	<tr>
+            		<td>
+            			<table width="548" border="1" cellspacing=0 cellpadding=4 bordercolor="#666666">
+            				<tr>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{tobacco}
+            					</td>
+            					<td align="center" valign="top" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{nutrition}
+            					</td>
+            					<td align="center" valign="top" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{alcohol}
+            					</td>
+            					<td align="center" valign="top" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{injury}
+            					</td>
+             					<td align="center" valign="top" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{fitness}
+            					</td>
+            					<td align="center" valign="top" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{well_being}
+            					</td>
+           				</tr>
+            				<tr>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$smk_short_risk
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="20">&nbsp;
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="20">&nbsp;
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="20">&nbsp;
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="20">&nbsp;
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="20">&nbsp;
+            					</td>
+            				</tr>
+            				<tr>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/hra/hra_smoking.jpg" width="75" height="75"><br>$smk_short_risk
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="75" height="50">&nbsp;
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="75" height="50">&nbsp;
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="75" height="50">&nbsp;
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="75" height="50">&nbsp;
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="75" height="50">&nbsp;
+            					</td>
+            				</tr>
+            				<tr>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$smoke_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="20">
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="20">
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="20">
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="20">
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="20">
+            					</td>
+            				</tr>
+            			</table>
+            		</td>
+            	</tr>
+            </table></div><br>
+             <div align="center"><span class="HSbodytext1">$lang{$current_language}{use_button_msg}</span></div><br>
+           <img src="images/global/trans.gif" width="1" height="10"></td>
+        </tr>
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td align="center" valign="top">
+            <!--Form and form table START here. Table max width no more than 560 pixels.-->
+            <form METHOD="POST" action="$collector" name="theForm" onSubmit="return checkWholeForm(this)">
+              <table border="0" cellspacing="0" cellpadding="0" width="550">
+               <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr valign="top">
+                  <td align="left" height="50"><input type="image" border=0 name="prev" value="prev" $back onmousedown="doValidate=false;"></td>
+                  <td align="right" height="50">&nbsp;</td>
+                  <td align="right" height="50"><input type="image" border=0 name="next" value="next" $next onmousedown="doValidate=true;">
+					<input type=hidden name="page" value="6">
+                  </td>
+                </tr>|;
+	}
+elsif ($curr_page == 7) {
+	$html_page = qq|        <tr>
+          <td width="12">&nbsp;</td>
+          <td align=left><img src="images/global/trans.gif" width="1" height="22"><br>
+            $hra_title<br>
+            <img src="images/global/trans.gif" width="1" height="8"><br>
+            <br><div align='center'>
+            <table width="274" border="0" cellspacing="0" cellpadding="0">
+				  <tr>
+					<td colspan="3"><img src="images/assessbar/assessbar_title.gif" width="274" height="22"></td>
+				  </tr>
+				  <tr>
+					<td><img src="images/assessbar/assessbar0.gif" width="27" height="22"></td>
+					<td><img src="images/assessbar/assessbar_start.gif" width="9" height="22"><img src="images/assessbar/assessbar_completed.gif" width="91" height="22"><img src="images/assessbar/assessbar_void.gif" width="96" height="22"><img src="images/assessbar/assessbar_end.gif" width="9" height="22"></td>
+					<td><img src="images/assessbar/assessbar100.gif" width="42" height="22"></td>
+				  </tr>
+			</table></div>
+            <img src="images/global/trans.gif" width="1" height="18"><br>
+            <div align="center"><span class="HSbodytext1">$lang{$current_language}{use_button_msg}</span></div><br>
+           &nbsp;<br><span class="HStitle">$lang{$current_language}{nutrition_info}</span><br><img src="images/global/trans.gif" width="1" height="10"></td>
+        </tr>        <tr>
+          <td width="12">&nbsp;</td>
+          <td align="center" valign="top">
+            <!--Form and form table START here. Table max width no more than 560 pixels.-->
+            <form METHOD="POST" action="$collector" name="theForm" onSubmit="return checkWholeForm(this)">
+              <table border="0" cellspacing="0" cellpadding="0" width="550">
+                <tr>
+                  <td align="right" class="HSbodytext">
+                  $lang{$current_language}{hra_question13}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="breads_check">
+						<option value="">&nbsp;</option>
+						<option value="3">$lang{$current_language}{daily}</option>
+						<option value="2">$lang{$current_language}{several_times_a_week}</option>
+						<option value="1">$lang{$current_language}{few_times_a_month}</option>
+						<option value="1">$lang{$current_language}{rarely}</option>
+					</select> <span id="breadStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">
+                  $lang{$current_language}{hra_question14}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="fruits_check">
+						<option value="">&nbsp;</option>
+						<option value="3">$lang{$current_language}{daily}</option>
+						<option value="2">$lang{$current_language}{several_times_a_week}</option>
+						<option value="1">$lang{$current_language}{few_times_a_month}</option>
+						<option value="1">$lang{$current_language}{rarely}</option>
+					</select> <span id="fruitStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">
+                  $lang{$current_language}{hra_question15}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="vegetables_check">
+						<option value="">&nbsp;</option>
+						<option value="3">$lang{$current_language}{daily}</option>
+						<option value="2">$lang{$current_language}{several_times_a_week}</option>
+						<option value="1">$lang{$current_language}{few_times_a_month}</option>
+						<option value="1">$lang{$current_language}{rarely}</option>
+					</select> <span id="veggieStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">
+                  $lang{$current_language}{hra_question16}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="meats_check">
+						<option value="">&nbsp;</option>
+						<option value="3">$lang{$current_language}{daily}</option>
+						<option value="2">$lang{$current_language}{several_times_a_week}</option>
+						<option value="1">$lang{$current_language}{few_times_a_month}</option>
+						<option value="1">$lang{$current_language}{rarely}</option>
+					</select> <span id="dairyStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">
+                  $lang{$current_language}{hra_question17}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="fatty_meats_check">
+						<option value="">&nbsp;</option>
+						<option value="1">$lang{$current_language}{daily}</option>
+						<option value="2">$lang{$current_language}{several_times_a_week}</option>
+						<option value="3">$lang{$current_language}{few_times_a_month}</option>
+						<option value="3">$lang{$current_language}{rarely}</option>
+					</select> <span id="fatsStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">
+                  $lang{$current_language}{hra_question18}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="rich_breads_check">
+						<option value="">&nbsp;</option>
+						<option value="1">$lang{$current_language}{daily}</option>
+						<option value="2">$lang{$current_language}{several_times_a_week}</option>
+						<option value="3">$lang{$current_language}{few_times_a_month}</option>
+						<option value="3">$lang{$current_language}{rarely}</option>
+					</select> <span id="richbreadsStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">
+                  $lang{$current_language}{hra_question19}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="desserts_check">
+						<option value="">&nbsp;</option>
+						<option value="1">$lang{$current_language}{daily}</option>
+						<option value="2">$lang{$current_language}{several_times_a_week}</option>
+						<option value="3">$lang{$current_language}{few_times_a_month}</option>
+						<option value="3">$lang{$current_language}{rarely}</option>
+					</select> <span id="dessertStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr valign="top">
+                  <td align="left" height="50"><input type="image" border=0 name="prev" value="prev" $back onmousedown="doValidate=false;"></td>
+                  <td align="right" height="50">&nbsp;</td>
+                  <td align="right" height="50"><input type="image" border=0 name="next" value="next" $next onmousedown="doValidate=true;">
+					<input type=hidden name="page" value="7">
+                  </td>
+                </tr>|;
+	}
+elsif ($curr_page == 8) {
+	$html_page = qq|        <tr>
+          <td width="12">&nbsp;</td>
+          <td align=left><img src="images/global/trans.gif" width="1" height="22"><br>
+            $hra_title<br>
+            <img src="images/global/trans.gif" width="1" height="8"><br>
+            <br><div align='center'>
+            <table width="274" border="0" cellspacing="0" cellpadding="0">
+				  <tr>
+					<td colspan="3"><img src="images/assessbar/assessbar_title.gif" width="274" height="22"></td>
+				  </tr>
+				  <tr>
+					<td><img src="images/assessbar/assessbar0.gif" width="27" height="22"></td>
+					<td><img src="images/assessbar/assessbar_start.gif" width="9" height="22"><img src="images/assessbar/assessbar_completed.gif" width="117" height="22"><img src="images/assessbar/assessbar_void.gif" width="70" height="22"><img src="images/assessbar/assessbar_end.gif" width="9" height="22"></td>
+					<td><img src="images/assessbar/assessbar100.gif" width="42" height="22"></td>
+				  </tr>
+			</table></div><img src="images/global/trans.gif" width="1" height="18"><br>
+            <span class="HStitle">$lang{$current_language}{health_risks}</span><br><div align='center'>
+            <table width="550" border="1" bordercolor="$top_bar_color" cellspacing=0 cellpadding=0>
+            	<tr>
+            		<td>
+            			<table width="548" border="1" cellspacing=0 cellpadding=4 bordercolor="#666666">
+            				<tr>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{tobacco}
+            					</td>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{nutrition}
+            					</td>
+            					<td align="center" valign="top" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{alcohol}
+            					</td>
+            					<td align="center" valign="top" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{injury}
+            					</td>
+             					<td align="center" valign="top" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{fitness}
+            					</td>
+            					<td align="center" valign="top" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{well_being}
+            					</td>
+           				</tr>
+            				<tr>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$smk_short_risk
+            					</td>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$nutrition_short_risk
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="20">&nbsp;
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="20">&nbsp;
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="20">&nbsp;
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="20">&nbsp;
+            					</td>
+            				</tr>
+            				<tr>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/hra/hra_smoking.jpg" width="75" height="75">
+            					</td>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/hra/hra_nutrition.jpg" width="75" height="75">
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="75" height="50">
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="75" height="50">
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="75" height="50">
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="75" height="50">
+            					</td>
+            				</tr>
+            				<tr>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$smoke_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$nutrition_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">&nbsp;
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">&nbsp;
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">&nbsp;
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">&nbsp;
+            					</td>
+            				</tr>
+            			</table>
+            		</td>
+            	</tr>
+            </table></div><br>
+             <div align="center"><span class="HSbodytext1">$lang{$current_language}{use_button_msg}</span></div><br>
+           &nbsp;<br><span class="HStitle">Alcohol Information</span><br><img src="images/global/trans.gif" width="1" height="10"></td>
+        </tr>
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td align="center" valign="top">
+            <!--Form and form table START here. Table max width no more than 560 pixels.-->
+            <form METHOD="POST" action="$collector" name="theForm" onSubmit="return checkWholeForm(this)">
+              <table border="0" cellspacing="0" cellpadding="0" width="550">
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{common_question22}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+                  	<input type="TEXT"  class="HSquestion" name="drinks_week" SIZE="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"><span class="HSbodytext"> $lang{$current_language}{drinks} </span><span id="drinksStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td class="HSbodytext"><span class="HSbodytext1">$lang{$current_language}{drink_define}:</span><br>
+                  <img src="images/global/trans.gif" height="5" width="12">$lang{$current_language}{drink_define1}<br>
+                  <img src="images/global/trans.gif" height="5" width="12">$lang{$current_language}{drink_define2}<br>
+                  <img src="images/global/trans.gif" height="5" width="12">$lang{$current_language}{drink_define3}<br>
+                  <img src="images/global/trans.gif" height="5" width="12">$lang{$current_language}{drink_define4}<br>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr valign="top">
+                  <td align="left" height="50"><input type="image" border=0 name="prev" value="prev" $back onmousedown="doValidate=false;"></td>
+                  <td align="right" height="50">&nbsp;</td>
+                  <td align="right" height="50"><input type="image" border=0 name="next" value="next" $next onmousedown="doValidate=true;">
+					<input type=hidden name="page" value="8">
+                  </td>
+                </tr>|;
+	}
+elsif ($curr_page == 9) {
+	$html_page = qq|        <tr>
+          <td width="12">&nbsp;</td>
+          <td align=left><img src="images/global/trans.gif" width="1" height="22"><br>
+            $hra_title<br>
+            <img src="images/global/trans.gif" width="1" height="8"><br>
+            <br><div align='center'>
+            <table width="274" border="0" cellspacing="0" cellpadding="0">
+				  <tr>
+					<td colspan="3"><img src="images/assessbar/assessbar_title.gif" width="274" height="22"></td>
+				  </tr>
+				  <tr>
+					<td><img src="images/assessbar/assessbar0.gif" width="27" height="22"></td>
+					<td><img src="images/assessbar/assessbar_start.gif" width="9" height="22"><img src="images/assessbar/assessbar_completed.gif" width="130" height="22"><img src="images/assessbar/assessbar_void.gif" width="57" height="22"><img src="images/assessbar/assessbar_end.gif" width="9" height="22"></td>
+					<td><img src="images/assessbar/assessbar100.gif" width="42" height="22"></td>
+				  </tr>
+			</table></div>
+            <img src="images/global/trans.gif" width="1" height="18"><br>
+            <span class="HStitle">$lang{$current_language}{health_risks}</span><br><div align='center'>
+            <table width="550" border="1" bordercolor="$top_bar_color" cellspacing=0 cellpadding=0>
+            	<tr>
+            		<td>
+            			<table width="548" border="1" cellspacing=0 cellpadding=4 bordercolor="#666666">
+            				<tr>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{tobacco}
+            					</td>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{nutrition}
+            					</td>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{alcohol}
+            					</td>
+            					<td align="center" valign="top" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{injury}
+            					</td>
+             					<td align="center" valign="top" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{fitness}
+            					</td>
+            					<td align="center" valign="top" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{well_being}
+            					</td>
+           				    </tr>
+            				<tr>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$smk_short_risk
+            					</td>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$nutrition_short_risk
+            					</td>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$alcohol_short_risk
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="20">
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="20">
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="20">
+            					</td>
+            				</tr>
+            				<tr>
+            					<td align="center">
+            						<img src="images/hra/hra_smoking.jpg" width="75" height="75">
+            					</td>
+            					<td align="center">
+            						<img src="images/hra/hra_nutrition.jpg" width="75" height="75">
+            					</td>
+            					<td align="center">
+            						<img src="images/hra/hra_alcohol.jpg" width="75" height="75">
+            					</td>
+            					<td align="center">
+            						<img src="images/global/trans.gif" width="75" height="50">
+            					</td>
+            					<td align="center">
+            						<img src="images/global/trans.gif" width="75" height="50">
+            					</td>
+            					<td align="center">
+            						<img src="images/global/trans.gif" width="75" height="50">
+            					</td>
+            				</tr>
+            				<tr>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$smoke_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$nutrition_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$alcohol_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">
+            					</td>
+            				</tr>
+            			</table>
+            		</td>
+            	</tr>
+            </table></div><br>
+             <div align="center"><span class="HSbodytext1">$lang{$current_language}{use_button_msg}</span></div><br>
+           &nbsp;<br><span class="HStitle">$lang{$current_language}{injury_info}</span><br><img src="images/global/trans.gif" width="1" height="10"></td>
+        </tr>        <tr>
+          <td width="12">&nbsp;</td>
+          <td align="center" valign="top">
+            <!--Form and form table START here. Table max width no more than 560 pixels.-->
+            <form METHOD="POST" action="$collector" name="theForm" onSubmit="return checkWholeForm(this)">
+              <table border="0" cellspacing="0" cellpadding="0" width="550">
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{common_question23}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">&nbsp;<br>
+					<input type="TEXT" class="HSquestion" name="miles_car" SIZE="6" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> <span id="milesStatus" ></span><br>
+					<input type="TEXT" class="HSquestion" name="miles_motorcycle" SIZE="6" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> <span id="motomilesStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{common_question24}</td>
+                  <td><img src="images/global/trans.gif" width="10" height="1"></td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="travel_mode">
+						<option value="">&nbsp;</option>
+						<option value="Mostly stay at home">$lang{$current_language}{stay_at_home}</option>
+						<option value="Bus, subway or train">$lang{$current_language}{bus_subway_train}</option>
+						<option value="Walk">$lang{$current_language}{walk}</option>
+						<option value="Bicycle">$lang{$current_language}{bicycle}</option>
+						<option value="Motorcycle">$lang{$current_language}{motorcycle}</option>
+						<option value="Sub-compact or compact car">$lang{$current_language}{sub_compact_or_compact_car}</option>
+						<option value="Mid or full-size car">$lang{$current_language}{Mid_or_full_size_car}</option>
+						<option value="Truck or van">$lang{$current_language}{truck_or_van}</option>
+					</select> <span id="travleStatus" ></span>
+						  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{common_question25}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="seat_belt">
+						<option value="">&nbsp;</option>
+						<option value="Never, 0%">$lang{$current_language}{never}, 0%</option>
+						<option value="Seldom, 1%-40%">$lang{$current_language}{seldom}, 1%-40%</option>
+						<option value="Sometimes, 41%-80%">$lang{$current_language}{sometimes}, 41%-80%</option>
+						<option value="Nearly always, 81%-99%">$lang{$current_language}{nearly_always}, 81%-99%</option>
+						<option value="Always, 100%">$lang{$current_language}{always}, 100%</option>
+					</select> <span id="seatbeltStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+				<tr>
+				  <td align="right" class="HSbodytext">$lang{$current_language}{common_question26}</td>
+				  <td>&nbsp;</td>
+				  <td class="HSbodytextQ" align="left">&nbsp;<br>
+					<select class="HSquestion" name="helmet">
+						<option value="">&nbsp;</option>
+						<option value="Do not ride">$lang{$current_language}{do_not_ride}</option>
+						<option value="Never, 0%">$lang{$current_language}{never}, 0%</option>
+						<option value="Seldom, 1%-25%">$lang{$current_language}{seldom}, 1%-25%</option>
+						<option value="Sometimes, 26%-75%">$lang{$current_language}{sometimes}, 26%-75%</option>
+						<option value="Nearly always, 76%-99%">$lang{$current_language}{nearly_always}, 76%-99%</option>
+						<option value="Always, 100%">$lang{$current_language}{always}, 100%</option>
+					</select> <span id="helmetStatus" ></span>
+				  </td>
+				</tr>
+				<tr>
+				  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+				  <td></td>
+				  <td></td>
+				</tr>
+				<tr>
+				  <td align="right" class="HSbodytext">$lang{$current_language}{common_question27}</td>
+				  <td>&nbsp;</td>
+				  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="speed">
+						<option value="">&nbsp;</option>
+						<option value="Within 5 mph of limit">$lang{$current_language}{within_limit}</option>
+						<option value="6-10 mph over limit">6-10 $lang{$current_language}{over_limit}</option>
+						<option value="11-15 mph over limit">11-15 $lang{$current_language}{over_limit}</option>
+						<option value="More than 15 mph over limit">$lang{$current_language}{more_than} 15 $lang{$current_language}{over_limit}</option>
+					</select> <span id="speedStatus" ></span>
+				  </td>
+				</tr>
+				<tr>
+				  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+				  <td></td>
+				  <td></td>
+				</tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{common_question28}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<input type="TEXT"  class="HSquestion" name="drink_and_drive" SIZE="3" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> <span id="drinkndriveStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr valign="top">
+                  <td align="left" height="50"><input type="image" border=0 name="prev" value="prev" $back onmousedown="doValidate=false;"></td>
+                  <td align="right" height="50">&nbsp;</td>
+                  <td align="right" height="50"><input type="image" border=0 name="next" value="next" $next onmousedown="doValidate=true;">
+					<input type=hidden name="page" value="9">
+                  </td>
+                </tr>|;
+	}
+elsif ($curr_page == 10) {
+	$html_page = qq|        <tr>
+          <td width="12">&nbsp;</td>
+          <td align=left><img src="images/global/trans.gif" width="1" height="22"><br>
+            $hra_title<br>
+            <img src="images/global/trans.gif" width="1" height="8"><br>
+            <br><div align='center'>
+            <table width="274" border="0" cellspacing="0" cellpadding="0">
+				  <tr>
+					<td colspan="3"><img src="images/assessbar/assessbar_title.gif" width="274" height="22"></td>
+				  </tr>
+				  <tr>
+					<td><img src="images/assessbar/assessbar0.gif" width="27" height="22"></td>
+					<td><img src="images/assessbar/assessbar_start.gif" width="9" height="22"><img src="images/assessbar/assessbar_completed.gif" width="143" height="22"><img src="images/assessbar/assessbar_void.gif" width="44" height="22"><img src="images/assessbar/assessbar_end.gif" width="9" height="22"></td>
+					<td><img src="images/assessbar/assessbar100.gif" width="42" height="22"></td>
+				  </tr>
+			</table></div><img src="images/global/trans.gif" width="1" height="18"><br>
+            <span class="HStitle">$lang{$current_language}{health_risks}</span><br><div align='center'>
+            <table width="550" border="1" bordercolor="$top_bar_color" cellspacing=0 cellpadding=0>
+            	<tr>
+            		<td>
+            			<table width="548" border="1" cellspacing=0 cellpadding=4 bordercolor="#666666">
+            				<tr>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{tobacco}
+            					</td>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{nutrition}
+            					</td>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{alcohol}
+            					</td>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{injury}
+            					</td>
+             					<td align="center" valign="top" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{fitness}
+            					</td>
+            					<td align="center" valign="top" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{well_being}
+            					</td>
+           				    </tr>
+            				<tr>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$smk_short_risk
+            					</td>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$nutrition_short_risk
+            					</td>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$alcohol_short_risk
+            					</td>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$injury_short_risk
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="20">
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="20">
+            					</td>
+            				</tr>
+            				<tr>
+            					<td align="center">
+            						<img src="images/hra/hra_smoking.jpg" width="75" height="75">
+            					</td>
+            					<td align="center">
+            						<img src="images/hra/hra_nutrition.jpg" width="75" height="75">
+            					</td>
+            					<td align="center">
+            						<img src="images/hra/hra_alcohol.jpg" width="75" height="75">
+            					</td>
+            					<td align="center">
+            						<img src="images/hra/hra_injury.jpg" width="75" height="75">
+            					</td>
+            					<td align="center">
+            						<img src="images/global/trans.gif" width="75" height="50">
+            					</td>
+            					<td align="center">
+            						<img src="images/global/trans.gif" width="75" height="50">
+            					</td>
+            				</tr>
+            				<tr>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$smoke_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$nutrition_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$alcohol_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$injury_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">
+            					</td>
+            				</tr>
+            			</table>
+            		</td>
+            	</tr>
+            </table></div><br>
+             <div align="center"><span class="HSbodytext1">$lang{$current_language}{use_button_msg}</span></div><br>
+           &nbsp;<br><span class="HStitle">$lang{$current_language}{fitness_info}</span><br><img src="images/global/trans.gif" width="1" height="10"></td>
+        </tr>
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td align="center" valign="top">
+            <!--Form and form table START here. Table max width no more than 560 pixels.-->
+            <form METHOD="POST" action="$collector" name="theForm" onSubmit="return checkWholeForm(this)">
+              <table border="0" cellspacing="0" cellpadding="0" width="550">
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{hra_question20}</td>
+                  <td><img src="images/global/trans.gif" width="10" height="1"></td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="exercise_unable">
+						<option value="">&nbsp;</option>
+						<option value="Yes">$lang{$current_language}{yes}</option>
+						<option value="No">$lang{$current_language}{no}</option>
+					</select> <span id="exerunableStatus" > </span>
+				  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{common_question29}</td>
+                  <td><img src="images/global/trans.gif" width="10" height="1"></td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="exercise">
+						<option value="">&nbsp;</option>
+						<option value="Less than one time per week">$lang{$current_language}{less_than_one_time_per_week}</option>
+						<option value="One or two times per week">$lang{$current_language}{one_or_two_times_per_week}</option>
+						<option value="At least three times per week">$lang{$current_language}{at_least_three_times_per_week}</option>
+					</select> <span id="exerStatus" ></span>
+				  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr valign="top">
+                  <td align="left" height="50"><input type="image" border=0 name="prev" value="prev" $back onmousedown="doValidate=false;"></td>
+                  <td align="right" height="50">&nbsp;</td>
+                  <td align="right" height="50"><input type="image" border=0 name="next" value="next" $next onmousedown="doValidate=true;">
+					<input type=hidden name="page" value="10">
+                  </td>
+                </tr>|;
+	}
+elsif ($curr_page == 11) {
+	$html_page = qq|        <tr>
+          <td width="12">&nbsp;</td>
+          <td align=left><img src="images/global/trans.gif" width="1" height="22"><br>
+            $hra_title<br>
+            <img src="images/global/trans.gif" width="1" height="8"><br>
+            <br><div align='center'>
+            <table width="274" border="0" cellspacing="0" cellpadding="0">
+				  <tr>
+					<td colspan="3"><img src="images/assessbar/assessbar_title.gif" width="274" height="22"></td>
+				  </tr>
+				  <tr>
+					<td><img src="images/assessbar/assessbar0.gif" width="27" height="22"></td>
+					<td><img src="images/assessbar/assessbar_start.gif" width="9" height="22"><img src="images/assessbar/assessbar_completed.gif" width="156" height="22"><img src="images/assessbar/assessbar_void.gif" width="31" height="22"><img src="images/assessbar/assessbar_end.gif" width="9" height="22"></td>
+					<td><img src="images/assessbar/assessbar100.gif" width="42" height="22"></td>
+				  </tr>
+			</table></div><img src="images/global/trans.gif" width="1" height="18"><br>
+            <span class="HStitle">$lang{$current_language}{health_risks}</span><br><div align='center'>
+            <table width="550" border="1" bordercolor="$top_bar_color" cellspacing=0 cellpadding=0>
+            	<tr>
+            		<td>
+            			<table width="548" border="1" cellspacing=0 cellpadding=4 bordercolor="#666666">
+            				<tr>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{tobacco}
+            					</td>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{nutrition}
+            					</td>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{alcohol}
+            					</td>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{injury}
+            					</td>
+             					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{fitness}
+            					</td>
+            					<td align="center" valign="top" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{well_being}
+            					</td>
+           				</tr>
+            				<tr>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$smk_short_risk
+            					</td>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$nutrition_short_risk
+            					</td>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$alcohol_short_risk
+            					</td>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$injury_short_risk
+            					</td>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$fitness_short_risk
+            					</td>
+            					<td align="center" class="HSintro">
+            						<img src="images/global/trans.gif" width="1" height="20">
+            					</td>
+            				</tr>
+            				<tr>
+            					<td align="center">
+            						<img src="images/hra/hra_smoking.jpg" width="75" height="75">
+            					</td>
+            					<td align="center">
+            						<img src="images/hra/hra_nutrition.jpg" width="75" height="75">
+            					</td>
+            					<td align="center">
+            						<img src="images/hra/hra_alcohol.jpg" width="75" height="75">
+            					</td>
+            					<td align="center">
+            						<img src="images/hra/hra_injury.jpg" width="75" height="75">
+            					</td>
+            					<td align="center">
+            						<img src="images/hra/hra_fitness.jpg" width="75" height="75">
+            					</td>
+            					<td align="center">
+            						<img src="images/global/trans.gif" width="75" height="50">
+            					</td>
+            				</tr>
+            				<tr>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$smoke_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$nutrition_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$alcohol_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$injury_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$fitness_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">
+            					</td>
+            				</tr>
+            			</table>
+            		</td>
+            	</tr>
+            </table></div><br>
+             <div align="center"><span class="HSbodytext1">$lang{$current_language}{use_button_msg}</span></div><br>
+           &nbsp;<br><img src="images/global/trans.gif" width="1" height="10"></td>
+        </tr>
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td align="center" valign="top">
+            <!--Form and form table START here. Table max width no more than 560 pixels.-->
+            <form METHOD="POST" action="$collector" name="theForm" onSubmit="return checkWholeForm(this)">
+              <table border="0" cellspacing="0" cellpadding="0" width="550">
+               <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr valign="top">
+                  <td align="left" height="50"><input type="image" border=0 name="prev" value="prev" $back onmousedown="doValidate=false;"></td>
+                  <td align="right" height="50">&nbsp;</td>
+                  <td align="right" height="50"><input type="image" border=0 name="next" value="next" $next onmousedown="doValidate=true;">
+					<input type=hidden name="page" value="11">
+                  </td>
+                </tr>|;
+	}
+elsif ($curr_page == 12) {
+	$html_page = qq|<tr>
+          <td width="12">&nbsp;</td>
+          <td align=left><img src="images/global/trans.gif" width="1" height="22"><br>
+            $hra_title<br>
+            <img src="images/global/trans.gif" width="1" height="8"><br>
+            <br><div align='center'>
+            <table width="274" border="0" cellspacing="0" cellpadding="0">
+				  <tr>
+					<td colspan="3"><img src="images/assessbar/assessbar_title.gif" width="274" height="22"></td>
+				  </tr>
+				  <tr>
+					<td><img src="images/assessbar/assessbar0.gif" width="27" height="22"></td>
+					<td><img src="images/assessbar/assessbar_start.gif" width="9" height="22"><img src="images/assessbar/assessbar_completed.gif" width="156" height="22"><img src="images/assessbar/assessbar_void.gif" width="31" height="22"><img src="images/assessbar/assessbar_end.gif" width="9" height="22"></td>
+					<td><img src="images/assessbar/assessbar100.gif" width="42" height="22"></td>
+				  </tr>
+			</table></div><img src="images/global/trans.gif" width="1" height="18"><br>
+             <div align="center"><span class="HSbodytext1">$lang{$current_language}{use_button_msg}</span></div><br>
+           &nbsp;<br><span class="HStitle">$lang{$current_language}{well_being_info}	</span><br><img src="images/global/trans.gif" width="1" height="10"></td>
+        </tr>
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td align="center" valign="top">
+            <!--Form and form table START here. Table max width no more than 560 pixels.-->
+            <form METHOD="POST" action="$collector" name="theForm" onSubmit="return checkWholeForm(this)">
+              <table border="0" cellspacing="0" cellpadding="0" width="550">
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{common_question30}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="overall_health">
+						<option value="">&nbsp;</option>
+						<option value="Excellent">$lang{$current_language}{excellent}</option>
+						<option value="Good">$lang{$current_language}{good}</option>
+						<option value="Fair">$lang{$current_language}{fair}</option>
+						<option value="Poor">$lang{$current_language}{poor}</option>
+					</select> <span id="overallhealthStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{common_question31}</td>
+                  <td><img src="images/global/trans.gif" width="10" height="1"></td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="life_satisfaction">
+						<option value="">&nbsp;</option>
+						<option value="Mostly satisfied">$lang{$current_language}{mostly_satisfied}</option>
+						<option value="Partly satisfied">$lang{$current_language}{partly_satisfied}</option>
+						<option value="Not satisfied">$lang{$current_language}{not_satisfied}</option>
+					</select> <span id="satisfiedStatus" ></span>
+				  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+				<td align="right" class="HSbodytext">$lang{$current_language}{common_question32}</td>
+				  <td>&nbsp;</td>
+				  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="loss">
+						<option value="">&nbsp;</option>
+						<option value="Yes, one serious loss or misfortune">$lang{$current_language}{yes_serious_loss}</option>
+						<option value="Yes, two or more">$lang{$current_language}{yes_two_more}</option>
+						<option value="No">$lang{$current_language}{no}</option>
+					</select> <span id="lossStatus" ></span>
+				  </td>
+				</tr>
+				<tr>
+				  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+				  <td></td>
+				  <td></td>
+				</tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{hra_question21}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="q3">
+						<option value="">&nbsp;</option>
+						<option value="0">$lang{$current_language}{ans_feel_depressed0}</option>
+						<option value="1">$lang{$current_language}{ans_feel_depressed1}</option>
+						<option value="2">$lang{$current_language}{ans_feel_depressed2}</option>
+						<option value="3">$lang{$current_language}{ans_feel_depressed3}</option>
+						<option value="4">$lang{$current_language}{ans_feel_depressed4}</option>
+						<option value="5">$lang{$current_language}{ans_feel_depressed5}</option>
+					</select> <span id="q3Status" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{hra_question22}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="q5">
+						<option value="">&nbsp;</option>
+						<option value="0">$lang{$current_language}{every_day} </option>
+						<option value="1">$lang{$current_language}{almost_every_day}</option>
+						<option value="2">$lang{$current_language}{half_of_the_time}</option>
+						<option value="3">$lang{$current_language}{less_than_half}</option>
+						<option value="4">$lang{$current_language}{rarely}</option>
+						<option value="5">$lang{$current_language}{none_of_the_time}</option>
+					</select> <span id="q5Status" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{hra_question23}:</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="q7">
+						<option value="">&nbsp;</option>
+						<option value="5">$lang{$current_language}{none_of_the_time}</option>
+						<option value="4">$lang{$current_language}{little_of_the_time}</option>
+						<option value="3">$lang{$current_language}{some_of_the_time}</option>
+						<option value="2">$lang{$current_language}{good_bit_of_the_time}</option>
+						<option value="1">$lang{$current_language}{most_of_the_time}</option>
+						<option value="0">$lang{$current_language}{all_of_the_time}</option>
+					</select> <span id="q7Status" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{hra_question24}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="q8">
+						<option value="">&nbsp;</option>
+						<option value="0">$lang{$current_language}{extremely_tense}</option>
+						<option value="1">$lang{$current_language}{very_tense}</option>
+						<option value="2">$lang{$current_language}{fairly_tense}</option>
+						<option value="3">$lang{$current_language}{little_tense}</option>
+						<option value="4">$lang{$current_language}{low_tension}	</option>
+						<option value="5">$lang{$current_language}{never_felt_tense}</option>
+					</select> <span id="q8Status" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{hra_question25}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="q11">
+						<option value="">&nbsp;</option>
+						<option value="0">$lang{$current_language}{extremely_so}</option>
+						<option value="1">$lang{$current_language}{very_much_so}</option>
+						<option value="2">$lang{$current_language}{quite_a_bit}</option>
+						<option value="3">$lang{$current_language}{some_enough}</option>
+						<option value="4">$lang{$current_language}{little_bit}</option>
+						<option value="5">$lang{$current_language}{not_at_all}</option>
+					</select> <span id="q11Status" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{hra_question26}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="q17">
+						<option value="">&nbsp;</option>
+						<option value="0">$lang{$current_language}{being_sick}</option>
+						<option value="1">$lang{$current_language}{very_much_so}</option>
+						<option value="2">$lang{$current_language}{quite_a_bit}</option>
+						<option value="3">$lang{$current_language}{some_enough}</option>
+						<option value="4">$lang{$current_language}{little_bit}</option>
+						<option value="5">$lang{$current_language}{not_at_all}</option>
+					</select> <span id="q17Status" ></span>
+				  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{hra_question27}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="q19">
+						<option value="">&nbsp;</option>
+						<option value="5">$lang{$current_language}{ease_all_month}</option>
+						<option value="4">$lang{$current_language}{ease_most_of_time}</option>
+						<option value="3">$lang{$current_language}{felt_relaxed}</option>
+						<option value="2">$lang{$current_language}{felt_high_strung}</option>
+						<option value="1">$lang{$current_language}{keyed_up_most_of_time}</option>
+						<option value="0">$lang{$current_language}{keyed_up_whole_month}</option>
+					</select> <span id="q19Status" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">$lang{$current_language}{hra_question28}</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ" align="left">
+					<select class="HSquestion" name="q22">
+						<option value="">&nbsp;</option>
+						<option value="0">$lang{$current_language}{ans_pressure1}</option>
+						<option value="1">$lang{$current_language}{ans_pressure2}</option>
+						<option value="2">$lang{$current_language}{ans_pressure3}</option>
+						<option value="3">$lang{$current_language}{ans_pressure4}</option>
+						<option value="4">$lang{$current_language}{ans_pressure5}</option>
+						<option value="5">$lang{$current_language}{not_at_all}</option>
+					</select> <span id="q22Status" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr valign="top">
+                  <td align="left" height="50"><input type="image" border=0 name="prev" value="prev" $back onmousedown="doValidate=false;"></td>
+                  <td align="right" height="50">&nbsp;</td>
+                  <td align="right" height="50"><input type="image" border=0 name="next" value="next" $next onmousedown="doValidate=true;">
+					<input type=hidden name="page" value="12">
+                  </td>
+                </tr>|;
+	}
+elsif ($curr_page == 13) {
+	$html_page = qq|        <tr>
+          <td width="12">&nbsp;</td>
+          <td align=left><img src="images/global/trans.gif" width="1" height="22"><br>
+            $hra_title<br>
+            <img src="images/global/trans.gif" width="1" height="8"><br>
+            <br><div align='center'>
+            <table width="274" border="0" cellspacing="0" cellpadding="0">
+				  <tr>
+					<td colspan="3"><img src="images/assessbar/assessbar_title.gif" width="274" height="22"></td>
+				  </tr>
+				  <tr>
+					<td><img src="images/assessbar/assessbar0.gif" width="27" height="22"></td>
+					<td><img src="images/assessbar/assessbar_start.gif" width="9" height="22"><img src="images/assessbar/assessbar_completed.gif" width="187" height="22"><img src="images/assessbar/assessbar_end_fill.gif" width="9" height="22"></td>
+					<td><img src="images/assessbar/assessbar100.gif" width="42" height="22"></td>
+				  </tr>
+			</table></div><img src="images/global/trans.gif" width="1" height="18"><br>
+            <span class="HStitle">$lang{$current_language}{personal_information}</span><br><div align='center'>
+            <table width="480" border="1" bordercolor="$top_bar_color" cellspacing=0 cellpadding=0>
+            	<tr>
+            		<td>
+            			<table width="478" border="1" cellspacing=0 cellpadding=4 bordercolor="#666666">
+            				<tr>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{bmi}
+            					</td>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{gender_specific_health}
+            					</td>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{my_health}
+            					</td>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{my_family_history}
+            					</td>
+            				</tr>
+            				<tr>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">BMI = $bmi<br>$weight_short
+            					</td>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$sex_check
+            					</td>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$my_short
+            					</td>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$family_short
+            					</td>
+            				</tr>
+            				<tr>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$bmi_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$sex_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$my_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$family_links
+            					</td>
+            				</tr>
+            			</table>
+            		</td>
+            	</tr>
+            </table></div><br><img src="images/global/trans.gif" width="1" height="18"><br>
+            <span class="HStitle">$lang{$current_language}{health_risks}</span><br><div align='center'>
+            <table width="550" border="1" bordercolor="$top_bar_color" cellspacing=0 cellpadding=0>
+            	<tr>
+            		<td>
+            			<table width="548" border="1" cellspacing=0 cellpadding=4 bordercolor="#666666">
+            				<tr>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{tobacco}
+            					</td>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{nutrition}
+            					</td>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{alcohol}
+            					</td>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{injury}
+            					</td>
+             					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{fitness}
+            					</td>
+            					<td align="center" valign="top" class="HSsubtitle">
+            						<img src="images/global/trans.gif" width="1" height="10">$lang{$current_language}{well_being}
+            					</td>
+           				</tr>
+            				<tr>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$smk_short_risk
+            					</td>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$nutrition_short_risk
+            					</td>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$alcohol_short_risk
+            					</td>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$injury_short_risk
+            					</td>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$fitness_short_risk
+            					</td>
+            					<td align="center" class="HSbodytext1">
+            						<img src="images/global/trans.gif" width="1" height="20">$wellbeing_short_risk
+            					</td>
+            				</tr>
+            				<tr>
+            					<td align="center">
+            						<img src="images/hra/hra_smoking.jpg" width="75" height="75">
+            					</td>
+            					<td align="center">
+            						<img src="images/hra/hra_nutrition.jpg" width="75" height="75">
+            					</td>
+            					<td align="center">
+            						<img src="images/hra/hra_alcohol.jpg" width="75" height="75">
+            					</td>
+            					<td align="center">
+            						<img src="images/hra/hra_injury.jpg" width="75" height="75">
+            					</td>
+            					<td align="center">
+            						<img src="images/hra/hra_fitness.jpg" width="75" height="75">
+            					</td>
+            					<td align="center">
+            						<img src="images/hra/hra_wellbeing.jpg" width="75" height="75">
+            					</td>
+            				</tr>
+            				<tr>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$smoke_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$nutrition_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$alcohol_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$injury_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$fitness_links
+            					</td>
+            					<td align="left">
+            						<img src="images/global/trans.gif" width="1" height="50">$wellbeing_links
+            					</td>
+            				</tr>
+            			</table>
+            		</td>
+            	</tr>
+            </table></div><br>
+             <div align="center"><span class="HSbodytext1">$lang{$current_language}{use_button_msg}</span></div>
+           <img src="images/global/trans.gif" width="1" height="10"></td>
+        </tr>
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td align="center" valign="top">
+            <!--Form and form table START here. Table max width no more than 560 pixels.-->
+            <form METHOD="POST" action="$collector" name="theForm" onSubmit="return checkWholeForm(this)">
+              <table border="0" cellspacing="0" cellpadding="0" width="550">|;
+	if ($r2c_issues != 0){
+			$html_page .= qq|<tr>
+						  <td align="right" class="HSbodytext">$lang{$current_language}{common_question1}</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ" align="left">
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>|;
+		$html_page .= qq|               <tr>
+						  <td align="right" class="HSbodytext">$lang{$current_language}{common_question2}</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ" align="left">
+							<select class="HSquestion" name="r2c_weight">
+								<option value="">&nbsp;</option>
+								<option value="Yes">$lang{$current_language}{yes}</option>
+								<option value="No">$lang{$current_language}{no}</option>
+								<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+							</select> <span id="r2c_weightStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>| if ($r2c_weight_flag);
+		$html_page .= qq|               <tr>
+						  <td align="right" class="HSbodytext">$lang{$current_language}{common_question3}</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ" align="left">
+							<select class="HSquestion" name="r2c_smoke">
+								<option value="">&nbsp;</option>
+								<option value="Yes">$lang{$current_language}{yes}</option>
+								<option value="No">$lang{$current_language}{no}</option>
+								<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+							</select> <span id="r2c_smokeStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>| if ($r2c_smoke_flag);
+		$html_page .= qq|               <tr>
+						  <td align="right" class="HSbodytext">$lang{$current_language}{common_question8}</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ" align="left">
+							<select class="HSquestion" name="r2c_drink">
+								<option value="">&nbsp;</option>
+								<option value="Yes">$lang{$current_language}{yes}</option>
+								<option value="No">$lang{$current_language}{no}</option>
+								<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+							</select> <span id="r2c_drinkStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>| if ($r2c_drink_flag);
+		$html_page .= qq|               <tr>
+						  <td align="right" class="HSbodytext">$lang{$current_language}{common_question9}</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ" align="left">
+							<select class="HSquestion" name="r2c_autosafety">
+								<option value="">&nbsp;</option>
+								<option value="Yes">$lang{$current_language}{yes}</option>
+								<option value="No">$lang{$current_language}{no}</option>
+								<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+							</select> <span id="r2c_autosafetyStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>| if ($r2c_autosafety_flag);
+		$html_page .= qq|               <tr>
+						  <td align="right" class="HSbodytext">$lang{$current_language}{common_question4}</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ" align="left">
+							<select class="HSquestion" name="r2c_exercise">
+								<option value="">&nbsp;</option>
+								<option value="Yes">$lang{$current_language}{yes}</option>
+								<option value="No">$lang{$current_language}{no}</option>
+								<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+							</select> <span id="r2c_exerciseStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>| if ($r2c_exercise_flag);
+		$html_page .= qq|               <tr>
+						  <td align="right" class="HSbodytext">$lang{$current_language}{common_question5}</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ" align="left">
+							<select class="HSquestion" name="r2c_fat">
+								<option value="">&nbsp;</option>
+								<option value="Yes">$lang{$current_language}{yes}</option>
+								<option value="No">$lang{$current_language}{no}</option>
+								<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+							</select> <span id="r2c_fatStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>| if ($r2c_fat_flag);
+		$html_page .= qq|               <tr>
+						  <td align="right" class="HSbodytext">$lang{$current_language}{common_question6}</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ" align="left">
+							<select class="HSquestion" name="r2c_bp">
+								<option value="">&nbsp;</option>
+								<option value="Yes">$lang{$current_language}{yes}</option>
+								<option value="No">$lang{$current_language}{no}</option>
+								<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+							</select> <span id="r2c_bpStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>| if ($r2c_bp_flag);
+		$html_page .= qq|               <tr>
+						  <td align="right" class="HSbodytext">$lang{$current_language}{common_question7}</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ" align="left">
+							<select class="HSquestion" name="r2c_cholesterol">
+								<option value="">&nbsp;</option>
+								<option value="Yes">$lang{$current_language}{yes}</option>
+								<option value="No">$lang{$current_language}{no}</option>
+								<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+							</select> <span id="r2c_cholesterolStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>| if ($r2c_cholesterol_flag);
+		$html_page .= qq|               <tr>
+						  <td align="right" class="HSbodytext">$lang{$current_language}{common_question10}</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ" align="left">
+							<select class="HSquestion" name="r2c_checkups">
+								<option value="">&nbsp;</option>
+								<option value="Yes">$lang{$current_language}{yes}</option>
+								<option value="No">$lang{$current_language}{no}</option>
+								<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+							</select> <span id="r2c_checkupStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>| if ($r2c_checkups_flag);
+                }
+		$html_page .= qq|               <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+					<td colspan=3><br>&nbsp;<br>
+						<span class="HSbodytext">$lang{$current_language}{hra_msg7}</span><br>&nbsp;
+					</td>
+             	</tr>
+                <tr valign="top">
+                  <td align="left" height="50"><input type="image" border=0 name="prev" value="prev" $back onmousedown="doValidate=false;"></td>
+                  <td align="right" height="50">&nbsp;</td>
+                  <td align="right" height="50"><input type="image" border=0 name="next" value="next" $next onmousedown="doValidate=true;">
+					<input type=hidden name="page" value="13">
+                  </td>
+                </tr>|;
+	}
+
+$html_page;
+}
+                </table>
+{ my $html_hiddens;
+	$html_hiddens = qq|<input type="hidden" name="assessment" value="HRA">
+					<input type=hidden name="output_format" value="HTML">|;
+
+
+	$html_hiddens .= qq|<SCRIPT LANGUAGE="javascript">
+						|;
+	$html_hiddens .= qq|var noRace=$no_race_question;|;
+	$html_hiddens .= qq|var noDrive=$no_drive_question;|;
+	$html_hiddens .= qq|var noGina=$no_gina_question;|;
+	$html_hiddens .= qq|var noBio=$no_bio_question;|;
+	$html_hiddens .= qq|var noJob=$no_job_question;|;
+	$html_hiddens .= qq|
+						</script>|;
+
+$html_hiddens;
+}
+            </form>
+            <!--Form and form table END here.-->
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td class="HSassessmentsGap"></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td class="HScopyright">{$copyright}</td>
+        </tr>
+      </table>
+      </div>
+      </div>
+    <!-- Template: hra_qset.tmpl End -->
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$footer_file", PACKAGE => __PACKAGE__ );
+}

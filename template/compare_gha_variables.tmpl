@@ -1,0 +1,531 @@
+{
+use vars qw( 	$gender $genders $fact $wellness_bar @good_habits @bad_habits
+		$Wellness $risks_short $WeightLine $gha_title $gha_subtitle
+		$gha_color_guide $smoke_message $other_smoke_message $chew_message
+		$weight_message $drink_and_drive_message $speed_message 
+		$seat_belt_message $bp_message $cholesterol_message 
+		$exercise_message $diabetes_message $loss_message 
+		$breast_cancer_message $mammogram_message $pap_message 
+		$fat_message $fiber_message $alcohol_message $helmet_message 
+		@recommendations $risks_bars $status_message $time_since
+	);
+
+require HealthStatus::CalcRisk;		
+use Date::Calc qw(:all);
+use DateTime::Format::MySQL;
+use DateTime;
+use DateTime::Format::Duration;
+
+#my $d = DateTime::Format::Duration->new(pattern => '%j total days, %Y years, %m months, %e days');
+my $d = DateTime::Format::Duration->new(pattern => ' %j days ago');
+
+my $lc_sex = lc $sex;
+if ($sex eq MALE){
+	$gender = 'man';
+	$genders = 'men';
+}else{
+	$gender =  'woman';
+	$genders = 'women';
+}
+
+$status_message = 'Assessment taken on ';
+if($x_user{'db_sortdate'} gt $y_user{'db_sortdate'}){
+	my $dt1 = DateTime::Format::MySQL->parse_datetime($x_user{'db_sortdate'});
+	my $dt2 = DateTime::Format::MySQL->parse_datetime($y_user{'db_sortdate'});
+	my $dur = $dt1->subtract_datetime($dt2);
+	$status_message .= 'x ' . $x_user{'db_sortdate'} . ' is greater than y ' . $y_user{'db_sortdate'} . '<br>' . $d->format_duration($dur) . ' <br>';
+	$status_message .= $dt2->mdy('/') . ' was compared to one taken ' . $dt1->mdy('/');
+	$time_since = $d->format_duration($dur);
+	}
+elsif($x_user{'db_sortdate'} lt $y_user{'db_sortdate'}){
+	my $dt1 = DateTime::Format::MySQL->parse_datetime($x_user{'db_sortdate'});
+	my $dt2 = DateTime::Format::MySQL->parse_datetime($y_user{'db_sortdate'});
+	my $dur = $dt2->subtract_datetime($dt1);
+	$status_message .= 'y ' . $y_user{'db_sortdate'} . ' is greater than x ' . $x_user{'db_sortdate'} . '<br>' . $d->format_duration($dur) . ' <br>';
+	$status_message .= $dt1->mdy('/') . ' was compared to one taken ' . $dt2->mdy('/');
+	$time_since = $d->format_duration($dur);
+	}
+else {
+	$status_message .= 'x is equal to y<br>' . "$x_user{'db_sortdate'} - $y_user{'db_sortdate'}<br>";
+	#$time_since = $d->format_duration($dur);
+	}
+
+my @examine = ( 'age', 'bmi', 'weight', 'bp_sys', 'bp_dias', 'cholesterol', 'hdl' );
+
+foreach my $thing (sort keys %x_user) {
+	++$ex_cnt2;
+	#$status_message .=  $thing . ' =( ' . $x_user{$thing} . ' ) - ( '  . $y_user{$thing} . ' ) . <br>';
+	}
+
+# $gha_title = '<img src="images/gha/title.gif" width="299" height="15">';
+# $gha_subtitle = '<img src="images/gha/sub_out.gif" width="115" height="18">';
+# $gha_subtitle_in = '<img src="images/gha/sub_out.gif" width="93" height="18">';
+# $gha_color_guide = '<img src="images/gha/color_guide.gif" width="309" height="13">';
+
+my $barswitch = $wellness*10;
+$wellness_bar = 'images/well/well_';
+$wellness_bar .= "$barswitch.png";
+
+my $bp_avg = 120; # U.S. average blood pressure level(120/80) - National Institutes of Health 
+my $bp_target = 130; # target blood pressure (130, optimal is 120) - National Institutes of Health
+my $cholesterol_avg = 210; # U.S. average for cholesterol level - National Institutes of Health 
+my $cholesterol_target = CHOL_MARGINAL; # target cholesterol - American Heart Association
+my $cholesterol_low = CHOL_LOW; # target cholesterol - American Heart Association
+my $hdl_avg_men = 45; # U.S. average for cholesterol level men - National Institutes of Health 
+my $hdl_avg_women = 55; # U.S. average for cholesterol level women - National Institutes of Health 
+my $hdl_target = HDL_LOW; # target HDL cholesterol - American Heart Association
+my $exercise_avg = 1; # U.S. average 30 minute exercise sessions - Surgeon General 
+my $exercise_target = 3; # target 30 minute exercise sessions - Surgeon General
+
+
+my @weightflg 		=  ('within', 'over', 'significantly over', 'under');
+my @smoke_habits 	= ( 'not smoking','quit smoking','smoking','smoking heavily' );
+my @weight_habits 	= ( 'healthy weight', 'slightly overweight', 'overweight', 'significantly overweight', 'under weight' );
+my @fat_habits 		= ( '', 'eating too many fats', 'eating too many fats', '', 'low fat diet' );
+my @bp_habits 		= ( 'safe blood pressure', 'don\'t know blood pressure', 'high blood pressure', 'high blood pressure' );
+my @chol_habits 	= ( 'low cholesterol', 'unknown cholesterol', 'too low cholesterol', 'elevated cholesterol', 'high cholesterol' );
+my @hdl_habits 		= ( 'healthy HDL', 'unknown HDL', 'low HDL' );
+my @exer_habits 	= ( 'regular exercise', 'not enough regular exercise', 'not enough regular exercise', 'no regular exercise' );
+my @fiber_habits 	= ( 'diet includes plenty of fiber', 'diet includes fiber', 'not enough fiber', 'very little fiber' );
+
+$CRC_bar_height = 22;
+$CRC_end_width = 9;
+$CRC_left = 'images/global/bar_start.gif';
+$CRC_right = 'images/global/bar_end.gif';
+$CRC_middle = 'images/global/bar_mid.gif';
+$CRC_you = 'images/global/bar_current.gif';
+$CRC_target = 'images/global/bar_desired.gif';
+$CRC_avg = 'images/global/bar_avg.gif';
+
+
+$WeightLine = "For height $height_imperial and $frame_size frame, $weight pounds is $weightflg[$weight_flag] the recommended range which is $low_weight to $high_weight pounds.";
+
+
+my $start = "$name, there are some risk factors you cannot control - like that you are $lc_sex, and you are $age";
+$fact = do 	{
+		if ($diabetes eq YES && 
+			( $FBC_flag == 1 || $FBC_flag == 2 ) )	{ "$start, that you have diabetes, or that your family has a history of breast cancer."}
+		elsif ($diabetes eq YES  ) 			{ "$start or that you have diabetes." }
+		elsif (( $FBC_flag == 1 || $FBC_flag == 2 )) 	{ "$start or that your family has a history of breast cancer." }
+		else						{ "$start." }
+		};
+
+push @good_habits, "Your weight is in the desirable range." if ($weight_flag == 0);
+push @bad_habits, 'You need to gain a few pounds.' if ($weight_flag == 4);
+push @bad_habits, 'You need to lose a few pounds.' if ($weight_flag == 1);
+push @bad_habits, 'You need to start a weight-loss program.' if ($weight_flag == 2);
+push @good_habits, "You don't use tobacco products." if (!$smoke_count && !$smoke_other);
+push @good_habits, "You quit smoking." if ($smoke_flag == 1);
+push @bad_habits, 'You need to quit smoking.' if ($smoke_flag == 2);
+push @bad_habits, 'You need to stop using smokeless tobacco.' if ($chews_flag == 1);
+push @bad_habits, 'You need to stop using a pipe.' if ($pipes_flag == 1);
+push @bad_habits, 'You need to stop smoking cigars.' if ($cigars_flag == 1);
+push @good_habits, 'Your blood pressure is good.' if ($bp_flag == 0);
+push @bad_habits, 'Get your blood pressure tested.' if ($bp_flag == 1 || $bp_flag == 2);
+push @bad_habits, 'Lower your blood pressure.' if ($bp_flag == 2 || $bp_flag == 3);
+push @good_habits, 'You wear your seatbelt.' if ($seat_belt_flag == 0);
+push @bad_habits, 'Buckle up.' if ($seat_belt_flag == 1);
+push @good_habits, 'You drive at a safe speed.' if ($speed_flag == 0);
+push @bad_habits, 'Drive within the speed limit.' if ($speed_flag == 1);
+push @good_habits, 'You always wear a helmet.' if ($helmet_flag == 1);
+push @bad_habits, 'Always wear your helmet.' if ($helmet_flag == 2);
+push @bad_habits, "Don't ride with drivers who drink." if ($drink_and_drive_flag == 1);
+push @good_habits, 'You get an annual Pap smear.' if ($pap_flag <= 1  && $sex eq FEMALE);
+push @bad_habits, 'You are due for an annual Pap smear.' if ($pap_flag > 1  && $sex eq FEMALE);
+push @good_habits, 'You had a recent mammogram.' if ($mammogram_flag <= 1  && $sex eq FEMALE);
+push @bad_habits, 'You are due for a mammogram.' if ($mammogram_flag > 1  && $sex eq FEMALE && $age >= 50);
+push @bad_habits, 'You are due for a mammogram.' if ($mammogram_flag > 2  && $sex eq FEMALE && $age >= 40);
+push @bad_habits, 'Check with your doctor about your mammogram schedule.' if ($mammogram_flag > 2  && $sex eq FEMALE && $FBC_flag && $age < 40);
+push @good_habits, 'You do a monthly breast self-exam.' if (!$self_breast_exam_flag  && $sex eq FEMALE);
+push @good_habits, 'You do breast self-exam regularly.' if ($self_breast_exam_flag == 1  && $sex eq FEMALE);
+push @bad_habits, 'You need to do breast self-exam regularly.' if (self_breast_exam_flag == 2  && $sex eq FEMALE);
+push @good_habits, 'You do not drink alcohol.' if ($alcohol_flag == 0);
+push @good_habits, 'You have low risk from alcohol.' if ($alcohol_flag == 1);
+push @bad_habits, 'Limit your drinking to two glasses a day.' if ($alcohol_flag == 2 && $sex eq MALE);
+push @bad_habits, 'Reduce your drinking to two glasses a day, see a counselor.' if ($alcohol_flag == 3 && $sex eq MALE);
+push @bad_habits, 'Limit your drinking to one glass a day.' if ($alcohol_flag == 2 && $sex eq FEMALE);
+push @bad_habits, 'Reduce your drinking to one glass a day, see a counselor.' if ($alcohol_flag == 3 && $sex eq FEMALE);
+push @good_habits, 'Your cholesterol level is within the healthy range.' if ($cholesterol_flag == 1);
+push @bad_habits, 'Get help in lowering your cholesterol level.' if ($cholesterol_flag == 3);
+push @bad_habits, 'Get help in lowering your cholesterol level.' if ($cholesterol_flag == 2);
+push @bad_habits, 'Get your cholesterol checked.' if ($cholesterol_flag == 0);
+push @good_habits, 'You get regular exercise.' if ($exercise_flag == 0);
+push @bad_habits, 'Exercise 3 to 5 times a week.' if ($exercise_flag == 1);
+push @bad_habits, 'Exercise 3 to 5 times a week.' if ($exercise_flag == 2);
+push @good_habits, 'You eat a diet high in fiber.' if ($fiber_flag == 1);
+push @bad_habits, 'Add more fiber to your diet.' if ($fiber_flag == 0);
+push @good_habits, 'There is not too much fat in your diet.' if ($fat_flag == 1);
+push @bad_habits, 'Reduce the amount of fat in your diet.' if ($fat_flag == 0);
+push @bad_habits, 'If you have witnessed a violent crime, consider seeing a counselor.' if ($violence_flag > 1);
+push @good_habits, 'Manage your diabetes.' if ($diabetes eq YES);
+
+my $well = '';
+if ($wellness >= 85 && 
+	$#bad_habits <= 2)	{ $well = "Congratulations, your wellness score of $wellness shows that you are making good decisions about your health.  Keep up the good work! " }
+elsif ($wellness > 85 && 
+	$#bad_habits > 2)	{ 
+	$well = "Your wellness score of $wellness is in the low risk category, good for you!  You still have some habits that could be improved. ";
+	if ($diabetes eq YES || 
+		( $FBC_flag == 1 || $FBC_flag == 2 )) 		{ $well .= "You have uncontrollable factors that lower your wellness score.  That makes it very important to improve in areas you can control. " }
+	if ($smoke_flag == 2)	{ $well .= "Use of tobacco in any form " }
+	if ($alcohol_flag >=1)	{ 
+		if ($smoke_flag == 2)	{ $well .= "and drinking alcohol " }
+		else			{ $well .= "Drinking alcohol " }
+	}
+	if ($smoke_flag == 2 || $alcohol_flag >=1) { $well .= "can cause buildup in your system that can cause many problems later in life. " }
+	$well .= "Start making healthier decisions now to reduce chances of health problems in the future. "
+	}
+elsif ($wellness < 70){
+	$well = "Your wellness score of $wellness indicates that you are at high risk and may already be experiencing serious health problems. ";
+	if ($diabetes eq YES || 
+		( $FBC_flag == 1 || $FBC_flag == 2 ) ) 	{ $well .= "You have uncontrollable factors that lower your wellness score.  That makes it very important to improve in areas you can control. " }
+	if ($smoke_flag == 2)				{ $well .= "Use of tobacco in any form " }
+	if ($alcohol_flag >=1){
+		if ($smoke_flag == 2)			{ $well .= "and drinking alcohol " }
+		else					{ $well .= "Drinking alcohol " }
+	}
+	if ($smoke_flag == 2 || 
+		$alcohol_flag >=1)			{ $well .= "can cause buildup in your system that can cause many problems. Stopping these high risk behaviors now will reduce your health risks almost immediately. " }
+	$well .= "Now is the time to start making changes.  Follow the recommendations in this report to get your health back on track. ";
+	}
+else{
+	$well = "Your wellness score of $wellness indicates that you are at moderate risk and may already be experiencing health problems. ";
+	if ($diabetes eq YES || 
+		( $FBC_flag == 1 || $FBC_flag == 2 ) ) 	{ $well .= "You have uncontrollable factors that lower your wellness score.  That makes it very important to improve in areas you can control. " }
+	if ($smoke_flag == 2)				{ $well .= "Use of tobacco in any form " }
+	if ($alcohol_flag >=1)	{ 
+		if ($smoke_flag == 2)			{ $well .= "and drinking alcohol " }
+		else					{ $well .= "Drinking alcohol " }
+	}
+	if ($smoke_flag == 2 || 
+		$alcohol_flag >=1)			{ $well .= "can cause buildup in your system that can cause many problems. Stopping these high risk behaviors now will reduce your health risks almost immediately. " }
+	$well .= "Now is the time to start making changes.  Follow the recommendations in this report to get your health back on track. ";
+	}
+if ($appraised_age < $actual_age){
+	$well .= "By looking at the responses you gave we are able to compute an appraised age, your appraised age is $appraised_age, that is great, it is less than your actual age. ";
+	$well .= "If you modify your habits you could reach an appraised age of $achievable_age, wouldn't that be great? " if($achievable_age < $appraised_age);
+	}
+elsif($appraised_age > $actual_age){
+	$well .= "By looking at the responses you gave we are able to compute an appraised age, your appraised age is $appraised_age, this is not very good, it is more than your actual age. ";
+	$well .= "If you modify your habits you could reach an appraised age of $achievable_age, wouldn't that be great? " if($achievable_age < $appraised_age);
+	}
+else{
+	$well .= "By looking at the responses you gave we are able to compute an appraised age, your appraised age is $appraised_age, it is the same as your actual age. ";
+	$well .= "If you modify your habits you could reach an appraised age of $achievable_age, wouldn't that be great? " if($achievable_age < $appraised_age);
+	}
+
+$Wellness = $well;	
+
+# condition specific messages
+## smoking
+my $smk ='';
+	{
+	if ($smoke_flag == 0)  					{ $smk .= "By not smoking you have avoided the habit that causes the most illness and death in the United States." }
+	elsif($smoke_flag == 1){ 
+				if ($cigarette_years_quit <= 2)	{ $smk .= "Your recent decision to stop smoking has significantly reduced your risk of cancer and heart disease.  While it may be tough at times, you have made the right decision." }
+				else				{ $smk .= "Congratulations, by stopping smoking, you significantly reduced your risk of cancer and heart disease.  " }
+				}
+	elsif($smoke_flag == 2){
+				if ($cigs_a_day == 1 )		{ $smk .= "You smoke one cigarette a day!  Smoking" }
+				else 				{ $smk .= "You smoke $cigs_a_day cigarettes a day!  Smoking" }
+				if ($cigs_a_day < 21) 		{ $smk .= " is a serious threat" }
+				else 				{ $smk .= " $cigs_a_day cigarettes a day is a critical threat" }
+				$smk .= " to your health.  It raises your risk for cancer, heart disease, and stroke.";
+				$smk .= "  Smoking also makes you more susceptible to colds and respiratory infections.";
+				$smk .= "  You should quit smoking. Links to additional resources and more information are";
+				$smk .= " located at the end of this report.";
+				}
+	};
+$smoke_message = $smk;
+
+## smoking cigars, pipes or chewing tobacco
+$chew_message = "Smokeless tobacco presents serious health risks, even if you don't light up.  It increases your risk for tongue, mouth and throat cancers.  " 
+	if $chews_flag;
+
+my $smk_other;
+	{
+		if ($cigars_flag || 
+			$pipes_flag) {
+					$smk_other = "You smoke";
+					if ($cigars_flag ) 		{ $smk_other .= " cigars"}
+					if ($pipes_flag &&
+						$cigars_flag) 		{ $smk_other .= " and" }
+					if ($pipes_flag) 		{ $smk_other .= " a pipe.  " }
+					else 				{ $smk_other .= ".  " }
+				      }
+		if ( $cigars_flag || 
+			$pipes_flag || 
+			$chews_flag ) { $smk_other .= "  Use of any tobacco products increases your risk for lung and mouth cancers, as well as heart disease.  To reduce these risks, stop using tobacco in any form." }
+	}
+$other_smoke_message = $smk_other;
+
+## diabetes
+my $DiabMsg='';
+{
+	if ($diabetes_flag == 1) {
+				$DiabMsg = "Follow the recommendations of your health care provider to control";
+				if ($bmi > 24.9) 	{ $DiabMsg .= " your diabetes and weight." }
+				else			{ $DiabMsg .= " your diabetes." }
+				$DiabMsg .= "  Additional links of information are available at the end of this report.";
+				}
+}
+$diabetes_message = $DiabMsg;
+
+## loss
+my $LossMsg='';
+{
+	if ($loss_flag > 0) {
+		$LossMsg = "You indicated having";
+		if ($loss_flag == 1)	{ $LossMsg .= " a" }
+		else 			{ $LossMsg .= " more than one" }
+		$LossMsg .= " serious loss in the past year.  A loss can affect many";
+		$LossMsg .= " parts of your life including your health.  If you are having problems, find help - a friend";
+		$LossMsg .= " to talk to, a pastor or minister, or a trained counselor.  Other resources are listed at the end of this report.";
+	}
+}
+$loss_message = $LossMsg;
+
+# body measure messages
+## weight
+$weight_message = "Your weight of $weight pounds is $weightflg[$weight_flag] the recommended range for people $height_imperial tall.    Your Body Mass Index (BMI) is $bmi; most professionals agree it should be between 19.5 and 25.  The healthy weight range for your height is $low_weight to $high_weight pounds.";
+
+## blood pressure
+my $BPMsg;
+{ 
+	$BPMsg = '';
+	if ($bp_flag == 3) 	{ $BPMsg = "Your blood pressure ($bp_sys/$bp_dias) is higher than recommended." }
+	elsif ($bp_flag == 2) 	{ $BPMsg = "You checked that your blood pressure is high." }
+	elsif ($bp_flag == 1)	{ $BPMsg = "You checked that you do not know your blood pressure reading.  Take time to find out immediately." }
+	elsif ($bp_flag == 0)	{ $BPMsg = "Your blood pressure ($bp_sys/$bp_dias) is within the recommended range." }
+	$BPMsg .= "  High blood pressure (hypertension) can be serious.  It puts extra stress on your heart and blood vessels, which could result in heart disease or stroke.";
+	# since blood pressure people don't take their medicine too well add  some emphasis
+	if ($bp_meds eq YES) { $BPMsg .= "  Make sure you continue to take your medicine as prescribed.  Many people fail to take their medicine when feeling good, this is very unwise."	}
+	if ($bp_flag) {
+			$BPMsg .= "  Consult with your health care provider for";
+			if ($bp_meds eq YES) { $BPMsg .= " additional" }
+			$BPMsg .= " steps to lower your blood pressure.  These steps may include diet";
+			if ($bp_meds eq NO) { $BPMsg .= ", medication," }
+			$BPMsg .= " and exercise.  You should also review the links and reading material recommended at the end of this report.";
+		      }
+}
+$bp_message = $BPMsg;
+
+## cholesterol
+my $CholMsg;
+{
+	$CholMsg='';
+	if ($cholesterol_flag == 0) { 
+		$CholMsg = "No value was entered for your cholesterol.  The ideal range for cholesterol is under $cholesterol_target. Have your cholesterol checked to make sure you are under this.";
+		if ($cholesterol_check eq DONT_KNOW) {
+			$CholMsg = "You checked that you do not know your cholesterol levels.  To be able to insure your best health,";
+			$CholMsg .= " check with your provider to get this information.  If you have not had your cholesterol checked,";
+			$CholMsg .= " it is a simple process.  The ideal range for cholesterol is under $cholesterol_target.";
+			$CholMsg .= " Have your cholesterol checked to make sure you are under this.";
+		}
+	}
+	if ($cholesterol_flag == 1) {
+		$CholMsg = "$cholesterol was entered for your cholesterol.  This is within the ideal range for cholesterol, under $cholesterol_target."}
+	elsif ($cholesterol_flag == 2) {
+		$CholMsg = "$cholesterol was entered for your cholesterol.  This is slightly above the ideal for cholesterol which is $cholesterol_target.";
+		$CholMsg .= " Review the material and links supplied later in the report for ways to reduce your cholesterol.";}
+	elsif ($cholesterol_flag == 3){
+		$CholMsg = "$cholesterol was entered for your cholesterol.  This is significantly above the ideal for cholesterol which is $cholesterol_target.";
+		$CholMsg .= "  Consult with your health care provider for recommendations on lowering your cholesterol and";
+		$CholMsg .= " review the material and links supplied later in the report for ways to reduce your cholesterol.";}
+	elsif ($cholesterol_flag == 4){
+		$CholMsg = "$cholesterol was entered for your cholesterol.  This is below the ideal for cholesterol which is 90.";
+		$CholMsg .= "  Consult with your health care provider for recommendations on checking your cholesterol levels and";
+		$CholMsg .= " review the material and links supplied later in the report for ways to manage your cholesterol.";	}
+	if ($hdl_flag == 2) 	{ $CholMsg .= " Your HDL cholesterol (good cholesterol) was entered as $hdl. You are below the recommended level for HDL which is $hdl_target." }
+	elsif ($hdl_flag == 0) 	{ $CholMsg .= " You did not enter a value for your HDL cholesterol (good cholesterol).  The recommended level is above $hdl_target." }
+	else 			{ $CholMsg .= " Your HDL cholesterol (good cholesterol) was entered as $hdl which is great.  The recommended level is $hdl_target or above." }
+}
+$cholesterol_message = $CholMsg;
+
+# Habits
+## Driving related messages
+$seat_belt_message = "Automobile accidents are the number one cause of death for people under 40.  You can reduce your risk of serious injury or death by wearing your seatbelt <b>EVERY</b> time." 
+	if $seat_belt_flag ;
+
+$speed_message = "This combined with your driving at dangerous speeds has put you at higher risk for dying in an automobile accident.  Don't become a statistic." 
+	if $speed_flag ;
+
+$drink_and_drive_message = "Driving a car or riding with a driver under the influence of alcohol is dangerous!  Car accidents and alcohol related car accidents are one of the leading causes of death.  Use a designated driver or take a taxi." 
+	if $drink_and_drive_flag ;
+
+$helmet_message = "Practicing good safety while on a motorcycle, ATV, or snowmobile is very important.  Your risk for serious injury is much higher when you do not wear your helmet.  While you may be a very good rider, other drivers can cause you to be in an accident.  Wear your helmet <b>EVERY</b> time you ride." 
+	if $helmet_flag > 1;
+
+## Exercise
+my @ExerMsg = [ " ideal body weight and", "", "", "", ""];
+$exercise_message = do
+		{
+		if ($exercise_flag == 0) 	{ "Continue to exercise regularly, 3-5 times per week, to maintain $ExerMsg[$weight_flag] optimal health." }
+		elsif ($exercise_flag == 1)	{ "To be your best, a fitness program of exercise 3 to 5 times per week is recommended. See the resources at the end of the report for more fitness information. Before engaging in any exercise, it is best to consult with your health care provider." }
+		else				{ "To be your best, a fitness program of exercise 3 to 5 times per week is recommended. See the resources at the end of the report for more fitness information. Before engaging in any exercise, it is best to consult with your health care provider." }
+		};
+		
+
+# Female messages
+if ($sex eq FEMALE){
+## Mammogram
+$mammogram_message = do
+			{
+			if ($actual_age > 50 && 
+				($mammogram_female ne LESS_THAN_A_YEAR && 
+				 $mammogram_female ne ONE_YEAR_AGO)) 		{ "U.S. Preventive Services Task Force recommends annual mammograms for women over 50 years of age.  You are overdue for this important exam, make an appointment with your health care provider as soon as possible.  " }
+			elsif ($actual_age > 40 && 
+				($mammogram_female ne LESS_THAN_A_YEAR && 
+				 $mammogram_female ne ONE_YEAR_AGO && 
+				 $mammogram_female ne TWO_YEARS_AGO)) 		{ "U.S. Preventive Services Task Force recommends breast cancer screening for women your age.  You are overdue for this important exam, make an appointment with your health care provider as soon as possible.  " }
+			};
+			
+## Breast cancer
+my $bc;
+{
+	if ($FBC_flag == 1 || 
+		$FBC_flag == 2){
+				$bc = "Your family history puts you at greater risk for breast cancer.  Practice regular self examination, and discuss your family history with your physician.";
+				if($mammogram_flag < 2)		{ $bc .= "  Your recent mammogram shows you are paying attention to this health issue, stay on track and follow your physicians recommendations." }
+				elsif($actual_age >= 35 && 
+					$mammogram_flag > 1)	{ $bc .= "  You are at an age where regular mammograms are recommended for those at higher risk.  Check with your physician now about taking one." }
+				}
+}
+$breast_cancer_message = $bc;
+
+## Pap examination
+$pap_message = do
+		{
+		if ($hyst_female eq NO &&
+			$pap_flag > 1) 		{ "Most doctors recommend an annual Pap exam.  You are overdue for your exam, make an appointment with your health care provider as soon as possible." }
+		elsif ($hyst_female eq NO &&
+			$pap_flag <= 1) 	{ "Annual Pap exams reduce your cancer risk, good job on keeping up with this important examination." }
+		elsif ($hyst_female eq YES)	{ "Check with your physician regarding a pelvic examination schedule that fits your situation. " }
+		};
+
+# end of Female
+}
+
+# Dietary intake
+## Alcohol
+my $AlcMsg;
+{
+	if($alcohol_flag == 0)	{  }
+	elsif($alcohol_flag == 1){
+				if ($drinks_week == 1)	{ $AlcMsg = "Your consumption of one drink in a week is considered low to moderate." }
+				else 			{ $AlcMsg = "Your consumption of $drinks_week drinks in a week is considered low to moderate." }
+				$AlcMsg .= "  Any consumption of alcohol increases your risk for liver disease and some cancers.";
+				$AlcMsg .= "  By limiting your drinking to a low level, you remain in control and reduce your risks.";
+				}
+	elsif ($alcohol_flag == 2){
+				$AlcMsg = "Your consumption of $drinks_week drinks in a week is higher than it should be.  Any consumption of alcohol increases your risk for liver disease and some cancers.";
+				$AlcMsg .= "  Drinking as much as you do will damage your health, and often leads to cirrhosis of the liver, one of the top ten causes of death.  Reduce your drinking, to no more than one";
+				$AlcMsg .= " drink per day, quit if you can.  Check out the resources available at the end of this report.";
+				}
+	elsif ($alcohol_flag == 3){
+				$AlcMsg = "You are a heavy drinker.  Drinking $drinks_week drinks in a week may indicate you have lost control of this habit.  Consult with a counselor or health care";
+				$AlcMsg .= " provider <b>immediately</b>.  Drinking as much as you do will damage your health and often leads to cirrhosis of the";
+				$AlcMsg .= " liver, one of the top ten causes of death.  Reduce your drinking, to no more than one drink per day and quit if you can.  Check out the resources available at the end of this report.";
+				}
+}
+$alcohol_message = $AlcMsg;
+
+## Fiber
+$fiber_message = do
+		{
+		if ($fiber_flag == 0) 	{ "You do not eat high fiber foods every day.  High fiber foods include fruits, cereals, beans, and breads.  These foods can help reduce some cancers." }
+		else 			{ "You eat high fiber foods every day.  High fiber foods include fruits, cereals, beans, and breads.  These foods can help reduce some cancers." }
+		};
+		
+## Fat intake
+$fat_message = do
+		{
+		if ($fat_flag == 0) 	{ "You are keeping your diet low in saturated fats.  This is reducing your risk for heart disease and hardening of the arteries.  Keep up the good work!" }
+		else 			{ "You reported eating foods that are high in cholesterol and fat.  This increases your risk for heart disease and hardening of the arteries.  Fried foods, cheese, and whole milk are foods you should stay away from to reduce the amount of fat in your diet." }
+		};
+
+# Recommendations for checkups
+#status messages
+@recommendations = ();
+@recommendations = ( "Exercise 3 to 5 times per week","Dental exam","Blood pressure check","Cholesterol test","Prostate exam","Tetanus-Diptheria booster shot (every 10 years)","Measles-Rubella vaccine (if not already immune)" )
+	if $sex eq MALE &&
+		$actual_age < 40;
+
+@recommendations = ( "Exercise 3 to 5 times per week","Dental exam","Blood pressure check","Cholesterol test","Prostate exam (or sigmoidoscopy)","Tetanus-Diptheria booster shot (every 10 years)","Eye exam for glaucoma" )
+	if $sex eq MALE &&
+		($actual_age >= 40 && $actual_age < 50);
+
+@recommendations = ( "Exercise 3 to 5 times per week","Dental exam","Blood pressure check","Cholesterol test","Prostate exam (or sigmoidoscopy)","Tetanus-Diptheria booster shot (every 10 years)","Eye exam for glaucoma" )
+	if $sex eq MALE &&
+		($actual_age >= 50 && $actual_age < 65);
+		
+@recommendations = ( "Exercise 3 to 5 times per week","Blood pressure check","Prostrate exam (or sigmoidoscopy)","Tetanus-Diptheria booster shot (every 10 years)","Influenza vaccine (every year)","Eye exam for glaucoma","Pneumococcal vaccine (one time)" )
+	if $sex eq MALE &&
+		$actual_age >= 65;
+
+@recommendations = ( "Exercise 3 to 5 times per week","Dental exam","Blood pressure check","Cholesterol test","Pap smear test","Rectal exam","Tetanus-Diptheria booster shot (every 10 years)","Measles-Rubella vaccine (if not already immune)" )
+	if $sex eq FEMALE &&
+		$actual_age < 35;
+
+@recommendations = ( "Exercise 3 to 5 times per week","Dental exam","Blood pressure check","Cholesterol test","Pap smear test","Breast cancer screening for high risk persons (check with your doctor or clinic)","Rectal exam","Tetanus-Diptheria booster shot (every 10 years)","Measles-Rubella vaccine (if not already immune)" )
+	if $sex eq FEMALE &&
+		($actual_age >= 35 && $actual_age < 40);
+
+@recommendations = ( "Exercise 3 to 5 times per week","Dental exam","Blood pressure check","Cholesterol test","Pap smear test","Rectal exam (or sigmoidoscopy)","Breast cancer screening(check with your doctor or clinic)","Eye exam for glaucoma","Tetanus-Diptheria booster shot (every 10 years)" )
+	if $sex eq FEMALE &&
+		($actual_age >= 40 && $actual_age < 50);
+
+@recommendations = ( "Exercise 3 to 5 times per week","Dental exam","Blood pressure check","Cholesterol test","Pap smear test","Rectal exam (or sigmoidoscopy)","Mammogram","Eye exam for glaucoma","Tetanus-Diptheria booster shot (every 10 years)" )
+	if $sex eq FEMALE &&
+		($actual_age >= 50 && $actual_age < 65);
+
+@recommendations = ( "Exercise 3 to 5 times per week","Blood pressure check","Mammogram","Rectal exam (or sigmoidoscopy)","Tetanus-Diptheria booster shot (every 10 years)","Eye exam for glaucoma","Influenza vaccine (every year)","Pneumococcal vaccine (one time)" )
+	if $sex eq FEMALE &&
+		$actual_age >= 65;
+
+my $risks_object1 = HealthStatus::CalcRisk::unpack_risk_data($hs_risk_data) ;
+my $risks_object2 = HealthStatus::CalcRisk::unpack_risk_data($hs_risk_data1) ;
+
+my @risks_list = $risks_object1->HealthStatus::CalcRisk::sort('average_risk');
+my $cntx = 1;
+$risks_short = "<ol>";
+foreach (@risks_list){ 
+	$risks_hash = $risks_object1->HealthStatus::CalcRisk::record($_);
+	next if ($_ == 43);
+	$risks_short .= "<li>" . $risks_hash->{name} . "</li>";
+	last if($cntx >= 10);
+	++$cntx;
+}
+$risks_short .= "</ol>";
+
+@risks_list = $risks_object1->HealthStatus::CalcRisk::sort('user_risk');
+$cntx = 1;
+my $scale = 1;
+$risks_bars = "<ul>";
+foreach (@risks_list){ 
+	$risks_hash = $risks_object1->HealthStatus::CalcRisk::record($_);
+	next if ($_ == 43);
+	if($cntx == 1){
+		$scale = sprintf("%.2f",( 150 / ( $risks_hash->{user_risk} + 15 ) ));
+	}
+	%vars = (
+		format => 1,
+		my_score => sprintf("%.2f",$risks_hash->{user_risk} * 1000),
+		avg_score => sprintf("%.2f",$risks_hash->{average_risk} * 1000),
+		target_score => sprintf("%.2f",$risks_hash->{achievable_risk} * 1000),
+		scope_text => "$risks_hash->{name}",
+		rate_text => 'Average score for ',
+		target_text => 'Achievable score for ',
+		bar_scale => $scale,
+		title_text => ''                      	
+	        );
+	my $bar = Text::Template::fill_in_file( "$config{template_directory}html_bar.tmpl", PACKAGE => __PACKAGE__ ) or die $Text::Template::ERROR;
+	$risks_bars .= qq|<li><span class="h_risk">$risks_hash->{name}</span>&nbsp;-&nbsp;<span class="h_detail">Your risk is $vars{my_score}</span><br>$bar<br><span class="h_detail">Achievable score is $vars{target_score}<br>&nbsp;</span></li>|;
+	last if($cntx >= 10);
+	++$cntx;
+}
+$risks_bars .= "</ul>";
+
+
+' ';
+}

@@ -1,0 +1,257 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}drc_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}batch_header.tmpl", PACKAGE => __PACKAGE__ );
+}       <div class="HSstyle">
+		<table width="560" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td align=left class="HStitle"><img src="images/global/trans.gif" width="1" height="22">Batch Entry Diabetes</td>
+        </tr>
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td align="center" valign="top">
+            <!--Form and form table START here. Table max width no more than 560 pixels.-->
+            <form METHOD="POST" action="{$batch_entry}" name="theForm" onSubmit="return checkWholeForm(this)">
+              <table border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td align="right" class="HSbodytext">Registration/Location Number:</td>
+					<td>&nbsp;</td>
+					<td><input name="db_employer" type="text" size="18" /></td>
+				</tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="bodytext">User ID:</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input NAME="db_id" SIZE="15" maxlength="12">
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">First name:</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input NAME="first_name" SIZE="28" value="">
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Last name:</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input NAME="last_name" SIZE="28" value="" class="HSquestion">
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td><img src="images/global/trans.gif" height="5" width="220"></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Date of Birth:mm/dd/yyyy</td>
+                  <td><img src="images/global/trans.gif" width="10" height="1"></td>
+                  <td>
+                    <input name="birth_month" SIZE="2" value="" class="HSquestion"> /
+                    <input name="birth_date" SIZE="2" value="" class="HSquestion"> /
+		  			<input NAME="birth_year" SIZE="4" maxlength="4" value="" class="HSquestion"  onChange="check_batch_date()">
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Sex:(M/F)</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input NAME="sex" SIZE="7" value="" class="HSquestion"  onChange="disable_sex()">
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">What is your weight?<br>
+                    (in pounds)</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input NAME="weight" SIZE="5" maxlength="3" class="HSquestion">
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">What is your height?</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input NAME="feet" SIZE="5" maxlength="1" class="HSquestion" onChange="convert_height()">
+                    <input NAME="inch" SIZE="5" maxlength="2" class="HSquestion" onChange="convert_height()">
+                    <input type=hidden name=inches value="">
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Please indicate your race:</td>
+                  <td>&nbsp;</td>
+                  <td>
+					<select size="1" NAME="race" class="HSquestion">
+						<option value="">&nbsp;</option>
+						<option VALUE="African American">African American </option>
+						<option VALUE="Aleutian, Eskimo or American Indian">Aleutian</option>
+						<option VALUE="Aleutian, Eskimo or American Indian">American Indian</option>
+						<option VALUE="Asian"> Asian</option>
+						<option VALUE="Caucasian">Caucasian</option>
+						<option VALUE="Aleutian, Eskimo or American Indian">Eskimo</option>
+						<option VALUE="Hispanic">Hispanic/Latino</option>
+						<option VALUE="Other">Other </option>
+						<option VALUE="Don't know">Don't know</option>
+					</select>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Do you exercise regularly?(y/n)</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input name="exercise" SIZE="7" value="" class="HSquestion" onChange="check_exer()">
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Do you have a sister or<br>brother with diabetes?</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input name="siblings_have_diabetes" SIZE="7" value="" class="HSquestion" onChange="check_siblings_have_diabetes()">
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Do you have a parent<br>with diabetes?</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input name="parents_have_diabetes" SIZE="7" value="" class="HSquestion" onChange="check_parents_have_diabetes()">
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Were you diagnosed with gestational<br />diabetes mellitus (GDM) during<br />any pregnancy?</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input name="diabetes_gdm" SIZE="7" value="" class="HSquestion" onChange="diabetes_gdm()">
+        		  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext" class="HSquestion">Have you given birth to a baby weighing<br>more than nine pounds at birth?</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input name="big_kid" SIZE="7" value="" class="HSquestion" onChange="big_kid()">
+        		  </td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input type="image" border="0" name="assess" {$submit}>
+                  </td>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td><img src="images/global/trans.gif" height="45" width="1">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    &nbsp;
+                  </td>
+                </tr>
+                </tr>
+              </table>
+					<input type=hidden name="restrict" value="">
+					<input type=hidden name="modify" value="">
+					<input type=hidden name="page" value="1">
+					<input type="hidden" name="assessment" value="DRC">
+					<input type=hidden name="output_format" value="BATCH">
+					<input type=hidden name="db_batch_entered_by" value="">
+					<input type=hidden name="db_batch_count" value="">
+					<input type=hidden name="db_batch_count_crc" value="">
+					<input type=hidden name="db_batch_count_drc" value="">
+					<input type=hidden name="db_batch_count_fit" value="">
+					<input type=hidden name="db_batch_count_gha" value="">
+					<input type=hidden name="db_batch_count_gwb" value="">
+					<input type=hidden name="db_batch_count_hra" value="">
+					<input type=hidden name="db_batch_count_mr" value="">
+					<input type=hidden name="db_batch_count_pt" value="">
+					<input type=hidden name="db_batch_number" value="">
+					<input type=hidden name="db_number" value="">
+					{ if($modify){ '<input type=hidden name="xnum" value="">';} }
+            </form>
+            <!--Form and form table END here.-->
+          </td>
+        </tr>
+        <tr>
+          <td width="12" height="30">&nbsp;</td>
+          <td align="center" valign="top" height="30">&nbsp;</td>
+        </tr>
+      </table>
+      </div>
+      {$copyright}<p>&nbsp;</p>
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$footer_file", PACKAGE => __PACKAGE__ );
+}
+

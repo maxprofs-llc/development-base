@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Template: assessment_in_header.tmpl -->
+<head>
+<title>Welcome to {$client} Internet Assessments</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta name="abstract" content="" />
+<meta name="classification" content="" />
+<meta name="robots" content="index, follow" />
+<meta name="revisit-after" content="7 days" />
+<meta name="rating" content="general" />
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="author" content="Copyright &copy; 2011 healthstatus.com" />
+<meta name="copyright" content="Copyright &copy; 1998-2011 healthstatus.com" />
+<base href="{$base}" />
+<link rel="stylesheet" type="text/css" href="include/internet_tmp.css" />
+<SCRIPT LANGUAGE="javascript" src="{$hs_java}"></script>
+<script type="text/javascript">
+function unhide() \{
+ var item = document.getElementById('header-inn');
+ if (item) \{
+ item.className=(item.className=='hidden')?'unhidden':'hidden';
+ \}
+ var item1 = document.getElementById('header');
+ if (item1) \{
+ item1.className=(item1.className=='hidden')?'unhidden':'hidden';
+ \}
+ \}
+ </script></head>
+
+<body>
+
+<!-- main section start here-->
+<div id="main">	
+
+<!-- header-spc section start here-->
+<div id="header-spc">	
+</div>
+<!-- header-spc section end here-->
+
+<!-- header section start here-->
+<div id="header">
+
+<div id="logo">
+
+<div id="header-right">
+{ my $html;
+	
+	if($cookie){
+       $html = qq|<p class="welcome_user">Welcome $fullname! </p>|;
+    }else{
+	   $html = qq|<p class="welcome_user">Welcome guest! </p>|;
+	}
+}
+<p class="pad1" style="padding-top: 28px;">
+<a href="/cgi-bin/hs/assessment_recs.cgi"><img src="images/but_07.jpg" alt="" /></a>
+<a href="/cgi-bin/hs/register.cgi?action=update&siteid=healthstatus/greg"><img src="images/but_09.jpg" alt="" /></a>
+<a href="/cgi-bin/hs/register.cgi?action=update_pass&siteid=healthstatus/greg"><img src="images/but_11.jpg" alt="" /></a>
+<a href="/cgi-bin/hs/logout.cgi"><img src="images/but_13.jpg" alt="" /></a>
+
+</p>
+</div>
+
+<p class="pad2"><a href="{$base}"><img height="95" src="{$brand_logo}" alt="" /></a></p>
+</div>
+</div>
+<!-- header section end here-->
+
+<!-- top-menu section start here-->
+
+<!-- top-menu section end here-->
+
+<!-- banner-spc section start here-->
+<!-- banner-spc section end here-->
+
+<!-- banner section start here-->
+<div id="banner">
+{my $html;
+if(uc $assessment eq 'CRC'){ $html = qq|<img src="images/global/cardiac1.jpg" alt="" />|; }
+elsif(uc $assessment eq 'DRC' ){ $html = qq|<img src="images/global/diabetes1.jpg" alt="" />|; }
+elsif(uc $assessment eq 'FIT' ){ $html = qq|<img src="images/global/fitness1.jpg" alt="" />|; }
+elsif(uc $assessment eq 'GHA' ){ $html = qq|<img src="images/global/healthrisk1.jpg" alt="" />|; }
+elsif(uc $assessment eq 'HRA' ){ $html = qq|<img src="images/global/generalhealth1.jpg" alt="" />|; }
+
+$html;
+}
+</div>
+<!-- banner section end here-->
+
+<!-- banner-botspc section start here-->
+<div id="banner-botspc">
+</div>
+<!-- banner-botspc section end here-->
+
+<!-- center section start here-->
+<div id="center">

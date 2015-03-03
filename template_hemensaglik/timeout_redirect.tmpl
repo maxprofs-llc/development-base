@@ -1,0 +1,28 @@
+<html>
+<head>
+<meta HTTP-EQUIV="REFRESH" CONTENT="0; URL={$config{logout_page}}">
+<title></title>
+<base href="{$base}">
+<link rel="stylesheet" href="{$styles}" type="text/css">
+<script language="JavaScript" type="text/javascript">
+function deletecook() {
+    var d = new Date();
+    document.cookie = "hs_ident=; expires= -1M ";
+     alert(document.cookie);
+     }
+</script>
+</head>
+
+
+<body onload="deletecook();">
+<!-- Template: timeout_redirect.tmpl from dir template_hemensaglik -->
+<p align="center"><br>
+<strong>Your session timed out, returning you to a login screen,</strong>
+</p>
+
+<p align="center"><strong>or you may click</strong><br>
+</p>
+
+<h3 align="center"><a href="{$config{logout_page}}"><big>{$config{client}}</big></a></h3>
+</body>
+</html>

@@ -1,0 +1,93 @@
+{ Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ ); }
+{
+if($submit_value eq 'Update') {'Configuration variable has been updated successfully.'}
+else {
+	my $html;
+	my $script;
+	my $height;
+	my $left_height= 0;
+	my $right_height= 0;
+	$html .= qq|
+		<form method="POST" action="$config{admin_dir}ggr_set_configuration.cgi" name="frm" onsubmit="return check_new_report_form()">
+		<table><tr><td width="20px"></td><td width="300px" class="maintext-b">Report fields</td><td width="40px"></td><td width="300px" class="maintext-b">Available fields</td></tr></table>
+		<div id="droppable_left" >|;
+		foreach my $field_value  (@report_fields_array){
+			$field_value =~ s/\_/-/g ;
+			$html .= qq|<div id="item_$field_value" class="draggable DragBox" onmouseover="showhint('$report_column_hash{$field_value}{description}', this, event, '150px')">$report_column_hash{$field_value}{name}</div>|;
+			$left_height += 24;
+		}
+		$html .= qq|</div><div id="droppable_right" >|;
+
+		foreach (sort { lc($default_avl_column_hash{$a}->{"name"}) cmp lc($default_avl_column_hash{$b}->{"name"}) } keys %default_avl_column_hash){
+			$html .= qq|<div id="item_$_" class="draggable DragBox" onmouseover="showhint('$default_avl_column_hash{$_}{description}', this, event, '150px')">$default_avl_column_hash{$_}{name} </div>|;
+			$script .= 	qq| new Draggable('item_$_'); |;
+			$right_height += 24;
+		}
+		$height = ($left_height > $right_height) ? $left_height : $right_height ; 
+		$html .= qq|</div>
+		<table align="left" width="100%">
+		<tr><td class="maintext-b"><input type="checkbox" name="new_report" value="1"> Save changes as a new report </td></tr>
+		<tr><td class="maintext-n">Report name: <input name="rpt_name" type="text"  value="" clas="maintext-n"> </td></tr>
+		<tr><td><input name="Submit" type="submit"  value="Update" class="maintext-b"> 
+		<input name="part_field_groups" type="hidden"  value="$part_field_groups">
+		<input name="indv_field_groups" type="hidden"  value="$indv_field_groups">
+		<input name="assessment_list" type="hidden"  value="$assessment_list">
+		<input name="rpt_type" type="hidden"  value="$rpt_type">
+		<input name="rpt_friendly_string" type="hidden"  value="$rpt_friendly_string">
+		<input id="conf_value" name="conf_value" type="hidden"  value="$report_column_string" size="100">
+		</td></tr></table>
+		</form>
+		<script type="text/javascript" language="javascript" >
+		document.getElementById('droppable_left').style.minHeight = $height + 'px';
+		document.getElementById('droppable_right').style.minHeight = $height + 'px';
+		$script
+		function create_sortable() {
+			Sortable.create('droppable_left',{
+			tag: 'div' ,
+			onChange:function(element){
+			var id_array = Sortable.sequence('droppable_left');
+			\$('conf_value').value = id_array;
+			}
+			});
+		}
+		create_sortable();
+		Droppables.add('droppable_left', { 
+			accept: 'draggable',
+			hoverclass: 'hover',
+			onDrop: function(element) {
+				if(element.parentNode.id != 'droppable_left'){
+					var el_id= element.id;
+					var content= document.getElementById(element.id).innerHTML ;
+					\$(element.id).remove();
+					\$('droppable_left').insert('<div id="'+ el_id + '" class="draggable DragBox">'+ content + '</div>');
+					//darg(element.id);
+					create_sortable();
+					var id_array = Sortable.sequence('droppable_left');
+					\$('conf_value').value = id_array;
+				}
+			}
+		});
+		Droppables.add('droppable_right', { 
+			accept: 'draggable',
+			hoverclass: 'hover',
+			onDrop: function(element) {
+				if(element.parentNode.id != 'droppable_right'){
+					var el_id= element.id;
+					var content= document.getElementById(element.id).innerHTML ;
+					\$(element.id).remove();
+					\$('droppable_right').insert('<div id="'+ el_id + '" class="draggable DragBox">'+ content + '</div>');
+					darg(element.id);
+					create_sortable();
+					var id_array = Sortable.sequence('droppable_left');
+					\$('conf_value').value = id_array;
+				}
+			}
+		});
+		function darg(id) {
+			new Draggable(id);
+		}
+		</script>|;
+		$html;
+	}
+}
+{ Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ ); }

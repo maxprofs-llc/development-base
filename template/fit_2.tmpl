@@ -1,0 +1,177 @@
+{
+# this part fills in a file that sets language variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}language.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}fit_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}fit_links.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE => __PACKAGE__ );
+}       <!-- Template: fit_1.tmpl -->
+	<!-- Templates called: fit_variables.tmpl, fit_links.tmpl, {$footer_file}, {$config{variables_template}},  {$header_file} -->
+	 
+	 <!-- ass-top-img section start here-->
+		<div id="ass-top-img" class="steptxt">
+			<p class="pad26">{$fit_title}</p>
+		</div>
+	 <!-- ass-top-img section end here-->
+
+		<div id="ass-bg" class="content">
+			<p class="pad27">
+			{$lang{$current_language}{fit_intro}}
+			</p>
+		</div> 
+
+<!-- risk-top-img section start here-->
+<div id="risk-top-img" class="steptxt">
+
+<p class="pad26">{$fit_subtitle}{$continued}</p>
+</div>
+<!-- risk-top-img section end here-->
+
+
+
+<p><img src="images/ass_06.jpg" alt="" /></p> <br/>
+
+
+<div id="risk-bg">
+<table width="967" cellspacing="0" style="margin-left: 30px">
+
+<tr>
+<td style="padding-top: 8px; padding-bottom: 10px; padding-right: 70px;" class="content">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td colspan="2" class="HSbodytext1">
+                  <p><b>{$date} {$lang{$current_language}{for}} {$name}</b></p>
+                </td>
+              </tr>
+              
+              <tr>
+                <td class="HStitle" width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{$current_language}{body_composition}}</b></font></td>
+                <td height="30">&nbsp;</td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right">{$body_graphic}<img src="images/global/trans.gif" width="20" height="1"></td>
+                <td class="HSbodytext">
+                  <p class="HSbodytext">{$lang{$current_language}{height}} = {$height}<br>
+                  	{$lang{$current_language}{waist}} = {$waist_output}<br>
+                  	{$lang{$current_language}{frame_size}} = { $frame_sizes[$frame_size] }<br>
+                  	{$lang{$current_language}{weight}} = {$weight} {$weight_units} - Ideal = {$low_weight} to {$high_weight} {$weight_units}<br>
+                  	{$lang{$current_language}{bmi}} = {$bmi}<br>
+					{$lang{$current_language}{body_fat}} % = {$body_fat_percent}<br>
+					{$lang{$current_language}{daily_energy_exp}} = {$daily_caloric_requirements} calories<br><br>
+					</p>
+                   <p><span class="HSsubtitle"><b>{$lang{$current_language}{details}}</b></span><br>
+                    <span class="HSbodytext">{$body_message}</span></p>
+                </td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right" colspan="2" height="30">&nbsp;</td>
+              </tr>
+              <tr>
+                <td class="HStitle" width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{$current_language}{cardiorespitory_endurance}}</b></font></td>
+                <td height="30">&nbsp;</td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right">{$step_graphic}<img src="images/global/trans.gif" width="20" height="1"></td>
+                <td class="HSbodytext">
+                  <p class="HSbodytext">{$lang{$current_language}{fit_msg22}} = {$pulse_rate_30_seconds}<br>
+                   {$lang{$current_language}{fitness_level}} = {$step_desc}<br><br><span class="HSbodytextbold"><b>{$step_target}</b></span><br><br></p>
+                  <p><span class="HSsubtitle"><b>{$lang{$current_language}{details}}</b></span><br>
+                    <span class="HSbodytext">{$Step_Detail}</span></p>
+                </td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right" colspan="2" height="30">&nbsp;</td>
+              </tr>
+              <tr>
+                <td class="HStitle" width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{$current_language}{muscular_endurance}}</b></font><br>({$lang{$current_language}{sit_ups}})</td>
+                <td height="30">&nbsp;</td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right">{$sits_graphic}<img src="images/global/trans.gif" width="20" height="1"></td>
+                <td class="HSbodytext">
+                  <p class="HSbodytext">{$lang{$current_language}{sit_ups}} {$lang{$current_language}{performed}} = {$sit_up}<br>
+                   {$lang{$current_language}{fitness_level}} = {$sits_desc}<br><br><span class="HSbodytextbold"><b>{$sits_target}</b></span><br><br></p>
+                  <p><span class="HSsubtitle"><b>{$lang{$current_language}{details}}</b></span><br>
+                    <span class="HSbodytext">{$Sits_Detail}</span></p>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="middle" align="right" colspan="2" height="30">&nbsp;</td>
+              </tr>
+              <tr>
+                <td class="HStitle" width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{$current_language}{muscular_endurance}}</b></font><br>({$lang{$current_language}{push_ups}})</td>
+                <td height="30">&nbsp;</td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right">{$push_graphic}<img src="images/global/trans.gif" width="20" height="1"></td>
+                <td class="HSbodytext">
+                  <p class="HSbodytext">{$lang{$current_language}{push_ups}} {$lang{$current_language}{performed}} = {$push_ups}<br>
+                   {$lang{$current_language}{fitness_level}} = {$push_desc}<br><br><span class="HSbodytextbold"><b>{$push_target}</b></span><br><br></p>
+                  <p><span class="HSsubtitle"><b>{$lang{$current_language}{details}}</b></span><br>
+                    <span class="HSbodytext">{$Push_Detail}</span></p>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="middle" align="right" colspan="2" height="30">&nbsp;</td>
+              </tr>
+              <tr>
+                <td class="HStitle" width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{$current_language}{flexibility}}</b></font></td>
+                <td height="30">&nbsp;</td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right">{$flexy_graphic}<img src="images/global/trans.gif" width="20" height="1"></td>
+                <td class="HSbodytext">
+                  <p class="HSbodytext">{$lang{$current_language}{reach}} = {$flexibility} inches<br>
+                   {$lang{$current_language}{fitness_level}} = {$flexy_desc}<br><br><span class="HSbodytextbold"><b>{$flexy_target}</b></span><br><br></p>
+                  <p><span class="HSsubtitle"><b>{$lang{$current_language}{details}}</b></span><br>
+                    <span class="HSbodytext">{$Flexy_Detail}</span></p>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="middle" align="right" colspan="2" height="30">&nbsp;</td>
+              </tr>
+              <tr>
+                <td colspan="2" class="HSbodytext">
+                  <p><span class="HStitle"><b>{$lang{$current_language}{additional_reading}}</b></span><br>
+			{
+			join "\r",
+				map { qq|<li><a target="_blank" href="$$_[1]">$$_[0]</a>| }
+				@links;
+			}</p>
+                </td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right" colspan="2" height="30">&nbsp;</td>
+              </tr>
+              <tr valign="bottom">
+                <td height="50" align="left"><form method="post" action="{$pager}">
+                <input type="image" border=0 name="fit_1.tmpl" value="fit_1.tmpl" src="images/back_05.jpg">
+			{$hidden_cgi_fields}
+                </form>
+		</td>
+                <td align="right" height="50">{my $html = qq|<a href="$member">$lang{$current_language}{assessment_records}</a>| unless $status eq 'retake';$html;}</td>
+              </tr>
+            </table>
+</td>
+</tr>
+
+</table>
+</div>
+
+<!-- risk-bg section start here-->
+    <!-- Template: fit_2.tmpl End -->
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$footer_file", PACKAGE => __PACKAGE__ );
+}

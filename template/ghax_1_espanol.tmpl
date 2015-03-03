@@ -1,0 +1,407 @@
+<?xml version="1.0" standalone="yes" ?>
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( $config{template_directory} . $config{variables_template}, PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}gha_variables_espanol.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}gha_links.tmpl", PACKAGE => __PACKAGE__ );
+}<PDF PageMode="UseNone" PageLayout="SinglePage" PageSize="Letter" FindHyperlink="1" Author="HealthStatus.com, Inc.">
+<Image Width="{$brand_logo_pdf_width}" Height="{$brand_logo_pdf_height}" File="{$config{pdf_base}}/{$brand_logo_pdf}" Name="Im0" />
+<Image Width="15" Height="14" File="{$config{pdf_base}}/{$config{green_risk_image}}" Name="Im1" />
+<Image Width="15" Height="14" File="{$config{pdf_base}}/{$config{yellow_risk_image}}" Name="Im2" />
+<Image Width="15" Height="14" File="{$config{pdf_base}}/{$config{red_risk_image}}" Name="Im3" />
+<Image Width="442" Height="13" File="{$config{pdf_base}}/images/gha/color_guide_espanol.jpg" Name="Im9" />
+<Page Name="Pg0" Width="612" Height="792" Bookmark="Cover Letter">
+<Graph Rect="0, 0, 612, 792" Name="Gr0">
+<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
+<ShowText X="60" Y="685" Text="Su Evaluación de Riesgo de Salud Personalizada" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Width="320" Height="12" />
+<ShowText X="580" Y="60" Text="Evaluación de Riesgo de Salud" FontFace="Helvetica" Color="E0E0E0" Width="350" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="AAAAAA" />
+</Graph>
+<Text Name="Txt0" Rect="60, 60, 552, 670" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+
+
+^P ^a:align=Right {$date} ^P
+
+{$translate{$sex}}, {$age} años ^P ^A
+
+^P
+^P
+
+El siguiente informe es una herramienta educativa destinada a identificar factores de riesgo de salud que usted puede controlar. También le da sugerencias para hacer cambios de estilo de vida positivos. ^P
+
+^P
+
+Sin embargo, esta evaluación no sustituye al examen de salud hecho por un médico y no puede identificar un problema médico específico. Sólo puede mostrarle cómo puede evitar las causas más comunes de lesiones y enfermedades para una persona de su edad y género. Por favor visite a un profesional de salud para recibir consejo adicional. ^P
+
+^P
+
+{$fact}
+Este informe pondrá énfasis en las cosas que no puede controlar.. ^P
+
+^P
+
+Las tasas promedio para enfermedades y condiciones se basan en datos recopilados por los Centros de Control de Enfermedades y Prevención. Estos reflejan patrones de salud, prácticas médicas y condiciones ambientales actuales y son modificados de acuerdo a la información personal que usted ingresó. Estos riesgos se basan en datos y fórmulas de investigadores del Centro Carter del Proyecto para Gente Más Sana de la Universidad de Emory, con el apoyo técnico de otros 25 importantes organismos de salud. ^P
+
+^P
+
+Lea su informe con cuidado y si tiene alguna pregunta, póngase en contacto con su doctor o un profesional de salud que pueda ayudarlo a entender los resultados. Si desea mostrar los resultados a su doctor, imprima una copia de la página titulada "Informe Gráfico." ^P
+
+^P
+
+Gracias, ^P
+
+^P
+
+^P
+
+{$client_pdf_signature} ^P
+
+
+
+  ]]>
+</Text>
+</Page>
+<Page Name="Pg0a" Width="612" Height="792">
+	<Graph Rect="0, 0, 612, 792" Name="Gr0a">
+	<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
+	<ShowText X="580" Y="60" Text="Evaluación de Riesgo de Salud" FontFace="Helvetica" Color="E0E0E0" Width="475" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+	<ShowText X="60" Y="685" Text="Su Evaluación de Riesgo de Salud Personalizada" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Width="320" Height="12" />
+	<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="AAAAAA" />
+	<ShowText X="520" Y="20" Text="Página 2" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
+	</Graph>
+	<Text Name="Txt0" Rect="60, 448, 552, 660" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
+		<![CDATA[
+
+			^f:size=14&color={$config{brand_subtitle_color}} ^b Su puntaje de bienestar personal es {$wellness} de 100. ^B ^F  ^P
+
+			^P
+
+			{$wellness_line}
+
+			^P
+
+			{$Wellness}
+	        ]]>
+	</Text>
+	<Text Name="Txt0aa" Rect="60, 265, 295, 515" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" BorderColor="White" BgColor="White" TextJustify="Left" VerticalAlign="Top"  ExtraParaSpacing="0" TabPosition="0.3in">
+		<![CDATA[
+
+			^f:size=12&color={$config{brand_subtitle_color}}  Hábitos que mantener  ^F ^P ^p      ^P
+
+			{ foreach $i (@good_habits) {
+					    $OUT .= "^f:size=8&face=ZapfDingbats u ^F ^f:face=Arial&size=10 $i ^F ^P ^p      ^P ";
+					  }
+			}
+		]]>
+	</Text>
+	<Text Name="Txt0ab" Rect="295, 265, 530, 515" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" BorderColor="White" BgColor="White" TextJustify="Left" VerticalAlign="Top"  ExtraParaSpacing="0" TabPosition="0.3in">
+		<![CDATA[
+
+			^f:size=12&color={$config{brand_subtitle_color}}  Cosas que cambiar   ^F ^P ^p      ^P
+
+			{ foreach $i (@bad_habits) {
+					    $OUT .= "^f:size=8&face=ZapfDingbats u ^F ^f:face=Arial&size=10 $i ^F ^P ^p      ^P ";
+					  }
+			}
+		]]>
+	</Text>
+	<Text Name="Txt0ad" Rect="60, 75, 530, 312" FontFace="Arial" FontSize="9" Leading="12" FontColor="666666" BorderColor="White" BgColor="White" TextJustify="Left" VerticalAlign="Top" PaddingRight="5" ExtraParaSpacing="0" TabPosition="0.3in">
+		<![CDATA[
+
+			^f:size=14&color={$config{brand_subtitle_color}} ^b Causas más comunes de muerte en {$genders} de {$age} años. ^B ^F  ^P
+
+			^P
+
+			{$risks_short}
+
+		]]>
+	</Text>
+</Page>
+<Page Name="Pg1" Width="612" Height="792">
+	<Graph Rect="0, 0, 612, 792" Name="Gr1">
+	<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
+	<ShowImage Name="Im9" Left="145" Bottom="645" Flip="0" />
+	<ShowText X="580" Y="60" Text="Evaluación de Riesgo de Salud" FontFace="Helvetica" Color="E0E0E0" Width="475" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+	<ShowText X="60" Y="685" Text="Su Evaluación de Riesgo de Salud Personalizada" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Width="320" Height="12" />
+	<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="AAAAAA" />
+	<ShowText X="520" Y="20" Text="Página 3" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
+	</Graph>
+	<Text Name="Txt0" Rect="60, 60, 552, 635" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
+	<![CDATA[
+		^f:size=14&color={$config{brand_subtitle_color}} ^b Sus 10 mayores riesgos de salud ^B ^F ^P
+
+		Causas más probables de su muerte durante los próximos 10 años. ^P  
+
+		Los números bajos son mejores.
+	]]>
+	</Text>
+	{$risks_bars}
+</Page>
+<Page Name="Pg2" Width="612" Height="792">
+	<Graph Rect="0, 0, 612, 792" Name="Gr3a">
+	<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
+	<ShowText X="580" Y="60" Text="Evaluación de Riesgo de Salud" FontFace="Helvetica" Color="E0E0E0" Width="475" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+	<ShowText X="60" Y="685" Text="Su Evaluación de Riesgo de Salud Personalizada" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Width="320" Height="12" />
+	<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="AAAAAA" />
+	<ShowText X="520" Y="20" Text="Página 4" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
+	</Graph>
+	<Text Name="Txt0" Rect="60, 60, 552, 670" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
+	<![CDATA[
+
+^f:size=14&color={$config{brand_subtitle_color}} ^b Medidas básicas ^B ^F ^f:size=12 Auto-declarado ^F ^P
+		{
+			$mz='';
+			$mz = "^p Peso: $weight ^P   ^p Altura: $height_imperial ^P   ^p Índice de Masa Corporal calculado: $bmi ^P   ^p Presión Arterial:";
+			if($bp_sys){
+				$mz.= " $bp_sys/$bp_dias ^P ^p ";
+				}
+			else	{
+				$mz.= " $translate{$bp_check} ^P ^p ";
+				}
+			if($cholesterol){
+				$mz.= "Colesterol: $cholesterol ^P ^p ";
+				}
+			else	{
+				$mz.= "Colesterol: $translate{$cholesterol_check} ^P ^p ";
+				}
+			if($hdl){
+				$mz.= "LAD: $hdl ^P ^p ";
+				}
+			$mz .= " ^P ";
+			$mz;
+		}
+
+^P
+
+^P
+
+^f:size=14&color={$config{brand_subtitle_color}} ^b Evaluación de riesgo ^B ^F ^P
+
+^P
+{ 	$sm1='^p ';
+      	if($smoke_message){ $sm1.=$smoke_message . " ^P ^p  ^P ^p " ;}
+	if($chew_message || $other_smoke_message){ $sm1.=$chew_message . " " .  $other_smoke_message . " ^P ^p  ^P ^p "; }
+	if($weight_message){ $sm1.=$weight_message  . " ^P ^p  ^P ^p " }
+	if($seat_belt_message || $speed_message ){ $sm1.=$seat_belt_message . " " .  $speed_message  . " ^P ^p  ^P ^p "; }
+	if($drink_and_drive_message ){ $sm1.=$drink_and_drive_message . " ^P ^p  ^P ^p "; }
+	$sm1.=" ^P ";
+	$sm1;
+
+}
+
+]]>
+</Text>
+</Page>
+<Page Name="Pg3" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr10">
+	<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
+	<ShowText X="580" Y="60" Text="Evaluación de Riesgo de Salud" FontFace="Helvetica" Color="E0E0E0" Width="475" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+	<ShowText X="60" Y="685" Text="Su Evaluación de Riesgo de Salud Personalizada" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Width="320" Height="12" />
+	<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="AAAAAA" />
+	<ShowText X="520" Y="20" Text="Página 5" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
+</Graph>
+	<Text Name="Txt0" Rect="60, 60, 560, 670" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
+	<![CDATA[
+
+{ 	$sm1='';
+      	if($bp_message){ $sm1.=$bp_message . " ^P ^p  ^P ^p " }
+	if($cholesterol_message){ $sm1.=$cholesterol_message . " ^P ^p  ^P ^p " }
+	if($exercise_message){ $sm1.=$exercise_message  . " ^P ^p  ^P ^p " }
+	if($mammogram_message || $breast_cancer_message){ $sm1.=$mammogram_message . " " . $breast_cancer_message . " ^P ^p  ^P ^p " }
+	if($pap_message){ $sm1.=$pap_message . " ^P ^p  ^P ^p " }
+	$sm1.=" ^P ";
+	'';
+
+}{$sm1}
+
+]]>
+</Text>
+</Page>
+<Page Name="Pg4" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr10">
+	<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}" Flip="0" />
+	<ShowText X="580" Y="60" Text="Evaluación de Riesgo de Salud" FontFace="Helvetica" Color="E0E0E0" Width="475" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+	<ShowText X="60" Y="685" Text="Su Evaluación de Riesgo de Salud Personalizada" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Width="320" Height="12" />
+	<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="AAAAAA" />
+	<ShowText X="520" Y="20" Text="Página 6" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
+</Graph>
+	<Text Name="Txt0" Rect="60, 60, 552, 670" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
+	<![CDATA[
+
+{ 	$sm1='';
+      	if($alcohol_message){ $sm1.=$alcohol_message . " ^P ^p  ^P ^p " }
+	if($fiber_message){ $sm1.=$fiber_message . " ^P ^p  ^P ^p " }
+	if($fat_message){ $sm1.=$fat_message  . " ^P ^p  ^P ^p " }
+	if($helmet_message){ $sm1.=$helmet_message  . " ^P ^p  ^P ^p " }
+	if($loss_message){ $sm1.=$loss_message  . " ^P ^p  ^P ^p " }
+	if($diabetes_message){ $sm1.=$diabetes_message  . " ^P ^p  ^P ^p " }
+	$sm1.=" ^P ";
+	$sm1;
+
+}
+
+]]>
+</Text>
+</Page>
+<Page Name="Pg5" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr10">
+	<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
+	<ShowText X="580" Y="60" Text="Evaluación de Riesgo de Salud" FontFace="Helvetica" Color="E0E0E0" Width="475" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+	<ShowText X="60" Y="685" Text="Su Evaluación de Riesgo de Salud Personalizada" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Width="320" Height="12" />
+	<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="AAAAAA" />
+	<ShowText X="520" Y="20" Text="Página 7" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
+</Graph>
+	<Text Name="Txt0" Rect="60, 60, 552, 670" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
+	<![CDATA[
+
+^p ^f:size=14&color={$config{brand_subtitle_color}} ^b Guía de Servicios Preventivos ^B ^F ^f:size=12 Recomendado para {$genders} de su edad. ^F ^P ^p      ^P
+{ foreach $i (@recommendations) {
+		$OUT .= "$i ^P  ^p      ^P ";
+		}
+}
+
+^P
+
+^P
+
+^f:size=14&color={$config{brand_subtitle_color}} ^b Información adicional para usted: ^B ^F ^P
+{
+join "",
+	map { qq|^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=9&face=Arial $$_[1] -- $$_[0] ^F ^P  | }
+	@links;
+}
+
+ ^P
+
+]]>
+</Text>
+</Page>
+<Page Name="Pg6" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr12">
+	<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
+	<ShowText X="580" Y="60" Text="Evaluación de Riesgo de Salud" FontFace="Helvetica" Color="E0E0E0" Width="475" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+	<ShowText X="60" Y="685" Text="Su Evaluación de Riesgo de Salud Personalizada" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Width="320" Height="12" />
+	<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="AAAAAA" />
+	<ShowText X="520" Y="20" Text="Página 8" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
+</Graph>
+	<Text Name="Txt0" Rect="60, 60, 552, 670" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
+	<![CDATA[
+
+^p ^f:size=14&color={$config{brand_title_color}} ^b Informe Gráfico del Doctor  ^B ^F ^P
+^p Fecha de nacimiento: {$birth_month}/{$birth_date}/{$birth_year} ^P ^p Edad: {$actual_age} ^P ^p {$translate{$sex}} ^P ^p      ^P
+
+^p ^f:size=14&color={$config{brand_subtitle_color}} ^b Medidas y hábitos auto-declarados  ^B ^F ^P
+^p Peso: ^b {$weight} ^B ^P
+^p Estatura: ^b {$height_imperial} ^B ^P
+^p Índice de Masa Corporal calculado: ^b {$bmi} ^B ^P
+^p Presión arterial: ^b 
+	{my $html;
+	if($bp_sys) {$html = $bp_sys."/".$bp_dias;}else{$html= "No sabe los números exactos, pero seleccionó ". lc($translate{$bp_check})}
+	$html .= " ^B ^P";
+
+	$html;
+	}
+^p Toma medicamentos para la presión arterial: ^b {$translate{$bp_meds} || "No"} ^B ^P 
+^p Colesterol: ^b {my $html;
+	if($cholesterol) {$html = $cholesterol;}else{$html= "No sabe los números exactos, pero seleccionó ". lc($translate{$cholesterol_check})}
+	$html .= " ^B ^P";
+		    
+	$html;
+	}
+^p LAD: ^b {$hdl || "No ingresó ningún valor."} ^B ^P  {if($hdl && $cholesterol){ '^p Índice de Colesterol: ^b '. sprintf("%.1f",$cholesterol/$hdl). ':1 ^B ^P ' }}
+^p Diabetes: ^b {$translate{$diabetes}} ^B ^P
+^p Uso de tabaco: ^b { $sm='';
+
+	     if ($smoke_flag == 0){
+
+		$sm=": Ninguno";
+
+	     }elsif($smoke_flag == 1){
+
+		$sm="Ex-fumador por $cigarette_years_quit años";
+
+	     }elsif($smoke_flag == 2){
+
+		$sm="Fuma $cigs_a_day cigarrillos diarios";
+
+	     }else{
+
+	     	$sm='';
+
+	     }
+
+	     if ($smoke_other == 2){
+
+		if($chews_flag){$sm.= "; Mastica tabaco"}
+
+		if($pipes_flag){$sm.= "; Fuma pipa"}
+
+		if($cigars_flag){$sm.= "; Fuma purosh"}
+
+	     }
+
+	     '';
+
+	   }{$sm} ^B ^P
+^p Uso de alcohol: ^b {$drinks_week || '0 drinks '} por semana ^B ^P
+^p Actividad física: ^b {$translate{$exercise}} ^B ^P
+^p Salud total: ^b {$translate{$overall_health}} ^B ^P
+^p Satisfacción con la vida: ^b {$translate{$life_satisfaction}} ^B ^P
+^p Pérdida personal: ^b {$translate{$loss}} ^B
+^p Fibra en la dieta diaria: ^b {$translate{$fiber}}^B ^P
+^p Grasa en la dieta diaria: ^b {$translate{$fat}} ^B ^P
+{ $mh='';
+	if($sex eq FEMALE){
+		$mh=qq|^p Histerectomía: ^b $translate{$hyst_female} ^B ^P |;
+		$mh.=qq|^p Cáncer de mama en la familia: ^b $translate{$fam_breast_cancer} ^B ^P |;
+		$mh.=qq|^p Edad de la menarquia: ^b $translate{$menarche_female} ^B ^P |;
+	}
+	$mh;
+
+}
+
+^P
+
+^p ^f:size=14&color={$config{brand_subtitle_color}} ^b Servicios preventivos auto-declarados  ^B ^F ^P
+{ $pm='';
+
+	if ($sex eq MALE){
+		$pm = qq| ^p Último examen rectal: ^b $translate{$rectal_male} ^B ^P |;
+		}
+	else	{
+		$pm = qq| ^p Último examen de Papanicolau: ^b $translate{$pap_female} ^B ^P |;
+		$pm .= qq| ^p Última mamografía: ^b $translate{$mammogram_female} ^B ^P |;
+		$pm .= qq| ^p Último examen rectal: ^b $translate{$rectal_female} ^B ^P |;
+		$pm .=  qq| ^p Último examen clínico de mama: ^b $translate{$clinic_breast_exam} ^B ^P |;
+		$pm .= qq| ^p Autoexamen de mama: ^b $translate{$self_breast_exam} ^B ^P |;
+		}
+	$pm;
+}
+
+^P
+
+^p ^f:size=14&color={$config{brand_subtitle_color}} ^b Disposición para cambiar  ^B ^F ^P
+{ my $html='';
+
+	if ($r2c_drink){$html .= qq| ^p Reducir su consumo de alcohol: ^b $translate{$r2c_drink} ^B ^P |;}
+	if ($r2c_autosafety){$html .= qq| ^p Conducir de forma más segura: ^b $translate{$r2c_autosafety} ^B ^P |;}
+	if ($r2c_bp){$html .= qq| ^p Reducir su presión arterial: ^b $translate{$r2c_bp} ^B ^P |;}
+	if ($r2c_checkups){$html .= qq| ^p Hacerse chequeos regulares: ^b $translate{$r2c_checkups} ^B ^P |;}
+	if ($r2c_cholesterol){$html .= qq| ^p Reducir su colesterol: ^b $translate{$r2c_cholesterol} ^B ^P |;}
+	if ($r2c_exercise){$html .= qq| ^p Hacer más ejercicio: ^b $translate{$r2c_exercise} ^B ^P |;}
+	if ($r2c_fat){$html .= qq| ^p Reducir la cantidad de grasa en su dieta: ^b $translate{$r2c_fat} ^B ^P |;}
+	if ($r2c_smoke){$html .= qq| ^p Dejar de fumar: ^b $translate{$r2c_smoke} ^B ^P |;}
+	if ($r2c_stress){$html .= qq| ^p Reducir su nivel de estrés: ^b $translate{$r2c_stress} ^B ^P |;}
+	if ($r2c_weight){$html .= qq| ^p Hacer que su peso esté dentro de lo recomendado: ^b $translate{$r2c_weight} ^B ^P |;}
+	if ($html eq ''){$html = " ^p Los hábitos principales reciben recomendaciones estándares. ^B ^P "}
+
+	$html;
+	}
+]]>
+</Text>
+</Page></PDF>

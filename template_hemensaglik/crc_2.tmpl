@@ -1,0 +1,244 @@
+{
+# this part fills in a file that sets language variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}assessment_language.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$crc_variables_tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}hemensaglik_crc_links.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE => __PACKAGE__ );
+}      <!-- Template: crc_2.tmpl from dir template_hemensaglik -->
+	<!-- Templates called: crc_variables.tmpl, crc_links.tmpl, {$footer_file}, {$config{variables_template}},  {$header_file} -->
+<!-- ass-top-img section start here-->
+<div id="ass-top-img" class="steptxt">
+<p class="pad26">{$crc_title}</p>
+</div>
+<!-- ass-top-img section end here-->
+
+<div id="ass-bg" class="content">
+<p class="pad27">
+{$lang{$current_language}{crc_msg1}}
+</p>
+</div> 
+
+<!-- risk-top-img section start here-->
+<div id="risk-top-img" class="steptxt">
+
+<p class="pad26">{$crc_subtitle}{$continued}</p>
+</div>
+<!-- risk-top-img section end here-->
+<br/>
+
+	<div id="risk-bg">
+		<table width="967" cellspacing="0" style="margin-left: 30px">
+
+			<tr>
+			{ my $html;
+            if($subdomain eq 'hemensaglik'){
+                $html = qq| <td style="padding-top: 8px; padding-bottom: 10px; padding-right: 362px;" class="content">|;
+			 }else{
+				$html = qq| <td style="padding-top: 8px; padding-bottom: 10px; padding-right: 70px;" class="content">|;
+             }
+            }
+				
+				
+					<form method="post" action="{$pager}">
+					
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td colspan="2" >
+                 <p >&nbsp;<br>{$date} {$lang{$current_language}{for}}<b> {$name}</b></p><br>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" >{$crc_color_guide}</td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right" colspan="2" height="30">&nbsp;</td>
+              </tr>
+              <tr>
+                <td  width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{$current_language}{blood_pressure}}</b></font></td>
+                <td height="30">&nbsp;</td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right">{$bp_score}<img src="https://hemensaglik.hra.net/images/global/trans.gif" width="20" height="1"></td>
+                <td >
+                  <p >{$bp_status}</p>{# this part creates a bargraph
+                  if ( $bp_sys > $bp_target || $bp_dias <= $bp_dtarget ) {
+                     %vars = (
+                     	format => 1,
+                     	my_score => $bp_sys,
+                     	avg_score => $bp_avg,
+                     	target_score => $bp_target,
+                     	scope_text => 'systolic blood pressure (less yellow is better)',
+                     	rate_text => 'Average US',
+                     	target_text => 'Your target',
+                     	title_text => ''
+                     );
+                     }
+                     else {
+                     %vars = (
+                     	format => 1,
+                     	my_score => $bp_dias,
+                     	avg_score => $bp_davg,
+                     	target_score => $bp_dtarget,
+                     	scope_text => 'diastolic blood pressure (less yellow is better)',
+                     	rate_text => 'Average US',
+                     	target_text => 'Your target',
+                     	title_text => ''
+                     );
+                     }
+                     if( $bp_sys < 160) {$vars{bar_scale} = .6;}else{$vars{bar_scale} = .25;}
+                     my $bar;
+                     if ($config{'risks3bar'}){ 
+                        if( $bp_sys < 160) {$vars{bar_scale} = .25;}else{$vars{bar_scale} = .18;}
+                     	$bar = Text::Template::fill_in_file( "$config{template_directory}html_bar_3bars.tmpl", PACKAGE => __PACKAGE__ ) or die $Text::Template::ERROR;
+                     	}
+                     else	{ 
+                     	$bar = Text::Template::fill_in_file( "$config{template_directory}html_bar.tmpl", PACKAGE => __PACKAGE__ );
+                     	} 
+                    $bar;
+                    }
+                  <p><b>{$bp_challenge}</b></p>
+                  <p><span><b>{$lang{$current_language}{details}}</b></span><br>
+                    <span >{$bp_message} {$lang{$current_language}{crc_bp_msg}}</span></p>
+                </td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right" colspan="2" height="30">&nbsp;</td>
+              </tr>
+              <tr>
+                <td  width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{$current_language}{cholesterol}}</b></font></td>
+                <td height="30">&nbsp;</td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right">{$cholesterol_score}<img src="https://hemensaglik.hra.net/images/global/trans.gif" width="20" height="1"></td>
+                <td >
+                  <p >{$cholesterol_status}</p>{# this part creates a bargraph
+                     %vars = (
+                     	format => 1,
+                     	my_score => $cholesterol,
+                     	avg_score => $cholesterol_avg,
+                     	target_score => $cholesterol_target,
+                     	scope_text => 'total cholesterol (less yellow is better)',
+                     	rate_text => 'Average US',
+                     	target_text => 'Your target',
+                     	title_text => ''
+                     );
+                     if( $cholesterol < 210) {$vars{bar_scale} = .4}else{$vars{bar_scale} = .25}
+                     my $bar;
+                     if ($config{'risks3bar'}){ 
+                     	if( $cholesterol < 210) {$vars{bar_scale} = .25}else{$vars{bar_scale} = .18}
+                     	$bar = Text::Template::fill_in_file( "$config{template_directory}html_bar_3bars.tmpl", PACKAGE => __PACKAGE__ ) or die $Text::Template::ERROR;}
+                     else{ $bar = Text::Template::fill_in_file( "$config{template_directory}html_bar.tmpl", PACKAGE => __PACKAGE__ );} $bar;}
+		  <p><b>{$cholesterol_challenge}</b></p>
+                  <p><span><b>{$lang{$current_language}{details}}</b></span><br>
+                    <span >{$cholesterol_message}</span></p>
+                </td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right" colspan="2" height="30">&nbsp;</td>
+              </tr>
+              <tr>
+                <td  width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{$current_language}{hdl}}</b></font></td>
+                <td height="30">&nbsp;</td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right">{$hdl_score}<img src="https://hemensaglik.hra.net/images/global/trans.gif" width="20" height="1"></td>
+                <td >
+                  <p >{$hdl_status}</p>{# this part creates a bargraph
+                     %vars = (
+                     	format => 1,
+                     	my_score => $hdl,
+                     	avg_score => $hdl_avg,
+                    	target_score => $hdl_target_high,
+                     	scope_text => 'HDL level (good cholesterol)',
+                     	rate_text => 'Average US',
+                     	target_text => 'Your target',
+                     	title_text => '',
+                     	bar_scale => 1.2
+                     );
+
+                     if($lc_sex eq 'male'){$var{target_score} = $hdl_target_men}else{$var{target_score} = $hdl_target_women}
+                     my $bar;
+                     if ($config{'risks3bar'}){ $vars{bar_scale} = .4; $bar = Text::Template::fill_in_file( "$config{template_directory}html_bar_3bars.tmpl", PACKAGE => __PACKAGE__ ) or die $Text::Template::ERROR;}
+                     else{ $bar = Text::Template::fill_in_file( "$config{template_directory}html_bar.tmpl", PACKAGE => __PACKAGE__ );} $bar;}
+                  <p><span><b>{$lang{$current_language}{details}}</b></span><br>
+                    <span >{$hdl_message}</span></p>
+                </td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right" colspan="2" height="30">&nbsp;</td>
+              </tr>
+              <tr>
+                <td  width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{$current_language}{exercise}}</b></font></td>
+                <td height="30">&nbsp;</td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right">{$exercise_score}<img src="https://hemensaglik.hra.net/images/global/trans.gif" width="20" height="1"></td>
+                <td >
+                  <p >{$exercise_status}</p>{# this part creates a bargraph
+                     %vars = (
+                     	format => 1,
+                     	my_score => $exercise,
+                     	avg_score => $exercise_avg,
+                     	target_score => $exercise_target,
+                     	scope_text => 'exercise sessions each week',
+                     	rate_text => 'Average US',
+                     	target_text => 'Your target',
+                     	title_text => ''
+                     );
+
+                     my $bar;
+                     if ($config{'risks3bar'}){ $vars{bar_scale} = 1; $bar = Text::Template::fill_in_file( "$config{template_directory}html_bar_3bars.tmpl", PACKAGE => __PACKAGE__ ) or die $Text::Template::ERROR;}
+                     else{ 
+                     	if( $exercise < 7) {$vars{bar_scale} = 15}else{$vars{bar_scale} = 11}
+                     	$bar = Text::Template::fill_in_file( "$config{template_directory}html_bar.tmpl", PACKAGE => __PACKAGE__ );} $bar;}
+                  <p><span><b>{$lang{$current_language}{details}}</b></span><br>
+                    <span >{$exercise_message}</span></p>
+                </td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right" colspan="2" height="30">&nbsp;</td>
+              </tr>
+			  
+			  <tr>
+				<td width=200>
+				<input type="image" border=0 name="crc_1.tmpl" value="crc_1.tmpl" src="https://hemensaglik.hra.net/images/global/back.jpg"></td>
+				{ my $html;
+            if($subdomain eq 'hemensaglik'){
+                $html = qq| <td width="767" style="padding-top: 8px; padding-bottom: 10px; text-align:right; padding-right: 10px;">|;
+			 }else{
+				$html = qq| <td width="767" style="padding-top: 8px; padding-bottom: 10px; text-align:right;">|;
+             }
+            }
+				
+				<input type="image" border=0 name="crc_3.tmpl" value="crc_3.tmpl" src="https://hemensaglik.hra.net/images/global/next.jpg">
+			{$hidden_cgi_fields}
+				</td>
+				<td>&nbsp;</td>
+            </tr>
+              
+            </table>
+					
+					</form>
+  
+  
+  
+  
+				</td>
+			</tr>
+    
+		</table>
+	</div>
+    <!-- Template: crc_2.tmpl End -->
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$footer_file", PACKAGE => __PACKAGE__ );
+}

@@ -1,0 +1,85 @@
+{ 
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( $directory . $input_variables, PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $header_file, PACKAGE => __PACKAGE__ );
+}
+<!--- Template:bac.html ---------------->
+<!-- your next step section start here-->
+<div id="title" class="steptxt">
+<p class="pad17">{$title}</p>
+</div>
+
+<div class="content" style="margin-left: 5px; background-color:#ffffff">
+<p class="pad29">{$intro}</p></div>
+
+<div id="step-inn-bg" class="content1">
+<table width="406" cellspacing="0" style="margin-left: 30px">
+<form  method="POST" action="{$cgi}calculator.cgi" name="theForm" onSubmit="return checkCalcForm(this)">
+      <tr>
+        <td class="lb2" width=300 style="padding-top: 10px; padding-right: 20px">{$lang{$current_language}{male_or_female}}</td>
+        <td width=90 style="padding-top: 10px"><select name="sex" size="1" style="width: 200px">
+					<option selected="selected">{$lang{$current_language}{Select_your_gender}}</option>
+					<option value="Male">{$lang{$current_language}{Male}}</option>
+					<option value="Female">{$lang{$current_language}{Female}}</option>
+				</select></td>
+      </tr>
+      <tr>
+			<td class="lb2" width=300 style="padding-top: 10px; padding-right: 20px">{$lang{$current_language}{what_is_weight}}</td>
+        <td width=90 style="padding-top: 10px"><input maxlength="3" name="weight" size="4" type="text" style="width: 120px">&nbsp;&nbsp;Kg </td>
+      </tr>
+      <tr>
+        <td class="lb2" width=300 style="padding-top: 10px; padding-right: 20px">{$lang{$current_language}{bac_input_beverage}}</td>
+        <td width=90 style="padding-top: 10px"><select size="1" name="type" style="width: 200px">
+			<option selected="selected" value="airline miniature bottle||airline miniature bottles||.7">{$lang{$current_language}{Airline_miniature_bottle}}</option>
+			<option value="Yar&#305;m litre bira||X Litre bira||.81">{$lang{$current_language}{Ale_pint}}</option>
+			<option value="Bira||Biralar||.54">{$lang{$current_language}{Beer_12_oz}}</option>
+			<option value="Bira||Biralar||.72">{$lang{$current_language}{Beer_16_oz}}</option>
+			<option value="Light Bira||Light Biralar||.44">{$lang{$current_language}{Beer_Light_12_oz}}</option>
+			<option value="Light Bira||Light Biralar||.59">{$lang{$current_language}{Beer_Light_16_oz}}</option>
+			<option value="Azalt&#305;lm&#305;&#351; alkol Bira||Azalt&#305;lm&#305;&#351; alkol Biralar||.28">{$lang{$current_language}{Beer_reduced_alcohol}}</option>
+			<option value="Bir yudum brendi||X yudum brendi||.9">{$lang{$current_language}{Brandy_snifter}}</option>
+			<option value="Martini||Martinis||1">{$lang{$current_language}{Dry_martini}}</option>
+			<option value="Kadeh Cin||X kadeh Cin||.645">{$lang{$current_language}{Gin_15_oz}}</option>
+			<option value="Viski||Viskiler||.6">{$lang{$current_language}{Highball}}</option>
+			<option value="Bira||Biralar||.71">{$lang{$current_language}{Malt_Liquor_12_oz}}</option>
+			<option value="Manhattan||X Manhattan||1.15">{$lang{$current_language}{Manhattan}}</option>
+			<option value="Yar&#305;m Litre Bira||X Litre Bira||1.1">{$lang{$current_language}{Porter_pint}}</option>
+			<option value="Kadeh Rom||X Kadeh Rom||.645">{$lang{$current_language}{Rum_15_oz}}</option>
+			<option value="Kadeh Sake||X Kadeh Sake||.8">{$lang{$current_language}{Sake_15_oz}}</option>
+			<option value="Yar&#305;m Litre Bira||X Litre Bira||1.3">{$lang{$current_language}{Stout_pint}}</option>
+			<option value="Kadeh Tekila||X Kadeh Tekila||.645">{$lang{$current_language}{Tequila_15_oz}}</option>
+			<option value="Kadeh Votka||X Kadeh Votka||.645">{$lang{$current_language}{Vodka_15_oz}}</option>
+			<option value="Kadeh Viski||X Kadeh Viski||.645">{$lang{$current_language}{Whiskey_15_oz}}</option>
+			<option value="Yar&#305;m kadeh &#350;arap||X kadeh &#350;arap ||.55">{$lang{$current_language}{Wine_half_large_glass}}</option>
+		</select></td>
+      </tr>
+      <tr>
+        <td class="lb2" width=300 style="padding-top: 10px; padding-right: 20px">{$lang{$current_language}{bac_input_beverage_count}}</td>
+        <td width=90 style="padding-top: 10px"><input maxlength="3" name="number" size="3" type="text" style="width: 120px"></td>
+      </tr>
+      <tr>
+        <td class="lb2" width=300 style="padding-top: 10px; padding-right: 20px">{$lang{$current_language}{bac_input_beverage_timespan}}</td>
+        <td width=90 style="padding-top: 10px"><input maxlength="5" name="time" size="3" type="text" style="width: 120px">&nbsp;&nbsp;saat</td>
+      </tr>
+      <tr>
+        <td><a href="/cgi-bin/hs/calc.cgi?calc=men" class="btn_input" align="left">YEMEK LISTESI</a></td>
+
+        <td style="padding-top: 8px; padding-bottom: 10px">
+        	<input name="Submit" type="image" class="HSButton" src="https://hemensaglik.hra.net/images/hemensaglik_calculate.jpg" />
+			<input type="hidden" name="snum" value="{$snum}">
+			<input type="hidden" name="measure" value="Metric">
+			<input type="hidden" name="calculator" value="bac">
+        </td>
+        <td>&nbsp;</td>
+      </tr>
+	  </form>
+    </table>
+</div>
+<!-- your next step section end here-->
+
+{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $footer_file, PACKAGE => __PACKAGE__ );
+}

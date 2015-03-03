@@ -1,0 +1,1645 @@
+<?xml version="1.0" standalone="yes" ?>
+<PDF PageMode="UseNone" PageLayout="SinglePage" PageSize="Letter" FindHyperlink="1" Magnification="100%">
+<Image File="{$vars{fixed_images}}{$vars{ggr_branding}}" Name="Im0" />
+<Image File="{$vars{fixed_images}}hp_2010.png" Name="Im6" />
+{ use vars qw( $pdf_page %empty_chart);
+  %empty_chart = %{$vars{empty_chart}};
+  $pdf_page = 0;
+  $image_list= '';
+  $image_list.= qq|<Image File="$vars{fixed_images}HSG_P1.png" Name="bg_pie" />\n|;
+  $image_list.= qq|<Image File="$vars{fixed_images}HSG_1.png" Name="bg_bar" />\n|;
+   $image_list.= qq|<Image File="$vars{fixed_images}HSG_P2.png" Name="bg_pie_men" />\n| if($vars{breakout_sex});
+  $image_list.= qq|<Image File="$vars{fixed_images}HSG_2.png" Name="bg_bar_men" />\n| if($vars{breakout_sex});
+  $image_list.= qq|<Image File="$vars{fixed_images}HSG_P3.png" Name="bg_pie_women" />\n| if($vars{breakout_sex});
+  $image_list.= qq|<Image File="$vars{fixed_images}HSG_3.png" Name="bg_bar_women" />\n| if($vars{breakout_sex});
+  $image_list.= qq|<Image File="$vars{fixed_images}HSG_P5.png" Name="bg_pie_age" />\n| if($vars{breakout_age});
+  $image_list.= qq|<Image File="$vars{fixed_images}HSG_5.png" Name="bg_bar_age" />\n| if($vars{breakout_age});
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_risks.png" Name="Im1" />\n| if($vars{pgraphs} eq 'all' || $vars{print_risklevels} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_risks_ach.png" Name="Im2" />\n| if($vars{pgraphs} eq 'all' || $vars{print_achievable} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_factors.png" Name="Im3" />\n| if($vars{pgraphs} eq 'all' || $vars{print_riskfactors} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_disease.png" Name="Im4" />\n| if($vars{pgraphs} eq 'all' || $vars{print_preventable} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_age.png" Name="Im5" />\n| if($vars{pgraphs} eq 'all' || $vars{print_agegroups} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_alc.png" Name="Im7" />\n| if($vars{pgraphs} eq 'all' || $vars{print_alcohol} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_bp.png" Name="Im8" />\n| if($vars{pgraphs} eq 'all' || $vars{print_bloodpressure} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_chol.png" Name="Im9" />\n| if($vars{pgraphs} eq 'all' || $vars{print_cholesterol} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_exer.png" Name="Im10" />\n| if($vars{pgraphs} eq 'all' || $vars{print_exercise} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_mammo.png" Name="Im11" />\n| if($vars{pgraphs} eq 'all' || $vars{print_mammogram} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_pap.png" Name="Im12" />\n| if($vars{pgraphs} eq 'all' || $vars{print_pap} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_sb.png" Name="Im13" />\n| if($vars{pgraphs} eq 'all' || $vars{print_seatbelts} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_sm.png" Name="Im14" />\n| if($vars{pgraphs} eq 'all' || $vars{print_smoking} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_wt.png" Name="Im15" />\n| if($vars{pgraphs} eq 'all' || $vars{print_weight} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_cardrisks.png" Name="Im16" />\n| if($vars{pgraphs} eq 'all' || $vars{print_cardiac} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_diabrisks.png" Name="Im17" />\n| if($vars{pgraphs} eq 'all' || $vars{print_diabetes} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_fit.png" Name="Im18" />\n| if($vars{pgraphs} eq 'all' || $vars{print_fitness} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_gwb.png" Name="Im19" />\n| if($vars{pgraphs} eq 'all' || $vars{print_wellbeing} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_prostate.png" Name="Im20" />\n| if($vars{pgraphs} eq 'all' || $vars{print_prostate} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_ta.png" Name="Im21" />\n| if($vars{pgraphs} eq 'all' || $vars{print_totalassessments} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr1_gwb.png" Name="Im22" />\n| if($vars{pgraphs} eq 'all' || $vars{print_depression} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_srd.png" Name="Im23" />\n| if($vars{pgraphs} eq 'all' || $vars{print_srdisease} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_srfh.png" Name="Im24" />\n| if($vars{pgraphs} eq 'all' || $vars{print_srfam} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_breast_self.png" Name="Im25" />\n| if($vars{pgraphs} eq 'all' || $vars{print_breast_self} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_gluc.png" Name="Im26" />\n| if($vars{pgraphs} eq 'all' || $vars{print_glucose} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_ldl.png" Name="Im27" />\n| if($vars{pgraphs} eq 'all' || $vars{print_ldl} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_trig.png" Name="Im28" />\n| if($vars{pgraphs} eq 'all' || $vars{print_triglycerides} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_days.png" Name="Im29" />\n| if($vars{pgraphs} eq 'all' || $vars{print_days_missed} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_colon.png" Name="Im30" />\n| if($vars{pgraphs} eq 'all' || $vars{print_colon_exam} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_general.png" Name="Im31" />\n| if($vars{pgraphs} eq 'all' || $vars{print_general_exam} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_hga1c.png" Name="Im32" />\n| if($vars{pgraphs} eq 'all' || $vars{print_hga1c} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_hdl.png" Name="Im33" />\n| if($vars{pgraphs} eq 'all' || $vars{print_hdl} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_flu.png" Name="Im34" />\n| if($vars{pgraphs} eq 'all' || $vars{print_flu} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_waist.png" Name="Im35" />\n| if($vars{pgraphs} eq 'all' || $vars{print_waist} == 1);
+  $image_list.= qq|<Image File="$vars{image_dir}$vars{files_prefix}_ggr_diet.png" Name="Im36" />\n| if($vars{pgraphs} eq 'all' || $vars{print_diet} == 1);
+  $image_list;
+  
+}
+{ $page0= '';
+  if(($vars{pgraphs} eq 'all' || $vars{print_risklevels} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_risklevels}) ) ){
+  ++$pdf_page;
+  $page0= qq|<Page Name="Pg0" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr0">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Group Summary Report" FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black" />
+<ShowText X="50" Y="710" Text="Group Health Risk" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />|;
+if ($vars{print_page_numbers}){ $page0 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page0 .= qq|<ShowImage Name="Im1" Left="220" Bottom="210" Flip="0" />
+</Graph>
+<Text Name="Txt0" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+This report will show the information gathered through the health assessments survey conducted with your group.  Complete data was collected on $vars{user_count} individuals.  Graphs will show you how the group ranks as a whole, what their achievable risks are, the diseases and modifiable habits that affect your group. ^P
+
+^P
+
+Low risk members are the healthiest and statistically have the best chance of living long and healthy lives.  These people eat properly, watch their weight and diet, and use good sense in regards to traffic safety. ^P
+
+^P
+
+Those in the moderate risk group are "average", they may be a touch overweight or have one or two habits that while not the healthiest are not causing any serious problems.  People in this group respond well to health promotion since they do not have far to go. ^P
+
+^P
+
+The high risk group has one or more categories where they are more than twice the average statistical risk for their sex and age.  This group will suffer some health care problems, and will benefit greatly from intervention programs. ^P
+
+^P
+
+Very high risk individuals are at significant risk for an early death from disease or accidents.  These people can cost their employers in high insurance claims and absenteeism due to health issues and accidents. ^P
+
+^P
+
+  ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Health Risk Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Health Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|; }
+
+$page0;}
+{ $page1= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_achievable} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_achievable}) ) ){
+  ++$pdf_page;
+  $page1= qq|<Page Name="Pg1" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr2">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Achievable Risk" FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black" />
+<ShowText X="50" Y="710" Text="Achievable Group Risk" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="8" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page1 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page1 .= qq|<ShowImage Name="Im2" Left="220" Bottom="210" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+The achievable risk graph shows what could happen if the group were to follow all the recommendations for good health.  While this won't eliminate all risks, it will significantly decrease them. ^P
+
+^P
+
+  ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Health Risk Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Health Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page1;}
+{ $page2= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_riskfactors} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_riskfactors}) ) ){
+  ++$pdf_page;
+  $page2= qq|<Page Name="Pg2" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr4">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Modifiable Behaviors" FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black" />
+<ShowText X="50" Y="710" Text="Group Contributing Risk Factors" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page2 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page2 .= qq|<ShowImage Name="Im3" Left="50" Bottom="209" Flip="0" />
+</Graph>
+<Text Name="Txt1" Rect="37, 360, 253, 625" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+Members of this group have many habits that if modified would decrease the risks of disease and accidents.  This graph shows of those with modifiable behaviors, the percentage negatively affected by each behavior.  Maximize your intervention programs by targeting the largest segments. ^P
+  ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Health Risk Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Health Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page2;}
+{ $page3= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_preventable} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_preventable}) ) ){
+  ++$pdf_page;
+  $page3= qq|<Page Name="Pg3" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr5">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Specific Disease Risks" FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black" />
+<ShowText X="50" Y="710" Text="Preventable Deaths by Disease" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page3 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page3 .= qq|<ShowImage Name="Im4" Left="50" Bottom="209" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622"  FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+Based on the results of the assessment, the graph will show the impact of risky behavior based on the number of participants with above average risks for each disease. ^P
+  ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Health Risk Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Health Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page3;}
+{ $page4= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_cardiac} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_cardiac}) ) ){
+  ++$pdf_page;
+  $page4= qq|<Page Name="Pg100" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr0">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Cardiac Risk Report" FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black" />
+<ShowText X="50" Y="710" Text="Cardiac Assessment Results" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page4 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page4 .= qq|<ShowImage Name="Im16" Left="220" Bottom="210" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+These are the results from your members that have taken the disease specific cardiac risk assessment. Complete data was collected on $vars{CRC_cnt} individuals.  This graph shows the break down of cardiac risk across your group. ^P
+
+^P
+
+Cardiovascular disease is the No. 1 cause of death in the United States and it has been for the past 80 years. According to the American Heart Association, in 2008, cardiovascular disease represented 1 out of 3 deaths in America. It remains a major cause of disability and results in substantial health care expenditures. ^P
+
+^P
+
+A person’s risk of cardiovascular disease is influenced by factors such as smoking, high blood pressure, high blood cholesterol, diabetes, being overweight or obese and physical inactivity. Cardiac risk also increases with age and also if a member has a close relative who had heart disease at an early age. Most of the above factors are highly modifiable if members choose to adopt healthy lifestyles. ^P
+
+^P
+
+This assessment measures the risk of having a heart attack or dying from coronary heart disease in the future based on risk factors present in the group. Cardiac assessment is recommended for people age 20 and above. By 40, everyone should be aware of their cardiac health status and risk reassessed every 5 years. ^P
+
+^P
+
+If the risk score is low, members should still be vigilant with their cardiovascular health. Even one risk factor, such as high cholesterol, that is not treated may lead to a higher risk later in life. ^P
+
+^P
+
+It is essential to analyze the group’s cardiac risk and make plans or programs to minimize risk factors. Working to modify all risk factors present by promoting a healthy diet, a healthy weight, smoking cessation and an active lifestyle will benefit cardiovascular as well as overall health. ^P
+
+^P
+
+  ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Cardiac Risk Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page4;}
+{ $page5= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_diabetes} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_diabetes}) ) ){
+  ++$pdf_page;
+  $page5= qq|<Page Name="Pg101" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr0">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Diabetes Risk Report" FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black" />
+<ShowText X="50" Y="710" Text="Diabetes Assessment Results" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page5 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page5 .= qq|<ShowImage Name="Im17" Left="220" Bottom="210" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+25.8 million children and adults in the United States - 8.3% of the population - have diabetes. 79 million Americans are estimated to have pre-diabetes.  Most people with pre-diabetes develop type 2 diabetes within 10 years, unless they make changes to their diet and physical activity that results in a loss of about 5-7 percent of their body weight. ^P
+
+^P
+
+These are the results from your members that have taken the disease specific diabetes risk assessment. Complete data was collected on $vars{DRC_cnt} individuals.  This graph shows the break down of diabetes risk across your group. ^P
+
+^P
+  ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Diabetes Risk Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page5;}
+{ $page6= '';
+  if(($vars{pgraphs} eq 'all' || $vars{print_fitness} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_fitness}) ) ){
+  ++$pdf_page;
+  $page6= qq|<Page Name="Pg102" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr0">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Fitness Report" FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black" />
+<ShowText X="50" Y="710" Text="Fitness Assessment Results" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page6 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page6 .= qq|<ShowImage Name="Im18" Left="220" Bottom="210" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+These are the results from your members that have taken the fitness assessment. Complete data was collected on $vars{FIT_cnt} individuals.  This graph shows the break down of the physical condition in four different areas for your group. ^P
+
+^P
+
+Significant health benefits can be obtained by including a moderate amount of physical activity (e.q., 30 minutes of brisk walking or raking leaves, 15 minutes of running, 45 minutes of playing volleyball). Additional health benefits can be gained through greater amounts of physical activity. ^P
+
+^P
+
+Heart disease is the leading cause of death among men and women in the United States.  Physically inactive people are twice as likely to develop coronary heart disease as regularly active people. ^P
+
+^P
+  ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Fitness Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page6;}
+{ $page7= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_wellbeing} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_wellbeing}) ) ){
+  ++$pdf_page;
+  $page7= qq|<Page Name="Pg103" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr0">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="General Well-being Report" FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black" />
+<ShowText X="50" Y="710" Text="General Well-being Assessment Results" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page7 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page7 .= qq|<ShowImage Name="Im19" Left="220" Bottom="210" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+These are the results from your members that have taken the well-being assessment. Complete data was collected on $vars{GWB_cnt} individuals.  This graph shows the break down of the perceptions of your group in six key areas. ^P
+
+^P
+  ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Well-being Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page7;}
+{ $page8= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_totalassessments} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_totalassessments}) ) ){
+  ++$pdf_page;
+  $page8= qq|<Page Name="Pg104" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr0">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Total Assessments Taken" FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black" />
+<ShowText X="50" Y="710" Text="Number of Assessments Taken" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page8 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page8 .= qq|<ShowImage Name="Im21" Left="220" Bottom="210" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+This graph indicates the number of each assessment your group has completed. This can help put in perspective the graphs in this report, that show the results as percentages. ^P
+
+^P
+  ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial All Assessments ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page8;}
+{ $page9= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_agegroups} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_agegroups}) ) ){
+  ++$pdf_page;
+  $page9= qq|<Page Name="Pg5" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr9">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Age and Gender Demographics"  FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black"  />
+<ShowText X="50" Y="710" Text="Gender by Age Group" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="8" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page9 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page9 .= qq|<ShowImage Name="Im5" Left="45" Bottom="225" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+Knowing the age and gender of your group is important as you analyze the results.  In many instances younger people will show lower risk levels, even if they have poor health habits.  Changing these modifiable habits before they become ingrained will significantly reduce their risks as they get older.  Women can reduce their risks by having regular pelvic and breast exams. ^P
+  ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial All Assessments ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page9;}
+{ $page10= '';
+  if(($vars{pgraphs} eq 'all' || $vars{print_alcohol} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_alcohol}) ) ){
+  ++$pdf_page;
+  $page10= qq|<Page Name="Pg6" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr11">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Alcohol" FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black" />
+<ShowText X="50" Y="710" Text="Drinks in a Week" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page10 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page10 .= qq|<ShowImage Name="Im7" Left="220" Bottom="210" Flip="0" />
+</Graph><Graph Rect="0, 0, 612, 792" Name="GrIm6" ZIndex="10"><ShowImage Name="Im6" Left="255" Bottom="147" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+Alcohol induced deaths increased from 2009 to 2010 and chronic liver disease remains in the top 15 causes of death.  Healthy People 2010 has targeted substance abuse reduction in its list of health issues. ^P
+
+^P
+
+Males that drink eight or less drinks in a week and females that drink four or less drinks in a week are categorized as low use.  Men that drink fifteen or more drinks in a week or women that drink more than seven drinks in a week are considered to be high users.  
+
+^P
+
+$vars{alcohol_msg}  ]]>
+</Text>
+<Text Name="Txt0" Rect="250, 130, 318, 210" FontFace="Arial" FontSize="10" Leading="10" FontColor="White" BgColor="EAE7DB" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^P ]]>
+</Text>
+<Text Name="Txt1" Rect="318, 130, 582, 210"  FontFace="Arial" FontSize="10" Leading="10" FontColor="Black" BgColor="EAE7DB" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^b Goal: ^B ^P
+
+^P
+
+Less than 6% drink 14 or more drinks a week. ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Health Risk Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Health Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page10;}
+{ $page11= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_bloodpressure} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_bloodpressure}) ) ){
+  ++$pdf_page;
+  $page11= qq|<Page Name="Pg7" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr11">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Blood Pressure" FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black" />
+<ShowText X="50" Y="710" Text="Group Blood Pressure" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page11 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page11 .= qq|<ShowImage Name="Im8" Left="220" Bottom="210" Flip="0" />
+</Graph><Graph Rect="0, 0, 612, 792" Name="GrIm6" ZIndex="10"><ShowImage Name="Im6" Left="255" Bottom="147" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+High blood pressure is known as the silent killer and remains a major risk factor for coronary heart disease, stroke, and heart failure. About 76.4 million adults in the United States have high blood pressure. About 69% of people who have a first heart attack, 77% who have a first stroke, and 74% who have congestive heart failure have blood pressure higher than 140/90 mm Hg. The estimated direct and indirect cost of high blood pressure in 2008 is $50.6 billion. ^P
+
+^P
+
+Both the systolic and diastolic readings must be below 120/80 for the user to achieve a normal or low ranking.  If either the systolic or diastolic parts of the blood pressure exceed 139/89 the person is considered to have high blood pressure.  When both the systolic and diastolic numbers fall between these ranges it is called prehypertension. Those with prehypertension are at increased risk for progression to hypertension. ^P
+
+^P
+
+Lifestyle modification is a cornerstone in the prevention and delay of progression of hypertension. To achieve goal blood pressure, individuals must aim for normal weight, consume a high fiber, low fat and low salt diet and engage in regular aerobic physical activity. ^P
+
+^P
+
+$vars{bp_msg}  ]]>
+</Text>
+<Text Name="Txt1a" Rect="37, 130, 215, 480" FontFace="Arial" FontSize="10" Leading="10" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0" IsContinued="1"></Text>
+<Text Name="Txt0" Rect="250, 130, 318, 210" FontFace="Arial" FontSize="10" Leading="10" FontColor="White" BgColor="EAE7DB" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^P ]]>
+</Text>
+<Text Name="Txt1" Rect="318, 130, 582, 210"  FontFace="Arial" FontSize="10" Leading="10" FontColor="Black" BgColor="EAE7DB" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^b Goal: ^B ^P
+
+^P
+
+Less than 16% of adults with high blood pressure. ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Cardiac Risk Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Health Risk Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Health Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page11;}
+{ $page12= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_cholesterol} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_cholesterol}) ) ){
+  ++$pdf_page;
+  $page12= qq|<Page Name="Pg8" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr11">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Cholesterol" FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black" />
+<ShowText X="50" Y="710" Text="Group Cholesterol" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page12 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page12 .= qq|<ShowImage Name="Im9" Left="220" Bottom="210" Flip="0" />
+</Graph><Graph Rect="0, 0, 612, 792" Name="GrIm6" ZIndex="10"><ShowImage Name="Im6" Left="255" Bottom="147" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+High blood cholesterol is a major risk factor for heart disease. 33.6 million Americans have total blood cholesterol levels of 240 mg/dL or higher.  In a survey conducted by the Centers for Disease Control 23 percent of the individuals reported they have never had their cholesterol checked. ^P
+
+^P
+
+Blood cholesterol levels less than 200 mg/dL are considered desirable. Levels of 240 mg/dL or above are considered high. Levels of 200-239 mg/dL are considered borderline.  $vars{chol_msg} ^P
+
+^P
+
+Primary prevention works best to decrease cardiovascular disease that results from high cholesterol. Encouraging a healthy diet with low saturated fat and cholesterol, regular physical activity and sustained weight loss reduces cardiac risk. Cholesterol-lowering therapy for members with high levels also show great benefits in decreasing heart disease risk. ^P
+
+
+  ]]>
+</Text>
+<Text Name="Txt0" Rect="250, 130, 318, 210" FontFace="Arial" FontSize="10" Leading="10" FontColor="White" BgColor="EAE7DB" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^P ]]>
+</Text>
+<Text Name="Txt1" Rect="318, 130, 582, 210"  FontFace="Arial" FontSize="10" Leading="10" FontColor="Black" BgColor="EAE7DB" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^b Goal: ^B ^P
+
+^P
+
+Less than 17% of the population with high cholesterol. ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Cardiac Risk Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Health Risk Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Health Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page12;}
+{ $page23= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_colon_exam} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_colon_exam}) ) ){
+  ++$pdf_page;
+  $page23= qq|<Page Name="Pg23" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr11">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Colon exam" FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black" />
+<ShowText X="50" Y="710" Text="Group colon exam" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page23 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page23 .= qq|<ShowImage Name="Im30" Left="220" Bottom="210" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+The US Preventive Services Task Force (USPSTF) now recommends that adults aged 50 to 74 years be screened in 1 of the following ways: every year with high-sensitivity fecal occult blood testing (FOBT); every 10 years with colonoscopy; or every 5 years with flexible sigmoidoscopy plus interval high-sensitivity FOBT. ^P
+
+^P
+
+The task force also recommended against routine screening of people aged 76 to 85 years, although individual patients might have considerations that support screening. As for CTC, the task force said it is still too early to include it in the screening recommendations.  $vars{colon_msg} ^P
+
+^P
+
+The recommendation has a rating of A, meaning that the task force urges the clinician to provide the service to eligible patients and that there is good evidence that the service improves health outcomes, with benefits substantially outweighing harms.
+
+
+  ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Cardiac Risk Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Health Risk Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Health Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page23;}
+{ $page22= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_days_missed} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_days_missed}) ) ){
+  ++$pdf_page;
+  $page22= qq|<Page Name="Pg22" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr11">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Days missed" FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black" />
+<ShowText X="50" Y="710" Text="Group days missed" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page22 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page22 .= qq|<ShowImage Name="Im29" Left="220" Bottom="210" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+The number of days missed due to illness by your population can tell you a lot.  People will miss fewer days when they enjoy their work, have a good working environment, and don't feel overwhelming stress or pressure. ^P
+
+^P
+
+Make sure everyone has a workstation that works for them.  Desks should be the proper height for the tasks usually preformed and chairs need to have good back support.  Good lighting is also important to reduce eyestrain and glare which can lead to headaches and stress.  $vars{days_msg}
+
+
+  ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Health Risk Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Health Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page22;}
+{ $page107= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_depression} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_wellbeing2}) ) ){
+  ++$pdf_page;
+  $page107= qq|<Page Name="Pg107" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr0">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Depression Report" FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black" />
+<ShowText X="50" Y="710" Text="Stress and Depression Results" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page107 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page107 .= qq|<ShowImage Name="Im22" Left="220" Bottom="210" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+These are the results from your members that have answered questions regarding depression. This graph shows the level of stress and people with symptoms of depression within the group. ^P
+
+^P
+
+According to the National Institute of Mental Health, about 9.5 percent of the adult population suffers from clinical depression and more than 16 percent suffer from depression severe enough to warrant treatment. ^P
+
+^P
+
+The depression and stress score is based on answers to questions found in the General Well-Being or General Health assessments.  A cumulative score is generated for both categories and the range is measured against a standard scoring chart that determines a persons current attitudes toward stress and depression. Values may not add up to 100% due to rounding.
+
+^P
+
+  ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Health Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Well-Being Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page107;}
+{ $page36= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_diet} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_diet}) ) ){
+  ++$pdf_page;
+  $page36= qq|<Page Name="Pg36" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr11">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Dietary Habits" FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black" />
+<ShowText X="50" Y="710" Text="Fiber and Fat" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page22 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page36 .= qq|<ShowImage Name="Im36" Left="220" Bottom="210" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+The recommended dietary fiber intake is 14 grams per 1,000 calories consumed. For example, for a 2000 calorie pattern, the fiber recommendation is 28 grams per day. This is based on the recommendations set forth by the 2010 Dietary Guidelines for Americans. You can find the amount of fiber in a food on the Nutrition Facts label of a product. ^P
+
+^P
+
+Some of the best sources of fiber include: beans and peas, vegetables, fruits, whole grains, and nuts. ^P
+
+^P
+
+Fats and oils are part of a healthful diet, but the type of fat makes a difference to heart health, and the total amount of fat consumed is also important. High intake of saturated fats, trans fats, and cholesterol increases the risk of unhealthy blood lipid levels, which, in turn, may increase the risk of coronary heart disease. A high intake of fat (greater than 35 percent of calories) generally increases saturated fat intake and makes it more difficult to avoid consuming excess calories. A low intake of fats and oils (less than 20 percent of calories) increases the risk of inadequate intakes of vitamin E and of essential fatty acids and may contribute to unfavorable changes in high-density lipoprotein (HDL) blood cholesterol and triglycerides.
+
+  ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Health Risk Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page36;}
+{ $page13= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_exercise} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_exercise}) ) ){
+  ++$pdf_page;
+  $page13= qq|<Page Name="Pg9" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr11">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Exercise"  FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black"  />
+<ShowText X="50" Y="710" Text="Group Exercise Habits" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="8" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page13 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page13 .= qq|<ShowImage Name="Im10" Left="220" Bottom="210" Flip="0" />
+</Graph><Graph Rect="0, 0, 612, 792" Name="GrIm6" ZIndex="10"><ShowImage Name="Im6" Left="255" Bottom="147" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+Regular physical activity throughout life is important for maintaining a healthy body, enhancing psychological well-being, and preventing premature death.  A Surgeon General's report on physical activity and health concluded that moderate physical activity can reduce substantially the risk of developing or dying from heart disease, diabetes, colon cancer, and high blood pressure. ^P
+
+^P
+
+Between 1999 and 2009, the percentage of men 18 years of age and over who met the 2008 federal aerobic activity and muscle-strengthening guidelines increased from 19% to 22%. Among men, the percentage who met the guidelines for those 45-64 years and 65 years of age and over increased during this period, although their levels were lower than among younger men. In 2009, 12% of men 65 years of age and over met the guidelines, compared with 28% of men 18-44 years of age. ^P 
+
+^P
+ 
+Throughout this period, women were generally less likely to meet the guidelines than men in the same age group. The percentage of women 18 years of age and over who met the guidelines increased during this period, from 12% to 16%. As with men, the percentage who met the guidelines increased during this period for women 45-64 years and 65 years of age and over. The percentage of women who met the guidelines decreased with age (9% of women 65 years of age and over compared with 19% of women 18-44 years in 2009). ^P
+
+^P
+
+$vars{exer_msg}
+
+  ]]>
+</Text>
+<Text Name="Txt1a" Rect="37, 130, 215, 480" FontFace="Arial" FontSize="10" Leading="10" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0" IsContinued="1"></Text>
+
+<Text Name="Txt0" Rect="250, 130, 318, 210" FontFace="Arial" FontSize="10" Leading="10" FontColor="White" BgColor="EAE7DB" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^P ]]>
+</Text>
+<Text Name="Txt1" Rect="318, 130, 582, 210"  FontFace="Arial" FontSize="10" Leading="10" FontColor="Black" BgColor="EAE7DB" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^b Goal: ^B ^P
+
+^P
+
+80% of the population getting regular exercise. ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Cardiac Risk Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Health Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Health Risk Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page13;}
+{ $page34= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_flu} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_flu}) ) ){
+  ++$pdf_page;
+  $page34= qq|<Page Name="Pg34" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr11">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Influenza vaccinations" FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black" />
+<ShowText X="50" Y="710" Text="Group flu shot" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page34 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page34 .= qq|<ShowImage Name="Im34" Left="220" Bottom="210" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+All people 6 months and older are now recommended to receive annual influenza vaccination. This is a new and expanded recommendation for this season. In August, 2011, CDC's Advisory Committee on Immunization Practices (ACIP) voted in favor of "universal" influenza vaccination in the United States to protect as many people as possible against the flu.  ^P
+
+^P
+ 
+The decision is supported by evidence that influenza vaccination is a safe and effective preventive health measure with potential benefit across all age groups. Even healthy adults with no previously identified risk factors can develop influenza-related complications, including adults ages 19-49 years old.  ^P
+
+^P
+
+The seasonal flu vaccine protects against three influenza viruses that research indicates will be most common during the upcoming season. ^P
+
+^P
+
+  ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Health Risk Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Health Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page34;}
+{ $page24= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_general_exam} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_general_exam}) ) ){
+  ++$pdf_page;
+  $page24= qq|<Page Name="Pg24" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr11">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="General exam" FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black" />
+<ShowText X="50" Y="710" Text="Group general exam" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page24 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page24 .= qq|<ShowImage Name="Im31" Left="220" Bottom="210" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+In medicine, the (annual) general medical examination is a common form of preventive medicine involving visits to a general practitioner by asymptomatic adults on a regular basis. This is generally yearly or less frequently. It is known under several other names, such as the periodic health evaluation or preventive health examination.  ^P
+
+ ^P
+
+The term is generally not meant to include visits for the purpose of newborn checks, Pap smears for cervical cancer, or regular visits for people with certain chronic medical disorders (for example, diabetes). The general medical examination generally involves a medical history, a (brief or complete) physical examination and sometimes laboratory tests. ^P
+
+^P
+
+  ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Health Risk Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Health Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page24;}
+{ $page19= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_glucose} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_glucose}) ) ){
+  ++$pdf_page;
+  $page19= qq|<Page Name="Pg19" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr11">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Glucose" FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black" />
+<ShowText X="50" Y="710" Text="Group Glucose" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page19 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page19 .= qq|<ShowImage Name="Im26" Left="220" Bottom="210" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+A blood glucose test measures the amount of sugar (glucose) in a sample of blood. Glucose is a major source of energy for most cells of the body, including those in the brain.  ^P
+
+^P
+
+Levels vary according to the laboratory, but in general up to 100 milligrams per deciliter (mg/dL) are considered normal.  Persons with levels between 100 and 126 mg/dL may have impaired fasting glucose or prediabetes. These levels are considered to be risk factors for type 2 diabetes and its complications. Diabetes is typically diagnosed when fasting blood glucose levels are 126 mg/dL or higher.  ^P
+
+^P
+
+$vars{gluc_msg}
+
+
+  ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Cardiac Risk Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Health Risk Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Health Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page19;}
+
+{ $page32= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_hga1c} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_hga1c}) ) ){
+  ++$pdf_page;
+  $page32= qq|<Page Name="Pg19" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr11">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="HgA1c" FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black" />
+<ShowText X="50" Y="710" Text="Group HgA1c" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page32 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page32 .= qq|<ShowImage Name="Im32" Left="220" Bottom="210" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+Hemoglobin A1c is a test that indicates the average level of blood sugar over the past 2 to 3 months. People with diabetes need to have this test done regularly to see whether their blood sugar levels have been staying within a target range.
+
+^P
+
+Hemoglobin A1c test results show your average blood sugar level over time. The result is reported as a percentage. Your goal is to keep your hemoglobin A1c level as close to the normal level as possible. Studies suggest that the lower the hemoglobin A1c level, the lower the incidence of diabetic complications (eye, kidney, heart, blood vessel, and nerve disease). The American Diabetes Association (ADA) recommends keeping the hemoglobin A1c less than 7%.
+
+^P
+
+$vars{hga1c_msg}
+
+
+  ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Cardiac Risk Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Health Risk Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Health Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page32;}
+
+{ $page105= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_srdisease} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_selfreported}) ) ){
+  ++$pdf_page;
+  $page105= qq|<Page Name="Pg105" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr0">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="History - Personal"  FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black"  />
+<ShowText X="50" Y="710" Text="Personal Conditions" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="8" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page105 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page105 .= qq|<ShowImage Name="Im23" Left="220" Bottom="210" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+These are the results from your members that have answered questions regarding their own disease history. This graph shows the number of self reported personal conditions within the group. ^P
+
+^P
+
+  ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Cardiac Risk Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Health Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page105;}
+{ $page106= '';
+  if( ( ($vars{pgraphs} eq 'all' && $vars{GINA} != 1) || $vars{print_srfam} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_familyhistory}) ) ){
+  ++$pdf_page;
+  $page106= qq|<Page Name="Pg106" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr0">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="History - Family"  FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black"  />
+<ShowText X="50" Y="710" Text="Family Conditions" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="8" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page106 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page106 .= qq|<ShowImage Name="Im24" Left="220" Bottom="210" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+These are the results from your members that have answered questions regarding their family disease history. This graph shows the number of self reported family history conditions within the group. ^P
+
+^P
+
+  ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Health Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page106;}
+{ $page20a= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_hdl} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_hdl}) ) ){
+  ++$pdf_page;
+  $page20a= qq|<Page Name="Pg20a" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr11">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="HDL" FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black" />
+<ShowText X="50" Y="710" Text="Group HDL" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page20a .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page20a .= qq|<ShowImage Name="Im33" Left="220" Bottom="210" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+
+
+With HDL (good) cholesterol, higher levels are better. Low HDL cholesterol (less than 40 mg/dL for men, less than 50 mg/dL for women) puts you at higher risk for heart disease. In the average man, HDL cholesterol levels range from 40 to 50 mg/dL. In the average woman, they range from 50 to 60 mg/dL. An HDL cholesterol of 60 mg/dL or higher gives some protection against heart disease. The mean level of HDL cholesterol for American adults age 20 and older is 54.3 mg/dL.  ^P
+
+^P
+
+Smoking, being overweight and being sedentary can all result in lower HDL cholesterol. To raise your HDL level, avoid tobacco smoke, maintain a healthy weight and get at least 30-60 minutes of physical activity more days than not.  $vars{hdl_msg}
+
+
+  ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Cardiac Risk Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page20a;}
+{ $page20= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_ldl} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_ldl}) ) ){
+  ++$pdf_page;
+  $page20= qq|<Page Name="Pg20" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr11">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="LDL" FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black" />
+<ShowText X="50" Y="710" Text="Group Ldl" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page20 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page20 .= qq|<ShowImage Name="Im27" Left="220" Bottom="210" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+
+
+The lower the level of LDL cholesterol, the lower the risk of heart attack and stroke. In fact, it's a better gauge of risk than total blood cholesterol.  ^P
+
+^P
+
+Other risk factors for heart disease and stroke help determine what a healthy LDL level should be, as well as the appropriate treatment.  $vars{ldl_msg}
+
+
+  ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Cardiac Risk Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Health Risk Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Health Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page20;}
+{ $page14= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_mammogram} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_mammogram}) ) ){
+  ++$pdf_page;
+  $page14= qq|<Page Name="Pg10" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr11">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Mammograms"  FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black"  />
+<ShowText X="50" Y="710" Text="Group Mammograms (females 40 and older)" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="8" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page14 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page14 .= qq|<ShowImage Name="Im11" Left="220" Bottom="210" Flip="0" />
+</Graph><Graph Rect="0, 0, 612, 792" Name="GrIm6" ZIndex="10"><ShowImage Name="Im6" Left="255" Bottom="147" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+Besides skin cancer, breast cancer is the most commonly diagnosed cancer among U.S. women. More than 1 in 4 cancers in women (about 28%) are breast cancer. In 2011, an estimated 230,480 new cases of invasive breast cancer are expected to be diagnosed in women in the U.S., along with 57,650 new cases of non-invasive (in situ) breast cancer. About 39,520 women in the U.S. are expected to die in 2011 from breast cancer, though death rates have been decreasing since 1990. These decreases are thought to be the result of treatment advances, earlier detection through screening, and increased awareness. ^P
+
+^P
+
+Death from breast cancer can be reduced substantially if the tumor is discovered at an early stage. Mammography is the most effective method for detecting these early malignancies. Clinical trials have demonstrated that mammography screening can reduce breast cancer deaths by 20 to 39 percent in women aged 50 to 74 years and about 17 percent in women aged 40 to 49 years. Breast cancer deaths can be reduced through increased adherence with recommendations for regular mammography screening.  $vars{mammo_msg}
+  ]]>
+</Text>
+<Text Name="Txt0" Rect="250, 130, 318, 210" FontFace="Arial" FontSize="10" Leading="10" FontColor="White" BgColor="EAE7DB" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^P ]]>
+</Text>
+<Text Name="Txt1" Rect="318, 130, 582, 210"  FontFace="Arial" FontSize="10" Leading="10" FontColor="Black" BgColor="EAE7DB" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^b Goal: ^B ^P
+
+^P
+
+Screening of all women over 40 years of age. ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Health Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Health Risk Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page14;}
+{ $page15= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_pap} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_pap}) ) ){
+  ++$pdf_page;
+  $page15= qq|<Page Name="Pg11" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr11">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Pelvic Exams"  FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black"  />
+<ShowText X="50" Y="710" Text="Group Pap Examinations" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="8" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page15 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page15 .= qq|<ShowImage Name="Im12" Left="220" Bottom="210" Flip="0" />
+</Graph><Graph Rect="0, 0, 612, 792" Name="GrIm6" ZIndex="10"><ShowImage Name="Im6" Left="255" Bottom="147" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+Cervical cancer is the 10th most common cancer among females in the United States. It is estimated that 12,170 women will be diagnosed with and 4,220 women will die of cancer of the cervix uteri in 2012. The number of new cases of cervical cancer is higher among females from racial and ethnic groups other than white females. Cervical cancer accounts for about 1.7 percent of cancer deaths among females. Infections of the cervix with certain types of sexually transmitted human papilloma virus increase risk of cervical cancer and may be responsible for most cervical cancer in the United States. ^P
+
+^P
+
+Considerable evidence suggests that screening can reduce the number of deaths from cervical cancer. Invasive cervical cancer is preceded in a large proportion of cases by precancerous changes in cervical tissue that can be identified with a Pap test. If cervical cancer is detected early, the likelihood of survival is almost 100 percent with appropriate treatment and followup; that is, almost all cervical cancer deaths could be avoided if all females complied with screening and followup recommendations.  $vars{pap_msg} ^P
+
+  ]]>
+</Text>
+<Text Name="Txt0" Rect="250, 130, 318, 210" FontFace="Arial" FontSize="10" Leading="10" FontColor="White" BgColor="EAE7DB" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^P ]]>
+</Text>
+<Text Name="Txt1" Rect="318, 130, 582, 210"  FontFace="Arial" FontSize="10" Leading="10" FontColor="Black" BgColor="EAE7DB" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^b Goal: ^B ^P
+
+^P
+
+Annual Pap exams for women over 18 years old. ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Health Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Health Risk Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page15;}
+{ $page25= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_breast_self} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_breast_self}) ) ){
+  ++$pdf_page;
+  $page25= qq|<Page Name="Pg11" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr11">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Self Breast Exam"  FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black"  />
+<ShowText X="50" Y="710" Text="Self Breast Exam Habits" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="8" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page25 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page25 .= qq|<ShowImage Name="Im25" Left="220" Bottom="210" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+The American Cancer Society recommends that women age 20 or older should perform a breast self-examination (BSE) every month. By doing the exam regularly, you get to know how your breasts normally feel and you can more readily detect any signs or symptoms.  ^P
+
+^P
+
+Women who follow the above recommendations from the American Cancer Society have the best chance of early detection and the best prognosis should cancer be found.  Breast cancer will affect one in eight women during their lifetime, this is up from one in twenty in the 1960's. $vars{self_breast_msg} ^P
+
+  ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Health Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Health Risk Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page25;}
+{ $page251= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_prostate} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_prostate}) ) ){
+  ++$pdf_page;
+  $page251= qq|<Page Name="Pg251" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr11">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Male Prostate Exam"  FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black"  />
+<ShowText X="50" Y="710" Text="Group Prostate Exams (males 40 and older)" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="8" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page251 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page251 .= qq|<ShowImage Name="Im20" Left="220" Bottom="210" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+
+The American Cancer Society recommends that men make an informed decision with their doctor about whether to be tested for prostate cancer. Research has not yet proven that the potential benefits of testing outweigh the harms of testing and treatment. The American Cancer Society believes that men should not be tested without learning about what we know and don’t know about the risks and possible benefits of testing and treatment. ^P
+
+^P
+
+Starting at age 50, talk to your doctor about the pros and cons of testing so you can decide if testing is the right choice for you. If you are African American or have a father or brother who had prostate cancer before age 65, you should have this talk with your doctor starting at age 45. If you decide to be tested, you should have the PSA blood test with or without a rectal exam. How often you are tested will depend on your PSA level. ^P
+
+^P
+
+$vars{male_msg} ^P
+
+  ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Health Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Health Risk Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page251;}
+{ $page16= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_seatbelts} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_seatbelts}) ) ){
+  ++$pdf_page;
+  $page16= qq|<Page Name="Pg12" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr11">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Seatbelts"  FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black"  />
+<ShowText X="50" Y="710" Text="Group Seatbelt Use" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="8" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page16 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page16 .= qq|<ShowImage Name="Im13" Left="220" Bottom="210" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+Motor vehicle crashes are often predictable and preventable. Increased use of safety belts and reductions in driving while impaired are two of the most effective means to reduce the risk of death and serious injury of occupants in motor vehicle crashes.   As of January 2011, the national safety belt use rate was 85 percent.  Still, every 14 seconds, an adult in the United States is treated in an emergency department for crash-related injuries.  In 2009, nearly 34,000 people in the United States died in a motor vehicle crash. ^P
+
+^P
+
+When used properly, seatbelts reduce the risk of fatal injury to front seat vehicle occupants by 45 percent.  In rollovers, seatbelts are 80 percent effective in preventing death in light trucks and 74 percent effective in cars. ^P
+
+^P
+
+Motor vehicle crashes are the leading cause of death among those age 5-34 in the U.S.  ^P
+
+^P
+
+In 2009, nearly 11,000 people died at the hands of alcohol-impaired drivers.  Each year in the United States it is estimated that more than 112 million episodes of impaired driving occur among adults.  ^P
+
+^P
+
+$vars{sb_msg} ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Health Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Health Risk Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page16;}
+{ $page17= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_smoking} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_smoking}) ) ){
+  ++$pdf_page;
+  $page17= qq|<Page Name="P13" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr11">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Smoking"  FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black"  />
+<ShowText X="50" Y="710" Text="Group Smoking Habits" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="8" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page17 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page17 .= qq|<ShowImage Name="Im14" Left="220" Bottom="210" Flip="0" />
+</Graph><Graph Rect="0, 0, 612, 792" Name="GrIm6" ZIndex="10"><ShowImage Name="Im6" Left="255" Bottom="147" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+Cigarette smoking is the single most preventable cause of disease and death in the United States. Smoking results in more deaths each year in the United States than AIDS, alcohol, cocaine, heroin, homicide, suicide, motor vehicle crashes, and fires combined. ^P
+
+^P
+
+More people die from lung cancer than any other type of cancer, in 2003 it accounted for more deaths than breast cancer, prostate cancer and colon cancer combined. ^P
+
+^P
+
+In the US, tobacco use is responsible for nearly 1 in 5 deaths; this equaled an estimated 443,000 premature deaths each year between 2000 and 2004. In addition, an estimated 8.6 million people suffer from chronic conditions related to smoking, such as chronic bronchitis, emphysema, and cardiovascular diseases. ^P
+
+^P
+
+Since 2004, smoking rates have changed little; in 2008, an estimated 21% of adults, or 46 million Americans, smoked cigarettes.  $vars{smoke_msg} ^P
+
+  ]]>
+</Text>
+<Text Name="Txt0" Rect="250, 130, 318, 210" FontFace="Arial" FontSize="10" Leading="10" FontColor="White" BgColor="EAE7DB" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^P ]]>
+</Text>
+<Text Name="Txt1" Rect="318, 130, 582, 210"  FontFace="Arial" FontSize="10" Leading="10" FontColor="Black" BgColor="EAE7DB" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^b Goal: ^B ^P
+
+^P
+
+Less than 12% of adults smoke. ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Cardiac Risk Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Health Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Health Risk Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page17;}
+{ $page21= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_triglycerides} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_triglycerides}) ) ){
+  ++$pdf_page;
+  $page21= qq|<Page Name="Pg21" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr11">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Triglycerides" FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black" />
+<ShowText X="50" Y="710" Text="Group Triglycerides" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page21 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page21 .= qq|<ShowImage Name="Im28" Left="220" Bottom="210" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+Triglycerides are the chemical form in which most fat exists in food as well as in the body. They're also present in blood plasma and, in association with cholesterol, form the plasma lipids.  ^P
+
+^P
+
+Excess triglycerides in plasma is called hypertriglyceridemia. It's linked to the occurrence of coronary artery disease in some people. Elevated triglycerides may be a consequence of other disease, such as untreated diabetes mellitus. Like cholesterol, increases in triglyceride levels can be detected by plasma measurements. These measurements should be made after an overnight food and alcohol fast. ^P
+
+^P
+
+Changes in lifestyle habits are the main therapy for hypertriglyceridemia.   $vars{trig_msg}
+
+
+  ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data within the specified criteria from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Cardiac Risk Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Health Risk Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Health Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page21;}
+{ $page35= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_waist} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_waist}) ) ){
+  ++$pdf_page;
+  $page35= qq|<Page Name="P14" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr11">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Waist"  FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black"  />
+<ShowText X="50" Y="710" Text="Group Waist" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="8" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page35 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page35 .= qq|<ShowImage Name="Im35" Left="220" Bottom="210" Flip="0" />
+</Graph><Graph Rect="0, 0, 612, 792" Name="GrIm6" ZIndex="10"><ShowImage Name="Im6" Left="255" Bottom="147" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+Measuring waist circumference helps screen for possible health risks that come with overweight and obesity. If fat is stored around the waist rather than at the hips, the individual is at higher risk for heart disease and type 2 diabetes. This risk goes up with a waist size that is greater than 35 inches for women or greater than 40 inches for men. 
+  ]]>
+</Text>
+<Text Name="Txt0" Rect="250, 130, 318, 210" FontFace="Arial" FontSize="10" Leading="10" FontColor="White" BgColor="EAE7DB" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^P ]]>
+</Text>
+<Text Name="Txt1" Rect="318, 130, 582, 210"  FontFace="Arial" FontSize="10" Leading="10" FontColor="Black" BgColor="EAE7DB" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^b Goal: ^B ^P
+
+^P
+
+Increase the proportion of adults who are at a healthy weight to 60%. ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Health Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Health Risk Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page35;}
+{ $page18= '';
+  if( ($vars{pgraphs} eq 'all' || $vars{print_weight} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_weight}) ) ){
+  ++$pdf_page;
+  $page18= qq|<Page Name="P14" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr11">
+<ShowImage Name="bg_bar" Left="0" Bottom="102" Height="690" Width="605" Flip="0" />
+<ShowImage Name="Im0" Left="450" Bottom="30" Width="85" Flip="0" />
+<ShowText X="50" Y="740" Text="Weight"  FontFace="Arial,BoldItalic" FontSize="20" Leading="14" Color="Black"  />
+<ShowText X="50" Y="710" Text="Group Weight" FontFace="Arial" FontSize="16" Leading="14" Color="Black" />
+<ShowText X="95" Y="30" Text="$copyright_pdf" FontFace="Arial" FontSize="8" Leading="8" Color="Slategray" />
+|; if ($vars{print_page_numbers}){ $page18 .= qq|<ShowText X="55" Y="30" Text="Page $pdf_page" FontFace="Arial" FontSize="7" Leading="8" Color="Slategray" />\n|;}
+$page18 .= qq|<ShowImage Name="Im15" Left="220" Bottom="210" Flip="0" />
+</Graph><Graph Rect="0, 0, 612, 792" Name="GrIm6" ZIndex="10"><ShowImage Name="Im6" Left="255" Bottom="147" Flip="0" />
+</Graph>
+<Text Name="Txt1" Poly="37, 130, 211, 130, 211, 523, 437, 523, 437, 622, 37, 622" FontFace="Arial" FontSize="10" Leading="11" FontColor="Darkslategray" VerticalAlign="Top" ExtraParaSpacing="0">
+<![CDATA[
+Overweight and obesity are major contributors to many preventable causes of death. On average, higher body weights are associated with higher death rates. The number of overweight children, adolescents, and adults has risen over the past four decades. Americans who are 30 or more pounds over a healthy weight cost the country an estimated $147 billion in weight-related medical bills in 2008, double the amount a decade ago, according to a study by government scientists and the non-profit research group RTI International. ^P
+
+^P
+
+More than half of adults in the United States are estimated to be overweight or obese. The proportion of adolescents from poor households who are overweight or obese is twice that of adolescents from middle- and high-income households. Obesity is especially prevalent among women with lower incomes and is more common among African American and Mexican American women than among white women. Among African Americans, the proportion of women who are obese is 80 percent higher than the proportion of men who are obese. This gender difference also is seen among Mexican American women and men, but the percentage of white, non-Hispanic women and men who are obese is about the same. ^P
+
+^P
+
+While one in every three American adults is obese, two in every three others suffer from being overweight, stated the Centers for Disease Control and Prevention (CDC) officials in their recent report.  $vars{wt_msg} ^P
+
+  ]]>
+</Text>
+<Text Name="Txt0" Rect="250, 130, 318, 210" FontFace="Arial" FontSize="10" Leading="10" FontColor="White" BgColor="EAE7DB" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^P ]]>
+</Text>
+<Text Name="Txt1" Rect="318, 130, 582, 210"  FontFace="Arial" FontSize="10" Leading="10" FontColor="Black" BgColor="EAE7DB" TextJustify="Left" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^b Goal: ^B ^P
+
+^P
+
+Increase the proportion of adults who are at a healthy weight to 60%. ]]>
+</Text>
+<Text Name="TxtRefs" Rect="37, 40, 280, 100" FontFace="Arial" FontSize="8" Leading="10" FontColor="Darkslategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+Graph created using data from: ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Cardiac Risk Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Diabetes Risk Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Fitness Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial General Health Assessment ^F ^P
+^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=8&face=Arial Health Risk Assessment ^F ^P
+  ]]>
+</Text>
+<Text Name="TxtFoot" Rect="37, 103, 340, 116" FontFace="Arial" FontSize="8" Leading="10" FontColor="Slategray" TextJustify="Left" VerticalAlign="Bottom" ExtraParaSpacing="0">
+<![CDATA[
+$vars{user_footer}
+  ]]>
+</Text>
+</Page>|;}
+
+$page18;}
+
+
+
+{ $outlines= '';
+  $outlines= qq|<Outlines Title="Group Summary Report" Page="Pg0" Name="GSR">|;
+  $outlines .= qq|<Outlines Title="Achievable Risk" Page="Pg1" Name="Ar" />\n|  if( ($vars{pgraphs} eq 'all' || $vars{print_achievable} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_achievable}) ) );
+  $outlines .= qq|<Outlines Title="Modifiable Behaviors" Page="Pg2" Name="mb" />\n|  if( ($vars{pgraphs} eq 'all' || $vars{print_riskfactors} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_riskfactors}) ) );
+  $outlines .= qq|<Outlines Title="Specific Disease Risks" Page="Pg3" Name="dsr" />\n|  if( ($vars{pgraphs} eq 'all' || $vars{print_preventable} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_preventable}) ) );
+  $outlines .= qq|<Outlines Title="Cardiac Assessment Summary" Page="Pg100" Name="crc" />\n|  if( ($vars{pgraphs} eq 'all' || $vars{print_cardiac} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_cardiac}) ) );
+  $outlines .= qq|<Outlines Title="Diabetes Assessment Summary" Page="Pg101" Name="drc" />\n| if( ($vars{pgraphs} eq 'all' || $vars{print_diabetes} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_diabetes}) ) );
+  $outlines .= qq|<Outlines Title="Fitness Assessment Summary" Page="Pg102" Name="fit" />\n| if(($vars{pgraphs} eq 'all' || $vars{print_fitness} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_fitness}) ) );
+  $outlines .= qq|<Outlines Title="Well-being Assessment Summary" Page="Pg103" Name="gwb" />\n| if( ($vars{pgraphs} eq 'all' || $vars{print_wellbeing} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_wellbeing}) ) );
+  $outlines .= qq|<Outlines Title="Total Assessments Taken" Page="Pg104" Name="tot" />\n| if( ($vars{pgraphs} eq 'all' || $vars{print_totalassessments} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_totalassessments}) ) );
+  $outlines .= qq|<Outlines Title="Age and Sex Demographics" Page="Pg5" Name="age" />\n|  if( ($vars{pgraphs} eq 'all' || $vars{print_agegroups} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_agegroups}) ) );
+  $outlines .= qq|<Outlines Title="Alcohol" Page="Pg6" Name="alc" />\n| if(($vars{pgraphs} eq 'all' || $vars{print_alcohol} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_alcohol}) ) );
+  $outlines .= qq|<Outlines Title="Blood Pressure" Page="Pg7" Name="bp" />\n| if( ($vars{pgraphs} eq 'all' || $vars{print_bloodpressure} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_bloodpressure}) ) );
+  $outlines .= qq|<Outlines Title="Cholesterol" Page="Pg8" Name="chol" />\n| if( ($vars{pgraphs} eq 'all' || $vars{print_cholesterol} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_cholesterol}) ) );
+  $outlines .= qq|<Outlines Title="Depression" Page="Pg107" Name="dep" />\n| if( ($vars{pgraphs} eq 'all' || $vars{print_depression} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_wellbeing2}) ) );
+  $outlines .= qq|<Outlines Title="Exercise" Page="Pg9" Name="exe" />\n| if( ($vars{pgraphs} eq 'all' || $vars{print_exercise} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_exercise}) ) );
+  $outlines .= qq|<Outlines Title="History - Personal" Page="Pg105" Name="srd" />\n| if( ($vars{pgraphs} eq 'all' || $vars{print_srdisease} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_selfreported}) ) );
+  $outlines .= qq|<Outlines Title="History - Family" Page="Pg106" Name="srf" />\n| if( ( ($vars{pgraphs} eq 'all' && $vars{GINA} != 1) || $vars{print_srfam} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_familyhistory}) ) );
+  $outlines .= qq|<Outlines Title="Mammograms" Page="Pg10" Name="mam" />\n| if( ($vars{pgraphs} eq 'all' || $vars{print_mammogram} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_mammogram}) ) );
+  $outlines .= qq|<Outlines Title="Pelvic Exams" Page="Pg11" Name="pap" />\n| if( ($vars{pgraphs} eq 'all' || $vars{print_pap} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_pap}) ) );
+  $outlines .= qq|<Outlines Title="Prostate Exams" Page="Pg251" Name="pro" />\n| if( ($vars{pgraphs} eq 'all' || $vars{print_prostate} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_prostate}) ) );
+  $outlines .= qq|<Outlines Title="Seatbelts" Page="Pg13" Name="sb" />\n| if( ($vars{pgraphs} eq 'all' || $vars{print_seatbelts} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_seatbelts}) ) );
+  $outlines .= qq|<Outlines Title="Self Breast Exams" Page="Pg251" Name="pro" />\n| if( ($vars{pgraphs} eq 'all' || $vars{print_breast_self} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_breast_self}) ) );
+  $outlines .= qq|<Outlines Title="Smoking" Page="P14" Name="smk" />\n| if( ($vars{pgraphs} eq 'all' || $vars{print_smoking} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_smoking}) ) );
+  $outlines .= qq|<Outlines Title="Weight" Page="P15" Name="wei" />\n| if( ($vars{pgraphs} eq 'all' || $vars{print_weight} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_weight}) ) );
+  $outlines .= qq|<Outlines Title="Glucose" Page="Pg19" Name="gluc" />\n| if( ($vars{pgraphs} eq 'all' || $vars{print_glucose} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_glucose}) ) );
+  $outlines .= qq|<Outlines Title="LDL" Page="Pg20" Name="ldl" />\n| if( ($vars{pgraphs} eq 'all' || $vars{print_ldl} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_ldl}) ) );
+  $outlines .= qq|<Outlines Title="Triglycerides" Page="Pg21" Name="trig" />\n| if( ($vars{pgraphs} eq 'all' || $vars{print_triglycerides} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_triglycerides}) ) );
+  $outlines .= qq|<Outlines Title="Days missed" Page="Pg22" Name="days" />\n| if( ($vars{pgraphs} eq 'all' || $vars{print_days_missed} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_days_missed}) ) );
+   $outlines .= qq|<Outlines Title="Colon exam" Page="Pg23" Name="colon" />\n| if( ($vars{pgraphs} eq 'all' || $vars{print_colon_exam} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_colon_exam}) ) );
+   $outlines .= qq|<Outlines Title="General exam" Page="Pg24" Name="general" />\n| if( ($vars{pgraphs} eq 'all' || $vars{print_general_exam} == 1) && ( $vars{print_empty_graphs} || (!$vars{print_empty_graphs} && !$empty_chart{print_general_exam}) ) );
+  $outlines .= qq|</Outlines>|;
+  $outlines;
+}
+</PDF>

@@ -1,0 +1,50 @@
+{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+
+<h1>Search Assessments</h1>
+
+<form action="{$config{admin_dir}}/assessments_results.cgi" method="get" name="search_form">
+Partial User ID or batch number: 
+<input type="text" name="search_uid">
+
+<br /><br />Partial Name (first or last): 
+<input type="text" name="search_uname" />
+
+{	if (@site_list > 1){
+	$OUT .= qq|<br /><br />Group: <select name="search_site">
+	<option value=""></option>|;
+	foreach (@site_list) {
+		$tmp = CGI::escapeHTML($_);
+		$OUT .= "<option value=\"$tmp\">$tmp</option>";
+	}
+	$OUT .= "</select>";}
+}
+
+<br /><br />Assessment Type:
+<select multiple="multiple" name="search_assessment_type" size="{scalar @assessment_types}">
+<option value="ALL" selected>ALL</option>
+{
+my %short_names = (
+			HRA => 'General Health',
+			GHA => 'Health Risk',
+			GWB => 'Well-being',
+			FIT => 'Fitness',
+			DRC => 'Diabetes',
+			CRC => 'Cardiac'
+			);
+
+foreach (@assessment_types) {
+	$OUT .= "<option value=\"$_\">$short_names{$_}</option>";
+}}
+</select>
+
+<br /><br />
+<nobr>After Date: (mm/dd/yyyy): <script>DateInput('search_from', false, 'MM/DD/YYYY')</script></nobr>
+
+
+<br /><nobr>Before Date (mm/dd/yyyy): <script>DateInput('search_to', false, 'MM/DD/YYYY')</script></nobr>
+	
+
+<br /><input type="submit" value="Search Assessments">
+</form>
+
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

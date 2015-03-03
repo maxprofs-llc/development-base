@@ -1,0 +1,154 @@
+{
+# this part fills in a file that sets language variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}assessment_language.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$assessment_recs_variables_tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$assessment_recs_header_file", PACKAGE => __PACKAGE__ );
+}    <!-- Template: hemensaglik_assessment_records.tmpl -->
+
+<div id="step-topimg" class="steptxt">
+<p class="pad3">Your Next Step</p>
+</div>
+{$next_steps}
+<!-- your next step section start here-->
+<table><tr><td valign="top">
+
+<div id="step-topimg1" class="steptxt">
+<p class="pad5">{$lang{$current_language}{Assessments}}</p>
+</div>
+
+{
+my $html;
+$html .= qq |<div id="step-bg" class="content1">|;
+
+my( $year, $month, $day ) = (localtime)[5,4,3];
+
+$year  += 1900;
+$month += 1;
+my $today1;
+my $group_startdate;
+my $group_enddate;
+ 
+$today = sprintf("%04d-%02d-%02d", $year, $month, $day);
+if($config{restrict_first} && !$show_all){  
+	do {  print STDERR "\nhello configrestrictttt";
+		if(uc $config{restrict_first} eq 'CRC'){ $html .= qq |$alinks{CRC} |;}
+		elsif(uc $config{restrict_first} eq 'DRC'){ $html .= qq |$alinks{DRC} |;}
+		elsif(uc $config{restrict_first} eq 'FIT'){ $html .= qq |$alinks{FIT} |;}
+		elsif(uc $config{restrict_first} eq 'HRA'){ $html .= qq |$alinks{HRA}|;}
+		elsif(uc $config{restrict_first} eq 'GHA'){$html .= qq |$alinks{GHA}|;}
+		else {''};
+		}
+}elsif($site_id{groupID}){ print STDERR "\nhello gropiddddd";
+   
+   if($site_id{groupRestrict}){ 
+      @view_order = split(',',$site_id{groupRestrict});
+   }else{
+     @view_order = split /\s+/, $config{show_order};
+   }  
+   $group_startdate = $site_id{groupLaunch};
+   $group_enddate = $site_id{groupResetDate};    
+   $group_startdate = substr($group_startdate, 0, 10);
+   $group_enddate   = substr($group_enddate,0,10);	
+	
+	
+	#if( $today lt $group_startdate){
+	   #$group_startdate = sprintf("%02d-%02d-%04d", $day, $month, $year);	 
+	 # $html .= qq |<p><span style=\"color: red;\"><b>Assessments will be avilable on $group_startdate.</b></span></p>|;
+	#}elsif($today gt $group_enddate){	 
+	#$html .= qq |<p><span style=\"color: red;\"><b>There is no assessment available right now.</b></span></p>|;
+	#}elsif($today ge $group_startdate && $today  le $group_enddate){		
+		#foreach (@view_order){ $html .= qq |$alinks{$_}| };
+	#}
+	 
+	my $count =1;
+	$html .= qq |<table cellspacing="0" width="647"><tr>|;
+	$length = scalar(@view_order);
+	foreach (@view_order){ $html .= qq |
+				<td valign="top" width="321" class="content1">
+				<p class="pad6">  
+				$alinks{$_}
+				</p></td><td valign="top" width="1" background="images/healthstatus_20.jpg"></td>|;
+			if($count % 1 == 0 && $count != $length ){
+                    $html .= qq|</tr><tr><td valign="top" width="647" colspan="3" background="images/healthstatus_37.jpg" height="16">&nbsp;</td></tr>|;
+			 }
+			$count++;	
+    }
+	$html .= qq |</table>|;
+	$html;
+}else{ print STDERR "\nhello elseeee";
+$html .= qq |<table cellspacing="0" width="647">
+<tr>
+<td valign="top" width="150" class="content1">
+<p class="pad6">
+$alinks{GHA}
+</p>
+<p class="pad6">
+$alinks{CRC}
+</p>
+<p class="pad6">
+$alinks{DRC}
+</p>
+<p class="pad6">
+$alinks{FIT}
+</p>
+</td>
+</tr>
+</table>
+</div>
+
+<!-- your next step section end here-->|;
+$html;
+}
+}
+</td><td valign="top">
+<div style=" float:left; margin-left:-328px;">
+<div id="center-right">
+
+{$directions}
+
+<!-- license our tools section start here-->
+<div id="license-topimg" class="licensetxt">
+<p class="pad9">{$lang{$current_language}{Instructions}}</p>
+</div>
+
+<div id="license-bg" class="rightcontent">
+<p class="pad10">  
+{my $html; 
+if($assessment){
+	$html = qq|Our assessments are user friendly and focus on the areas where you can make changes.  Acccurately complete as much information as you can, the more details we have the better our recommendations will be.|;
+	}
+elsif($assessment_recs){
+	$html = qq|This is the assessment records page.  You can select to take an assessment by clicking on the name of the assessment in the left side section.  If you have previously taken assessments, they will be listed above and you can click to review those previous results.|;
+	}
+else	{
+	$html = qq|If this is your first visit you will need to complete the registration section.  The registration number should have been provided to you by someone in your organization.  The other information you will provide, create your own user id and password.  Please remember these as they will be needed when you access the system in the future.|;
+	} 
+$html;}
+</p>
+</div>
+<!-- license our tools section end here-->
+
+<!-- helpful links section start here-->
+<div id="helpful-bg">
+</div>
+<!-- helpful links section end here-->
+
+
+</div>
+</div>
+</td>
+
+</tr></table>
+</div>
+
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$home_footer_file", PACKAGE => __PACKAGE__ );
+}

@@ -1,0 +1,42 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file("$config{template_directory}$home_header_in_file", PACKAGE => __PACKAGE__ );
+}      
+        <!-- Template: lost_password_sent.tmpl -->
+		<div id="ass-top-img" class="steptxt">
+			<p class="pad26">Password Retrieval</p>
+		</div>
+		
+		<div id="ass-bg" class="content">
+		<p class="pad27">
+		{$lost_subtitle}<br>
+		</p>
+	</div>
+		
+		<div id="risk-bg">
+		<table width="967" cellspacing="0" style="margin-left: 30px">
+	
+		<tr>
+			<td class="lb2" width="100%" style="padding-top: 10px; padding-right: 20px"><p align="left">Password sent:::<br></p>
+			<p align="left">We found a username and password for you.  They have been sent to the email address on file.</p><br></td>
+			
+		</tr>
+		
+		<tr>
+			<td width=767 class="lb2"style="padding-top: 8px; padding-bottom: 10px; padding-right: 70px; text-align:right">
+			Having trouble? Email us at {$support_email}
+			</td>
+			<td>&nbsp;</td>
+		</tr>
+	
+	
+		
+		</table>
+		</div>
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file("$config{template_directory}$footer_file", PACKAGE => __PACKAGE__ );
+}

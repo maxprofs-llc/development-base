@@ -1,0 +1,277 @@
+<?xml version="1.0" standalone="yes" ?>
+{
+# this part fills in a file that sets language variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}language.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( $config{template_directory} . $config{variables_template}, PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}fit_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}fit_links.tmpl", PACKAGE => __PACKAGE__ );
+}<PDF PageMode="UseNone" PageLayout="SinglePage" PageSize="Letter" FindHyperlink="1" Author="HealthStatus.com, Inc.">
+<Image Width="{$brand_logo_pdf_width}" Height="{$brand_logo_pdf_height}" File="{$config{pdf_base}}/{$brand_logo_pdf}" Name="Im0" />
+<Image Width="15" Height="14" File="{$config{pdf_base}}/{$config{green_risk_image}}" Name="Im1" />
+<Image Width="15" Height="14" File="{$config{pdf_base}}/{$config{yellow_risk_image}}" Name="Im2" />
+<Image Width="15" Height="14" File="{$config{pdf_base}}/{$config{red_risk_image}}" Name="Im3" />
+<Image Width="2550" Height="3300" File="{$config{pdf_base}}/images/global/pdf-background-256.png" Name="ImBack" />
+<Page Name="Pg0" Width="612" Height="792" Bookmark="Cover Letter">
+<Graph Rect="0, 0, 612, 792" Name="Gr0">
+	<ShowImage Name="ImBack" Left="0" Bottom="0" Width="620" Flip="0" />
+<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
+<ShowText X="60" Y="685" Text="Your Personalized Fitness Assessment" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
+<ShowText X="588" Y="90" Text="Fitness Assessment" FontFace="Helvetica" Color="245081" Width="300" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
+</Graph>
+<Text Name="Txt0" Rect="60, 60, 552, 670" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+{
+my $midtext;
+	# this is the standard header for the assessment output.
+$midtext = Text::Template::fill_in_file( $config{template_directory} . 'fit_cover_letter_html.tmpl', PACKAGE => __PACKAGE__ );
+$midtext =~ s/<br>/^P ^p  ^P /ig;
+$midtext =~ s/<br \/>/^P ^p  ^P /ig;
+$midtext =~ s/<p>|<\/p>/ ^P ^p  ^P \n /ig;
+$midtext =~ s/<!--.*-->//g;
+$midtext =~ s/&nbsp;//g;
+$midtext;
+}
+  ]]>
+</Text>
+</Page>
+<Page Name="Pg1" Width="612" Height="792">
+	<ShowImage Name="ImBack" Left="0" Bottom="0" Width="620" Flip="0" />
+<Graph Rect="0, 0, 612, 792" Name="Gr1">
+<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
+<ShowText X="60" Y="685" Text="Your Personalized Fitness Assessment" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
+<ShowText X="588" Y="90" Text="Fitness Assessment" FontFace="Helvetica" Color="245081" Width="300" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
+<ShowText X="490" Y="20" Text="Page 2" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
+</Graph>
+<Text Name="Txt1" Rect="60, 565, 210, 650" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Bottom" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^f:size=12&color={$config{brand_subtitle_color}} ^b Body Composition ^B ^F ^P
+
+^P
+
+^P
+
+^P
+
+^P ^f:size=9&color={$config{brand_subtitle_color}} ^b ^B ^F  ]]>
+</Text>
+<Graph Rect="0, 0, 612, 792" Name="Gr2">
+<ShowImage Name="{$body_graphic}" Left="180" Bottom="565" Flip="0" />
+</Graph>
+<Text Name="Txt2" Rect="240, 430, 552, 650" FontFace="Arial" FontSize="10" Leading="11" FontColor="666666" TextJustify="Uniform" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0" Bookmark="Body Composition">
+<![CDATA[
+^P
+
+^P
+
+Height = {$height_imperial} ^P
+
+Waist = {$waist} ^P
+
+Frame size = {$frame_sizes[$frame_size] } ^P
+
+Weight = {$weight} - Ideal = {$low_weight} to {$high_weight} ^P
+
+Body Mass Index = {$bmi} ^P
+
+Estimated Body Fat % = {$body_fat_percent} ^P
+
+Daily energy expenditure = {$daily_caloric_requirements} calories ^P
+
+^P
+
+^f:size=9&color={$config{brand_subtitle_color}} ^b Details  ^B ^F ^P
+
+{$body_message} ^P
+
+  ]]>
+</Text>
+<Text Name="Txt3" Rect="60, 290, 210, 380" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Bottom" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^f:size=12&color={$config{brand_subtitle_color}} ^b Cardiorespiratory Endurance ^B ^F ^P
+
+^P
+
+^P
+
+^P
+
+^P ^f:size=9&color={$config{brand_subtitle_color}} ^b  ^B ^F ]]>
+</Text>
+<Graph Rect="0, 0, 612, 792" Name="Gr3">
+<ShowImage Name="{$step_graphic}" Left="180" Bottom="290" Flip="0" />
+</Graph>
+<Text Name="Txt4" Rect="240, 130, 552, 380" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0" Bookmark="Cardiorespitory Endurance">
+<![CDATA[
+^P
+
+^P
+
+30 second pulse rate = {$pulse_rate_30_seconds} ^P
+
+Fitness Level = {$step_desc} ^P
+
+^P
+
+{$step_target} ^P
+
+^P
+
+^f:size=9&color={$config{brand_subtitle_color}} ^b Details  ^B ^F ^P
+
+{$Step_Detail} ^P
+
+  ]]>
+</Text>
+</Page>
+<Page Name="Pg2" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr3a">
+	<ShowImage Name="ImBack" Left="0" Bottom="0" Width="620" Flip="0" />
+<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
+<ShowText X="60" Y="685" Text="Your Personalized Fitness Assessment" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
+<ShowText X="588" Y="90" Text="Fitness Assessment" FontFace="Helvetica" Color="245081" Width="300" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
+<ShowText X="490" Y="20" Text="Page 3" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
+</Graph>
+<Text Name="Txt1" Rect="60, 560, 210, 650" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Bottom" PaddingRight="5" ExtraParaSpacing="0">
+<![CDATA[
+^f:size=12&color={$config{brand_subtitle_color}} ^b Muscular Endurance ^P
+
+(Sit-ups)  ^B ^F ^P
+
+^P
+
+^P
+
+^P
+
+^P ^f:size=9&color={$config{brand_subtitle_color}} ^b  ^B ^F   ]]>
+</Text>
+<Graph Rect="0, 0, 612, 792" Name="Gr4">
+<ShowImage Name="{$sits_graphic}" Left="180" Bottom="560" Flip="0" />
+</Graph>
+<Text Name="Txt2" Rect="240, 500, 552, 650" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0" Bookmark="Muscular Endurance - Situps">
+<![CDATA[
+^P
+
+^P
+
+Sit-ups performed = {$sit_up} ^P
+
+Fitness Level = {$sits_desc} ^P
+
+^P
+
+{$sits_target} ^P
+
+^P
+
+^f:size=9&color={$config{brand_subtitle_color}} ^b Details  ^B ^F ^P
+
+{$Sits_Detail} ^P
+
+  ]]>
+</Text>
+<Text Name="Txt7" Rect="60, 380, 210, 470" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Bottom" PaddingRight="5" ExtraParaSpacing="0">
+<![CDATA[
+^f:size=12&color={$config{brand_subtitle_color}} ^b Muscular Endurance ^P
+
+(Push-ups) ^B ^F ^P
+
+^P
+
+^P
+
+^P
+
+^P ^f:size=9&color={$config{brand_subtitle_color}} ^b  ^B ^F  ]]>
+</Text>
+<Graph Rect="0, 0, 612, 792" Name="Gr5">
+<ShowImage Name="{$push_graphic}" Left="180" Bottom="380" Flip="0" />
+</Graph>
+<Text Name="Txt8" Rect="240, 320, 552, 470" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0" Bookmark="Muscular Endurance - Pushups">
+<![CDATA[
+^P
+
+^P
+
+Push-ups performed = {$push_ups} ^P
+
+Fitness Level = {$push_desc} ^P
+
+^P
+
+{$push_target}  ^P
+
+  ]]>
+</Text>
+<Text Name="Txt9" Rect="60, 190, 210, 280" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Bottom" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^f:size=12&color={$config{brand_subtitle_color}} ^b Flexibility ^B ^F ^P
+
+^P
+
+^P
+
+^P
+
+^P ^f:size=9&color={$config{brand_subtitle_color}} ^b  ^B ^F ]]>
+</Text>
+<Graph Rect="0, 0, 612, 792" Name="Gr6">
+<ShowImage Name="{$flexy_graphic}" Left="180" Bottom="190" Flip="0" />
+</Graph>
+<Text Name="Txt10" Rect="240, 105, 552, 280" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0" Bookmark="Flexibility">
+<![CDATA[
+^P
+
+^P
+
+Reach = {$flexibility} inches ^P
+
+Fitness Level = {$flexy_desc} ^P
+
+^P
+
+{$flexy_target} ^P
+
+^P
+
+^f:size=9&color={$config{brand_subtitle_color}} ^b Details  ^B ^F ^P
+
+{$Flexy_Detail}
+  ]]>
+</Text>
+</Page>
+<Page Name="Pg3" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr10">
+	<ShowImage Name="ImBack" Left="0" Bottom="0" Width="620" Flip="0" />
+<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
+<ShowText X="60" Y="685" Text="Your Personalized Fitness Assessment" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
+<ShowText X="588" Y="90" Text="Fitness Assessment" FontFace="Helvetica" Color="245081" Width="300" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
+<ShowText X="490" Y="20" Text="Page 4" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
+</Graph>
+<Text Name="Txt11" Rect="60, 60, 552, 660" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" Bookmark="Resources">
+<![CDATA[
+^P
+
+^P
+
+^f:size=14&color={$config{brand_subtitle_color}} ^b Internet resources for more information: ^B ^F ^P
+
+{
+join "",
+	map { qq|^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=9&face=Arial $$_[1] -- $$_[0] ^F ^P  | }
+	@links;
+}
+  ]]>
+</Text>
+</Page>
+</PDF>

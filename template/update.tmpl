@@ -1,0 +1,111 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE => __PACKAGE__ );
+}   
+<!-- update.tmpl----------------------->    
+<div id="ass-top-img" class="steptxt">
+<p class="pad26">Update Your Account</p><br>
+<p class="pad27 content"><font color="red">{$update_acc}</font></p><br>
+</div>
+<!-- ass-top-img section end here-->
+
+<div id="ass-bg" class="content">
+<p class="pad27">
+Enter your new information, please complete all fields.<br>
+<br><a href="{$member}">click here to return to your assessment records page.</a>.
+</p>
+</div>
+
+<div id="risk-bg">
+<table width="967" cellspacing="0" style="margin-left: 30px">
+ <form action="{$register}" method="post" name="frmChangeAccount" id="frmChangeAccount" onSubmit="return checkWholeForm(this)">
+ 
+		<tr>
+			<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">Full Name:</td>
+			<td width=767 style="padding-top: 10px"><input name="db_fullname" type="text" size="28" ></td>
+		</tr>
+		
+		<tr>
+			<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">Email Address:</td>
+			<td width=767 style="padding-top: 10px"><input name="db_email" type="text" size="28" ></td>
+		</tr>
+		
+		<tr>
+			<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">U.S. Resident?:</td>
+			<td width=767 style="padding-top: 10px"><select name="auth_country"><option value="US" >Yes</option><option value="NO">No</option></select></td>
+		</tr>
+		
+		<tr>
+			<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">Postal or Zip code:</td>
+			<td width=767 style="padding-top: 10px"><input name="auth_postal_code" type="text" size="18" ></td>
+		</tr>
+		
+		<tr>
+			<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">User name (6 to 12 characters):</td>
+			<td width=767 class="lb2" style="padding-top: 10px; text-align:left;">{$db_id}</td>
+		</tr>
+ 
+        <tr>
+			<td width=200>
+			<input name="action" type="hidden" value="change">
+	    	<a href="{$member}"><img {$back} border="0"></a>
+			</td>
+			<td width=767 style="padding-top: 8px; padding-bottom: 10px; padding-right: 70px; text-align:right">
+			<input name="action" type="hidden" value="change">
+			<input type="image" border=0 name="assess" value="assess" {$submit}> 
+			</td>
+			<td>&nbsp;</td>
+		</tr>
+ 
+ 
+ 
+ 
+ 
+ </form>
+ </table>
+ </div>
+ 
+ <br>
+ <div id="ass-top-img" class="steptxt">
+<p class="pad26">Close your account</p>
+</div>
+
+<div id="ass-bg" class="content">
+<p class="pad27">If you wish to close your account enter your user id and password.  Your account will be made inactive and you will not be able retrieve any of your previously taken assessments.  <b>This action is not reversible.</b>
+</p>
+</div>
+<div id="risk-bg">
+<table width="967" cellspacing="0" style="margin-left: 30px">
+<form action="{$register}" method="post">
+		<tr>
+			<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">User Name:</td>
+			<td width=767 style="padding-top: 10px"><input name="db_id" type="text" id="UserName" size="28" ></td>
+		</tr>
+		
+		<tr>
+			<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">Password:</td>
+			<td width=767 style="padding-top: 10px"><input name="auth_password_entry" type="password" id="Password" size="28" ></td>
+			<td><input name="action" type="hidden" value="delete"></td>
+		</tr>
+
+		<tr>
+			<td width=200>
+			</td>
+			<td width=767 style="padding-top: 8px; padding-bottom: 10px; padding-right: 70px; text-align:right">
+			<input type="image" border=0 name="assess" value="assess" {$submit} onClick="return confirmDelete()">
+			</td>
+			<td>&nbsp;</td>
+		</tr>
+
+</form>
+</table>
+</div>
+
+
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$footer_file", PACKAGE => __PACKAGE__ );
+}

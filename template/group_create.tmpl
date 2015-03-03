@@ -1,0 +1,99 @@
+{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+
+<h1>{$client} Health Assessment Group Administration</h1>
+<hr />
+<center><b><span style="color: #660000;">{$display_message}</span></b></center>
+
+{ 
+my $action_name= ucfirst($action) ;
+$OUT .= qq|<script type="text/javascript">
+var cal_1 = new CalendarPopup("cal_div");
+var cal_2 = new CalendarPopup("cal_div");
+</script>
+
+
+<form method="POST" action="$config{admin_dir}$form_action" name="group_form" enctype="multipart/form-data" onsubmit="return check_group_form();">
+	<input type="hidden" name="action" value="$action">
+	<input type="hidden" name="logo_uploaded" value="$groupLogo">
+	<input type="hidden" name="css_uploaded" value="$groupCSS">
+	<table width="700px" cellspacing="2" cellpadding="6" border="0">
+		<tr><td class="maintext-b" width="180">Group Id :</td>
+			<td><input size="10" class="maintext-n" type="text" name="groupID" maxlength="12"/></td></tr>
+		<tr><td class="maintext-b" width="180">Group Name :</td>
+			<td><input size="20" class="maintext-n" type="text" name="groupName" maxlength="75"/></td></tr>
+
+		<tr><td class="maintext-b">Description :</td>
+			<td><input size="60" class="maintext-n" type="text" name="groupDescription" maxlength="256"/></td></tr>
+
+		<tr><td class="maintext-b">Launch Date:</td>
+			<td><input class="maintext-n" type="text" name="groupLaunch" />  
+				<a id="anchor1x" name="anchor1x" onclick="cal_1.select(document.forms[0].groupLaunch,'anchor1x','yyyy-MM-dd'); return false;" href="#"><img border="0" align="baseline" title="Calendar" src="images/global/calendar.jpg"/></a>
+			
+			</td></tr>
+			
+		<tr><td class="maintext-b">Group Status :</td>
+			<td><select class="maintext-n" name="groupStatus" class="maintext-n">
+				<option value="active" selected>Active</option>
+				<option value="inactive">Inactive</option>
+				<option value="pending">Pending</option>
+				<option value="archive">Archive</option>
+				</select>
+			</td></tr>
+		<tr><td class="maintext-b">Limit Assessment Access :</td>
+			<td><select name="groupRestrict" class="maintext-n" multiple><option value="No limit" >No limit</option>|;
+			foreach( keys %assessments_allowed_hash) {
+				my $op_selected;
+				if(exists $restrict_hash{$_}) {
+					$op_selected = "selected";
+				}
+				$OUT .= qq|<option value="$_" $op_selected >$assessments_allowed_hash{$_}</option>|;
+			}
+				$OUT .= qq|</select>
+			</td></tr>
+		<tr><td class="maintext-b">Reset Date :</td>
+			<td><input class="maintext-n" type="text" name="groupResetDate" /> <a id="anchor2" name="anchor2" onclick="cal_2.select(document.forms[0].groupResetDate,'anchor2','yyyy-MM-dd'); return false;" href="#"><img border="0" align="baseline" title="Calendar" src="images/global/calendar.jpg"/></a></td></tr>
+		<tr><td class="maintext-b">Number of Subgroups :</td>
+			<td><input class="maintext-n" type="text" name="numberSubgroups" onblur="checkIntValue(this)" /></td></tr>|;
+		if($config{service_level} eq 'basic') {
+			$OUT .= qq|
+			<tr><td class="maintext-b">Phone :</td>
+				<td><input type="text" name="groupPhone" /></td></tr>
+			<tr><td class="maintext-b">Signature :</td>
+				<td><input size="40" type="text" name="groupSignature" /></td></tr>
+			<tr><td class="maintext-b">Logo :</td>
+				<td>|;
+				my $display;
+				if($groupLogo) {
+					$OUT .= qq|<span id="show"><img border="0" width="80px" height="50px" align="center" src="groups/logo/$logo_name?rand=$random"/> <a href="#" onclick="document.getElementById('show').style.display='none'; document.getElementById('input_logo').style.display=''; return false;" > Change</a></span>|;
+					$display = "style=display:none";
+				} 
+			$OUT .= qq|<input $display id="input_logo" class="maintext-b" type="file" name="groupLogo" />
+				</td></tr><tr><td class="maintext-b">Style Sheet :</td>
+				<td><input class="maintext-b" type="file" name="groupCSS" /></td></tr>
+			<tr><td class="maintext-b">Admin Email :</td> 
+				<td><input type="text" name="groupAdminEmail" maxlength="75"/></td></tr>|;
+		}
+		$OUT .= qq|	</table>
+		<table width="700px" cellspacing="2" cellpadding="6" border="0">
+				<tbody id="subgroup_container">|;
+				for(my $i=0; $i < scalar(@names_array) ; $i++) {
+					my $j = $i+1;
+					$OUT .= qq|<tr><td width="180" class="maintext-b">SubGroup name $j: </td>
+							<td><input type="text" onblur="return alphanumeric(this)" name="subgroupNames" class="maintext-n" maxlength="10" size="10" value="$names_array[$i]" /></td></tr>
+							<tr><td width="180" class="maintext-b">SubGroup Description $j: </td>
+							<td><input type="text" name="subgroupDescriptions" class="maintext-n" maxlength="255" size="50" value="$desc_array[$i]" /></td></tr>|;
+				}
+		$OUT .= qq|			</tbody></table>
+
+		<table width="700px" cellspacing="2" cellpadding="6" border="0">
+		<tr><td class="maintext-b" width="180px"></td>
+			<td id="div_add_option"><input class="maintext-n" type="button"  onclick="return addField('subgroup_container','div_add_option');" value="Add Subgroups" name="add_subgroup"/> <input class="maintext-b" type="submit" name="$action" value="$action_name Group" /></td></tr>
+		</table>
+</form><p><a href="$config{admin_dir}admin_group_results.cgi">View group list</a></p>|;
+
+
+'';
+}
+<hr>
+<DIV ID="cal_div" STYLE="position:absolute;visibility:hidden;background-color:white;layer-background-color:white;"></DIV>
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

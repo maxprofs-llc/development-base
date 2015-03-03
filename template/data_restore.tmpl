@@ -1,0 +1,63 @@
+{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+
+<h1>DATABASE RESTORE</h1>
+<hr />
+
+<form method="POST" action="{$config{admin_dir}}data_restore.cgi" name="frm"  onsubmit="return check_form(frm);">
+
+	<table width="700px" cellspacing="2" cellpadding="6" border="0">
+		
+		<tr><td class="maintext-b" colspan="2">Please select the database to restore: </td></tr>
+		<tr>
+		<td class="maintext-n">{$db_list}</td>
+		</tr>		
+	</table>
+		{ my $html; if($db_list){
+	    $html .= qq~<table width="700px" cellspacing="2" cellpadding="6" border="0">
+		<tr><td class="maintext-b" width="180px"></td>
+		<td> <input class="maintext-b" type="submit" name="Submit" id="submit" value="Restore Now" /></td></tr>
+	</table>~; }
+	}
+</form>
+<hr>
+<b><span style="color: #660000;text-align:left">{$content}</span></b>
+<script type="text/javascript">
+    function check_form(form) 
+\{
+  var checked = false;
+  var buttons = form.elements.db_radio;
+  if(buttons.length >1)\{
+	  for (var i=0; i<buttons.length; i++) 
+	  \{ 
+		if (buttons[i].checked) \{ 
+		  checked = true;
+		  var answer = confirm("Are you sure to restore this database.");
+	 if (answer)\{
+	 return true;	  	 
+	 \}else
+	 \{
+	 //get_radio_value()
+	 return false;
+	\}
+		  break; 
+		\} 
+	   \}
+	 \}else \{
+		if (buttons.checked) \{ 
+		  checked = true;
+		  var answer = confirm("Are you sure to restore this database.");
+	 if (answer)\{
+	 return true;	  	 
+	 \}else
+	 \{
+	 //get_radio_value()
+	 return false;
+	\}
+		 \} 
+	 \}
+   if(!checked)
+     alert("You must select a database to restore."); 
+   return checked ;
+\} 
+</script>
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

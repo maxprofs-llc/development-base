@@ -1,0 +1,50 @@
+{
+use vars qw(@links);
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+@links = ();
+
+push @links, [ $lang{$current_language}{National_Women_Health},
+	"http://www.4woman.org/"] if $sex eq FEMALE || $checkme;
+
+push @links, [ $lang{$current_language}{American_Diabetes_Association},
+	"http://www.diabetes.org"] ;
+
+push @links, [ $lang{$current_language}{Aim_for_health_weight},
+	$config{html_base}."resource/aim_for_healthy_weight.pdf" ]
+	if $bmi > 29.5 || $checkme;
+
+push @links, [ $lang{$current_language}{Overeaters_Anonymous},
+	"http://www.overeatersanonymous.org/"] if $bmi > 27 || $checkme;
+
+push @links, [ $lang{$current_language}{American_Heart_Association},
+	"http://www.amhrt.org"] if $bmi > 25 || $checkme;
+
+push @links, [$lang{$current_language}{Dietary_Guidelines},
+	$config{html_base}."resource/dietaryguidelines.pdf"]
+	if $bmi > 25    || $bmi < 20 ||
+	   $fiber eq NO || $fats eq YES || $checkme;
+
+push @links, [ $lang{$current_language}{Getting_Older_Eating_Better},
+	$config{html_base}."resource/oldereating.pdf"]
+	if $age > 64 && ( $bmi > 25 || $bmi < 20 ) || $checkme;
+
+push @links, [ $lang{$current_language}{Staying_Healthy},
+	$config{html_base}."resource/Staying_healthy_50plus.pdf"]
+	if $age >= 50 || $checkme;
+
+push @links, [ $lang{$current_language}{Staying_Healthy},
+	$config{html_base}."resource/Staying_healthy_adult.pdf"]
+	if $age < 50 || $checkme;
+
+push @links, [ $lang{$current_language}{Keys_Choosing_Healthful_Foods},
+	$config{html_base}."resource/keytohealthfulfood.pdf"]
+	if $bmi > 25 || $bmi < 20 || $checkme;
+
+push @links, [ $lang{$current_language}{Indian_Health_Services},
+	"http://www.ihs.gov"]
+	if $race eq "Aleutian, Eskimo or American Indian" || $checkme;
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+'';
+}

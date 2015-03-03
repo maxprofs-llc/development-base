@@ -1,0 +1,28 @@
+{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+
+<h1>CREATE TABLE ADMINISTRATION</h1>
+<hr>
+{
+		$html;
+		$html .= qq| <form method="POST" action="$config{admin_dir}create_table.cgi" name="frm1" >
+					
+           	<table width="500px" cellspacing="4" cellpadding="4" border="0">
+			<tr><td class="maintext-b" width="20px"> <b><span style=\"color: red;\">$add_msg</span></b></td>				
+			</tr> |;
+			if($add_message){
+			$html .= qq| <tr><td class="maintext-b" width="20px"> <b><span style=\"color: red;\">$message</span></b></td>				
+			</tr> |;
+			}
+			if($data_msg){
+			$html .= qq| <tr><td class="maintext-b" width="20px"> <b><span style=\"color: red;\">$message</span></b></td>				
+			</tr> |;
+			}
+            			
+		  $html .= qq| <tr><td><input type="image" border=0 name="prev" value="create_table.cgi" $back onmousedown="doValidate=false;"> </td>				
+			</tr>
+			</table>
+			</form>	|;
+			$html;		
+}
+<hr>
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

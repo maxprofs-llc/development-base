@@ -1,0 +1,94 @@
+{
+# this part fills in a file that sets language variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}assessment_language.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}hemensaglik_gha_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}hemensaglik_gha_links.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE => __PACKAGE__ );
+}     <!-- Template: gha_7.tmpl from dir template_hemensaglik -->
+	<!-- Templates called: gha_variables.tmpl, hemensaglik_gha_links.tmpl, {$footer_file}, {$config{variables_template}},  {$header_file} -->
+<!-- ass-top-img section start here-->
+<div id="ass-top-img" class="steptxt">
+<p class="pad26">{$gha_title}</p>
+</div>
+<!-- ass-top-img section end here-->
+
+<div id="ass-bg" class="content">
+<p class="pad27">
+{$lang{$current_language}{gha_intro}} 
+</p>
+</div> 
+
+<!-- risk-top-img section start here-->
+<div id="risk-top-img" class="steptxt">
+
+<p class="pad26">{$gha_subtitle} {$continued}</p>
+</div>
+<!-- risk-top-img section end here-->
+
+
+<p><img src="images/ass_06.jpg" alt="" /></p> 
+
+<br/>
+<div id="risk-bg">
+<table width="967" cellspacing="0" style="margin-left: 30px">
+
+  <tr>
+  { my $html;
+     if($subdomain eq 'hemensaglik'){
+                $html = qq| <td style="padding-top: 8px; padding-bottom: 10px; padding-right: 360px;" class="content">|;
+			}else{
+				$html = qq| <td style="padding-top: 8px; padding-bottom: 10px; padding-right: 70px;" class="content">|;
+    }
+}
+ <!-- <td style="padding-top: 8px; padding-bottom: 10px; padding-right: 70px;" class="content">-->
+<form method="post" action="{$pager}">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td colspan="2" >
+                 <p><b>{$date} {$lang{$current_language}{for}} {$name}</b></p><br>
+                </td>
+              </tr>
+              <tr>
+          	<td class="HSassessmentsGap"></td>
+              </tr>
+             <tr>
+                <td colspan="2" >
+                  <p><span ><b>{$lang{$current_language}{gha_msg10}}</b></span><BR><span ><b>{$lang{$current_language}{gha_msg11}} {$genders}  {$lang{$current_language}{gha_diab_msg12}}.</b></span></P><br>
+      			<UL>{ foreach $i (@recommendations) {
+				$OUT .= "<li>$i</li>";
+			        }
+			}</UL><p>&nbsp;</p>
+		</td>
+              </tr>
+               <tr>
+				<td width=200>
+				<input type="image" border=0 name="gha_6.tmpl" value="gha_6.tmpl" src="https://hemensaglik.hra.net/images/hemensaglik_back.png"></td>
+				<td width=767 style="padding-top: 8px; padding-bottom: 10px; text-align:right">
+				<input type="image" border=0 name="gha_8.tmpl" value="gha_8.tmpl" src="https://hemensaglik.hra.net/images/hemensaglik_next.png">{ $hidden_cgi_fields }
+				</td>
+				<td>&nbsp;</td>
+            </tr>
+            </table></form>
+  
+
+
+  
+</td>
+</tr>
+             
+</table>
+</div>
+    <!-- Template: gha_7.tmpl End -->
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$footer_file", PACKAGE => __PACKAGE__ );
+}

@@ -1,0 +1,23 @@
+{
+## you only get here if an error happens, we are going to tell the user
+#  what they did wrong (it has to be their problem right?) then give them
+#  a chance to go back and fix or email the error message to us
+$form_title = $ERROR_TITLE;
+
+$calc_results = <<"HERE";
+<p><br>$ERROR_TITLE<br><br>
+$ERROR_MSG<br>$ERROR_NAME
+<br><br><form method="post" action="/cgi-bin/reload.pl">
+<input type="hidden" name="s_form" value="$hs_root/$calculator.html">
+<input type="image" border=0 name="submit" value="submit" src="/images/hs/back_blue.gif" align="left">
+$ERROR_FIELDS$hidden</form><br>&nbsp;<p align=right><a HREF="mailto:webmaster\@hap.org?subject=$ERROR_NAME-$ERROR_MSG">
+Click here if you would like to report this message</a><br>&nbsp;</p>
+HERE
+
+'';
+}{
+# this is the standard header for the calculator output. You can either
+# have an HTML page with $calc_results enclosed in braces and use the default format
+# for each calculator or you can drop in each result element yourself.
+Text::Template::fill_in_file($directory . $template_set . "/hsheader.html", PACKAGE => __PACKAGE__ ) or die $Text::Template::ERROR;
+}

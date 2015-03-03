@@ -1,0 +1,55 @@
+{ Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ ); }
+<form method="POST" action="/cgi-bin/hs/ggr_set_configuration.cgi" name="frm">
+<table width="770" border="0" cellspacing="0" cellpadding="0">
+	<tr align="center">
+	    <td height="40" colspan="2" class="pageheading">Report Setup</td>
+      </tr>
+	  <tr><td colspan="2">
+		<table width="320" border="0" cellpadding="1" cellspacing="0">
+			<tr>
+				<td width="20"><input name="rpt_type" type="radio" class="maintext-n" value="indv_data" onClick="enable_assessment_list()" checked></td>
+				<td width="100" class="maintext-n">Individual data </td>
+				<td width="20"><input name="rpt_type" type="radio" class="maintext-n" value="participation" onClick="disable_assessment_list()"></td>
+				<td width="100" class="maintext-n">Participation report </td>
+			</tr>
+		</table><br><hr>
+	</td></tr>
+</table><br>
+<table width="770" border="0" cellspacing="0" cellpadding="0">
+	<tr><td class="maintext-b" width="200px">For which assessments</td>
+		 <td><table width="50%" cellspacing="0" cellpadding="1" border="0">
+			
+{
+	my $html;
+	my $checked = 'checked';
+	foreach (@assessment_types){
+		#$html .= qq|$assessment_stuff{$_}{name}<br>|;
+		$html .= '<tr><td><input type="radio" name="assessment_list" value="' . $_ . '" '. $checked.'></td><td class="maintext-n">' . $assessment_stuff{$_}{name} . '</td></tr>';
+		$checked= '';
+ 	}
+	$html .= qq|</table></td>
+			</tr>
+			<tr><td colspan="2"><br><hr></td></tr>
+			<tr>
+				<td class="maintext-b">Predefined Field Groups</td>
+				<td  class="maintext-n"><select id="indv_fields" name="indv_field_groups" size="1" class="maintext-n">|;
+				foreach my $report(sort keys %defined_reports_list){
+					$html .= '<option value="' . $report . '">' . $defined_reports_list{"$report"} . '</option>';
+					}
+	$html .= qq|</select><select id="part_fields" style="display:none" name="part_field_groups" size="1" class="maintext-n">|;
+				foreach my $report_part(sort keys %defined_reports_list_part){
+					$html .= '<option value="' . $report_part . '">' . $defined_reports_list_part{"$report_part"} . '</option>';
+					}
+	$html .= qq|</select><br></td>
+			</tr>|;
+  
+ $html;
+ }
+ </table><br><br><table width="770" border="0" cellspacing="0" cellpadding="0">
+
+		<tr>
+		  <td class="maintext-n">&nbsp;</td>
+		  <td class="maintext-n"><input name="Submit" type="submit" class="maintext-b" value="Next step"></td>
+	  </tr>
+    </table></form>
+{ Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ ); }

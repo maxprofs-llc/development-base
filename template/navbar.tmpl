@@ -1,0 +1,12 @@
+<table class="navbar">
+<tr><td class="navbar_back" width="15%">
+{if ($navbar{start} > 1) {
+	"&nbsp;<br><a href=\"$navbar{url}page=" . ($navbar{page} - 1) . "\"><img border=\"0\" $back /></a>&nbsp; &nbsp; ";}}
+&nbsp;</td>
+<td width="30%" class="navbar_numbers">&nbsp;<br>Results {$navbar{start}} - {$navbar{end}}
+	{if (defined $navbar{total}) {"of $navbar{total}";}} </td>
+<td class="navbar_next" width="15%">
+{if (!defined $navbar{total} || $navbar{end} < $navbar{total}) {
+	"&nbsp;<br>&nbsp; &nbsp; <a href=\"$navbar{url}page=" . ($navbar{page} + 1) . "\"><img border=\"0\" $next /></a>";}}
+&nbsp;</td>
+</tr></table>

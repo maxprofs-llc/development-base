@@ -1,0 +1,25 @@
+{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+
+
+<h1>Configuration Settings List</h1>
+
+
+{
+
+	my $OUT .= "<table id=\"assessment_table\"><tr class=\"headings\">
+		<td>Setting</td><td>Value</td></tr>";
+		
+	%config_list = %$config;
+		
+	foreach my $a(sort keys %$config_list) {
+		$OUT .= "<tr>
+			<td>$a<\/td><td>$config{$a}</td>
+			</tr>";
+	}
+
+	$OUT .= "</table><br>";
+	
+$OUT;
+}
+
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

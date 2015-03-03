@@ -1,0 +1,256 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+<table width="770" border="0" cellspacing="0" cellpadding="0">
+  <form method="POST" action="{$ggr_adv}">
+  	<tr align="center">
+    <td height="40" colspan="3" class="pageheading">Aggregate File Details</td>
+  </tr>
+  <tr>
+    <td width="23"><input checked name="pgraphs" type="radio" class="maintext-n" value="all"></td>
+    <td height="25" colspan="2" class="maintext-b">All aggregations</td>
+  </tr>
+  <tr>
+    <td><input type="radio" value="select" name="pgraphs"></td>
+    <td height="20" colspan="2" class="maintext-b">Selected Aggregations</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td colspan="2"><table width="55%" border="0" cellpadding="0" cellspacing="0" id="table1">
+      <tr>
+        <td align=left valign="top"><p class="maintext-n">Overview Aggregations<br>
+            <input value="1" type="checkbox" name="print_agegroups">
+            Age/Sex of Group<br>
+            <input value="1" type="checkbox" name="print_risklevels">
+            Risk Levels<br>
+            <input value="1" type="checkbox" name="print_achievable">
+            Achievable Levels<br>
+            <input value="1" type="checkbox" name="print_preventable">
+            Preventable Diseases<br>
+            <input value="1" type="checkbox" name="print_riskfactors">
+            Modifiable Risk Factors<br>
+{ my $assessment_specific = '';
+	$assessment_specific .= '<input value="1" type="checkbox" name="print_cardiac">Cardiac Risk Results<br>' if (uc $assessments_allowed{CRC});
+        $assessment_specific .= '<input value="1" type="checkbox" name="print_diabetes">Diabetes Risk Results<br>' if (uc $assessments_allowed{DRC});
+        $assessment_specific .= '<input value="1" type="checkbox" name="print_fitness">Fitness Assessment Results<br>' if (uc $assessments_allowed{FIT});
+        $assessment_specific .= '<input value="1" type="checkbox" name="print_wellbeing">Well-being Assessment Results<br>' if (uc $assessments_allowed{GWB});
+
+$assessment_specific;
+}
+
+            <input value="1" type="checkbox" name="print_totalassessments">
+            Total Assessments<br>
+            </td>
+        <td align=left valign="top" class="maintext-n">Modifiable Risk Aggregations<br>
+          <input value="1" type="checkbox" name="print_alcohol">
+          Alcohol Use<br>
+          <input value="1" type="checkbox" name="print_bloodpressure">
+          Blood Pressure<br>
+          <input value="1" type="checkbox" name="print_breast_self">
+          Breast self exams<br>
+          <input value="1" type="checkbox" name="print_cholesterol">
+          Cholesterol<br>
+			<input value="1" type="checkbox" name="print_colon_exam">
+            Colon exam<br>
+		    <input value="1" type="checkbox" name="print_days_missed">
+            Days missed<br>
+		    <input value="1" type="checkbox" name="print_diet">
+            Diet<br>
+{ my $assessment_specific = '';
+	$assessment_specific .= '<input value="1" type="checkbox" name="print_wellbeing2">Depression & Stress<br>' if (uc $assessments_allowed{HRA});
+
+$assessment_specific;
+}
+          <input value="1" type="checkbox" name="print_exercise">
+          Exercise<br>
+		    <input value="1" type="checkbox" name="print_flu">
+            Flu shot<br>
+		    <input value="1" type="checkbox" name="print_general_exam">
+            General exam<br>
+			<input value="1" type="checkbox" name="print_glucose">
+			Glucose<br>
+			<input value="1" type="checkbox" name="print_hdl">
+            HDL<br>
+			<input value="1" type="checkbox" name="print_hga1c">
+            HGa1c<br>
+{ my $assessment_specific = '';         
+          $assessment_specific .= '<input value="1" type="checkbox" name="print_srfam">History Family <br>' if ( (uc $assessments_allowed{HRA} || uc $assessments_allowed{GHA} || uc $assessments_allowed{CRC}) && !$config{GINA} );
+          $assessment_specific .= '<input value="1" type="checkbox" name="print_srdisease">History Personal <br>' if (uc $assessments_allowed{HRA} || uc $assessments_allowed{GHA});
+
+$assessment_specific;
+}       
+			<input value="1" type="checkbox" name="print_ldl">
+            LDL<br>
+          <input value="1" type="checkbox" name="print_mammogram">
+          Mammograms<br>
+          <input value="1" type="checkbox" name="print_pap">
+          Pelvic exams<br>
+          <input value="1" type="checkbox" name="print_prostate">
+          Prostate exams<br>
+          <input value="1" type="checkbox" name="print_seatbelts">
+          Seatbelt use<br>
+          <input value="1" type="checkbox" name="print_smoking">
+          Smoking Status<br>
+			<input value="1" type="checkbox" name="print_triglycerides">
+			Triglycerides<br>
+          <input value="1" type="checkbox" name="print_waist">
+          Waist<br>
+          <input value="1" type="checkbox" name="print_weight">
+          Weight<br>
+
+	</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td colspan="2"><hr></td>
+  </tr>
+  <tr>
+  	<td>&nbsp;</td>
+  	<td class="maintext-n" colspan=2>
+          <input value="1" type="checkbox" name="print_empty_graphs"> Check to print pages with no data? (if a particular graph has no results do you want to print it?)<br>
+          <input value="1" type="checkbox" name="print_page_numbers"> Check to put page numbers on report?</td>
+          </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td colspan="2"><hr></td>
+  </tr>
+{ my $html = '';
+     $html = qq|  <tr>
+    <td colspan="2" class="maintext-b" valign=top>Options: </td>
+    <td width="654" class="maintext-n"</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td colspan="2"><hr></td>
+  </tr>
+    <tr>
+      <td colspan="2" class="maintext-b" valign=top>Compare against another time period? </td>
+      <td width="654" class="maintext-n"><input value="1" type="checkbox" name="comparitive">
+            Yes, Compare this report with another period in time.<br>
+    </tr>
+            <tr>
+      			<td colspan=2>&nbsp;</td>
+              <td class="maintext-n"><table width="50%"  border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td ><input type="radio" name="date" value="comp_date_range"></td>
+                    <td width="43%" class="maintext-n">Select a date range</td>
+                    <td width="57%"><select name="comp_date_range" size="1" class="maintext-n" onChange="comp_select_dates()">
+                      <option selected="selected" value="">All dates</option>
+                      <option value="yesterday">Yesterday</option>
+                      <option value="this_week">This week</option>
+                      <option value="last_week">Last week</option>
+                      <option value="this_month">This month</option>
+                      <option value="last_month">Last month</option>
+                      <option value="this_quarter">This quarter</option>
+                      <option value="last_quarter">Last quarter</option>
+                      <option value="this_year">This year</option>
+                      <option value="last_year">Last year</option>
+                    </select></td>
+                  </tr>
+                </table></td>
+            </tr>
+            <tr>
+      			<td colspan=2>&nbsp;</td>
+              <td valign="top"><table width="70%" border="0" cellpadding="1" cellspacing="0">
+                <tr>
+                  <td width="6%" class="maintext-n"><input type="radio" name="comp_date" value="specific"></td>
+                  <td width="39%" class="maintext-n">Specific date range</td>
+                  <td width="6%" class="maintext-n"><input name="comp_s_month" type="text" class="maintext-n" size="4"></td>
+                  <td width="6%" class="maintext-n"><input name="comp_s_day" type="text" class="maintext-n" size="4"></td>
+                  <td width="10%" class="maintext-n"><input name="comp_s_year" type="text" class="maintext-n" size="7"></td>
+                  <td width="11%" class="maintext-n">through</td>
+                  <td width="6%" class="maintext-n"><input name="comp_e_month" type="text" class="maintext-n" size="4"></td>
+                  <td width="6%" class="maintext-n"><input name="comp_e_day" type="text" class="maintext-n" size="4"></td>
+                  <td width="10%" class="maintext-n"><input name="comp_e_year" type="text" class="maintext-n" size="7"></td>
+                </tr>
+                <tr>
+                  <td class="maintext-n">&nbsp;</td>
+                  <td class="maintext-n">&nbsp;</td>
+                  <td class="maintext-n">MM</td>
+                  <td class="maintext-n">DD</td>
+                  <td class="maintext-n">YYYY</td>
+                  <td class="maintext-n">&nbsp;</td>
+                  <td class="maintext-n">MM</td>
+                  <td class="maintext-n">DD</td>
+                  <td class="maintext-n">YYYY</td>
+                </tr>
+                            </table></td>
+            </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td colspan="2"><hr></td>
+    </tr>| if $extra_breakdowns;
+ 
+$html;}
+{ my $output = '';
+  if ($rpt_format eq 'PDF'){
+  $output = qq|
+  <tr>
+    <td colspan="2" class="maintext-b" valign=top>Footer text:</td>
+    <td><input name="user_footer" type="text" class="maintext-n" size="63"></td>
+  </tr>
+    <tr>
+    <td>&nbsp;</td>
+    <td colspan="2"><hr></td>
+  </tr>|;}
+  $output;
+  }
+  <tr>
+    <td><input type="checkbox" name="rpt_email" value="ON"></td>
+    <td class="maintext-b">Email report as soon as processed?</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td class="maintext-n">Email Addresses (separate each email address with a semi-colon):</td>
+    <td><input name="email" type="text" class="maintext-n" size="63"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td colspan="2"><hr></td>
+  </tr>
+   <tr>
+     <td><input type="checkbox" name="save_rpt_parameter" value="ON"></td>
+     <td height="20" colspan="2" class="maintext-b">Save report parameters to use again in the future? </td>
+   </tr>
+   <tr>
+     <td>&nbsp;</td>
+     <td width="93" class="maintext-n">What do you want the saved Report to be called?</td>
+     <td><input name="rpt_parameter" type="text" class="maintext-n" size="63"></td>
+   </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td colspan="2"><hr></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td class="maintext-n">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td class="maintext-n">&nbsp;</td>
+    <td><input name="Submit_query_pdf" type="submit" class="maintext-b" value="Submit"></td>
+  </tr>
+  <input name="query" type="hidden" value="Submit_query_pdf">
+
+  <input value="" type="hidden" name="rpt_type">
+  <input value="" type="hidden" name="rpt_format">
+  <input value="" type="hidden" name="date">
+  <input value="" type="hidden" name="s_month">
+  <input value="" type="hidden" name="s_day">
+  <input value="" type="hidden" name="s_year">
+  <input value="" type="hidden" name="e_month">
+  <input value="" type="hidden" name="e_day">
+  <input value="" type="hidden" name="e_year">
+  <input value="" type="hidden" name="date_range">
+  <input value="" type="hidden" name="all_assessment">
+  <input value="" type="hidden" name="records">
+  <input value="" type="hidden" name="max_records">
+  <input value="" type="hidden" name="max">
+  {$hidden_values}
+  </form>
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

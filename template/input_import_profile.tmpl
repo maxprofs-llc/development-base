@@ -1,0 +1,49 @@
+{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+
+<h1>Data Import Administration</h1>
+<hr />
+<center><b><span style="color: #660000;">{$display_message}</span></b></center>
+
+<form method="POST" action="{$config{admin_dir}}create_import_profile.cgi" name="frm" enctype="multipart/form-data" onsubmit="return check_form()">
+
+	<table width="700px" cellspacing="2" cellpadding="6" border="0">
+		
+		<tr><td class="maintext-b" width="180">User data :</td>
+			<td><input type="radio" name="data_type" value="demographic" checked onClick="$('assessment').hide();">Demographic Data <input type="radio" name="data_type" value="biometric" onClick="$('assessment').show();">Biometric and Informational Data</td></tr>
+		<tr id="assessment" style="display:none"><td class="maintext-b">For which Assessment :</td>
+			<td><select name="assessment" class="maintext-n">
+{
+	$html;
+	foreach( keys %assessments_allowed_hash) {
+		$html .= qq|<option value="$_">$assessments_allowed_hash{$_}</option>|;
+	}
+	$html;
+}			</select>
+			</td></tr>
+		<tr>
+			<td class="maintext-b">Sample File :</td>
+			<td><input class="maintext-b" type="file" name="sample_file" />
+			</td>
+		</tr>
+	</table>
+		
+		<table width="700px" cellspacing="2" cellpadding="6" border="0">
+		<tr><td class="maintext-b" width="180px"></td>
+			<td> <input class="maintext-b" type="submit" name="Submit" value="Next step" /></td></tr>
+		</table>
+</form>
+<hr>
+<script type="text/javascript">
+	function check_form() \{
+		var str = document.frm.sample_file.value;
+		if(str == '')\{
+			alert('Please upload the sample file to create a profile.');
+			return false;
+		\}		
+		if(str.lastIndexOf(".csv") == -1 && str.lastIndexOf(".xls") == -1 && str.lastIndexOf(".xlsx") == -1) \{
+		   alert("Please upload only .csv or .xls or .xlsx extention file");
+		   return false;
+		\}
+	\}
+</script>
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

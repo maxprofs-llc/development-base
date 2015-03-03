@@ -1,0 +1,21 @@
+{ Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ ); }
+
+<h3>Administration</h3>
+<p class="indent">Select an option from the sidebar to continue.</p>
+
+<h1>Support</h1>
+<p class="indent">{$trouble_contacts}</p>
+
+{my $html;
+ $html = qq|<h1>Current Counts</h1><p class="indent">Registered Users: $user_count</p><p class="indent">|;
+ my $total;
+ foreach (@assessment_types){
+ 	my $cnt = $assessment_stuff{$_}{count};
+ 	$total += $cnt;
+ 	$html .= qq|$assessment_stuff{$_}{name}: $cnt<br>|;
+ 	}
+ $html .= qq|</p><p class="indent">Total Assessments: $total</p>|;
+ 
+ $html;
+ }
+{ Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ ); }

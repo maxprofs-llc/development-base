@@ -1,0 +1,42 @@
+<h1>{$client} Health Assessment User Administration - Edit User</h1>
+{
+	if ($display_message)
+	{
+		$OUT.= qq|<b><span style="color: #660000;">$display_message</span></b>|;
+	}
+	else
+	{
+		$OUT .=qq|<form method="post" name="edit_user" >
+		<table cellspacing="0" cellpadding="4" border="1" align="center" width="90%" style="border-collapse: separate;">|;
+		foreach $row(@edit_result)
+		{
+			foreach $t(sort keys %$row)
+			{
+				if ($t eq 'hs_uid' || $t eq 'rank' )
+				{
+					$OUT .=qq|<tr><td>$field_info{$t}{name}</td>|;
+					$OUT .=qq|<td><table cellspacing="0" cellpadding="0" border="0" width="100%">
+								<tr valign="top">
+									<td>$row->{$t}</td>
+								</tr></table></td></tr>|;
+				}
+				elsif ($t eq 'full_name' || $t eq 'add1' || $t eq 'add2' || $t eq 'add3' || $t eq 'city' || $t eq 'state' || $t eq 'postal' ||
+					$t eq 'country' || $t eq 'phone' || $t eq 'email' || $t eq 'coach')
+				{		
+					$OUT .=qq|<tr><td>$field_info{$t}{name}</td>|;
+					$OUT .=qq|<td><table cellspacing="0" cellpadding="0" border="0" width="100%">
+								<tr valign="top">
+									<td><input name="$t" type="text" size="50" value="$row->{$t}"></td></tr></table></td></tr>|;
+				}
+				if ($t eq 'unum')
+				{
+					$OUT .=qq|<input name="$t" type="hidden" value="$row->{$t}">|;
+				}
+		
+			}
+		}
+		$OUT .=qq|</table><br/><br/>
+		<div align="center"><input type="submit" name="submit" value="Edit Profile" /></div>
+		</form>|;
+	}
+}

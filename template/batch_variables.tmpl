@@ -1,0 +1,117 @@
+{
+use vars qw( $batch_js, $batch_collector $batch_address
+	    $batch_line $end_batch $print_batch $crc_batch $drc_batch $fit_batch
+	    $gha_batch $gwb_batch $hra_batch $mr_batch $pt_batch 
+	    $process_list $process_list1 $print_list $print_list1 $process_print_list $process_close_list $printed_list $printed_list1
+	    $db_sub_counts $default_assessment
+	   );
+
+$versions = '';
+
+@batch_assessments = @$batch_assessments;
+my %batch_list;
+foreach (@batch_assessments){
+	$batch_list{$_} = 1;
+	}
+$db_sub_counts = "Cardiac &nbsp;&nbsp;&nbsp;$db_batch_count_crc<br />" if (exists $batch_list{'CRC'});
+$db_sub_counts .= "Diabetes &nbsp;&nbsp;&nbsp;$db_batch_count_drc<br />" if (exists $batch_list{'DRC'});
+$db_sub_counts .= "Fitness &nbsp;&nbsp;&nbsp;$db_batch_count_fit<br />" if (exists $batch_list{'FIT'});
+$db_sub_counts .= "General Health &nbsp;&nbsp;&nbsp;$db_batch_count_gha<br />" if (exists $batch_list{'GHA'});
+$db_sub_counts .= "Well-being &nbsp;&nbsp;&nbsp;$db_batch_count_gwb<br />" if (exists $batch_list{'GWB'});
+$db_sub_counts .= "Health Risk &nbsp;&nbsp;&nbsp;$db_batch_count_hra<br />" if (exists $batch_list{'HRA'});
+
+
+my $default_assessment = 'GHA';
+$batch_js = "$config{html_base}$config{batch_java}" || "$config{html_base}styles/hs_batch_validate.js";
+$batch_collector = "$config{batch_collector}" || "$config{cgi_dir}/batch_entry.cgi";
+$batch_printer	= "$config{batch_printer}" || "$config{cgi_dir}/batch_print.cgi";
+
+$batch_line = "&db_batch_entered_by=$db_batch_entered_by&db_batch_number=$db_batch_number&db_id=$db_id";
+$batch_line .= "&db_batch_count=$db_batch_count&db_batch_count_crc=$db_batch_count_crc&db_batch_count_drc=$db_batch_count_drc";
+$batch_line .= "&db_batch_count_fit=$db_batch_count_fit&db_batch_count_gha=$db_batch_count_gha&db_batch_count_gwb=$db_batch_count_gwb";
+$batch_line .= "&db_batch_count_hra=$db_batch_count_hra&db_batch_count_mr=$db_batch_count_mr&db_batch_count_pt=$db_batch_count_pt&db_employer=$db_employer&siteid=$siteid";
+$batch_address = 1;
+
+$crc_batch = "$batch_collector?switch=1&assessment=CRC$batch_line";
+$drc_batch = "$batch_collector?switch=1&assessment=DRC$batch_line";
+$fit_batch = "$batch_collector?switch=1&assessment=FIT$batch_line";
+$gha_batch = "$batch_collector?switch=1&assessment=GHA$batch_line";
+$gwb_batch = "$batch_collector?switch=1&assessment=GWB$batch_line";
+$hra_batch = "$batch_collector?switch=1&assessment=HRA$batch_line";
+$mr_batch = "$batch_collector?switch=1&assessment=MR$batch_line";
+$pt_batch = "$batch_collector?switch=1&assessment=PT$batch_line";
+
+$end_batch = "$batch_collector?close=1$batch_line";
+$print_batch = "$batch_printer?print=1&db_batch_number=batch - $db_batch_number";
+
+if($want_print_list || $want_process_list){
+	my @to_process_list1 = split(/,/, $to_process_list);
+	my @to_print_list1 = split(/,/, $to_print_list);
+	my @been_printed_list1 = split(/,/, $been_printed_list);
+	
+	$print_list = 'No batches available for this step' if (!(scalar(@to_print_list1)));
+	$process_print_list = 'No batches available for this step' if (!(scalar(@to_process_list1)));
+	$process_close_list = 'No batches available for this step' if (!(scalar(@to_process_list1)));
+	$process_list = 'No batches available for this step' if (!(scalar(@to_process_list1)));
+	$process_list1 = "<b>". 'No batches available right now'. "<b>" if (!(scalar(@to_process_list1)));
+	$printed_list = 'No batches available for this step' if (!(scalar(@been_printed_list1)));
+	
+	my @check_this;
+	foreach my $batch(@to_print_list1){
+		@check_this = split(/-/, $batch);
+		if($user_rank ne 'admin'){
+			next if($check_this[1] ne $user_db_id);
+			}
+		my $am_pm="AM";
+		my $batch5 = $check_this[5];
+		if($check_this[5] > 12){ $check_this[5] = $check_this[5] - 12; $am_pm="PM"; }
+		#my $pretty_batch = "Batch Number: b" . $db_id . $check_this[4] . $check_this[2] . $check_this[3] . $batch5 . $check_this[6] . $check_this[7] . "Entered by: " . $check_this[1] . " on " . $check_this[2] . "/" . $check_this[3] . "/" . $check_this[4] . " at " . $check_this[5] . ":" . $check_this[6] . " " . $am_pm;
+		my $batch_status = "Closed";
+		my $pretty_batch = "b" . $check_this[4] . $check_this[2] . $check_this[3] . $batch5 . $check_this[6] . $check_this[7];
+		my $pretty_batch1 = $check_this[1];
+		my $pretty_batch2 =  $check_this[2] . "/" . $check_this[3] . "/" . $check_this[4] . " at " . $check_this[5] . ":" . $check_this[6] . " " . $am_pm ;
+		my $pretty_batch3 = $batch_status;
+		$print_list1 .= qq|<tr class="HSbodytext"><td align="center"><input type="checkbox" name="checkbox_batch" value="$batch"></td><td align="center"> $pretty_batch</td><td align="center"> $pretty_batch1</td><td align="center"> $pretty_batch2</td><td align="center">$pretty_batch3</td><tr>|;
+		$print_list .= qq|<a href="$batch_printer?print=1&db_batch_number=$batch">$pretty_batch</a><br />|;
+		}
+	foreach my $batch(@been_printed_list1){
+		@check_this = split(/-/, $batch);
+		if($user_rank ne 'admin'){
+			next if($check_this[1] ne $user_db_id);
+			}
+		my $am_pm="AM";
+		my $batch5 = $check_this[5];
+		if($check_this[5] > 12){ $check_this[5] = $check_this[5] - 12; $am_pm="PM"; }
+		#my $pretty_batch = "Batch Number: b" . $check_this[4] . $check_this[2] . $check_this[3] . $batch5 . $check_this[6] . $check_this[7] . "Entered by: " . $check_this[1] . " on " . $check_this[2] . "/" . $check_this[3] . "/" . $check_this[4] . " at " . $check_this[5] . ":" . $check_this[6] . " " . $am_pm;
+		my $batch_status="Printed";
+		my $pretty_batch = "b" . $check_this[4] . $check_this[2] . $check_this[3] . $batch5 . $check_this[6] . $check_this[7];
+		my $pretty_batch1 = $check_this[1];
+		my $pretty_batch2 =  $check_this[2] . "/" . $check_this[3] . "/" . $check_this[4] . " at " . $check_this[5] . ":" . $check_this[6] . " " . $am_pm ;
+		my $pretty_batch3 = $batch_status;
+		$printed_list1 .= qq|<tr class="HSbodytext"><td align="center"><input type="checkbox" name="checkbox_batch" value="$batch"></td><td align="center"> $pretty_batch</td><td align="center"> $pretty_batch1</td><td align="center"> $pretty_batch2</td><td align="center"> $pretty_batch3</td><tr>|;
+		$printed_list .= qq|<a href="$batch_printer?print=1&db_batch_number=$batch">$batch</a><br />|;
+		}
+	foreach my $batch(@to_process_list1){
+		@check_this = split(/-/, $batch);
+		if($user_rank ne 'admin'){
+			next if($check_this[1] ne $user_db_id);
+			}
+		my $am_pm="AM";
+		my $batch5 = $check_this[5];
+		if($check_this[5] > 12){ $check_this[5] = $check_this[5] - 12; $am_pm="PM"; }
+		#my $pretty_batch = "Batch Number: b" . $check_this[4] . $check_this[2] . $check_this[3] . $batch5 . $check_this[6] . $check_this[7] . "Entered by: " . $check_this[1] . " on " . $check_this[2] . "/" . $check_this[3] . "/" . $check_this[4] . " at " . $check_this[5] . ":" . $check_this[6] . " " . $am_pm;
+		my $batch_status= "Not Printed";
+  	    my $pretty_batch = "b" . $check_this[4] . $check_this[2] . $check_this[3] . $batch5 . $check_this[6] . $check_this[7];
+		my $pretty_batch1 = $check_this[1];
+		my $pretty_batch2 =  $check_this[2] . "/" . $check_this[3] . "/" . $check_this[4] . " at " . $check_this[5] . ":" . $check_this[6] . " " . $am_pm ;
+		my $pretty_batch3 = $batch_status;
+		$process_list1 .= qq|<tr class="HSbodytext"><td align="center"><input type="checkbox" name="checkbox_batch" value="$batch"></td><td align="center"> $pretty_batch</td><td align="center"> $pretty_batch1</td><td align="center"> $pretty_batch2</td><td align="center">$pretty_batch3</td><tr>|;
+		$process_list .= qq|<a href="$batch_collector?restart=$batch&assessment=$default_assessment">$pretty_batch</a><br />|;
+		#$process_close_list .= qq|<a href="$batch_collector?close=1&db_batch_number=$batch">$pretty_batch</a><br />|;
+		#$process_print_list .= qq|<a href="$batch_printer?close=1&db_batch_number=$batch">$pretty_batch</a><br />|;
+		}
+	}
+
+
+'' ;
+}

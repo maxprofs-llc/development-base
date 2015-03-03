@@ -1,0 +1,50 @@
+<?xml version="1.0" standalone="yes" ?>
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( $config{template_directory} . $config{variables_template}, PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}gha_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}gha_links.tmpl", PACKAGE => __PACKAGE__ );
+}
+
+<PDF PageMode="UseNone" PageLayout="SinglePage" PageSize="Letter" FindHyperlink="1" Author="HealthStatus.com, Inc.">
+<Image Width="{$brand_logo_pdf_width}" Height="{$brand_logo_pdf_height}" File="{$config{pdf_base}}/{$brand_logo_pdf}" Name="Im0" />
+<Image Width="15" Height="14" File="{$config{pdf_base}}/{$config{green_risk_image}}" Name="Im1" />
+<Image Width="15" Height="14" File="{$config{pdf_base}}/{$config{yellow_risk_image}}" Name="Im2" />
+<Image Width="15" Height="14" File="{$config{pdf_base}}/{$config{red_risk_image}}" Name="Im3" />
+<Image Width="303" Height="16" File="{$config{pdf_base}}/{$config{color_guide}}" Name="Im9" />
+<Page Name="Pg6" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr12">
+	<ShowImage Name="Im0" Left="330" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
+	<ShowText X="580" Y="60" Text="I Did It!" FontFace="Helvetica" Color="E0E0E0" Width="275" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+	<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="AAAAAA" />
+</Graph>
+	<Text Name="Txt0" Rect="60, 60, 552, 670" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
+	<![CDATA[
+
+^p      ^P 
+
+^p      ^P 
+
+^p      ^P 
+
+^p ^f:size=24&color=333366&a=Center  ^b Certificate of Completion  ^B ^F ^P 
+
+^p ^f:size=24&color=333366&a=Center of ^F ^P 
+
+^p ^f:size=24&color=333366&a=Center ^b {$ass_title} ^B ^F ^P
+
+^p      ^P 
+
+^p ^f:size=14&color=333366&a=Center Completed on: {$assessment_date}  ^F ^P
+
+^p ^f:size=14&color=333366&a=Center by: ^b {$name} ^B a {$sex} born {$birth_date}/{$birth_month} ^F ^P  
+
+^p      ^P 
+
+]]>
+</Text>
+</Page></PDF>

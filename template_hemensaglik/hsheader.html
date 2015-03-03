@@ -1,0 +1,39 @@
+{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $header_file, PACKAGE => __PACKAGE__ );
+}
+
+<!-- your next step section start here-->
+<div id="title" class="steptxt">
+<p class="pad17">{$title}</p>
+</div>
+<div class="content" style="margin-left: 5px; background-color:#ffffff">
+<p class="pad29"></p></div>
+
+<div id="step-inn-bg" class="content1">
+<table width="630" cellspacing="0" style="margin-left: 30px">
+<tr>
+<td width="300" style="padding-top: 10px; padding-right: 50px" class="content">
+{$calc_results}<br>
+
+<p class="step_hemen">
+<form  method="POST" action="/cgi-bin/hs/reload.pl">
+        <a href="/cgi-bin/hs/calc.cgi?calc=men" class="btn_input" align="left">YEMEK LISTESI</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input class="btn_input" type="image" border="0" align="right" value="GERI" name="submit">
+		{$hiddens}
+		
+</form>
+</p>
+<p>&nbsp;</p>
+</td>
+</tr>
+
+</table>
+</div>
+<!-- your next step section end here-->
+
+
+{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $footer_file, PACKAGE => __PACKAGE__ );
+}

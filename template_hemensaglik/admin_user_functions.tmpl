@@ -1,0 +1,94 @@
+{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+
+{sub fill_select{
+	use CGI qw(:standard);
+	# List is either a hash of key/value pairs (if you don't care what order the 
+	# options show up in) - or an array of 2-element arrays (first is value, 
+	# second is key)
+	my ($list, $default) = @_;
+	my $is_arr = (ref($list) eq 'ARRAY');
+	my $is_arr_arr = ($is_arr && ref($$list[0]) eq 'ARRAY');
+	my $val, $str;
+	$to_return = '';
+
+	foreach $l($is_arr ? @$list : keys %$list) {
+		$val = ($is_arr && $is_arr_arr) ? $$l[0] : $l;
+		$str = $is_arr ? ($is_arr_arr ? $$l[1] . '-' . $$l[2] : $l) : $$list{$l};
+		$to_return .= "<option value=\"" . escapeHTML($val) . "\"" . ($val eq $default ? " selected" : "") .
+			">" . escapeHTML($str) . "</option>";
+	}
+
+	return $to_return;
+}
+''; # No output
+}
+
+<h1>{$client} Health Assessment User Administration</h1>
+
+<b><span style="color: #660000;">{$display_message}</span></b>
+
+{ if (@user_list) {
+$OUT .= qq|
+<hr />
+
+<form method="POST">
+	<input type="hidden" name="action" value="usertype">
+	<b>Switch user type of</b> <select name="suser">| . fill_select(\@user_list, $input{suser}) . qq|</select>
+<b>To </b> <select name="new_type">
+		<option value="user">User</option>
+		<option value="coach">Coach</option>
+		<option value="clerk">Clerk</option>
+		<option value="admin">Admin</option>
+	</select>
+
+	<input type="hidden" name="partial_name" value="| . escapeHTML($partial_name) . qq|" />
+	<input type="hidden" name="partial_email" value="| . escapeHTML($partial_email) . qq|" />
+	<input type="submit" value="Go">
+</form>
+
+<hr />
+
+<form method="POST">
+	<input type="hidden" name="action" value="delete">
+	<b>Delete User:</b> <select name="duser">| . fill_select(\@user_list, $input{duser}) . qq|</select>
+	<input type="hidden" name="partial_name" value="| . escapeHTML($partial_name) . qq|" />
+	<input type="hidden" name="partial_email" value="| . escapeHTML($partial_email) . qq|" />
+
+	<input type="submit" value="Delete" onClick="return confirm('Are you sure you want to delete this user?')">
+</form>|;
+
+}
+'';
+}
+
+{if (@group_list) {
+	$OUT .= qq|<hr />
+
+	<form method="POST">
+		<input type="hidden" name="partial_name" value="| . escapeHTML($partial_name) . qq|" />
+		<input type="hidden" name="partial_email" value="| . escapeHTML($partial_email) . qq|" />
+	
+		<input type="hidden" name="action" value="delete_group">
+		<b>Delete Group of Users:</b> <select name="dgroup">| .
+
+	fill_select(\@group_list, $input{dgroup}) .
+
+		qq|</select>
+		<input type="submit" value="Delete Group" onClick="return confirm('Are you sure you want to delete this entire group?')">
+	</form>|;
+} else {'';}}
+
+
+<hr>
+Only up to {$users_shown} users are shown at a time.  You may revise the list below:
+
+<form method="POST">
+<p>Partial Name (E.g.: Joh will match "Johann Sebastian Bach" or "John Smith")
+<br /><input type="text" name="partial_name" />
+
+<p>Partial Email Search
+<br /><input type="text" name="partial_email" />
+
+<p><input type="submit" name="revise_userlist_submit" value="Update User List" />
+</form>
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

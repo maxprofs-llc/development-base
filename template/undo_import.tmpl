@@ -1,0 +1,47 @@
+{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+
+<h1>Data import Administration</h1>
+<hr />
+{
+	if($data_undo_msg) {
+                my $html;
+                $html .= qq|
+                <span style=\"color: #660000;\"><b>$data_undo_msg</b></span>
+                |;
+                $html;
+	}
+	else {
+		$html;
+		$html .= qq|<form method="POST" action="$config{admin_dir}undo_import.cgi" name="frm" enctype="multipart/form-data" onsubmit="return check_form()">
+
+		<table width="700px" cellspacing="2" cellpadding="6" border="0">
+			<tr><td class="maintext-b">Select undo file:</td>
+				<td><select name="undo_file" class="maintext-n">|;
+
+			foreach( reverse sort keys %undo_file_hash) {
+				$html .= qq|<option value="$undo_file_hash{$_}">$_</option>|;
+			}
+			$html .= qq|	</select>
+
+				</td></tr>
+                </table>
+
+                        <table width="700px" cellspacing="2" cellpadding="6" border="0">
+                        <tr><td class="maintext-b" width="180px"></td>
+				<td> <input class="maintext-b" type="submit" name="submit" value="Undo Import" /></td></tr>
+                        </table>
+		</form><script type="text/javascript">
+			function check_form() {
+				var str = document.frm.undo_file.value;
+				if(str == ''){
+					alert('Please upload a data file to import the data.');
+					return false;
+				}
+			}
+		</script>|;
+		$html;
+	}	
+}
+<hr>
+
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

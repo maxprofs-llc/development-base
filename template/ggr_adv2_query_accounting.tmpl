@@ -1,0 +1,61 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+<table width="770" border="0" cellspacing="0" cellpadding="0">
+  <form method="POST" action="{$ggr_adv}">
+  	<tr align="center">
+    <td height="40" colspan="3" class="pageheading">Accounting Report Details</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="maintext-b">Detail reporting:</td>
+    <td width="654"><table width="50%"  border="0" cellspacing="0" cellpadding="1">
+            <tr>
+              <td width="7%"><input type="checkbox" name="daily" value="1"></td>
+              <td width="93%" height="25" class="maintext-n">Daily assessment detail</td>
+            </tr>
+            <tr>
+              <td width="7%"><input type="checkbox" name="twelve_month" value="1"></td>
+              <td width="93%" height="25" class="maintext-n">12 month assessment detail</td>
+            </tr>
+          </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="maintext-b">File name:</td>
+    <td width="654"><input name="file_name" type="text" class="maintext-n" size="63"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="rpt_email" value="ON"></td>
+    <td class="maintext-b">Email report:</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td class="maintext-n">Email Addresses:</td>
+    <td><input name="email" type="text" class="maintext-n" size="63"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td class="maintext-n">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td class="maintext-n">&nbsp;</td>
+    <td><input name="Submit_query_pdf" type="submit" class="maintext-b" value="Submit"></td>
+  </tr>
+  <input name="query" type="hidden" value="Submit_query_pdf">
+  <input value="" type="hidden" name="rpt_type">
+
+  {$hidden_values}
+  </form>
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}
+

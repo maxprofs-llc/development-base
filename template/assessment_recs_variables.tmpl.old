@@ -1,0 +1,267 @@
+{
+use vars qw(
+		%need $title $assessment_recs_header_file $show_all $directions %ar_assessment
+		$view_admin $view_coach $view_clerk %alinks @view_order $assessment_recs $show_assessments
+	);
+
+use Date::Calc qw(Delta_Days);
+
+$assessment_recs_header_file = $config{assessment_recs_header} || 'assessment_recs_header.tmpl';
+
+$assessment_recs = 1;
+
+$name = $db_fullname || "$first_name $last_name";
+
+
+my %a_titles = ( FIT => 'Fitness',
+                 GHA => 'Health risks',
+                 HRA => 'General health',
+                 DRC => 'Diabetes risk',
+                 CRC => 'Cardiac risk',
+                 GWB => 'General well-being',
+                 PT  => 'Personal Tracker');
+                 
+
+my $lc_sex = lc $sex;
+
+                 
+# this sets the view order on the default assessment records template  
+my @t_view_order;
+if($config{show_order}){
+	@t_view_order = split /\s+/, $config{show_order};	
+	}
+else	{
+	@t_view_order = ("GHA", "CRC", "DRC", "FIT");
+	} 
+
+my %assessment_active;
+if($site_id{groupID}){	   
+      my @active_order = split(',',$site_id{groupRestrict}); 
+      foreach (@active_order){
+	$assessment_active{$_} = 1;
+	$need{$_} = 'You have not taken this assessment.';
+	}
+      foreach (@t_view_order){
+      	push @view_order, $_ if $assessment_active{$_};
+      	}
+   }
+else {
+      foreach (@t_view_order){
+        $assessment_active{$_} = 1;
+	push @view_order, $_;
+	$need{$_} = 'You have not taken this assessment.';
+	}
+   }
+
+$show_all = 1;
+my( $year, $month, $day ) = (localtime)[5,4,3];
+
+$year  += 1900;
+$month += 1;
+
+my $today = sprintf("%02d-%02d-%04d", $month, $day, $year);
+my $cutoff_date;
+my $date_status = 0;
+my $cod;
+my $com;
+my $coy;
+# this uses the set cutoff date to reset that they have to fill an assessment
+if($config{restrict_cutoff} || $site_id{groupResetDate}){
+	$show_all = 0;
+	unless ($site_id{groupResetDate} gt "0000-00-00 00:00:00"){
+		$cutoff_date = $config{restrict_cutoff}."-".$year;
+		}
+	else	{
+		$cutoff_date = substr($site_id{groupResetDate}, 5, 5);
+		}
+	$com = substr($cutoff_date, 0, 2);
+	$cod = substr($cutoff_date, 3, 2);
+	$coy = $year;
+	# this checks to see if the cutoff date is midyear that it is possible to have taken this assessment at this point in the year
+	if($cutoff_date gt $today){ 
+		$date_status = 1;
+		$year = $year - 1;
+		$coy = $year;
+		$cutoff_date = $config{restrict_cutoff}."-".$year;
+		}		
+	}
+	
+$view_old = '';
+$view_admin = '';
+
+
+
+if($hs_administration eq 'admin' || $hs_administration eq 'coach' || $hs_administration eq 'clerk'){
+$directions .= qq|<div id="resources-topimg" class="helptxt">
+<p class="pad13">Administration</p>
+</div>
+<div id="resources-bg">
+<ul class="pad14">
+|;
+$view_admin = qq|<li style="list-style-image:url(images/healthstatus_33.jpg);"><a href="$ggr_adv" class="ex1_link">Run group reports.</a></li>| if($hs_administration eq 'admin');
+$view_admin .= qq|<li style="list-style-image:url(images/healthstatus_33.jpg);"><a href="$config{admin_path}" class="ex1_link">Go to Admin area.</a></li>|;
+
+$directions .= $view_admin;
+$directions .= qq|</ul>
+</div>|;
+	
+	}
+	
+$directions .= qq|<div id="helpful-topimg" class="helptxt">
+<p class="pad11">Assessment History</p>
+</div>
+<div id="helpful-bg">
+<ul class="pad12">
+|;
+
+
+my $rec_cnt = @records;
+if ($rec_cnt < 1){
+	$view_old = '<li style="list-style-image:url(images/healthstatus_33.jpg);" class="ex1_link">You have not taken any of the assessments.</li>';
+	}
+my $j = 1;
+for (@records)
+	{
+	my %temp_hash = ();
+	%temp_hash = %$_;
+	my $tname = "$temp_hash{first_name} $temp_hash{last_name}";
+	$tname =~ s/\s+$//;
+	my $pretty_date =  substr($temp_hash{adate},5,2) . "-" . substr($temp_hash{adate},8,2) . "-" . substr($temp_hash{adate},0,4);
+	my $pom = substr($temp_hash{adate},5,2);
+	my $pod = substr($temp_hash{adate},8,2);
+	my $poy = substr($temp_hash{adate},0,4);
+	if($cutoff_date && $config{restrict_first}){
+		if($temp_hash{assessment} eq $config{restrict_first} && Delta_Days($coy,$com,$cod,$poy,$pom,$pod) >= 0){ $show_all = 1;}}
+	$need{$temp_hash{assessment}} = "You took this assessment $pretty_date." if ($need{$temp_hash{assessment}} eq 'You have not taken this assessment.');
+        if($j > $config{max_assessments} && !$view_all){
+		  next;
+		  }
+		  else {
+			$view_old .= qq|<li style="list-style-image:url(images/healthstatus_33.jpg);" class="ex1_link">Taken: $pretty_date - $tname<br />
+					$a_titles{$temp_hash{assessment}} <a href="javascript: myLightWindow.activateWindow(\{href: '$review?status=retake&assessment=$temp_hash{assessment}&xnum=$temp_hash{xnum}', type: 'external', title: '$a_titles{$temp_hash{assessment}} - $pretty_date',width:995,height:700\});"  class="ex1_link">[Review]</a>|;
+			$view_old .= qq|&nbsp;&nbsp;<a href="$review?status=retake&assessment=$temp_hash{assessment}&xnum=$temp_hash{xnum}&output_format=PDF" target="_blank" onclick="if(navigator.appName == 'Netscape')\{ return true;\} else \{myLightWindow.activateWindow(\{href: '$review?status=retake&assessment=$temp_hash{assessment}&xnum=$temp_hash{xnum}&output_format=PDF', type: 'external', title: '$a_titles{$temp_hash{assessment}} - $pretty_date',width:995,height:700\}); return false;\}"  class="ex1_link">[Printable PDF Version]</a>| unless ($config{no_pdf_option});
+			if($config{maintenance_mode}){ $view_old .= qq|&nbsp;&nbsp;<a href="$review?status=retake&assessment=$temp_hash{assessment}&xnum=$temp_hash{xnum}&HS_Debug=1"  class="ex1_link">[Debug]</a>|;}
+			$view_old .= qq|</li>|;
+			++$j;
+		  }
+	}
+
+if($j > $config{max_assessments} && !$view_all){
+	  $view_old .= qq|<br />&nbsp;<br /><a href="$cgi_dir/assessment_recs.cgi?view_all=1" class="ex1_link">[View All Assessments Taken]</a></p>|;
+	  }
+
+
+$directions .= $view_old;
+$directions .= qq|</ul>
+</div>|;
+
+
+$alinks{GHA} =  qq|<a href="$collector?assessment=GHA&page=0"><img src="images/healthstatus_18.jpg" align="top" alt="" /><span class="risktxt"> Health Risk Assessment</span></p> 
+<p class="pad6"><img src="images/healthstatus_28.jpg" alt="" /></p></a>
+<p class="pad7">
+<span class="tooktxt">$need{GHA}</span><br />Our Health Risk Assessment provides you with your health risks and habits that you can change to live healthier.</p>
+<p class="pad8">
+|;
+if($config{'allow_metrics'}){ $alinks{GHA} .=  qq|<img src="images/aro_47.jpg" alt="" /> &nbsp;<a href="$collector?assessment=GHA&page=0&qset=metric&units=Metric">[ Metric Version ]</a> |;}
+if($config{'allow_metrics'} && $config{'allow_spanish_inputs'}){ $alinks{GHA} .= "&nbsp;&nbsp;&nbsp;&nbsp;";}
+if($config{'allow_spanish_inputs'}){ $alinks{GHA} .=  qq|<img src="images/aro_47.jpg" alt="" /> &nbsp;<a href="$collector?assessment=GHA&page=0&subdir=$db_id&qset=espanol&language=espanol">[ Español ]</a> |;}
+
+$alinks{CRC} =  qq|<a href="$collector?assessment=CRC&page=0"><img src="images/healthstatus_18.jpg" align="top" alt="" /><span class="risktxt"> Cardiac Risk Assessment</span></p> 
+<p class="pad6"><img src="images/healthstatus_31.jpg" alt="" /></p></a>
+<p class="pad7">
+<span class="tooktxt">$need{CRC}</span><br />The Cardiac Risk Assessment help you determine your risk for heart disease and stroke.</p>
+<p class="pad8">
+|;
+if($config{'allow_metrics'}){ $alinks{CRC} .=  qq|<img src="images/aro_47.jpg" alt="" /> &nbsp;<a href="$collector?assessment=CRC&page=0&qset=metric&units=Metric">[ Metric Version ]</a> |;}
+
+$alinks{DRC} =  qq|<a href="$collector?assessment=DRC&page=0"><img src="images/healthstatus_18.jpg" align="top" alt="" /><span class="risktxt"> Diabetes Risk Assessment</span></p> 
+<p class="pad6"><img src="images/healthstatus_40.jpg" alt="" /></p></a>
+<p class="pad7">
+<span class="tooktxt">$need{DRC}</span><br />One in three people who have diabetes don't even know it. Are you at risk?</p>
+<p class="pad8">
+|;
+if($config{'allow_metrics'}){ $alinks{DRC} .=  qq|<img src="images/aro_47.jpg" alt="" /> &nbsp;<a href="$collector?assessment=DRC&page=0&qset=metric&units=Metric">[ Metric Version ]</a> |;}
+
+$alinks{FIT} =  qq|<a href="$cgi_dir/fitme.cgi?assessment=FIT&page=fit_pre.html&curr_page=1"><img src="images/healthstatus_18.jpg" align="top" alt="" /><span class="risktxt"> Fitness Assessment</span></p> 
+<p class="pad6"><img src="images/healthstatus_42.jpg" alt="" /></p></a>
+<p class="pad7">
+<span class="tooktxt">$need{FIT}</span><br />How fit are you? Measure your current level of fitness with our in-home assessment.</p>
+<p class="pad8">
+|;
+if($config{'allow_metrics'}){ $alinks{FIT} .=  qq|<img src="images/aro_47.jpg" alt="" /> &nbsp;<a href="$cgi_dir/fitme.cgi?assessment=FIT&page=fit_pre.html&qset=metric&units=Metric&curr_page=1">[ Metric Version ]</a> |;}
+
+
+
+if($show_all){
+	my $t_count=1;
+	foreach (@view_order){ 
+# do not change the order of these if statements
+		if($t_count == 3){
+			$show_assessments .= qq |</tr><tr><td valign="top" width="647" colspan="3" background="images/healthstatus_37.jpg" height="16">&nbsp;</td></tr><tr>|;
+			}
+		if($t_count == 1 || $t_count == 3){
+			$show_assessments .= qq |<td valign="top" width="321" class="content1">|;
+			}
+		if($t_count == 2 || $t_count == 4){
+			$show_assessments .= qq |<td valign="top" width="325">|;
+			}
+			
+		$show_assessments .= qq |<p class="pad6"> $alinks{$_} </p></td>|;
+		
+		if($t_count == 1 || $t_count == 3){
+			$show_assessments .= qq |<td valign="top" width="1" background="images/healthstatus_20.jpg"></td>|;
+			}
+		++$t_count;
+		}
+# we have now shown all the assessments for this group, we need to finish any empty rows		
+		if($t_count == 1){
+			$show_assessments .= qq |<td valign="top" width="325"><p class="pad6"></td></tr><tr><td valign="top" width="647" colspan="3" background="images/healthstatus_37.jpg" height="16">&nbsp;</td>|;
+			}
+		if($t_count == 3){
+			$show_assessments .= qq |<td valign="top" width="325"><p class="pad6"></td>|;
+			}	
+	}
+else	{
+	$show_assessments .= qq |<td valign="top" width="321" class="content1"><p class="pad6"> $alinks{$config{restrict_first}} </p></td><td valign="top" width="1" background="images/healthstatus_20.jpg"></td>
+				<td valign="top" width="325"><p class="pad6"></td></tr><tr><td valign="top" width="647" colspan="3" background="images/healthstatus_37.jpg" height="16">&nbsp;</td>|;
+    	}
+
+
+
+
+
+$alinks{PT} =  qq|<p><a href="$ptrack?action=ptshow">Enter Personal Tracker Data</a><br>Enter your new or updated personal tracker details.<br /></p>|;
+$alinks{PT} .=  qq|<p><a href="$ptrack?action=review">View Personal Tracker Data</a><br>View the results of your personal tracker inputs.<br /></p>|;
+
+my $filler;
+if ($j == 1){
+	$filler = 'Now that you have completed the registration process, you should establish a baseline of your current health situation.  ' ;
+	}
+	
+if($need{GHA} eq 'You have not taken this assessment.' && $assessment_active{GHA}){ 
+	$filler .= 'The Health Risk Assessment is the best tool for you to utilize at this time. You should also get your
+	daily energy expenditure and target heart rate by using the calculators on the menu above.<br /> <br />It will be helpful to have your latest blood pressure, cholesterol and other measures from your most recent doctor visit or health screening.';
+	}
+elsif($need{FIT} eq 'You have not taken this assessment.' && $assessment_active{FIT})	{
+	$filler .= 'You have completed the health risk assessment and given us some baseline information.  That is great!  ' if($need{GHA} ne 'You have not taken this assessment.' && $assessment_active{GHA});
+	$filler .= 'If you have time and feel up to it, now would be a good time to take a fitness assessment.  You will do some pushups, situps, a step test and a reach test.  It will take about 20-30 minutes to complete, and you need a watch or clock with a second hand, a tape measure, yard stick and some masking tape.  Click on Fitness Assessment to get started.';
+	}
+else	{
+	$filler .= 'Welcome back, you have previously taken assessments, you can review your results by clicking on the links on the right side of the web page.  You have a good idea on how the site works now, feel free to expolore the calculators, and take additional assessments.';
+	}
+{if ($config{restrict_first} && !$show_all){ 
+		if(uc $config{restrict_first} eq 'CRC'){ $filler .= qq|<br /> <br />** You must complete the cardiac risk assessment.|;}
+		elsif(uc $config{restrict_first} eq 'DRC'){ $filler .= qq|<br /> <br />** You must complete the diabetes risk assessment.|;}
+		elsif(uc $config{restrict_first} eq 'FIT'){ $filler .= qq|<br /> <br />** You must complete the fitness assessment.|;}
+		elsif(uc $config{restrict_first} eq 'GHA'){ $filler .= qq|<br /> <br />** You must complete the health risk assessment.|;}
+		else {}
+		}
+}
+$next_steps =qq|<div id="step-bg" class="content">
+<p class="pad4">
+$filler
+</p>|;
+
+  	  	
+'';
+}

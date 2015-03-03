@@ -1,0 +1,127 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( $directory . $input_variables, PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $header_file, PACKAGE => __PACKAGE__ );
+}
+
+<!-- your next step section start here-->
+<div id="title" class="steptxt">
+<p class="pad17">{$title}</p>
+</div>
+
+<div class="content" style="margin-left: 5px; background-color:#ffffff">
+<p class="pad29">{$intro}</p></div>
+
+<div id="step-inn-bg" class="content1">
+<table width="406" cellspacing="0" style="margin-left: 30px">
+<form action="{$cgi}calculator.cgi" name="theForm" method="POST" onSubmit="return checkCalcForm(this)">
+      <tr>
+        <td class="lb2" width=300 style="padding-top: 10px; padding-right: 20px">{$lang{$current_language}{male_or_female}}</td>
+        <td width=90 style="padding-top: 10px"><select name="sex" size="1" style="width: 200px">
+					<option selected="selected">{$lang{$current_language}{Select_your_gender}}</option>
+					<option value="Male">{$lang{$current_language}{Male}}</option>
+					<option value="Female">{$lang{$current_language}{Female}}</option>
+				</select></td>
+      </tr>
+      <tr>
+        <td class="lb2" width=300 style="padding-top: 10px; padding-right: 20px">{$lang{$current_language}{Select_your_height}}</td>
+        <td width=90 style="padding-top: 10px"><select size="1" name="mheight" style="width: 200px">
+ 							<option value="55.16">1.4 metre</option>
+							<option value="55.554">1.41 metre</option>
+							<option value="55.948">1.42 metre</option>
+							<option value="56.342">1.43 metre</option>
+							<option value="56.736">1.44 metre</option>
+							<option value="57.13">1.45 metre</option>
+							<option value="57.524">1.46 metre</option>
+							<option value="57.918">1.47 metre</option>
+							<option value="58.312">1.48 metre</option>
+							<option value="58.706">1.49 metre</option>
+							<option value="59.1">1.5 metre</option>
+							<option value="59.494">1.51 metre</option>
+							<option value="59.888">1.52 metre</option>
+							<option value="60.282">1.53 metre</option>
+							<option value="60.676">1.54 metre</option>
+							<option value="61.07">1.55 metre</option>
+							<option value="61.464">1.56 metre</option>
+							<option value="61.858">1.57 metre</option>
+							<option value="62.252">1.58 metre</option>
+							<option value="62.646">1.59 metre</option>
+							<option value="63.04">1.6 metre</option>
+							<option value="63.434">1.61 metre</option>
+							<option value="63.828">1.62 metre</option>
+							<option value="64.222">1.63 metre</option>
+							<option value="64.616">1.64 metre</option>
+							<option value="65.01">1.65 metre</option>
+							<option value="65.404">1.66 metre</option>
+							<option value="65.798">1.67 metre</option>
+							<option value="66.192">1.68 metre</option>
+							<option value="66.586">1.69 metre</option>
+							<option value="0" selected>{$lang{$current_language}{Select_height}}</option>
+							<option value="66.98">1.7 metre</option>
+							<option value="67.374">1.71 metre</option>
+							<option value="67.768">1.72 metre</option>
+							<option value="68.162">1.73 metre</option>
+							<option value="68.556">1.74 metre</option>
+							<option value="68.95">1.75 metre</option>
+							<option value="69.344">1.76 metre</option>
+							<option value="69.738">1.77 metre</option>
+							<option value="70.132">1.78 metre</option>
+							<option value="70.526">1.79 metre</option>
+							<option value="70.92">1.8 metre</option>
+							<option value="71.314">1.81 metre</option>
+							<option value="71.708">1.82 metre</option>
+							<option value="72.102">1.83 metre</option>
+							<option value="72.496">1.84 metre</option>
+							<option value="72.89">1.85 metre</option>
+							<option value="73.284">1.86 metre</option>
+							<option value="73.678">1.87 metre</option>
+							<option value="74.072">1.88 metre</option>
+							<option value="74.466">1.89 metre</option>
+							<option value="74.86">1.9 metre</option>
+							<option value="75.254">1.91 metre</option>
+							<option value="75.648">1.92 metre</option>
+							<option value="76.042">1.93 metre</option>
+							<option value="76.436">1.94 metre</option>
+							<option value="76.83">1.95 metre</option>
+							<option value="77.224">1.96 metre</option>
+							<option value="77.618">1.97 metre</option>
+							<option value="78.012">1.98 metre</option>
+							<option value="78.406">1.99 metre</option>
+							<option value="78.8">2 metre</option>
+							<option value="79.194">2.01 metre</option>
+							<option value="79.588">2.02 metre</option>
+							<option value="79.982">2.03 metre</option>
+							<option value="80.376">2.04 metre</option>
+							<option value="80.77">2.05 metre</option>
+							<option value="81.164">2.06 metre</option>
+							<option value="81.558">2.07 metre</option>
+							<option value="81.952">2.08 metre</option>
+							<option value="82.346">2.09 metre</option>
+							<option value="82.74">2.1 metre</option>
+							<option value="83.134">2.11 metre</option>
+							<option value="83.528">2.12 metre</option>
+							<option value="83.922">2.13 metre</option>
+							<option value="84.316">2.14 metre</option>
+       </select></td>
+      </tr>
+      <tr>
+        <td><a href="/cgi-bin/hs/calc.cgi?calc=men" class="btn_input" align="left">YEMEK LISTESI</a></td>
+
+        <td style="padding-top: 8px; padding-bottom: 10px">
+        	<input name="Submit" type="image" class="HSButton" src="https://hemensaglik.hra.net/images/hemensaglik_calculate.jpg" /></td>
+				<input type="hidden" name="measure" value="Metric">
+				<input type="hidden" name="calculator" value="iwc">
+				<input type="hidden" name="snum" value="{$snum}">
+        <td>&nbsp;</td>
+      </tr>
+	  </form>
+    </table>
+</div>
+<!-- your next step section end here-->
+
+{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $footer_file, PACKAGE => __PACKAGE__ );
+}

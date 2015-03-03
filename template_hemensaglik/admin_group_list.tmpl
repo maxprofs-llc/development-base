@@ -1,0 +1,39 @@
+{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+
+
+<h1>Group List</h1>
+
+<p><a href="/cgi-bin/hs/create_groups.cgi?action=create">Create a new group</a></p>
+
+
+{
+if (defined(@assessment_list) && @assessment_list != 0) {
+	
+	$OUT = Text::Template::fill_in_file("$config{template_directory}navbar.tmpl", PACKAGE => __PACKAGE__ );
+
+	$OUT .= "<table id=\"assessment_table\"><tr class=\"maintext-b\">
+		<td nowrap>Group ID</td><td>Group Name</td><td>Description</td><td>Status</td><td>Start Date</td><td>Phone</td><td>Email</td><td>Modify</td></tr>";
+
+	foreach my $a(@assessment_list) {
+		$OUT .= "<tr>
+			<td>$$a{groupID}</td>
+			<td>$$a{groupName}</td>
+			<td>$$a{groupDescription}</td>
+			<td>$$a{groupStatus}</td>
+			<td>$$a{groupLaunch}</td>
+			<td>$$a{groupPhone}</td>
+			<td>$$a{groupAdminEmail}</td>
+			<td><a href=\"$config{admin_dir}admin_group_modify.cgi?groupID=$$a{groupID}&action=update \">Modify</a></td>
+			</tr>";
+	}
+
+	$OUT .= "</table><br>";
+	$OUT .= Text::Template::fill_in_file("$config{template_directory}navbar.tmpl", PACKAGE => __PACKAGE__ );
+	$OUT .= qq|<p><a href="$config{admin_dir}create_groups.cgi?action=create">Create a new group</a>|;
+
+}
+else {qq|No groups found.<p>|;}
+}
+
+
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en-US">
+<![endif]-->
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en-US">
+<!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<title>{$title}</title>
+	<meta name="description" content="{$intro}">
+	<meta http-equiv="expires" content="0" />
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="cache-control" content="no-cache" />
+	<link rel="icon" href="//www.healthstatus.com/favicon.ico" type="image/x-icon" />
+	<meta name="copyright" content="Healthstatus.com, Inc. 1998-2014 all rights reserved" />
+	<meta name="author" content="Healthstatus.com, Inc." />
+
+
+	<!-- Mobile Devices Viewport Resset-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+
+	<base href="https://base1.hra.net/">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
+	<!--[if IE 8]>
+		<link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome-ie7.min.css">
+	<![endif]-->
+
+	<link href='//fonts.googleapis.com/css?family=Droid+Sans:400,700|Lato:300,400,700,400italic,700italic|Droid+Serif' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="wp-content/themes/healthstatus/style.css">
+
+	<!--[if IE 8]>
+		<link rel="stylesheet" href="css/custom-ie9-lower.css">
+	<![endif]-->
+
+	<script src="vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+	<link rel="stylesheet" href="css/hopscotch-0.1.2.min.css">
+	<link href="vendor/datepicker/css/datepicker.css" rel="stylesheet">
+{my $html; 
+$html .= qq|<link rel='canonical' href='//www.healthstatus.com/quizzes/' />| if $output;
+$html;
+}
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-889474-1']);
+  _gaq.push(['_setDomainName', 'healthstatus.com']);
+  _gaq.push(['_setAllowLinker', true]);
+  {my $html; $html=qq|_gaq.push(['_trackPageview', '/quiz_$calc|;
+           if($output){$html.=qq|_output|;}else{$html.=qq|_input|;} $html .= qq|']);|; $html; }
+  (function() \{
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  \})();
+
+</script>
+<script type='text/javascript'>
+var googletag = googletag || \{\};
+googletag.cmd = googletag.cmd || [];
+(function() \{
+var gads = document.createElement('script');
+gads.async = true;
+gads.type = 'text/javascript';
+var useSSL = 'https:' == document.location.protocol;
+gads.src = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
+var node = document.getElementsByTagName('script')[0];
+node.parentNode.insertBefore(gads, node);
+\})();
+</script>
+<script type='text/javascript'>
+googletag.cmd.push(function() \{
+{my $html; 
+
+if(uc $calc eq 'ADULTSR'){
+	$content = qq|ADD Attention Deficit|;
+	}
+elsif(uc $calc eq 'ALCOHOL'){
+	$content = qq|Alcohol-Abuse|;
+	}
+elsif(uc $calc eq 'EDISORDER'){
+	$content = qq|Eating Disorder|;
+	}
+elsif (uc $calc eq 'LBW')	{
+	$content = qq|Back-Shoulder-Joints|;
+	}
+elsif (uc $calc eq 'DMDI')	{
+	$content = qq|Depression-Stress|;
+	}
+elsif (uc $calc eq 'COPDDX')	{
+	$content = qq|COPD|;
+	}
+else	{
+	$content = qq||;
+	}
+$html = "googletag.pubads().setTargeting('Content', ['".$content."']);" if $content;
+$html;
+}
+googletag.pubads().setTargeting('UGC', 'n');
+googletag.pubads().setTargeting('Page', 'quiz');
+var topCenter = googletag.sizeMapping().
+	addSize([320, 700], [300, 250]).
+	addSize([768, 200], [728, 90]).
+	addSize([1000, 200], [970,90]).
+	build();
+window.slot1= googletag.defineSlot('/25135005/healthstatus_any_top', [[300, 250], [728, 90], [970, 90]], 'div-gpt-ad-1394640758985-0').
+	defineSizeMapping(topCenter).
+	addService(googletag.pubads()).
+	setCollapseEmptyDiv(true);
+var bodyATF = googletag.sizeMapping().
+	addSize([320, 400], [300, 250]).
+	addSize([340, 400], [336, 280]).
+	addSize([320, 700], [300, 600]).
+	build();
+window.slot2= googletag.defineSlot('/25135005/healthstatus_any_middle_atf', [[300, 250], [300, 600], [300, 250]], 'div-gpt-ad-1399908009117-0').
+	defineSizeMapping(bodyATF).
+	addService(googletag.pubads()).
+	setCollapseEmptyDiv(true);
+var bodyBTF = googletag.sizeMapping().
+	addSize([320, 400], [300, 250]).
+	addSize([340, 400], [336, 280]).
+	build();
+window.slot3= googletag.defineSlot('/25135005/healthstatus_any_right_btf', [[300, 250], [300, 250]], 'div-gpt-ad-1399908009117-1').
+	defineSizeMapping(bodyBTF).
+	addService(googletag.pubads()).
+	setCollapseEmptyDiv(true);
+googletag.pubads().enableSingleRequest();
+googletag.enableServices();
+\});
+</script>
+<script type="text/javascript">
+
+ window._taboola = window._taboola || [];
+_taboola.push(\{article:'auto'\}); 
+!function (e, f, u) \{
+    e.async = 1;
+    e.src = u;
+    f.parentNode.insertBefore(e, f);
+\}(document.createElement('script'), document.getElementsByTagName('script')[0], '//cdn.taboola.com/libtrc/healthstatus/loader.js');
+
+</script>
+
+</head>
+
+<body class="page">
+<!--[if lt IE 8]>
+        Did you know that your web browser is a bit old? Some of the content on this site might not work right as a result. <a href="https://whatbrowser.org">Upgrade your browser</a> for a faster, better, and safer web experience.
+    <![endif]-->
+	<div id="page" class="hfeed site">
+		<div class="c-ad-wrapper" id="main-header-ad">
+			<div class="ad-inner">
+				<div class="ad ad-728x90">
+					<aside id="header_banner_widget-2" class="widget header-banner">
+						<div id='div-gpt-ad-1394640758985-0'>
+						<script type='text/javascript'>
+						googletag.cmd.push(function() \{
+						googletag.display('div-gpt-ad-1394640758985-0'); \}); </script> </div>
+
+					</aside>
+				</div>
+			</div>
+		</div>
+		<nav id="header" class="header-navbar" role="navigation">
+			<div class="header-navbar-inner container">
+				<div id="brand" class="navbar-brand">
+					<a class="head-logo" href="/" title="HealthStatus" rel="HealthStatus" rel="nofollow">
+						<img src="/wp-content/uploads/2014/03/logo1.png" class="header-image" width="244" height="56" alt="" />
+
+					</a>
+					<a class="head-title" href="/" >
+						<img src="/wp-content/themes/healthstatus/images/logo_big.png" class="header-image" alt="" />
+					</a>
+				</div>
+				<div class="nav nav-pages hidden-xs">
+					<div class="header-right-sidebar">
+						<aside id="follow-us-widget-3" class="widget col-xs-6 col-sm-2 follow-us-widget">
+							<h3 class="widget-title">follow us</h3>
+							<ul class="entries links">
+								<li>
+									<a rel="nofollow" href=https://www.facebook.com/healthstatuscom>
+										<i class='icon-facebook-sign icon-2x'></i> Facebook
+									</a>
+								</li>
+								<li>
+									<a rel="nofollow" href=https://twitter.com/glwHealthStatus>
+										<i class='icon-twitter-sign icon-2x'></i>  Twitter
+									</a>
+								</li>
+								<li>
+									<a rel="nofollow" href=https://plus.google.com/+Healthstatus-hra>
+										<i class='icon-google-plus-sign icon-2x'></i>  Google Plus
+									</a>
+								</li>
+							</ul>
+						</aside>
+						<aside id="text-3" class="widget widget_text">
+							<h3 class="widget-title">test</h3>
+							<div class="textwidget">
+								<ul>
+									<li><a href="/about-us/">About</a></li>
+									<li><a href="/disclaimer/">Disclaimer</a></li>
+									<li><a href="/trouble/">Trouble</a></li>
+								</ul>
+							</div>
+						</aside>
+					</div>
+				</div>
+				<ul class="nav nav-icons">
+					<li>
+						<a href="#" class="btn-icon" data-toggle=".header-navbar-inner" data-toggle-class="search-toggled-in">
+							<span class="search-toggled-out-icon glyphicon glyphicon-search"></span>
+							<span class="search-toggled-in-icon glyphicon glyphicon-remove"></span>
+						</a>
+					</li>
+				</ul>
+				<div class="search-wrapper js-stoppropagation">
+					<div class="search-wrapper-inner">
+						<form role="search" method="get" class="search-form" action="">
+							<input type="search" name="s" class="search-field" placeholder="search ... " value="">
+							<button type="submit" class="btn-icon search-submit">
+							<span class="glyphicon glyphicon-search"></span></button>
+						</form>
+					</div>
+				</div>
+				<ul id="menu-menu-1" class="nav navbar-nav">
+					<li id="menu-item-171" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-171">
+						<a href="/assessments/">Assessments</a>
+					</li>
+					<li id="menu-item-103" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-103">
+						<a href="/calculators/">Calculators</a>
+					</li>
+					<li id="menu-item-194" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-194">
+						<a href="/quizzes/">Self Check</a>
+					</li>
+					<li id="menu-item-228" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-228">
+						<a href="/?page_id=223">Get Healthy</a>
+						<div class='subnav-wrapper'>
+							<ul class="level-0 subnav">
+								<li id="menu-item-222" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-222"><a href="/apps/">Apps</a></li>
+								<li id="menu-item-104" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-104"><a href="/health_blog/fitness_expert/shannon-clark">Fitness Expert</a></li>
+								<li id="menu-item-105" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-105"><a href="/health_blog/hypnosis/justin-tranz-health-hypnotist">Hypnotherapist</a></li>
+								<li id="menu-item-222" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-222"><a href="/products/">Healthy Products</a></li>
+								<li id="menu-item-222" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-222"><a href="/symptom-checker/">Symptom Checker</a></li>
+							</ul>
+						</div>
+					</li>
+					<li id="menu-item-221" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-221">
+						<a href="#">Articles &#038; Info</a>
+						<div class='subnav-wrapper'>
+							<ul class="level-0 subnav">
+								<li id="menu-item-222" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-222"><a href="/health_blog/">Articles</a></li>
+								<li id="menu-item-104" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-104"><a href="/infographics/">Infographics</a></li>
+								<li id="menu-item-105" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-105"><a href="/health-tips/">Health Tips</a></li>
+								<li id="menu-item-137" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-137"><a href="/videos/">Videos</a></li>
+							</ul>
+						</div>
+					</li>
+					<li id="menu-item-220" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-220">
+						<a href="#">Resources</a>
+						<div class='subnav-wrapper'>
+							<ul class="level-0 subnav">
+								<li id="menu-item-222" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-222"><a href="/physician/">Physician Directory</a></li>
+								<li id="menu-item-222" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-222"><a href="/recipes/">Recipes</a></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav" id="menu-menu_all">
+					<li id="login" class="menu-item menu-item-type-custom menu-item-object-custom menu-login">
+						<a href="/wp-login.php?redirect_to=/?page_id=270" class="simplemodal-login" rel="nofollow">Login</a>
+					</li>
+					<li class="menu-item menu-item-type-custom menu-item-object-custom menu-register">
+						<a href="/wp-login.php?action=register" class="simplemodal-register" rel="nofollow">Register</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		
+<div id="main" class="container">
+{my $html; 
+my $next; my $next_link; my $previous; my $previous_link;
+
+if(uc $calc eq 'ADULTSR'){
+	$next = "Alcohol Abuse";
+	$next_link = "/quiz/alcoholabuse/";
+	$previous = "Health Calculators";
+	$previous_link = "/calculators/";
+	}
+elsif(uc $calc eq 'ALCOHOL'){
+	$next = "Eating Disorder";
+	$next_link = "/quiz/eatingdisorder/";
+	$previous = "Adult ADD Attention Deficit";
+	$previous_link = "/quiz/adultadhd/";
+	}
+elsif(uc $calc eq 'EDISORDER'){
+	$next = "Low Back Pain Questionnaire";
+	$next_link = "/quiz/lowbackpain/";
+	$previous = "Alcohol Abuse";
+	$previous_link = "/quiz/alcoholabuse/";
+	}
+elsif (uc $calc eq 'LBW')	{
+	$next = "Depression Stress";
+	$next_link = "/quiz/depression/";
+	$previous = "Eating Disorder";
+	$previous_link = "/quiz/eatingdisorder/";
+	}
+elsif (uc $calc eq 'DMDI')	{
+	$next = "COPD Quiz";
+	$next_link = "/quiz/copdsymptoms";
+	$previous = "Low Back Pain Questionnaire";
+	$previous_link = "/quiz/lowbackpain/";
+	}
+elsif (uc $calc eq 'COPDDX')	{
+	$next = "Health Videos";
+	$next_link = "/videos/";
+	$previous = "Depression Stress";
+	$previous_link = "/quiz/depression/";
+	}
+else	{
+	}
+
+if($output){
+$html = qq|	<div class='loading-message' style='display:none'>
+		<img src="/wp-content/themes/healthstatus/images/loading.gif" />
+	</div>
+	<div class="section section-no-margin-bottom row entries bg-primary">
+					<article class="entry blue-bg-white-col style-grid style-hero hero-nav type-post col-xs-6 col-sm-6">
+				<a href="$previous_link">
+					<header class="entry-header">
+						<p class="small">Previous</p>
+						<h3 class="entry-title normal-bold">$previous</h3>
+					</header>
+					<figure class="entry-thumbnail">
+						<div class="overlay overlay-primary"></div>
+					</figure>
+				</a> 
+			</article>
+							<article class="entry orange-bg-white-col style-grid style-hero hero-nav type-post col-xs-6 col-sm-6">
+				<a href="$next_link">
+				<header class="entry-header">
+					<p class="small">Next</p>
+					<h3 class="entry-title normal-bold">$next</h3>
+				</header>
+				<figure class="entry-thumbnail">
+					<div class="overlay overlay-primary"></div>
+				</figure>
+				</a> 
+			</article>
+			</div>|;
+	}
+$html;
+}
+	<div class="content section row" id="content">
+		<div class="col-md-8 bg-base col-lg-8 col-xl-9">
+			<div class="ribbon ribbon-highlight">
+				<ol class="breadcrumb ribbon-inner">
+					<li><a href="/">Home</a></li>
+					<li><a href="/quizzes/">Quizzes</a></li>
+					<li class="active">{$title}</li>
+				</ol>
+			</div>
+					<header class="page-header">
+						<h2 class="page-title" id="calc-title">{$form_title}</h2>
+					</header>
+{my $html; my $this_calc = lc $calc;
+	if($output){
+		$html = qq|<article class="entry style-media media  type-post">
+				<div class="entry-content">
+							<figure class="media-object pull-left entry-thumbnail" style="margin-right:12px">
+
+								<!-- to disable lazy loading, remove data-src and data-src-retina -->
+								<img src="$image_host/$graphic_group/$this_calc.jpg" data-src="$image_host/$graphic_group/$this_calc.jpg" data-src-retina="$image_host/$graphic_group/$this_calc.jpg" width="230" class="" alt="">
+
+								<!--fallback for no javascript browsers-->
+								<noscript>
+									<img src="$image_host/$graphic_group/$this_calc.jpg" width="230" alt="">
+								</noscript>
+
+							</figure>
+					
+			|;
+		}
+	else	{
+		$html =qq|<article class="entry style-single type-post">
+				<div class="entry-content">|;
+	if(uc $calc eq 'COPDDX'){
+		$html .= qq|                        <div class="btn-group center" data-toggle="buttons" id="switch-version" class="switch-change">
+							  <label class="btn btn-primary active">
+							    <input type="radio" name="calc-measures" id="imperial-btn" checked> Imperial
+							  </label>
+							  <label class="btn btn-primary">
+							    <input type="radio" name="calc-measures" id="metric-btn"> Metric
+							  </label>
+							</div><div id="switch-spot"></div>
+							|;
+		}
+	$html .= qq|<p>$intro</p>|;
+			
+		}
+$html;
+}					

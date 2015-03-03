@@ -1,0 +1,38 @@
+{
+use vars qw(@links);
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+@links = ();
+
+push @links, [ $lang{turkey}{physical_activity},
+	$config{html_base}."resource/Physical_activity_adults.pdf" ]
+	if $age < 50;
+push @links, [ $lang{turkey}{physical_activity},
+	$config{html_base}."resource/Physical_activity_olderad.pdf" ]
+	if $age >= 50;
+push @links, [ $lang{$current_language}{National_Women_Health},
+	"http://www.4woman.org/" ] 
+	if $sex eq FEMALE || $checkme;
+push @links, [ $lang{turkey}{fit_cover_letter7},
+	$config{html_base}."resource/tips_men.pdf" ] 
+	if $sex eq MALE || $checkme;
+push @links, [ $lang{$current_language}{Aim_for_health_weight},
+	$config{html_base}."resource/aim_for_healthy_weight.pdf" ]
+	if $bmi > 29.5 || $checkme;
+push @links, [ $lang{$current_language}{Overeaters_Anonymous},
+	"http://www.overeatersanonymous.org/" ] 
+	if $bmi > 29.5 || $checkme;
+push @links, [ $lang{$current_language}{Getting_Older_Eating_Better},
+	$config{html_base}."resource/oldereating.pdf" ] 
+	if ($age > 65 && ( $bmi > 25 || $bmi < 20 )) || $checkme;
+push @links, [ $lang{$current_language}{Keys_Choosing_Healthful_Foods},
+	$config{html_base}."resource/keytohealthfulfood.pdf" ] 
+	if $bmi > 25 || $bmi < 20 || $checkme;
+push @links, [ $lang{turkey}{Eating_Disorder_Facts},
+	$config{html_base}."resource/eating_disorder.pdf" ] 
+	if $bmi < 20 || $bmi > 28;
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+'';
+}

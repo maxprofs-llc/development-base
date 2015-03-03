@@ -1,0 +1,17 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$home_header_in_file", PACKAGE => __PACKAGE__ );
+}       <!-- Template: reg.tmpl -->
+	<!-- Templates called: {$footer_file}, {$config{variables_template}},  {$header_in_file} -->
+<p align="center"><br>
+<strong>One moment, checking for proper credentials.</strong>
+</p>
+<p>
+       {$error_msg}
+</p>
+<!--<iframe src="/cgi-bin/hs/register1.cgi?action=oauth_signup" title="Authenticate">...</iframe>-->
+</body>
+</html>

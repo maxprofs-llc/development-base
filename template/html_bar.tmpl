@@ -1,0 +1,163 @@
+{
+	my ($smlev, $suslev, $smtar, $scale, $scope, $rate, $targ, $title, $width);
+	$smlev = $vars{my_score};
+	$suslev = $vars{avg_score};
+	$smtar = $vars{target_score};
+	$scale = $vars{bar_scale};
+	$scope = $vars{scope_text};
+	$rate = $vars{rate_text};
+	$targ = $vars{target_text};
+	$title = $vars{title_text};
+	$width = $vars{width_of_table};
+	if(!$rate){
+		$rate = "Average US";
+	}
+	if(!$targ){
+		$targ = "Your target";
+	}
+	$mlev = int($smlev * $scale);
+	$uslev = int($suslev * $scale);
+	$mtar = int($smtar * $scale);
+	if(!$title){
+		$title = "Your current $scope is $smlev. ";}
+	else{
+		$title = eval $title;
+	}
+	my $bar_height = $CRC_bar_height || 19;
+	my $bar_end_width = $CRC_end_width || 2;
+	my $htm = qq|<NOBR><img src ="$CRC_left" border=0 height=$bar_height width=$bar_end_width>|;
+	my $curpos = 0;
+# which is first?
+	if ($mlev <= $uslev && $mlev <= $mtar) {
+#                                      mlev is the lowest so draw the bar to that point
+		$mwid = int($mlev * 2.5);
+		$curpos = $curpos + $mwid;
+		$htm .= qq|<img src ="$CRC_you" border=0 height=$bar_height width=$mwid alt="Your current $scope is $smlev">|;
+#									   which is next target or uslev
+		if ($uslev <= $mtar) {
+#										do uslev is 2nd lowest
+			$tmp = int(($uslev) * 2.5);
+#                                       do we need to add some blanks
+			if ($curpos < $tmp){
+#										yes, add some blank space
+				$mwid = $tmp - $curpos;
+				$curpos = $curpos + $mwid + 7;
+				$htm .= qq|<img src ="$CRC_middle" border=0 height=$bar_height width=$mwid>|;
+				$htm .= qq|<img src ="$CRC_avg" border=0 height=$bar_height width="7" alt="$rate $scope is $suslev">|;
+			} else {
+#										no, we are at uslev
+				$curpos = $curpos + 7;
+				$htm .= qq|<img src ="$CRC_avg" border=0 height=$bar_height width="7" alt="$rate $scope is $suslev">|;
+			}
+#										now print mtar
+			$tmp = int(($mtar) * 2.5);
+#                                       do we need to add some blanks
+			if ($curpos < $tmp){
+#										yes, add some blank space
+				$mwid = $tmp - $curpos;
+				$curpos = $curpos + $mwid + 5;
+				$htm .= qq|<img src ="$CRC_middle" border=0 height=$bar_height width=$mwid>|;
+				$htm .= qq|<img src ="$CRC_target" border=0 height=$bar_height width="5" alt="$targ $scope is $smtar">|;
+			} else {
+#										no, we are at mtar
+				$curpos = $curpos + 5;
+				$htm .= qq|<img src ="$CRC_target" border=0 height=$bar_height width="5" alt="$targ $scope is $smtar">|;
+			}
+
+		} else {
+#										do mtar is 2nd lowest
+			$tmp = int(($mtar) * 2.5);
+#                                       do we need to add some blanks
+			if ($curpos < $tmp){
+#										yes, add some blank space
+				$mwid = $tmp - $curpos;
+				$curpos = $curpos + $mwid + 5;
+				$htm .= qq|<img src ="$CRC_middle" border=0 height=$bar_height width=$mwid>|;
+				$htm .= qq|<img src ="$CRC_target" border=0 height=$bar_height width="5" alt="$targ $scope is $smtar">|;
+			} else {
+#										no, we are at mtar
+				$curpos = $curpos + 5;
+				$htm .= qq|<img src ="$CRC_target" border=0 height=$bar_height width="5" alt="$targ $scope is $smtar">|;
+			}
+#										now we are at uslev
+			$tmp = int(($uslev) * 2.5);
+#                                       do we need to add some blanks
+			if ($curpos < $tmp){
+#										yes, add some blank space
+				$mwid = $tmp - $curpos;
+				$curpos = $curpos + $mwid + 7;
+				$htm .= qq|<img src ="$CRC_middle" border=0 height=$bar_height width=$mwid>|;
+				$htm .= qq|<img src ="$CRC_avg" border=0 height=$bar_height width="7"  alt="$rate $scope is $suslev">|;
+			} else {
+#										no, we are at uslev
+				$curpos = $curpos + 7;
+				$htm .= qq|<img src ="$CRC_avg" border=0 height=$bar_height width="7" alt="$rate $scope is $suslev">|;
+			}
+		}
+	} elsif ($mtar < $uslev && $mlev > $mtar){
+#										if we are here, target is lower than everything, so we have to
+#										draw the we bar to target then recontinue the we bar maybe to
+#										average then continue some more or just to we then blank to average
+		$mwid = int($mtar * 2.5) - 2;
+		$curpos = $curpos + $mwid + 5;
+		$htm .= qq|<img src ="$CRC_you" border=0 height=$bar_height width=$mwid alt="Your current $scope is $smlev"><img src ="$CRC_target" border=0 height=$bar_height width="5" alt="Your target $scope is $smtar">|;
+		if ($uslev <= $mlev) {
+#  										uslev is less than the end of mlev so paint more bar then uslev
+#    									then more bar
+			$tmp = int($uslev * 2.5);
+			$mwid = $tmp - $curpos - 3;
+			$curpos = $curpos + $mwid + 7;
+			$htm .= qq|<img src ="$CRC_you" border=0 height=$bar_height width=$mwid alt="Your current $scope is $smlev"><img src ="$CRC_avg" border=0 height=$bar_height width="7" alt="$rate $scope is $suslev">|;
+			$tmp = int($mlev * 2.5);
+			$mwid = $tmp - $curpos;
+			$curpos = $curpos + $mwid;
+			$htm .= qq|<img src ="$CRC_you" border=0 height=$bar_height width=$mwid alt="Your current $scope is $smlev">|;
+		} else {
+# 										uslev is more than the end of mlev so draw some mlev then blank then uslev
+			$tmp = int($mlev * 2.5);
+			$mwid = $tmp - $curpos;
+			$curpos = $curpos + $mwid;
+			$htm .= qq|<img src ="$CRC_you" border=0 height=$bar_height width=$mwid alt="Your current $scope is $smlev">|;
+			$tmp = int($uslev * 2.5);
+			$mwid = $tmp - $curpos - 3;
+			$curpos = $curpos + $mwid + 7;
+			$htm .= qq|<img src ="$CRC_middle" border=0 height=$bar_height width=$mwid><img src ="$CRC_avg" border=0 height=$bar_height width="7" alt="$rate $scope is $suslev">|;
+		}
+	} else {
+#										if we are here, uslev (average) is lower than everything, so we have to
+#										draw the we bar to average then recontinue the we bar maybe to
+#										target then continue some more or just to we then blank to target
+		$mwid = int($uslev * 2.5) - 3;
+		$curpos = $curpos + $mwid + 7;
+		if ($mwid >= 1) {
+			$htm .= qq|<img src ="$CRC_you" border=0 height=$bar_height width=$mwid alt="Your current $scope is $smlev"><img src ="$CRC_avg" border=0 height=$bar_height width="7" alt="$rate $scope is $suslev">|;
+		}
+		if ($mtar <= $mlev) {
+#  										target is less than the end of mlev so paint more bar then target
+#    									then more bar
+			$tmp = int($mtar * 2.5);
+			$mwid = $tmp - $curpos - 3;
+			$curpos = $curpos + $mwid + 7;
+			$htm .= qq|<img src ="$CRC_you" border=0 height=$bar_height width=$mwid alt="Your current $scope is $smlev"><img src ="$CRC_target" border=0 height=$bar_height width="5" alt="Your target $scope is $smtar">|;
+			$tmp = int($mlev * 2.5);
+			$mwid = $tmp - $curpos;
+			$curpos = $curpos + $mwid;
+			$htm .= qq|<img src ="$CRC_you" border=0 height=$bar_height width=$mwid alt="Your current $scope is $smlev">|;
+		} else {
+# 										uslev is more than the end of mlev so draw some mlev then blank then uslev
+			$tmp = int($mlev * 2.5);
+			$mwid = $tmp - $curpos;
+			$curpos = $curpos + $mwid;
+			$htm .= qq|<img src ="$CRC_you" border=0 height=$bar_height width=$mwid alt="Your current $scope is $smlev">|;
+			$tmp = int($mtar * 2.5);
+			$mwid = $tmp - $curpos - 3;
+			$curpos = $curpos + $mwid + 7;
+			$htm .= qq|<img src ="$CRC_middle" border=0 height=$bar_height width=$mwid><img src ="$CRC_target" border=0 height=$bar_height width="5" alt="Your target $scope is $smtar">|;
+		}
+	}
+	$mwid = 250 - $curpos;
+	$mwid = 380 - $curpos if ($width);
+	$htm .= qq|<img src ="$CRC_middle" border=0 height=$bar_height width=$mwid>| if ($mwid > 0);
+	$htm .= qq|<img src ="$CRC_right" border=0 height=$bar_height width=$bar_end_width>\n</nobr>|;
+$htm;
+}

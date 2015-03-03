@@ -1,0 +1,52 @@
+{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+
+<h1>Data import Administration</h1>
+<hr />
+{
+	if($data_import_msg) {"<b><span style=\"color: #660000;\">$message</span></b>"}
+	else {
+		$html;
+		$html .= qq|<form method="POST" action="$config{admin_dir}data_import.cgi" name="frm" enctype="multipart/form-data" onsubmit="return check_form()">
+
+		<table width="700px" cellspacing="2" cellpadding="6" border="0">
+			<tr><td class="maintext-b">Select profile :</td>
+				<td><select name="profile" class="maintext-n">|;
+
+			foreach( keys %profile_hash) {
+				$html .= qq|<option value="$profile_hash{$_}">$_</option>|;
+			}
+			$html .= qq|	</select>
+			
+				<td><a href=\"javascript: myLightWindow.activateWindow(\{href: '$cgi_dir/create_import_profile.cgi?Submit=View Profile', type: 'external', title    : 'View Profile',width:780,height:700\});\">View Profile</a></td>
+
+				</td></tr>
+			<tr>
+				<td class="maintext-b">Data File :</td>
+				<td><input class="maintext-b" type="file" name="data_file" />
+				</td>
+			</tr>
+		   </table>
+			
+			        <table width="700px" cellspacing="2" cellpadding="6" border="0">
+                    <tr><td class="maintext-b" width="180px"></td>
+				<td> <input class="maintext-b" type="submit" name="submit" value="Import Data" /></td></tr>
+                        </table>
+		</form><script type="text/javascript">
+			function check_form() {
+				var str = document.frm.data_file.value;
+				if(str == ''){
+					alert('Please upload a data file to import the data.');
+					return false;
+				}
+				if(str.lastIndexOf(".csv") == -1 && str.lastIndexOf(".xls") == -1 && str.lastIndexOf(".xlsx") == -1) {
+				   alert("Please upload only .csv or .xls or .xlsx extention file");
+				   return false;
+				}
+			}
+		</script>|;
+		$html;
+	}	
+}
+<hr>
+
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

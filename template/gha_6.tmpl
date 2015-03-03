@@ -1,0 +1,98 @@
+{
+# this part fills in a file that sets language variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}assessment_language.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}gha_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}gha_links.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE => __PACKAGE__ );
+}       <!-- Template: gha_6.tmpl -->
+	<!-- Templates called: gha_variables.tmpl, gha_links.tmpl, {$footer_file}, {$config{variables_template}},  {$header_file} -->
+<!-- ass-top-img section start here-->
+<div id="ass-top-img" class="steptxt">
+<p class="pad26">{$gha_title}</p>
+</div>
+<!-- ass-top-img section end here-->
+
+<div id="ass-bg" class="content">
+<p class="pad27">
+{$lang{$current_language}{gha_intro}} 
+</p>
+</div> 
+
+<!-- risk-top-img section start here-->
+<div id="risk-top-img" class="steptxt">
+
+<p class="pad26">{$gha_subtitle} {$continued}</p>
+</div>
+<!-- risk-top-img section end here-->
+
+
+<p><img src="images/ass_06.jpg" alt="" /></p> 
+
+<br/>
+<div id="risk-bg">
+<table width="967" cellspacing="0" style="margin-left: 30px">
+
+  <tr>
+  <td style="padding-top: 8px; padding-bottom: 10px; padding-right: 70px;" class="content">
+<form method="post" action="{$pager}">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td colspan="2" >
+                 <p><b>{$date} {$lang{$current_language}{for}} {$name}</b></p><br>
+                </td>
+              </tr>
+              <tr>
+          	<td class="HSassessmentsGap"></td>
+              </tr>
+             <tr>
+                <td colspan="2" >
+                  <span><b>{$lang{$current_language}{risk_assessment}}</b></span><br>
+					  {if ($pap_message){ qq|<p >$pap_message</P>|;}}<br>	
+					  {if ($alcohol_message){ qq|<p >$alcohol_message</P>|;}}<br>
+					  {if ($anxiety_message){ qq|<p >$anxiety_message</P>|;}}<br>
+					  {if ($mood_message){ qq|<p >$mood_message</P>|;}}<br>
+					  {if ($nutrition_message){ qq|<p >$nutrition_message</P>|;}}<br>
+					  {if ($fiber_message){ qq|<p >$fiber_message</P>|;}}<br>
+					  {if ($fat_message){ qq|<p >$fat_message</P>|;}}<br>
+			   		  {if ($helmet_message){ qq|<p >$helmet_message</P>|;}}<br>
+			   		  {if ($loss_message){ qq|<p >$loss_message</P>|;}}<br>
+			   		  {if ($diabetes_message){ qq|<p >$diabetes_message</P>|;}}<br>		   			  
+		   			   {if ($hga1c_message){ qq|<p >$hga1c_message</P>|;}}<br>
+		   			   {if ($liver_message){ qq|<p >$liver_message</P>|;}}<br>
+		   			   {if ($pulse_rate_60_seconds){ qq|<p >$pulse_message</P>|;}}
+		   			   <p>&nbsp;</p>
+		</td>
+              </tr>
+               <tr>
+				<td width=200>
+				<input type="image" border=0 name="gha_5.tmpl" value="gha_5.tmpl" src="images/global/back.jpg"></td>
+				<td width=767 style="padding-top: 8px; padding-bottom: 10px; text-align:right">
+				<input type="image" border=0 name="gha_7.tmpl" value="gha_7.tmpl" src="images/global/next.jpg">{ $hidden_cgi_fields }
+				<input type="hidden" name="language" value="$hidden_language">
+				</td>
+				<td>&nbsp;</td>
+            </tr>
+            </table></form>
+  
+
+  
+  
+</td>
+</tr>
+             
+</table>
+</div>
+    <!-- Template: gha_6.tmpl End -->
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$footer_file", PACKAGE => __PACKAGE__ );
+}

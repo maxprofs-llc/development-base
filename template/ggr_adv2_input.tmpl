@@ -1,0 +1,301 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{Text::Template::fill_in_file("$config{template_directory}admin_header_ggr.tmpl", PACKAGE => __PACKAGE__ );}
+{my $html = qq|<script type="text/javascript">
+var cal1 = new CalendarPopup("cal_div");
+cal1.setReturnFunction("setMultipleValues1");
+function setMultipleValues1(y,m,d) {
+	 document.forms[0].s_year.value=y;
+	 document.forms[0].s_month.value=LZ(m);
+	 document.forms[0].s_day.value=LZ(d);
+}
+var cal2 = new CalendarPopup("cal_div");
+cal2.setReturnFunction("setMultipleValues2");
+function setMultipleValues2(y,m,d) {
+	 document.forms[0].e_year.value=y;
+	 document.forms[0].e_month.value=LZ(m);
+	 document.forms[0].e_day.value=LZ(d);
+}
+var cal3 = new CalendarPopup("cal_div");
+cal3.setReturnFunction("setMultipleValues3");
+function setMultipleValues3(y,m,d) {
+	 document.forms[0].s_year1.value=y;
+	 document.forms[0].s_month1.value=LZ(m);
+	 document.forms[0].s_day1.value=LZ(d);
+}
+var cal4 = new CalendarPopup("cal_div");
+cal4.setReturnFunction("setMultipleValues4");
+function setMultipleValues4(y,m,d) {
+	 document.forms[0].e_year1.value=y;
+	 document.forms[0].e_month1.value=LZ(m);
+	 document.forms[0].e_day1.value=LZ(d);
+}
+</script>|;
+$html}
+	<form method="POST" action="{$ggr_adv}" name=frm>{$hidden_values}
+<table width="770" border="0" cellspacing="0" cellpadding="0">
+
+	  <tr align="center">
+	    <td height="40" colspan="2" class="pageheading">Report Setup</td>
+      </tr>
+            { my $saved_report='';my $show_this=0;
+		  foreach my $report(sort keys %saved_reports_list){
+				$show_this=1;
+				$saved_report .= '<option value="' . $report . '">' . $saved_reports_list{"$report"} . '</option>';
+				}
+		if($show_this){
+            $saved_report = qq|	  <tr>
+		<td width="202" valign="top" class="maintext-b">Process a Saved Report:</td>
+			<td width="568" class="maintext-n"><select name="use_saved" size="1" class="maintext-n" onChange="hideSelections()">
+              <option value="0">List of saved or predefined reports</option>
+              $saved_report
+            </select><br><input name="Submit" type="submit" class="maintext-b" value="process"><br><hr><strong>If you are processing a saved report, all the information below is disregarded.</strong><br><hr></td>
+		</tr>|;}
+              $saved_report;
+              }
+		</table>
+<table width="770" border="0" cellspacing="0" cellpadding="0" ID="selections">
+		<tr>
+			<td valign="top" class="maintext-b">Create a new report<br>What type of report?</td>
+			<td class="maintext-n"><table width="320" border="0" cellpadding="1" cellspacing="0">
+  <tr>
+    <td width="23">{ if($ggr_no_accounting){'<input name="rpt_type" type="radio" class="maintext-n" value="accounting" onClick="disable_radio3()"></td><td width="86" class="maintext-n">Accounting report</td>'}else{'</td><td></td>'}}
+    <td width="23"><input name="rpt_type" type="radio" class="maintext-n" value="agrgt_data" onClick="disable_radio1()"></td>
+    <td width="86" class="maintext-n">Aggregate report</td>
+    <td width="20">{ if($ggr_hipaa){'</td><td></td>'}else{'<input name="rpt_type" type="radio" class="maintext-n" value="indv_data" onClick="disable_radio2()"></td>
+    <td width="83" class="maintext-n">Individual data </td>'}}
+    <td width="20">{ if($ggr_no_participation){'</td><td></td>'}else{'<input name="rpt_type" type="radio" class="maintext-n" value="participation" onClick="disable_radio4()"></td>
+    <td width="83" class="maintext-n">Participation report </td>'}}
+  </tr>
+</table></td>
+		</tr>
+		    <tr>
+		      <td class="maintext-n" colspan=2><hr></td>
+		    </tr>
+		<tr>
+		  <td valign="top" class="maintext-b">How do you want the report output?</td>
+		  <td class="maintext-n">
+		  <table width="526" border="0" cellspacing="0" cellpadding="0">
+		    <tr>
+		      <td width="22"><input type="radio" value="PDF" checked name="rpt_format"></td>
+		      <td width="504" class="maintext-n">PDF (only for aggregate report and individual data)</td>
+		    </tr>
+		    <tr>
+		      <td><input type="radio" name="rpt_format" value="XLS" disabled=true></td>
+		      <td class="maintext-n">Spreadsheet (xls file)</td>
+		    </tr>
+		    <tr>
+		      <td><input type="radio" name="rpt_format" value="XML"></td>
+		      <td class="maintext-n">XML data</td>
+		    </tr>
+		    <tr>
+		      <td><input type="radio" name="rpt_format" value="CSV" disabled=true></td>
+		      <td class="maintext-n">CSV data</td>
+		    </tr>
+		  </table></td>
+	   	</tr>
+		    <tr>
+		      <td class="maintext-n" colspan=2><hr></td>
+		    </tr>
+		<tr>
+		  <td valign="top" class="maintext-b">Choose a date range</td>
+		  <td class="maintext-n">
+		  <table width="526" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td colspan="2" valign="top">
+              <table width="70%"  border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td width="6%" class="maintext-n"><input type="radio" name="date" value="date_range"></td>
+                    <td width="37%" class="maintext-n">Pre-selected Period</td>
+                    <td width="57%"><select name="date_range" size="1" class="maintext-n" onChange="select_dates()">
+                      <option selected="selected" value="">All dates</option>
+                      <option value="yesterday">Yesterday</option>
+                      <option value="this_week">This week</option>
+                      <option value="last_week">Last week</option>
+                      <option value="this_month">This month</option>
+                      <option value="last_month">Last month</option>
+                      <option value="this_quarter">This quarter</option>
+                      <option value="last_quarter">Last quarter</option>
+                      <option value="this_year">This year</option>
+                      <option value="last_year">Last year</option>
+                    </select></td>
+                  </tr>
+                </table><br>&nbsp;</td>
+            </tr>
+            <tr>
+              <td colspan="2" valign="top"><table width="85%" border="0" cellpadding="1" cellspacing="0">
+                <tr>
+                  <td width="6%" class="maintext-n"><input type="radio" name="date" value="specific"></td>
+                  <td width="37%" class="maintext-n">Exact Period</td>
+                  <td width="6%" class="maintext-n"><input name="s_month" type="text" class="maintext-n" size="4" onchange="setDateBox()"></td>
+                  <td width="6%" class="maintext-n"><input name="s_day" type="text" class="maintext-n" size="4" onchange="setDateBox()"></td>
+                  <td width="10%" class="maintext-n"><input name="s_year" type="text" class="maintext-n" size="7" onchange="setDateBox()"></td>
+                  <td width="2%" class="maintext-n"><a id="anchor1" name="anchor1" onclick="cal1.showCalendar('anchor1'); return false;" href="#"><img border="0" align="baseline" title="Calendar" src="images/global/calendar.jpg"/></a></td>
+				  <td width="6%" class="maintext-n">through</td>
+                  <td width="6%" class="maintext-n"><input name="e_month" type="text" class="maintext-n" size="4" onchange="setDateBox()"></td>
+                  <td width="6%" class="maintext-n"><input name="e_day" type="text" class="maintext-n" size="4" onchange="setDateBox()"></td>
+                  <td width="10%" class="maintext-n"><input name="e_year" type="text" class="maintext-n" size="7" onchange="setDateBox()"></td>
+				  <td width="2%" class="maintext-n"><a id="anchor2" name="anchor2" onclick="cal2.showCalendar('anchor2'); return false;" href="#"><img border="0" align="baseline" title="Calendar" src="images/global/calendar.jpg"/></a></td>
+                </tr>
+                <tr>
+                  <td class="maintext-n">&nbsp;</td>
+                  <td class="maintext-n">&nbsp;</td>
+                  <td class="maintext-n">MM</td>
+                  <td class="maintext-n">DD</td>
+                  <td class="maintext-n">YYYY</td>
+                  <td class="maintext-n">&nbsp;</td>
+				  <td class="maintext-n">&nbsp;</td>
+                  <td class="maintext-n">MM</td>
+                  <td class="maintext-n">DD</td>
+                  <td class="maintext-n">YYYY</td>
+				  <td class="maintext-n">&nbsp;</td>
+                </tr>
+                            </table><br>&nbsp;</td>
+            </tr>
+            <tr>
+              <td colspan="2" valign="top"><table width="85%" border="0" cellpadding="1" cellspacing="0">
+                <tr>
+                  <td width="6%" class="maintext-n"><input type="radio" name="date" value="specific1"></td>
+                  <td width="39%" class="maintext-n">Specific Begining date through Today</td>
+                  <td width="6%" class="maintext-n"><input name="s_month1" type="text" class="maintext-n" size="4" onchange="setDateBox1()"></td>
+                  <td width="6%" class="maintext-n"><input name="s_day1" type="text" class="maintext-n" size="4" onchange="setDateBox1()"></td>
+                  <td width="10%" class="maintext-n"><input name="s_year1" type="text" class="maintext-n" size="7" onchange="setDateBox1()"></td>
+				  <td width="2%" class="maintext-n"><a id="anchor3" name="anchor3" onclick="cal3.showCalendar('anchor3'); return false;" href="#"><img border="0" align="baseline" title="Calendar" src="images/global/calendar.jpg"/></a></td>                  
+                </tr>
+                <tr>
+                  <td class="maintext-n">&nbsp;</td>
+                  <td class="maintext-n">&nbsp;</td>
+                  <td class="maintext-n">MM</td>
+                  <td class="maintext-n">DD</td>
+                  <td class="maintext-n">YYYY</td>  
+				  <td class="maintext-n">&nbsp;</td>
+                </tr>
+                            </table><br>&nbsp;</td>
+            </tr>
+            <tr>
+              <td colspan="2" valign="top"><table width="85%" border="0" cellpadding="1" cellspacing="0">
+                <tr>
+                  <td width="6%" class="maintext-n"><input type="radio" name="date" value="specific2"></td>
+                  <td width="39%" class="maintext-n">All Records up to a Specific End Date</td>               
+                  <td width="6%" class="maintext-n"><input name="e_month1" type="text" class="maintext-n" size="4" onchange="setDateBox2()"></td>
+                  <td width="6%" class="maintext-n"><input name="e_day1" type="text" class="maintext-n" size="4" onchange="setDateBox2()"></td>
+                  <td width="10%" class="maintext-n"><input name="e_year1" type="text" class="maintext-n" size="7" onchange="setDateBox2()"></td>
+				  <td width="2%" class="maintext-n"><a id="anchor4" name="anchor4" onclick="cal4.showCalendar('anchor4'); return false;" href="#"><img border="0" align="baseline" title="Calendar" src="images/global/calendar.jpg"/></a></td>
+                 </tr>
+                <tr>
+                  <td class="maintext-n">&nbsp;</td>
+                  <td class="maintext-n">&nbsp;</td>
+                  <td class="maintext-n">MM</td>
+                  <td class="maintext-n">DD</td>
+                  <td class="maintext-n">YYYY</td>                 
+                  <td class="maintext-n">&nbsp;</td>
+                </tr>
+          </table></td>
+	  </tr>
+	  	    <tr>
+		      <td class="maintext-n" colspan=2><hr></td>
+		    </tr>
+		</table></td>
+	   	</tr>
+
+		<tr>
+		  <td class="maintext-n">&nbsp;</td>
+		  <td class="maintext-n">&nbsp;</td>
+	  </tr>
+	</table>
+	<table width="770" border="0" cellspacing="0" cellpadding="0" id=accounting>
+
+		<tr>
+		  <td class="maintext-b" colspan=2>The remaining selection fields apply to Aggregate, Individual and Participation reports only.</td>
+	  </tr>
+		<tr>
+		  <td class="maintext-n">&nbsp;</td>
+		  <td class="maintext-n">&nbsp;</td>
+	  </tr>
+		<tr>
+		  <td valign="top" class="maintext-b">For which assessments</td>
+		  <td valign="middle" class="maintext-n"><table width="50%"  border="0" cellspacing="0" cellpadding="1">
+            { my $assessment_check;
+            if(!$useFolder){            
+		    $assessment_check='            <tr>
+		      <td width="7%"><input type="checkbox" name="all_assessment" value="ALL"></td>
+		      <td width="93%" height="25" class="maintext-n">All assessments</td>
+		    </tr>';
+		      my %aa = %assessments_allowed;
+		      foreach (sort keys %assessments_allowed){
+				$assessment_check .= '<tr><td><input type="checkbox" name="assessment_list" value="' . $_ . '" onClick="all_assessment_check()"></td><td class="maintext-n">' . $assessments_allowed{$_} . '</td></tr>';
+				}
+		}
+		else	{
+			$assessment_check='<tr><td>'."\n" .'<ul id="assessment_list_menu" class="mcdropdown_menu">'."\n" .'<li rel="ALL">'."\n" .'All assessments'."\n<ul>\n";
+		      my %aa = %assessments_allowed;
+		      foreach (sort keys %assessments_allowed){
+				$assessment_check .= '<li rel="' . $_ . '">'."\n" . $assessments_allowed{$_} ."\n</li>\n";
+				}
+			$assessment_check .= "</ul>\n</li>\n</ul>\n".'<input type="text" name="assessment_list" id="assessment_list" value="" /></td></tr>'
+		}
+              $assessment_check;
+              }
+          </table></td>
+	  </tr>
+		    <tr>
+		      <td class="maintext-n" colspan=2><hr></td>
+		    </tr>
+		<tr>
+		  <td class="maintext-n">&nbsp;</td>
+		  <td class="maintext-n">&nbsp;</td>
+	  </tr>
+		<tr>
+		  <td valign="top" class="maintext-b">User properties</td>
+		  <td class="maintext-n"><table width="85%"  border="0" cellspacing="0" cellpadding="1">
+
+{	my $html_output = qq|<tr><td colspan=2 class="maintext-b">Process users from:;</td></tr>|;
+	foreach my $keys (%ggr_global_group_lists) {
+	        next if ($keys =~ /HASH/);
+		$html_output .= qq|
+            <tr>
+              <td width="18%" class="maintext-n">$ggr_global_group_lists{$keys}{human} : </td>\n
+              <td width="30%" class="maintext-n"><select name="${keys}_selection" size="1" class="maintext-n">|;
+		$html_output .= $ggr_global_group_lists{$keys}{select_string};
+		$html_output .= qq|</select></td></tr>\n\n|;
+            }
+	$html_output;
+}
+          </table></td>
+	  </tr>
+		    <tr>
+		      <td class="maintext-n" colspan=2><hr></td>
+		    </tr>
+		<tr>
+		  <td class="maintext-n">&nbsp;</td>
+		  <td class="maintext-n">&nbsp;</td>
+	  </tr>
+		<tr>
+		  <td valign="top" class="maintext-b">User records</td>
+		  <td class="maintext-n">Use <select size="1" name="records">
+            <option value="all">All</option>
+            <option value="recent" selected>Most Recent</option>
+            <option value="oldest">Oldest</option>
+          </select>
+record(s) for each user and assessment.</td>
+	  </tr>
+		    <tr>
+		      <td class="maintext-n" colspan=2><hr></td>
+		    </tr>
+		<tr>
+		  <td class="maintext-n">&nbsp;</td>
+		  <td class="maintext-n">&nbsp;</td>
+	  </tr>
+	  </table>
+<table width="770" border="0" cellspacing="0" cellpadding="0">
+
+		<tr>
+		  <td class="maintext-n">&nbsp;</td>
+		  <td class="maintext-n"><input name="Submit" type="submit" class="maintext-b" value="Next step"></td>
+	  </tr>
+	<input type=hidden name=max_records value=all>
+	
+          </table></form>
+	<DIV ID="cal_div" STYLE="position:absolute;visibility:hidden;background-color:white;layer-background-color:white;"></DIV>
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

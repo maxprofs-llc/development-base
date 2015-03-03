@@ -1,0 +1,151 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( $config{template_directory} . $config{variables_template}, PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( $config{template_directory} . $header_file, PACKAGE => __PACKAGE__ );
+}   <div class="HSstyle">
+	<table width="560" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="12">&nbsp;</td>
+           <td width="12"><img src="images/global/trans.gif" width="12" height="1"></td>
+           <td class="HSbodytext"><img src="images/global/trans.gif" width="1" height="22"><br>
+            <img src="images/global/hs_logo_77.jpg" ><br>&nbsp;<br>
+            <span class="HStitle">{$pt_title}</span><br>
+            <img src="images/global/trans.gif" width="1" height="8"><br>
+                        <p class="HSintro">The Personal Tracker Program is not a substitute for a check-up or physical exam that you get from a doctor or a nurse.&nbsp; It only gives you
+        		a tracking over time of your personal physical measurements.<br>
+            &nbsp;<br>
+            {$pt_subtitle_in}<br>
+            &nbsp;<br>
+            <img src="images/global/trans.gif" width="1" height="10"></td>
+        </tr>
+        <tr>
+        <table width="560" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td align="center" valign="top">
+    	  <td><form name="form1" method="post" action="{$config{ptracker_url}}" onSubmit="return validateThis2()">
+		  <table width="500" border="0" align="center" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td colspan="3" bgcolor="#3399CC"><img src="images/global/spacer.gif" width="1" height="1"></td>
+			  </tr>
+			<tr>
+			  <td width="1" bgcolor="#3399CC"><img src="images/global/spacer.gif" width="1" height="1"></td>
+			  <td><table width="498" border="0" cellspacing="0" cellpadding="2">
+				<tr>
+				  <td colspan="3" class="HSbodytext">&nbsp;</td>
+				  </tr>
+				<tr>
+				  <td width="220" align="right" class="HSbodytext">Weight :</td>
+				  <td width="13">&nbsp;</td>
+				  <td width="253" class="HSbodytext">{$weight}</td>
+				</tr>
+				<tr>
+				  <td align="right" class="HSbodytext">Waist measurement: </td>
+				  <td>&nbsp;</td>
+				  <td class="HSbodytext">{$waist}</td>
+				</tr>
+				<tr>
+				  <td align="right" class="HSbodytext">Hip measurement: </td>
+				  <td>&nbsp;</td>
+				  <td class="HSbodytext">{$hip}</td>
+				</tr>
+				<tr>
+				  <td align="right" class="HSbodytext">Neck measurement: </td>
+				  <td>&nbsp;</td>
+				  <td class="HSbodytext">{$neck}</td>
+				</tr>
+				<tr>
+				  <td align="right" class="HSbodytext">Systolic blood pressure :</td>
+				  <td>&nbsp;</td>
+				  <td class="HSbodytext">{$bp_sys}</td>
+				</tr>
+				<tr>
+				  <td align="right" class="HSbodytext">Diastolic blood pressure  :</td>
+				  <td>&nbsp;</td>
+				  <td class="HSbodytext" >{$bp_dias}</td>
+				</tr>
+				<tr>
+				  <td align="right" class="HSbodytext">Total cholesterol  :</td>
+				  <td>&nbsp;</td>
+				  <td class="HSbodytext">{$cholesterol}</td>
+				</tr>
+				<tr>
+				  <td align="right" class="HSbodytext">HDL cholesterol  :</td>
+				  <td>&nbsp;</td>
+				  <td class="HSbodytext">{$hdl}</td>
+				</tr>
+				<tr>
+				  <td height="8" colspan="3"><img src="images/global/spacer.gif" width="1" height="1"></td>
+				  </tr>
+				
+			  </table></td>
+			  <td width="1" bgcolor="#3399CC"><img src="images/global/spacer.gif" width="1" height="1"></td>
+			</tr>
+			<tr>
+			  <td colspan="3" bgcolor="#3399CC"><img src="images/global/spacer.gif" width="1" height="1"></td>
+			  </tr>
+		  </table>
+        </tr>
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td align="center" valign="top">
+          
+    	  <td><form name="form1" method="post" action="{$config{ptracker_url}.'?hs_ident='.$db_number}" onSubmit="return validateThis2()">
+		  <table width="500" border="0" align="center" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td colspan="3" bgcolor="#3399CC"><img src="images/global/spacer.gif" width="1" height="1"></td>
+			</tr>
+                        
+			<tr>
+			  <td width="1" bgcolor="#3399CC"><img src="images/global/spacer.gif" width="1" height="1"></td>
+			  <td><table width="498" border="0" cellspacing="0" cellpadding="2">
+                          <tr align="center">
+					<td height="24"  colspan="2"><span class="HSbodytext1"><center>Select the range of month</center> </span></td>
+				  </tr>
+				  <tr align="center">
+					<td height="24"  class="HSbodytext" colspan="2"><strong>Reports</strong></td>
+				  </tr>
+				  <tr>
+					<td height="28" align="right" class="HSbodytext">Choose a graph :</td>
+					<td class="HSbodytext"><select name="graph_type" class="HSbodytext">
+					  <option selected>Select a graph</option>
+					  <option value=30>1 Month</option>
+					  <option value=90>3 Months</option>
+					  <option value=180>6 Months</option>
+					  <option value=365>1 Year</option>
+					  <option value=1825>5 Year</option>
+					</select></td>
+				  </tr>
+				  <tr>
+					<td height="8" colspan="2"><img src="images/global/spacer.gif" width="1" height="1"></td>
+				  </tr>
+				  <tr>
+					<td>&nbsp;</td>
+					
+					<td><input name="pt_report_submit" type="submit" class="textmain" id="submit2" value="Submit"></td>
+				  </tr>
+				  <tr>
+					<td colspan="3" class="HSbodytext">&nbsp;</td>
+				  </tr>
+			  </table></td>
+			  <td width="1" bgcolor="#3399CC"><img src="images/global/spacer.gif" width="1" height="1"></td>
+			</tr>
+			<tr>
+			  <td colspan="3" bgcolor="#3399CC"><img src="images/global/spacer.gif" width="1" height="1"></td>
+			</tr>
+                           <tr>
+            <td colspan="3"><span class="HSbodytext1"><center><a href={$member}>Assessment Records Page</a></center> </span>
+            <img src="images/global/trans.gif" width="1" height="10"></td>
+        </tr>
+                  <input name="action" type="hidden" value="pt_review">
+		  </table></form>
+		
+		</div>
+     {$copyright}<p>&nbsp;</p>
+ {
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file( $config{template_directory} . $footer_file, PACKAGE => __PACKAGE__ );
+}
+

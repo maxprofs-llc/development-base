@@ -1,0 +1,590 @@
+{ 
+Text::Template::fill_in_file($directory."calc_language.tmpl", PACKAGE => __PACKAGE__ ) or die $Text::Template::ERROR;
+}
+{ # set the values we will use below
+
+use vars qw( $title $base $form_title $basics $details $back $styles $trans $hs_java
+             $submit $popup $menu_img $qmark $cal_input_body $menu_body $menu
+             $back_link $hiddens $calc $tip $image_root $faq $client $current_language $height_displays );
+			 
+use constant CM_TO_INS   => 0.3937;
+use constant INS_TO_CM   => 2.54;
+use constant INS_TO_M    => 0.0254;
+
+$calc = $calculator;
+
+my $snum_link;
+if ($snum){
+	$snum_link = '&snum=' . $snum;}
+else	{
+	$snum_link = '';}
+
+#links to the other calculators
+$menu = $link_dir . $cgi . "calc.cgi?calc=men" . $snum_link;
+$menu = $menu_page if ($menu_page gt '');
+
+my $link = $link_dir . $cgi;
+
+my $link = $link_dir . $cgi;
+$back_link = $link_dir . $cgi . 'reload.cgi';
+my $link_bfc = $cgi . 'calc.cgi?calc=bfc&snum=' . $snum;
+my $link_whr = $cgi . 'calc.cgi?calc=whr&snum=' . $snum;
+
+$styles = $html . 'styles/' .$css;
+$hs_java = $html . 'styles/' .$java;
+
+if (!$faq) { $faq = $html . 'calcquest.html'}
+
+$image_root = $html . 'images/calc/';
+
+$trans = 'src=' . $image_root . 'trans.gif';
+$submit = 'src=' . $image_root . 'calculate.gif';
+$back = 'src=' . $image_root . 'back.gif';
+$menu_img = 'src=' . $image_root . 'menu.gif';
+$qmark = 'src=' . $image_root . 'qmark.gif';
+
+$popup = "";
+
+$hiddens = qq|<input type="hidden" name="measure" value="$measure" /><input type="hidden" name="calc" value="$calculator" /><input type="hidden" name="snum" value="$snum" />|;
+
+
+my ( $wt_units, $feet, $inches, $height_display, $ln_units );
+	
+if ( $metric )
+	{ 
+	if($height == 0){$height = $mheight} 
+	$wt_units = 'kilograms' if $current_language eq 'english';
+	$wt_units = 'Kilogram'  if $current_language eq 'turkey';
+	my $dheight = sprintf "%.2f",$height * INS_TO_M;
+	$height_display = qq|$dheight meters| if $current_language eq 'english';
+	$height_display = qq|$dheight metre| if $current_language eq 'turkey';
+	$ln_units = 'centimeters' if $current_language eq 'english';
+	$ln_units = $lang{$current_language}{centimeters} if $current_language eq 'turkey';
+	}
+else
+	{ 
+	$wt_units = 'pounds';
+	$ln_units = 'inches';
+	$feet = int($height/12);
+	$inches = $height%12;
+	$height_display = qq|$feet' $inches"|;
+	}
+
+
+########Calculator Specific Sections
+
+$tip = qq|<a href="$menu">Click here</a> for a complete list of calculators.|;
+
+######### blood alcohol concentration estimator ####
+if ( $calculator eq 'bac' )
+	{
+
+$form_title = $lang{$current_language}{bac_output_title};
+
+$basics = $lang{$current_language}{DO_NOT_DRINK_DRIVE};
+$basics =~ s/WEIGHT_UNITS/$wt_units/g;
+$details = $lang{$current_language}{people_may_experience_mild};
+
+$hiddens .= qq|<input type="hidden" name="type" value="$type" /><input type="hidden" name="weight" value="$weight" /><input type="hidden" name="sex" value="$sex" /><input type="hidden" name="number" value="$number" /><input type="hidden" name="time" value="$time" />|;
+
+	}
+######### END OF blood alcohol #####################
+
+######### body fat percentage #########################
+if ( $calculator eq 'bfc' || $calc eq 'bfn' || $calc eq 'bfb' )
+	{
+
+$form_title = $lang{$current_language}{bfb_output_title};
+
+if ( $calculator eq 'bfc' ){
+$basics = <<"HERE";
+According to your measurements of a $abd2 $ln_units waist and weight
+of $weight $wt_units your body fat percentage is estimated to be
+<strong>$preferred_body_fat %</strong>.  This method is not as
+accurate as a water displacement test, but is usually within 1-3%.
+Some people with an especially small waist may have a negative
+number.  If you carry all your extra weight around your middle you
+may have an elevated percentage.  Please note that this middle weight
+is a high risk factor for heart disease and stroke.  The
+<a href="$link_whr">waist to hip ratio calculator</a> can
+give you more information.
+HERE
+}
+elsif ( $calculator eq 'bfn' ){
+$basics = <<"HERE";
+According to your measurements of a $abd2 $ln_units waist, $abd1 $ln_units at naval,  $hip $ln_units at your hips, and neck circumference that is $neck $ln_units
+your body fat percentage is estimated to be
+<strong>$navy_body_fat %</strong>.  This method is not as
+accurate as a water displacement test, but is usually within 1-3%.
+Some people with an especially small waist may have a negative
+number.  If you carry all your extra weight around your middle you
+may have an elevated percentage.  Please note that this middle weight
+is a high risk factor for heart disease and stroke.  The
+<a href="$link_whr">waist to hip ratio calculator</a> can
+give you more information.
+HERE
+}
+elsif ( $calculator eq 'bfb' ){
+$basics = $lang{$current_language}{Using_your_measurements};
+$basics =~ s/WEIGHT_UNITS/$wt_units/g;
+$basics =~ s/LENGTH_UNITS/$ln_units/g;
+}
+
+if ( $sex eq 'Male' )
+		{
+		$details = $lang{$current_language}{Men_are_typically_lower};
+		}
+else
+		{
+		$details = $lang{$current_language}{Average_for_US_females};
+		}
+$hiddens .= qq|<input type="hidden" name="weight" value="$weight" /><input type="hidden" name="sex" value="$sex" /><input type="hidden" name="height" value="$height_display" /><input type="hidden" name="abd1" value="$abd1" /><input type="hidden" name="abd2" value="$abd2" /><input type="hidden" name="hip" value="$hip" /><input type="hidden" name="neck" value="$neck" />|;
+
+
+	}
+######### END OF body fat section #########################
+
+######### body mass index (BMI) ###########################
+if ( $calculator eq 'bmi' )
+	{
+
+$form_title = $lang{$current_language}{bmi_output_title};
+
+$basics = $lang{$current_language}{According_your_height};
+$basics =~ s/HEIGHT_DISPLAY/$height_display/g;
+$basics =~ s/WEIGHT_UNITS/$wt_units/g;
+$details = $lang{$current_language}{If_you_are_an_athlete};
+$details =~ s/LINK_BFC/$link_bfc/g;
+
+$hiddens .= qq|<input type="hidden" name="weight" value="$weight" /><input type="hidden" name="height" value="$height_display" />|;
+
+	}
+######### END OF body mass index ##########################
+
+######### calories burned estimation  ##########################
+if ( $calculator eq 'cbc' )
+	{
+
+$form_title = $lang{$current_language}{cbc_output_title};
+
+$basics = $lang{$current_language}{According_to_nformation};
+
+my $table_start = <<"HERE";
+<table cellpadding="2" cellspacing="0" border="1">
+<tr><td height="40" width="70%"  class="calc_celltitle" bgcolor="$cells_title">$lang{$current_language}{Activity}</td><td align="right" height="40" width="30%"  class="calc_celltitle" bgcolor="$cells_title">$lang{$current_language}{Calories_burned}</td></tr>
+HERE
+
+my $table_middle;
+my $even = 0;
+my @num_sort = sort {
+		$calories{$a} <=> $calories{$b}
+		} keys %calories;
+		
+my @final_num_sort;	
+	
+foreach my $key ( @num_sort)
+	{
+	if ( $even )
+		{
+		$even = 0;
+		$td = qq|bgcolor="$cells_even" |;
+		$td1 = qq|class="calc_celltext_even"|;
+		}
+	else
+		{
+		$even = 1;
+		$td = qq|bgcolor="$cells_odd"|;
+		$td1 = qq|class="calc_celltext_odd"|;
+		}
+	my $t1 = main::commify($calories{$key});    	
+	
+	$table_middle .= qq|<tr $td><td $td1>$key</td><td align="right" $td1>$t1</td></tr>\n|;
+	}
+
+my $table_end = <<"HERE";
+<tr><td height="40" width="70%" class="calc_celltitle" bgcolor="$cells_title">$lang{$current_language}{Total_Calories_Burned}</td><td align="right" height="40" width="30%" class="calc_celltitle" bgcolor="$cells_title">$total_calories </td></tr></table>
+HERE
+
+$table_out = "$table_start\n$table_middle\n$table_end";
+
+$hiddens .= qq|<input type="hidden" name="weight" value="$weight" />|;
+
+	}
+######### END OF calories burned estimation  ##########################
+
+######### daily energy expenditure  ##########################
+if ( $calculator eq 'dee' )
+	{
+
+$form_title = $lang{$current_language}{dee_output_title};
+
+$basics     = $lang{$current_language}{dee_According_to_your};
+$basics =~ s/HEIGHT_DISPLAY/$height_display/g;
+$basics =~ s/WEIGHT_UNITS/$wt_units/g;
+$details = <<"HERE";
+HERE
+
+$hiddens .= qq|<input type="hidden" name="weight" value="$weight" /><input type="hidden" name="sex" value="$sex" /><input type="hidden" name="height" value="$height_display" /><input type="hidden" name="age" value="$age" />|;
+
+	}
+######### END OF daily energy expenditure  ##########################
+
+######### due date calculator  ##########################
+if ( $calculator eq 'due' )
+	{
+
+$form_title = $lang{$current_language}{due_output_title};
+
+$basics = $lang{$current_language}{Congratulations};
+
+$details = <<"HERE";
+<UL><LI>$lang{$current_language}{Conception};</li>
+<LI>$lang{$current_language}{Highest_fetal_risk};</li>
+<LI>$lang{$current_language}{Organs_begin};</li>
+<LI>$lang{$current_language}{End_of_first_trimester};</LI>
+<LI>$lang{$current_language}{Baby_can_survive};</li>
+<LI>$lang{$current_language}{End_of_second_trimester};</li>
+<LI>$lang{$current_language}{DUE_DATE};</li></ul>
+<p>$lang{$current_language}{Your_next_step};</p>
+<p>$lang{$current_language}{During_prenatal_visits};</p>
+<UL><li>$lang{$current_language}{Teach_you_about};</li>
+<li>$lang{$current_language}{Check_any_medical};</li>
+<li>$lang{$current_language}{Monitor_the_baby};</li>
+<li>$lang{$current_language}{Test_you_and_baby};</li>
+<li>$lang{$current_language}{Tell_you_about_services};</li>
+</ul><p>$lang{$current_language}{typical_schedule};
+<UL>
+<li>$lang{$current_language}{Weeks_4_to_28};</li>
+<li>$lang{$current_language}{Weeks_28_to_36};</li>
+<li>$lang{$current_language}{Weeks_36_to_birth};</li></ul>
+<p>$lang{$current_language}{Congratulations_best_wishes};
+HERE
+
+$hiddens .= qq|<input type="hidden" name="month" value="$month" /><input type="hidden" name="day" value="$day" /><input type="hidden" name="year" value="$year" />|;
+	}
+######### END OF due date calculator  ##########################
+
+######### frame size calculator  ##########################
+if ( $calculator eq 'fsz' )
+	{
+
+$form_title = $lang{$current_language}{fsz_output_title};
+
+if ( $wrist )
+		{
+		$basics = $lang{$current_language}{with_wrist};
+		$basics =~ s/HEIGHT_DISPLAY/$height_display/g;
+		$basics =~ s/LENGTH_UNITS/$ln_units/g;
+		}
+else
+		{
+		$basics = $lang{$current_language}{without_wrist};
+		$basics =~ s/HEIGHT_DISPLAY/$height_display/g;
+		$basics =~ s/LENGTH_UNITS/$ln_units/g;
+		}
+
+$details = <<"HERE";
+HERE
+
+$hiddens .= qq|<input type="hidden" name="height" value="$height_display" /><input type="hidden" name="sex" value="$sex" /><input type="hidden" name="wrist" value="$wrist" /><input type="hidden" name="elbow" value="$elbow" />|;
+
+	}
+######### END OF frame size calculator  ##########################
+
+######### ideal weight calculation  ##########################
+if ( $calculator eq 'iwc' )
+	{
+
+$form_title = $lang{$current_language}{iwc_output_title};
+
+$basics = $lang{$current_language}{According_to_your_height};
+$basics =~ s/HEIGHT_DISPLAY/$height_display/g;
+$basics =~ s/WEIGHT_UNITS/$wt_units/g;
+$details = $lang{$current_language}{This_calculation};
+
+$hiddens .= qq|<input type="hidden" name="sex" value="$sex" /><input type="hidden" name="height" value="$height_display" />|;
+
+	}
+######### END OF ideal weight calculation  ##########################
+
+######### lean body mass  ##########################
+if ( $calculator eq 'lbm' )
+	{
+
+$form_title = $lang{$current_language}{lbm_output_title};
+
+if ( $sex eq 'Female')
+		{
+$basics = $lang{$current_language}{sex_female};
+$basics =~ s/HEIGHT_DISPLAY/$height_display/g;
+$basics =~ s/WEIGHT_UNITS/$wt_units/g;
+		}
+else
+		{
+$basics = $lang{$current_language}{sex_male};
+$basics =~ s/HEIGHT_DISPLAY/$height_display/g;
+$basics =~ s/WEIGHT_UNITS/$wt_units/g;
+		}
+$details = $lang{$current_language}{Your_lean_body_mass};
+
+$hiddens .= qq|<input type="hidden" name="weight" value="$weight" /><input type="hidden" name="sex" value="$sex" /><input type="hidden" name="height" value="$height_display" />|;
+
+	}
+######### END OF lean body mass  ##########################
+
+######### lose one pound  ##########################
+if ( $calculator eq 'lop' )
+	{
+
+$form_title = 'Lose One Pound';
+
+$basics = <<"HERE";
+HERE
+
+my $table_start = <<"HERE";
+<table cellpadding="2" cellspacing="0" border="1">
+<tr><td height="40" width="70%"  class="calc_celltitle" bgcolor="$cells_title">Activity</td><td align="right" height="40" width="30%"  class="calc_celltitle" bgcolor="$cells_title">Minutes to lose one pound</td></tr>
+HERE
+
+my $table_middle;
+my $even = 0;
+my @sorted = sort { $how_long{$a} <=> $how_long{$b} } keys %how_long ;
+foreach my $key ( @sorted)
+	{
+	if ( $even )
+		{
+		$even = 0;
+		$td = qq|bgcolor="$cells_even" |;
+		$td1 = qq|class="calc_celltext_even"|;
+		}
+	else
+		{
+		$even = 1;
+		$td = qq|bgcolor="$cells_odd"|;
+		$td1 = qq|class="calc_celltext_odd"|;
+		}
+	my $t1 = main::commify($how_long{$key});
+
+	$table_middle .= qq|<tr $td><td $td1>$key</td><td align="right" $td1>$t1</td></tr>\n|;
+	}
+
+my $table_end = <<"HERE";
+</table>
+HERE
+
+$table_out = "$table_start\n$table_middle\n$table_end";
+
+$hiddens .= qq|<input type="hidden" name="weight" value="$weight" /><input type="hidden" name="age" value="$age" />|;
+
+	}
+######### END OF lose one pound  ##########################
+
+######### lose one kilogram  ##########################
+if ( $calculator eq 'lok' )
+	{
+
+$form_title = $lang{$current_language}{lok_output_title};
+
+$intro = $lang{$current_language}{lok_intro};
+
+$basics = $lang{$current_language}{Below_is_a_list};
+
+my $table_start = <<"HERE";
+<table class="lop_table">
+<tr><td  class="celltitle1">$lang{$current_language}{Activity};</td><td  class="celltitle2">$lang{$current_language}{Minutes_to_lose};</td></tr>
+HERE
+
+my $table_middle;
+my $even = 0;
+my @sorted = sort { $how_long{$a} <=> $how_long{$b} } keys %how_long ;
+foreach my $key ( @sorted)
+	{
+	if ( $even )
+		{
+		$even = 0;
+		$td = qq|class="rows_odd"|;
+		$td1 = qq|class="cells_even"|;
+		$td2 = qq|class="cells_out_even"|;
+		}
+	else
+		{
+		$even = 1;
+		$td = qq|class="rows_even"|;
+		$td1 = qq|class="cells_odd"|;
+		$td2 = qq|class="cells_out_odd"|;
+		}
+	my $t1 = main::commify($how_long{$key});
+
+	$table_middle .= qq|<tr $td><td $td1>$key</td><td $td2>$t1</td></tr>\n|;
+	}
+
+my $table_end = <<"HERE";
+</table>
+HERE
+
+$table_out = "$table_start\n$table_middle\n$table_end";
+
+$hiddens .= qq|<input type="hidden" name="weight" value="$weight" /><input type="hidden" name="age" value="$age" />|;
+
+}
+######### END OF lose one kilogram  ##########################
+
+######### lose weight or calorie  ##########################
+if ( $calculator eq 'lwc' )
+	{
+
+$form_title = 'Lose weight or calorie';
+
+$basics = <<"HERE";
+HERE
+
+my $table_start = <<"HERE";
+<table cellpadding="2" cellspacing="0" border="1">
+<tr><td height="40" width="65%%"  class="calc_celltitle" bgcolor="$cells_title">Activity</td><td align="right" height="40" width="35%"  class="calc_celltitle" bgcolor="$cells_title">Minutes to lose weight or calorie</td></tr>
+HERE
+
+my $table_middle;
+my $even = 0;
+my @sorted = sort { $how_long{$a} <=> $how_long{$b} } keys %how_long ;
+foreach my $key ( @sorted)
+	{
+	if ( $even )
+		{
+		$even = 0;
+		$td = qq|bgcolor="$cells_even" |;
+		$td1 = qq|class="calc_celltext_even"|;
+		}
+	else
+		{
+		$even = 1;
+		$td = qq|bgcolor="$cells_odd"|;
+		$td1 = qq|class="calc_celltext_odd"|;
+		}
+	my $t1 = main::commify($how_long{$key});
+
+	$table_middle .= qq|<tr $td><td $td1>$key</td><td align="right" $td1>$t1</td></tr>\n|;
+	}
+
+my $table_end = <<"HERE";
+</table>
+HERE
+
+$table_out = "$table_start\n$table_middle\n$table_end";
+
+$hiddens .= qq|<input type="hidden" name="weight" value="$weight" /><input type="hidden" name="age" value="$age" />|;
+
+	}
+######### END OF lose weight or calorie  ##########################
+
+
+######### ovulation estimator  ##########################
+if ( $calculator eq 'ova' )
+	{
+
+$form_title = $lang{$current_language}{ova_output_title};
+
+$basics = $lang{$current_language}{DO_NOT_USE_THIS};
+
+$details = $lang{$current_language}{probable_date_of_ovulation};
+
+$hiddens .= qq|<input type="hidden" name="month" value="$month" /><input type="hidden" name="day" value="$day" /><input type="hidden" name="year" value="$year" /><input type="hidden" name="days_in_cycle" value="$days_in_cycle" />|;
+	}
+######### END OF ovulation estimator ##########################
+
+######### smoking costs calculator  ##########################
+if ( $calculator eq 'smc' )
+	{
+
+$form_title = $lang{$current_language}{smc_output_title};
+
+$basics = $lang{$current_language}{These_are_your_measurable};
+
+$details = <<"HERE";
+<ul><li>$lang{$current_language}{in_the_next};</li>
+<li>$lang{$current_language}{over_the_next};</li>
+<li>$lang{$current_language}{during_the_next};</li>
+</ul>
+HERE
+
+$hiddens .= qq|<input type="hidden" name="cigarettesperday" value="$cigarettesperday" /><input type="hidden" name="cigarettesperpack" value="$cigarettesperpack" /><input type="hidden" name="priceperpack" value="$priceperpack" />|;
+
+	}
+######### END OF smoking costs calculator  ##########################
+
+######### target heart rate  ##########################
+if ( $calculator eq 'thr' )
+	{
+
+$form_title = $lang{$current_language}{thr_output_title};
+
+$basics = $lang{$current_language}{thr_According_to_your_age};
+
+$table_out = <<"HERE";
+<table cellpadding="2" cellspacing="0" border="1">
+<tr><td width="50%" bgcolor="$cells_title" class="calc_celltitle">$lang{$current_language}{Fitness_Level}</td><td align="right" bgcolor="$cells_title" width="25%" class="calc_celltitle">$lang{$current_language}{beats_minute}</td><td align="right" bgcolor="$cells_title" width="25%" class="calc_celltitle">$lang{$current_language}{beats_10_seconds}</td></tr>
+<tr bgcolor="#99CC99"><td width="50%" class="calc_celltext_odd" bgcolor="$cells_odd">$lang{$current_language}{Average_fitness}</td><td align="right" bgcolor="$cells_odd" width="25%" class="calc_celltext_odd">$tmedlow - $tmedhigh</td><td align="right" bgcolor="$cells_odd" width="25%" class="calc_celltext_odd">$tseclow - $tsecmhigh</td></tr>
+<tr bgcolor="#FFFFCC"><td width="50%" class="calc_celltext_even" bgcolor="$cells_even">$lang{$current_language}{Superior_fitness}</td><td align="right" width="25%" bgcolor="$cells_even" class="calc_celltext_even">$tmed - $thigh</td><td align="right" bgcolor="$cells_even" class="calc_celltext_even">$tsecmhigh - $tsechigh</td></tr>
+</table>
+HERE
+
+$hiddens .= qq|<input type="hidden" name="age" value="$age" />|;
+
+	}
+######### END OF target heart rate  ##########################
+
+######### waist to hip ratio  ##########################
+if ( $calculator eq 'whr' )
+	{
+
+$form_title = $lang{$current_language}{whr_output_title};
+
+$basics = $lang{$current_language}{waist_to_hip_ratio};
+$basics =~ s/LENGTH_UNITS/$ln_units/g;
+
+if ( $shape eq 'pear' )
+		{
+    $details = $lang{$current_language}{reduced_risk_of_coronary};
+		}
+else
+		{
+    $details = $lang{$current_language}{increased_risk_of_coronary};
+		}
+
+$hiddens .= qq|<input type="hidden" name="waist" value="$waist" /><input type="hidden" name="sex" value="$sex" /><input type="hidden" name="hip" value="$hip" />|;
+
+	}
+######### END OF waist to hip ratio  ##########################
+
+######### END OF calculator specific sections #################
+
+$title = $form_title;
+
+######### Here we format the output, just take the pieces we built
+######### above and dump them into $calc_results,
+
+if ( $calculator eq 'cbc' ||
+	 $calculator eq 'lop' ||
+	 $calculator eq 'lwc' ||
+	 $calculator eq 'thr' )
+	{
+$calc_results = <<"HERE";
+<br />$basics<br /> <br />$table_out
+HERE
+	}
+else
+	{
+$calc_results = <<"HERE";
+<br />$basics<br /> <br />$details</p>
+HERE
+	}
+
+####### All done setting values, now we open the standard header and fill that in.
+###### DO NOT REMOVE THESE EMPTY QUOTES ###################################
+
+'';
+}{
+# this is the standard header for the calculator output. You can either
+# have an HTML page with $calc_results enclosed in braces and use the default format
+# for each calculator or you can drop in each result element yourself.
+Text::Template::fill_in_file($directory.$template_set."/hsheader.html", PACKAGE => __PACKAGE__ ) or die $Text::Template::ERROR;
+}

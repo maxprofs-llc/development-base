@@ -1,0 +1,68 @@
+<!-- Template: assessment_footer.tmpl -->
+</div>
+<!-- center-left section end here-->
+</td>
+<td valign="top" width="320" background="images/healthstatus_22.jpg">
+<!-- center-right section start here-->
+<div id="center-right">
+
+{$directions}
+
+<!-- license our tools section start here-->
+<div id="license-topimg" class="licensetxt">
+<p class="pad9">Instructions</p>
+</div>
+
+<div id="license-bg" class="rightcontent">
+<p class="pad10">  
+{my $html; 
+if($assessment){
+	$html = qq|Our assessments are user friendly and focus on the areas where you can make changes.  Acccurately complete as much information as you can, the more details we have the better our recommendations will be.|;
+	}
+elsif($assessment_recs){
+	$html = qq|This is the assessment records page.  You can select to take an assessment by clicking on the name of the assessment in the left side section.  If you have previously taken assessments, they will be listed above and you can click to review those previous results.|;
+	}
+elsif($config{show_instruction}){
+    $html = qq| $config{show_instruction_msg} |;
+}	
+else{
+	$html = qq|If this is your first visit you will need to complete the registration section.  The registration number should have been provided to you by someone in your organization.  The other information you will provide, create your own user id and password.  Please remember these as they will be needed when you access the system in the future.|;
+	} 
+$html;}
+</p>
+</div>
+<!-- license our tools section end here-->
+
+<!-- helpful links section start here-->
+<div id="helpful-bg">
+</div>
+<!-- helpful links section end here-->
+
+
+</div>
+<!-- center-right section end here-->
+</td>
+</tr>
+</table>
+</div>
+<!-- center section end here-->
+
+<!-- footer-menu section start here-->
+<div id="footer-menu" class="footer_link">
+</div>
+<!-- footer-menu section end here-->
+
+<!-- footer section start here-->
+<div id="footer" class="copyTxt">
+<p class="pad16">
+Copyright &copy; 1998-2012 HealthStatus.com, Inc., All rights reserved.
+</p>
+</div>
+<!-- footer section end here-->
+
+</div>
+<!-- main section end here-->
+<!-- Paste analytics code here -->
+
+</body>
+</html>

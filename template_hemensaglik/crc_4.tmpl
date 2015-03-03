@@ -1,0 +1,98 @@
+{
+# this part fills in a file that sets language variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}assessment_language.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$crc_variables_tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}hemensaglik_crc_links.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE => __PACKAGE__ );
+}      <!-- Template: crc_4.tmpl from dir template_hemensaglik -->
+	<!-- Templates called: crc_variables.tmpl, crc_links.tmpl, {$footer_file}, {$config{variables_template}},  {$header_file} -->
+<!-- ass-top-img section start here-->
+<div id="ass-top-img" class="steptxt">
+<p class="pad26">{$crc_title}</p>
+</div>
+<!-- ass-top-img section end here-->
+
+<div id="ass-bg" class="content">
+<p class="pad27">
+{$lang{$current_language}{crc_msg1}}
+</p>
+</div> 
+
+<!-- risk-top-img section start here-->
+<div id="risk-top-img" class="steptxt">
+
+<p class="pad26">{$crc_subtitle}{$continued}</p>
+</div>
+<!-- risk-top-img section end here-->
+<br/>
+
+<div id="risk-bg">
+<table width="967" cellspacing="0" style="margin-left: 30px">
+
+  <tr>
+  { my $html;
+            if($subdomain eq 'hemensaglik'){
+                $html = qq| <td style="padding-top: 8px; padding-bottom: 10px; padding-right: 362px;" class="content">|;
+			 }else{
+				$html = qq| <td style="padding-top: 8px; padding-bottom: 10px; padding-right: 70px;" class="content">|;
+             }
+            }
+				
+
+  <form method="post" action="{$pager}">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td colspan="2">
+                 <p>&nbsp;<br><span>{$date} {$lang{$current_language}{for}} <b>{$name}</b></span></p><br>
+                  <p><span><b>{$lang{$current_language}{summary}}</b></span><br>
+			{$crc_status}</p>
+			<p>{$crc_message}</p>
+			<p>{$stress_message}</p>
+			<p>{$loss_message}</p>
+			<p>{$factors_message}</p><br>
+			<p><span><b>{$lang{$current_language}{additional_reading}}</b></span><br>
+			{
+			join "\r",
+				map { qq|<li><a target="_blank" href="$$_[1]">$$_[0]</a>| }
+				@links;
+			}</p>
+                  <p>&nbsp; </p>
+                </td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right" colspan="2" height="30">&nbsp;</td>
+              </tr>
+			  
+			  <tr>
+				<td width=200>
+				<input type="image" border=0 name="crc_3.tmpl" value="crc_3.tmpl" src="https://hemensaglik.hra.net/images/global/back.jpg"></td>
+				<td width=767 style="padding-top: 8px; padding-bottom: 10px; text-align:right">
+				{my $html = qq|<a href="$member">$lang{$current_language}{assessment_records}</a>| unless $status eq 'retake';$html;}
+			{ $hidden_cgi_fields }
+				</td>
+				<td>&nbsp;</td>
+            </tr>
+			
+            </table>
+  
+  </form>
+  
+</td>
+</tr>
+             
+</table>
+</div>
+    <!-- Template: crc_4.tmpl End -->
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$footer_file", PACKAGE => __PACKAGE__ );
+}

@@ -1,0 +1,115 @@
+{ Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ ); }
+{
+if($create_profile) {
+		my $html;
+		$html .= qq|
+                <span style=\"color: #660000;\">$message</span>
+                <br><br> 
+		<form method=\"POST\" action=\"$config{admin_dir}create_import_profile.cgi\" name=\"frm\" >
+                <a href=\"javascript: myLightWindow.activateWindow(\{href: '$cgi_dir/create_import_profile.cgi?Submit=View Profile', type: 'external', title	: 'View Profile',width:780,height:700\});\">View Profile</a>
+	        </form>
+                |;
+		$html;
+}
+else {
+		my $html;
+		my $script;
+		my $height;
+		my $left_height= 0;
+		my $right_height= 0;
+		my $counter= 0;
+                my $count= 0;
+                my $datacount=0;
+                foreach my $key (keys %user_table_columns)
+                {
+                	foreach (@{$user_table_columns{$key}})
+                	{
+				$datacount++;
+			}
+		}
+                my $usercount = $#local_table_columns+1;
+		$html .= qq|
+		<form method="POST" action="$config{admin_dir}create_import_profile.cgi" name="frm" onsubmit="return check_form()">
+		<table><tr><td width="20px"></td><td width="300px" class="maintext-b">Database fields</td><td width="40px"></td><td width="300px" class="maintext-b">Available import fields</td></tr></table>
+		<div id="left_container" >|;
+		foreach my $key (keys %user_table_columns)
+                {
+                        my $group = scalar( @{$user_table_columns{$key}});
+                        $html .= qq|<div class="GroupBox" align="center">$key</div>| if $key;
+                        foreach (@{$user_table_columns{$key}})
+                        {
+                            
+                              next if($field_info{$_}{name} eq '');
+                              $html .= qq|<div id="$field_info{$_}{user_element}" class="MapBox" onmouseover="showhint('$field_info{$_}{description}', this, event, '150px')">$field_info{$_}{name} -></div>|;
+                        	$script .= qq|Droppables.add('$field_info{$_}{user_element}', {
+                        	accept: 'draggable',
+                        	hoverclass: 'hover',
+                                	onDrop: function(element) {
+                                        	if(element.parentNode.id != '$field_info{$_}{user_element}'){
+                                                	var content= document.getElementById(element.id).innerHTML ;
+                                                	\$('$field_info{$_}{user_element}').insert(' ' + content);
+                                                	\$('profile').value += ',' + '$table_info[$count]=$field_info{$_}{user_element}='+element.id ;
+                                                	\$('$field_info{$_}{user_element}').setStyle('background-color:#eee');
+                                        	}
+                                	}
+                        	});|;
+                        	$left_height += 24;
+                        	$count++;
+
+                        }
+                }
+		$html .= qq|</div><div id="right_container" >|;
+		foreach my $field_value  (@local_table_columns){
+			$html .= qq|<div id="$counter" class="draggable DragBox">$field_value</div>|;
+			$script .= 	qq| new Draggable('$counter', { revert: true }); |;
+			$right_height += 24;
+			$counter++;
+		}
+		$height = ($left_height > $right_height) ? $left_height : $right_height ; 
+		$html .= qq|</div>
+		<table align="left" width="100%">
+		<tr><td class="maintext-b"> </td></tr>
+		<tr><td class="maintext-b">Profile name: <input name="profile_name" type="text"  value="" class="maintext-n"> </td>
+        <td class="maintext-b">Profile description: <input name="profile_desc" type="text"  value="" class="maintext-n"> </td></tr>
+		<tr><td><input id="profile" name="profile" type="hidden"  value="" >
+		<input name="data_type" type="hidden"  value="">
+		<input name="assessment" type="hidden"  value="">
+		<input name="Submit" type="submit"  value="Create Profile" class="maintext-b"> 
+		</td></tr></table>
+		</form>
+		<script type="text/javascript" language="javascript" >
+		document.getElementById('left_container').style.minHeight = $height + 'px';
+		document.getElementById('right_container').style.minHeight = $height + 'px';
+		$script
+
+		function check_form() {
+			var str = document.frm.profile.value;
+			if(str == ''){
+				alert('Please  map the available data fields to database fields.');
+				return false;
+			}
+			if(str.match(/db_id/) == null && document.frm.data_type.value == 'demographic'){
+				alert('Please map the User Id field.');
+				return false;
+			}
+			if(str.match(/db_id/) == null && document.frm.data_type.value == 'biometric'){
+				alert('Please map the User Id field that will match with the hs_userdata record.');
+				return false;
+			}
+			if (document.frm.profile_name.value == '') {
+				alert('Please enter the profile name.');
+				document.frm.profile_name.focus();
+				return false;
+			}
+                        if (document.frm.profile_desc.value == '') {
+                                alert('Please enter the profile description.');
+                                document.frm.profile_desc.focus();
+                                return false;
+                        }
+
+		}
+		</script>|;
+		$html;
+	}
+}
+{ Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ ); }

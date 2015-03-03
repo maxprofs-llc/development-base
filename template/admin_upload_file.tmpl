@@ -1,0 +1,18 @@
+{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+
+
+<h1>Upload file to HealthStatus</h1>
+
+<p>If you need to upload an employee file or other information to HealthStatus, use this form.</p>
+
+
+<form action="https://www.healthstatus.com/cgi-bin/upload.cgi" method="post" enctype="multipart/form-data" target="_blank"> 
+     <p>File to Upload: <input type="file" name="file" size=40 /></p> 
+     <p>Your name: <input type="text" name="sender" size=40 /></p> 
+     <p>Your Email Address: <input type="text" name="email_address" size=40 /></p> 
+     <p><input type="submit" name="Submit" value="Upload File" />
+     <input type="hidden" name="client" value="{$client}"</p> 
+   </form>
+
+
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

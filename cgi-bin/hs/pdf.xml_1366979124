@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" standalone="yes" ?>
+
+
+
+<PDF PageMode="UseNone" PageLayout="SinglePage" PageSize="Letter" FindHyperlink="1" Author="HealthStatus.com, Inc.">
+<Font UNI="serif" />
+<Image Width="137" Height="105" File="/usr/local/www/vhosts/managed2/base_lang/htdocs/images/global/hs_logo_77.jpg" Name="Im0" />
+<Page Name="Pg0" Width="612" Height="792" Bookmark="Cover Letter">
+<Graph Rect="0, 0, 612, 792" Name="Gr0">
+<ShowImage Name="Im0" Left="460" Bottom="680" Width="137"  Flip="0" />
+<ShowText X="60" Y="685" Text="Your Personalized Diabetes Risk Results" FontFace="Helvetica-Bold" Color="3333cc" BorderColor="3333cc" Height="12"  />
+<ShowText X="580" Y="60" Text="Diabetes assessment" FontFace="NNN2" Color="E0E0E0" Width="350" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+</Graph>
+<Text Name="Txt0" Rect="60, 60, 552, 660" FontFace="NNN2" FontSize="10" Leading="12" FontColor="Slategray" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+
+ ^P ^p  ^P 
+  ^P ^p  ^P 
+ 
+ ^P ^p  ^P 
+ ^P ^p  ^P  ^b As of 04/26/2013 ^B  ^P ^p  ^P 
+ ^P ^p  ^P 
+ ^P ^p  ^P 
+ Dear  ^b manoj testing drc translations: ^B  ^P ^p  ^P 
+ 
+ ^P ^p  ^P 
+  ^P ^p  ^P 
+  ^P ^p  ^P 
+ ^P ^p  ^P 
+  ^P ^p  ^P 
+ ^P ^p  ^P 
+ ^P ^p  ^P 
+ manoj testing drc translations you are at RISK for having diabetes. Testing for diabetes at your age is not routine. Typically, people over 45 are tested every three years for the disease, as recommended by the American Diabetes Association. Your risk will increase as you get older, so watch for the symptoms. (Symptoms include unusual thirst, extreme fatigue, unusual weight changes, and increased urination, especially at night.) ^P ^p  ^P 
+ ^P ^p  ^P 
+ ^P ^p  ^P 
+  ^P ^p  ^P 
+ ^P ^p  ^P 
+ ^P ^p  ^P 
+  ^P ^p  ^P 
+ ^P ^p  ^P 
+ ^P ^p  ^P 
+ TeSTR_351ekkSTR_252rler, ^P ^p  ^P 
+ ^P ^p  ^P  ^P ^p  ^P 
+  ^b Language EN ^B  ^P ^p  ^P 
+ 
+ ^P ^p  ^P 
+   ^P ^p  ^P 
+ 
+
+  ]]>
+</Text>
+</Page>
+<Page Name="Pg2" Width="612" Height="792" Bookmark="Details">
+<Graph Rect="0, 0, 612, 792" Name="Gr0">
+<ShowImage Name="Im0" Left="460" Bottom="680" Width="137"  Flip="0" />
+<ShowText X="60" Y="685" Text="Your Personalized Diabetes Risk Results" FontFace="Helvetica-Bold" Color="3333cc" BorderColor="3333cc" Height="12"  />
+<ShowText X="580" Y="60" Text="Diabetes assessment" FontFace="NNN2" Color="E0E0E0" Width="350" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+</Graph>
+<Text Name="Txt0" Rect="60, 60, 552, 660" FontFace="NNN2" FontSize="10" Leading="12" FontColor="Slategray" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" ContentPadding="4mm" PaddingRight="24" ExtraParaSpacing="0">
+<![CDATA[
+^f:size=12&color=3333cc ^b Body Composition ^B ^F ^P
+
+^P
+
+Height =  ^P
+
+Weight = 80 - Ideal = 121 to 155 ^P
+
+Body Mass Index =  13 ^P
+
+Race = Other ^P
+
+Sex =  ^P
+
+
+
+^P
+
+^P
+
+^P ^f:size=12&color=3333cc ^b Weight ^B ^F ^P
+
+^P
+
+Your target: Get your weight between 121 and 155. ^P
+
+^P
+
+Your weight of 80  is under the recommended range for people 5' 6" tall. Your body mass index is  13. A healthy BMI is between 19.5 and 25. The healthy weight range for your height is 121  and  155. ^P
+
+^P
+
+^P
+
+^P
+
+^P ^f:size=12&color=3333cc ^b Exercise ^B ^F ^P
+
+^P
+
+Your target: Keep your current level of exercise. ^P
+
+^P
+
+Continue to exercise regularly, 3-5 times per week, to maintain optimal health. Ideally, take a walk or get some aerobic exercise at least 30 minutes a day. ^P
+
+^P
+
+^P
+
+^P
+
+^P ^f:size=12&color=3333cc ^b {Birth related } ^B ^F ^P
+
+^P
+
+Macrosomia (very large baby) occurs when the mother's blood sugar level is high. This allows too much sugar to go to the fetus and can cause the fetus to grow too large.  This coincides with your diagnosed gestational diabetes mellitus (GDM).  Up to 60% of women who have GDM will develop Type 2 Diabetes Mellitus within 10 years. Maintaining weight in a normal range and exercising regularly can reduce this risk. Women who have had GDM should have their blood sugar checked regularly and before they become pregnant again. ^P 
+
+^P
+
+^P
+
+^P
+
+^P ^f:size=12&color=3333cc ^b Predispositions ^B ^F ^P
+
+^P
+
+ At this time, you do not have any predispostions to having diabetes.  ^P
+
+^P
+
+^P
+  ]]>
+</Text>
+</Page>
+
+<Page Name="Pg3" Width="612" Height="792" Bookmark="Internet Resources">
+<Graph Rect="0, 0, 612, 792" Name="Gr0">
+<ShowImage Name="Im0" Left="460" Bottom="680" Width="137"  Flip="0" />
+<ShowText X="60" Y="685" Text="Your Personalized Diabetes Risk Results" FontFace="Helvetica-Bold" Color="3333cc" BorderColor="3333cc" Height="12"  />
+<ShowText X="580" Y="60" Text="Diabetes assessment" FontFace="NNN2" Color="E0E0E0" Width="350" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+</Graph>
+<Text Name="Txt0" Rect="60, 60, 552, 660" FontFace="NNN2" FontSize="10" Leading="12" FontColor="Slategray" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^P
+
+^f:size=14&color=3333cc ^b  ^B ^F ^P
+
+^p ^f:size=8&face=NNN2 ^F ^f:size=9&face=NNN2 http://www.4woman.org/ -- Ulusal Kadin SaSTR_287lSTR_305STR_287STR_305 Bilgi Merkezi ^F ^P  ^p ^f:size=8&face=NNN2 ^F ^f:size=9&face=NNN2 http://www.diabetes.org --  ^F ^P  ^p ^f:size=8&face=NNN2 ^F ^f:size=9&face=NNN2 https://lang-en.hra.net/resource/dietaryguidelines.pdf -- Beslenme KSTR_305lavuzlarSTR_305 ^F ^P  ^p ^f:size=8&face=NNN2 ^F ^f:size=9&face=NNN2 https://lang-en.hra.net/resource/Staying_healthy_adult.pdf --  ^F ^P  ^p ^f:size=8&face=NNN2 ^F ^f:size=9&face=NNN2 https://lang-en.hra.net/resource/keytohealthfulfood.pdf --  ^F ^P  
+  ]]>
+</Text>
+</Page>
+</PDF>

@@ -1,0 +1,79 @@
+{
+# This is the risk bar format, three bars in a row.
+	# set the colors
+	my $risksYou = 'Orange';
+	my $risksAvg = 'Blue';
+	my $risksAch = 'Green';
+	
+	my ($smlev, $suslev, $smtar, $scale, $scope, $rate, $level_desc, $layout) ;
+	my ($mlev, $uslev, $mtar, $otar, $t, $t2, $tx);
+
+	$smlev = $vars{my_score};
+	$suslev = $vars{avg_score};
+	$smtar = $vars{target_score};
+	$scale = $vars{bar_scale};
+	$scope = $vars{scope_text};
+	$rate = $vars{rate_text};
+	$targ = $vars{target_text};
+	$title = $vars{title_text};
+	$width = $vars{width_of_table};
+	$layout = $vars{layout};
+	$above = $vars{above_text};
+	$below = $vars{below_text};
+
+
+	if(!$rate){
+		$rate = $lang{$current_language}{average};
+	}
+	if(!$targ){
+		$targ = $lang{$current_language}{Your_target};
+	}
+	if(!$risk){
+		$risk = $lang{$current_language}{Your_risk_is};
+	}
+	if(!$above){
+		$above = $lang{$current_language}{above};
+	}
+	if(!$below){
+		$below = $lang{$current_language}{below};
+	}
+	if($layout ne 'bullet' && $layout ne 'bar'){ $layout= 'full' }
+	$mlev = int($smlev * $scale);
+	$uslev = int($suslev * $scale);
+	if($smtar < 0 || $level_desc eq '-'){
+		$smtar = $smtar * -1;
+		$mtar = int($smtar * $scale);
+		$otar = "$below $smtar";
+	}elsif($level_desc eq '+'){
+		$mtar = int($smtar * $scale);
+		$otar = "$above $smtar";
+	}else{
+		$mtar = int($smtar * $scale);
+		$otar = $smtar;
+	}
+
+	$t = 0;
+	$t2 = 0;
+	$tx = 0;
+
+        my $linewidth = 5;
+
+	my $xml = '';
+	$xml .= qq|<MoveTo X="57" Y="10"/><Set LineWidth="$linewidth"/><Set Color="navy" Ground="0" ColorSpace=""/>|;
+	$xml .= qq|<ShowText Text="$scope - $lang{$current_language}{Your_risk_is} $smlev." X="57" Y="43" FontSize="11" FontFace="Helvetica-Bold" Color="333333"/>| if($layout eq 'full');
+	if ($mlev > 0){
+		$t = $mlev+58;
+		$xml .= qq|<MoveTo X="58" Y="26"/><LineTo X="$t" Y="26" Width="$linewidth" Color="$risksYou" PathOnly="0" />|;
+	}
+	$t= $uslev+58;
+	$xml .= qq|<MoveTo X="58" Y="18"/><LineTo X="$t" Y="18" Width="$linewidth" Color="$risksAvg" PathOnly="0" />|;
+	$t= $mtar+58;
+	$xml .= qq|<MoveTo X="58" Y="10"/><LineTo X="$t" Y="10" Width="$linewidth" Color="$risksAch" PathOnly="0" />|;
+	$xml .= qq|<ShowText Text="$targ $lang{$current_language}{is} $otar." X="57" Y="6" FontSize="09" FontFace="Helvetica" Color="333333"/>| if($layout eq 'full' && $smlev <= $smtar);
+	$xml .= qq|<ShowText Text="$targ $lang{$current_language}{is} $otar, $lang{$current_language}{reduce_risk_changing_habits}" X="57" Y="6" FontSize="09" FontFace="Helvetica" Color="333333"/>| if($layout eq 'full' && $smlev > $smtar);
+	$xml .= qq|<ShowText Text="$lang{$current_language}{Your_Score}" X="-18" Y="34" FontSize="10" FontFace="Helvetica-Bold" Color="black"/>| if($layout eq 'full');
+	$xml .= qq|<ShowText Text="$lang{$current_language}{US_average}" X="-18" Y="24" FontSize="9" FontFace="Helvetica" Color="333333"/>| if($layout eq 'full');
+	$xml .= qq|<ShowText Text="$lang{$current_language}{Your_target}" X="-18" Y="15" FontSize="9" FontFace="Helvetica" Color="333333"/>| if($layout eq 'full');
+
+$xml;
+}

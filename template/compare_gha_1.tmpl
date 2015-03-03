@@ -1,0 +1,67 @@
+{
+# this part fills in a file that sets language variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}language.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}compare_gha_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file("$config{template_directory}$header_file", PACKAGE => __PACKAGE__ );
+}
+      <table width="560" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="12"><img src="images/global/trans.gif" width="12" height="1"></td>
+          <td><img src="images/global/trans.gif" width="1" height="22"><br>
+            {$gha_title}<br>
+            <img src="images/global/trans.gif" width="1" height="8"><br>
+            <span class="bodytextgray">Our General Health Risk Assessment provides
+            you with your health risks and key habits that you can change to live
+            healthier. <br>
+            </span><br>
+            <img src="images/global/trans.gif" width="1" height="18"><br>
+            {$gha_subtitle}<br>
+            <img src="images/global/trans.gif" width="1" height="10"></td>
+        </tr>
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td valign="top">{$status_message}
+            <table width="100%" border="1" cellspacing="0" cellpadding="4" bordercolor="#000099">
+ 			{
+
+				my $oline = ""  ;
+				foreach my $hash_key(sort keys %x_user){ 
+					next if $hash_key eq 'risk_data';
+					next if $hash_key eq 'config';
+					$oline .= "<tr><td class=\"bodytext\">$hash_key </td><td>$x_user{$hash_key}</td><td> $y_user{$hash_key}</td></tr>"; 
+				}
+
+				$oline;
+			}
+			</table></td>
+			</tr>
+               <tr>
+                <td valign="middle" align="right" colspan="3" height="30">&nbsp;</td>
+              </tr>
+              <tr valign="bottom">
+                <td height="50" align="left"></td>
+                <td align="right" height="50"><form method="post" action="{$pager}">
+		<input type="image" border=0 name="compare_gha_2.tmpl" value="compare_gha_2.tmpl" {$next}>
+			{ $hidden_cgi_fields }
+		</form></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td width="12" height="30">&nbsp;</td>
+          <td align="center" valign="top" height="30">&nbsp;</td>
+        </tr>
+      </table>
+      {$copyright}<p>&nbsp;</p>
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file("$config{template_directory}$footer_file", PACKAGE => __PACKAGE__ );
+}

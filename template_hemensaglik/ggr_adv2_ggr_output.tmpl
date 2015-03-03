@@ -1,0 +1,8 @@
+{
+Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );
+}
+<!--Template!---ggr_adv2_ggr_output.tmpl--->
+<center><span class="pageheading">Advanced Report Query Output</span></center>
+<span class="maintext-n">{$output_string}</span>
+
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

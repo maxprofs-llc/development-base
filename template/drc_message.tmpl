@@ -1,0 +1,86 @@
+{
+my $race_risk = 0;
+   $race_risk = 1 if
+	$race eq NATIVE_AMERICAN ||
+	$race eq AFRICAN_AMERICAN ||
+	$race eq HISPANIC;
+
+my $mid_life = $age > 44 && $age < 65 ? 1 : 0;
+
+my $drc_flag = do {
+	if(    $diabetes_points > 9 ) { 2 }
+	elsif( $diabetes_points > 6 ) { 1 }
+	else                          { 0 }
+	};
+
+my $risk = ( 'LOW', 'MODERATE', 'HIGH' )[ $drc_flag ] . " RISK";
+
+$risk = do {
+	if( $format eq 'pdf' ) { "^b $risk ^B" }
+	else                   { "<b>$risk</b>" }
+	};
+
+my $symptoms         = "(Symptoms include unusual thirst, extreme fatigue, unusual weight changes, and increased urination, especially at night.)";
+my $regular_exercise = "A regular habit of exercise will help decrease your risk.";
+my $tested_regularly = "You should be tested regularly for the disease, as recommended by the American Diabetes Association.";
+my $tested_3years    = "You should be tested every three years for the disease, as recommended by the American Diabetes Association. But with your risk factors, you should ask your physician about getting tested more frequently.";
+my $more_frequently  = "But with your risk factors, you should ask your physician about getting tested more frequently.";
+my $over_45          = "Typically, people over 45 are tested every three years for the disease, as recommended by the American Diabetes Association.";
+my $not_routine      = "Testing for diabetes at your age is not routine.";
+my $getting_older    = "Your risk will increase as you get older, so watch for the symptoms.";
+my $check_with_doc   = 'Check with your doctor on how often you should be tested, and watch for symptoms.';
+my $race_message     = "Keep in mind that being $race increases your chances for having diabetes.";
+
+my @messages = ( "$name, you are at $risk for having diabetes." );
+
+if(    $drc_flag == 2 )
+	{
+	push @messages, "Only your physician can determine if you have the disease. See your physician and get tested promptly. Share the findings of this report with your doctor and talk about a regular diabetes testing schedule.";
+	}
+elsif( $drc_flag == 1 )
+	{
+
+	if( $age < 45 )
+		{
+		push @messages, $over_45, $not_routine, $more_frequently,
+			$symptoms;
+		}
+	elsif( $mid_life )
+		{
+		push @messages, $tested_3years, $more_frequently,
+			$symptoms;
+		}
+	else
+		{
+		push @messages, $tested_regularly;
+		}
+
+	push @messages, $regular_exercise
+		if $exercise_drc eq NO;
+	push @messages, $race_message if $race_risk;
+	}
+else
+	{
+	if( $age < 45 )
+		{
+		push @messages, $not_routine, $over_45, $getting_older,
+			$symptoms;
+		}
+	elsif( $mid_life )
+		{
+		push @messages, $tested_3years, $symptoms;
+		}
+	else
+		{
+		push @messages, $tested_regularly, $check_with_doc,
+			$symptoms;
+		}
+
+	push @messages, $regular_exercise
+		if $exercise_drc eq NO;
+	push @messages, $race_message if $race_risk;
+	}
+
+
+$drcMsg = join " ", @messages;
+}

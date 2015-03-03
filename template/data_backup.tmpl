@@ -1,0 +1,36 @@
+{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+
+<h1>DATABASE BACKUP</h1>
+<hr />
+
+
+<form method="POST" action="{$config{admin_dir}}data_backup.cgi" name="frm"  onsubmit="return check_form()">
+
+	<table width="700px" cellspacing="2" cellpadding="6" border="0">
+		
+		<tr><td class="maintext-b" colspan="2">Please enter the description before going to backup: <br>(That could be title of your backup file)</td>
+		</tr>
+		<tr><td class="maintext-b" width="150px"></td>
+		<td class="maintext-n"><input type="text" name="db_backup" id="db_backup"    onKeyDown="limitText(this.form.limitedtextfield,this.form.countdown,50);" 
+onKeyUp="limitText(this.form.limitedtextfield,this.form.countdown,50);" maxlength="50">&nbsp;&nbsp;(Max 50 character: e.g. "Backup before merging biometrics")</td>
+		</tr>		
+	</table>
+		
+		<table width="700px" cellspacing="2" cellpadding="6" border="0">
+		<tr><td class="maintext-b" width="180px"></td>
+			<td> <input class="maintext-b" type="submit" name="Submit" value="Backup Now" /></td></tr>
+		</table>
+</form>
+<hr>
+<b><span style="color: #660000;text-align:left">{$content}</span></b>
+<script type="text/javascript">
+	function check_form() \{
+		var str = document.frm.db_backup.value;
+		if(str == '')\{
+			alert('Please enter the description.');
+			return false;
+		\}	
+      	
+	\}
+</script>
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

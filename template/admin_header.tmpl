@@ -1,0 +1,29 @@
+{ Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ ); }
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=8" >
+<title>Admin Area</title>
+<base href="{$base}" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link rel="stylesheet" href="styles/admin.css" type="text/css" />
+<script type="text/javascript">wload=1;</script>
+<script type="text/javascript"  src="{$java_ggr}"></script>
+<script type="text/javascript" src="styles/prototype.js"></script>
+<script type="text/javascript" src="styles/scriptaculous.js?load=effects,dragdrop"></script>
+<script type="text/javascript" src="styles/lightwindow.js"></script>
+<script type="text/javascript" src="styles/admin.js"></script>
+<script type="text/javascript" src="styles/CalendarPopup.js"></script>
+<SCRIPT LANGUAGE="JavaScript">document.write(getCalendarStyles());</SCRIPT>
+<link rel="stylesheet" href="styles/lightwindow.css" type="text/css" />
+
+</head>
+
+<body >
+<table width="95%" id="main_table"><tr><td id="sidebar">
+{ # Include sidebar
+Text::Template::fill_in_file("$config{template_directory}admin_sidebar.tmpl", PACKAGE => __PACKAGE__ );
+}     
+
+
+</td><td id="main_pane">

@@ -1,0 +1,95 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( $directory . $input_variables, PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $header_file, PACKAGE => __PACKAGE__ );
+}
+
+<!-- your next step section start here-->
+<div id="title" class="steptxt">
+<p class="pad17">{$title}</p>
+</div>
+
+<div class="content" style="margin-left: 5px; background-color:#ffffff">
+<p class="pad29">{$intro}</p></div>
+
+<div id="step-inn-bg" class="content1">
+<table width="406" cellspacing="0" style="margin-left: 30px">
+<form action="{$cgi}calculator.cgi" name="theForm" method="POST" onSubmit="return checkWholeForm(this)">
+      <tr>
+        <td class="lb2" width=300 style="padding-top: 10px; padding-right: 20px">Enter your gender:</td>
+        <td width=90 style="padding-top: 10px"><select name="sex" size="1" style="width: 200px">
+					<option selected="selected">Select your gender</option>
+					<option value="Male">Male</option>
+					<option value="Female">Female</option>
+				</select></td>
+      </tr>
+      <tr>
+		<td class="lb2" width=300 style="padding-top: 10px; padding-right: 20px">Enter your age:</td>
+        <td width=90 style="padding-top: 10px"><input maxlength="3" name="age" size="4" type="text" style="width: 120px" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"></td>
+      </tr>
+      <tr>
+        <td class="lb2" width=300 style="padding-top: 10px; padding-right: 20px">Select your height:</td>
+        <td width=90 style="padding-top: 10px"><select size="1" name="height" style="width: 200px">
+ 							<option value="55">4' 7&quot;</option>
+							<option value="56">4' 8&quot;</option>
+							<option value="57">4' 9&quot;</option>
+							<option value="58">4' 10&quot;</option>
+							<option value="59">4' 11&quot;</option>
+							<option value="60">5'</option>
+							<option value="61">5' 1&quot;</option>
+							<option value="62">5' 2&quot;</option>
+							<option value="63">5' 3&quot;</option>
+							<option value="64">5' 4&quot;</option>
+							<option value="65">5' 5&quot;</option>
+							<option value="0" selected>feet and inches</option>
+							<option value="66">5' 6&quot;</option>
+							<option value="67">5' 7&quot;</option>
+							<option value="68">5' 8&quot;</option>
+							<option value="69">5' 9&quot;</option>
+							<option value="70">5' 10&quot;</option>
+							<option value="71">5' 11&quot;</option>
+							<option value="72">6'</option>
+							<option value="73">6' 1&quot;</option>
+							<option value="74">6' 2&quot;</option>
+							<option value="75">6' 3&quot;</option>
+							<option value="76">6' 4&quot;</option>
+							<option value="77">6' 5&quot;</option>
+							<option value="78">6' 6&quot;</option>
+							<option value="79">6' 7&quot;</option>
+							<option value="80">6' 8&quot;</option>
+							<option value="81">6' 9&quot;</option>
+							<option value="82">6' 10&quot;</option>
+							<option value="83">6' 11&quot;</option>
+							<option value="84">7'</option>
+							<option value="85">7' 1&quot;</option>
+							<option value="86">7' 2&quot;</option>
+							<option value="87">7' 3&quot;</option>
+							<option value="88">7' 4&quot;</option>
+							<option value="89">7' 5&quot;</option>
+       </select></td>
+      </tr>
+      <tr>
+        <td class="lb2" width=300 style="padding-top: 10px; padding-right: 20px">Enter your weight:</td>
+        <td width=90 style="padding-top: 10px"><input maxlength="3" name="weight" size="4" type="text" style="width: 120px" onKeyup="if(this.value.match(/[^0-9\.]/))this.value=this.value.replace(/[^0-9\.]/g,'')"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+
+        <td style="padding-top: 8px; padding-bottom: 10px">
+        	<input name="Submit" type="image" class="HSButton" src="images/calculator_04.jpg" /></td>
+				<input type="hidden" name="snum" value="{$snum}">
+				<input type="hidden" name="measure" value="Imperial">
+				<input type="hidden" name="calculator" value="dee">
+        <td>&nbsp;</td>
+      </tr>
+	  </form>
+    </table>
+</div>
+<!-- your next step section end here-->
+
+{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $footer_file, PACKAGE => __PACKAGE__ );
+}

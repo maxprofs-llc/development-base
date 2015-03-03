@@ -1,0 +1,88 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( $directory.$input_variables, PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( $directory.$header_file, PACKAGE => __PACKAGE__ );
+}
+
+<!--Form and form table START here. .-->
+					<form id="quiz" name="theForm" action="{$cgi}adv_calculator.cgi" method="POST">
+						<div class="col-md-12 col-lg-10 col-xs-12 c_form_left">
+							{$question{edisorder}{$current_lang}{$current_lang."_1"}}
+						</div>
+						<div class="col-md-12 col-lg-2 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="feeluncomfortable" class="c_select" required>
+									<option selected="selected"></option>
+									<option value="1">{$question{edisorder}{$current_lang}{$current_lang."_6"}}</option>
+									<option value="0">{$question{edisorder}{$current_lang}{$current_lang."_7"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-10 col-xs-12 c_form_left">
+							{$question{edisorder}{$current_lang}{$current_lang."_2"}}
+						</div>
+						<div class="col-md-12 col-lg-2 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="eatingworry" class="c_select" required>
+									<option selected="selected"></option>
+									<option value="1">{$question{edisorder}{$current_lang}{$current_lang."_6"}}</option>
+									<option value="0">{$question{edisorder}{$current_lang}{$current_lang."_7"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-10 col-xs-12 c_form_left">
+							{$question{edisorder}{$current_lang}{$current_lang."_3"}}
+						</div>
+						<div class="col-md-12 col-lg-2 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="stone" class="c_select" required>
+									<option selected="selected"></option>
+									<option value="1">{$question{edisorder}{$current_lang}{$current_lang."_6"}}</option>
+									<option value="0">{$question{edisorder}{$current_lang}{$current_lang."_7"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-10 col-xs-12 c_form_left">
+							{$question{edisorder}{$current_lang}{$current_lang."_4"}}
+						</div>
+						<div class="col-md-12 col-lg-2 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="fat" class="c_select" required>
+									<option selected="selected"></option>
+									<option value="1">{$question{edisorder}{$current_lang}{$current_lang."_6"}}</option>
+									<option value="0">{$question{edisorder}{$current_lang}{$current_lang."_7"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-10 col-xs-12 c_form_left">
+							{$question{edisorder}{$current_lang}{$current_lang."_5"}}
+						</div>
+						<div class="col-md-12 col-lg-2 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="fooddominates" class="c_select" required>
+									<option selected="selected"></option>
+									<option value="1">{$question{edisorder}{$current_lang}{$current_lang."_6"}}</option>
+									<option value="0">{$question{edisorder}{$current_lang}{$current_lang."_7"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-10 col-xs-12 c_form_left">
+							
+						</div>
+						<div class="col-md-12 col-lg-2 col-xs-12 c_form_right">
+							<input type="submit" name="submit" class="c_button orange-bg-white-col f_right" value="Calculate" />
+							<input value="Imperial" name="measure" type="hidden" />
+							<input value="edisorder" name="calculator" type="hidden" />
+							<input value="{$snum}" name="snum" type="hidden" />
+							<input type="hidden" name="lang" value="{$lang}"/>
+						</div>
+						<div class="clear"></div>
+					</form>
+				</div>
+					<p>HealthStatus.com health quizzes and calculators and tools do not provide medical advice and do not replace the advice of a medical professional. Care has been taken to make sure the calculators and tools are generating correct results, but no guarantee is made that the results are accurate. The health tools use professionally accepted and peer reviewed algorithms to calculate their results or simple mathematical equations.</p>
+{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $footer_file, PACKAGE => __PACKAGE__ );
+}

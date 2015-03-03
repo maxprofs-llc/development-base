@@ -1,0 +1,257 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}batch_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}fit_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}batch_header.tmpl", PACKAGE => __PACKAGE__ );
+}       <div class="HSstyle">
+		<table width="560" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td align=left class="HSbodytext">Quick entry tips:<br>* tab key moves you from field to field<br>* enter is the same as clicking submit<br>* repeated pressing of the first key moves you down a drop down list (press M twice to get to May in the month field)<br> <br></td>
+        </tr>
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td align=left class="HStitle"><img src="images/global/trans.gif" width="1" height="22">Batch Entry Fitness</td>
+        </tr>
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td align="center" valign="top">
+            <!--Form and form table START here. Table max width no more than 560 pixels.-->
+            <form METHOD="POST" action="{$batch_entry}" name="theForm" onSubmit="return checkWholeForm(this)">
+              <table border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td align="right" class="HSbodytext" colspan=3>
+                    Switch assessment <a href="{$crc_batch}">[ cardiac ]</a> <a href="{$drc_batch}">[ diabetes ]</a> <a href="{$gha_batch}">[ health risk ]</a> <a href="{$gwb_batch}">[ well-being ]</a><br />&nbsp;<br />
+					Batch Number {$db_batch_number}<br />Fitness Assessments entered {$db_batch_count_fit}<br />Total Assessments entered {$db_batch_count}<br />&nbsp;<br />
+                    <a href="{$end_batch}">[ close batch ]</a><br />
+                    <a href="{$print_batch}">[ close and print batch ]</a><br />&nbsp;<br />
+                    <a href="{$member}">[ assessment records page ]</a><br />&nbsp;<br />
+					</td>
+				</tr>
+                <tr>
+                  <td align="right" class="HSbodytext">User ID:</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input class="HSquestion" NAME="db_id" SIZE="15" maxlength="12" />
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+				<tr>
+					<td align="right" class="HSbodytext">Registration/Location Number:</td>
+					<td>&nbsp;</td>
+					<td><input name="siteid" type="text" size="18" /></td>
+				</tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">First name:</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input class="HSquestion" NAME="first_name" SIZE="28" value="" />
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Last name:</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input class="HSquestion" NAME="last_name" SIZE="28" value="" />
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td><img src="images/global/trans.gif" height="5" width="220"></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Date of Birth:mm/dd/yyyy</td>
+                  <td><img src="images/global/trans.gif" width="10" height="1"></td>
+                  <td>
+                    <input name="birth_month" SIZE="2" value="" class="HSquestion"> /
+                    <input name="birth_date" SIZE="2" value="" class="HSquestion"> /
+		  			<input NAME="birth_year" SIZE="4" maxlength="4" value="" class="HSquestion"  onBlur="check_batch_date()">
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Sex:(M/F)</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input NAME="sex" SIZE="7" value="" class="HSquestion">
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">What is your weight?</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytext">
+                    <input class="HSquestion" NAME="weight" SIZE="5" maxlength="3" onBlur="check_weight()"> (in pounds)
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">What is your height?</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input NAME="feet" SIZE="5" maxlength="1" class="HSquestion">
+                    <input NAME="inches" SIZE="5" maxlength="2" class="HSquestion" onChange="convert_height(theForm.feet.value, theForm.inches.value)">
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">What is your waist size?</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytext">
+          			<input class="HSquestion" type="text" name="waist" size="7" maxlength="3"> inches
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext"><span class="HSbodytextbold">Enter either:</span><br>
+			         Wrist circumference:<br>
+			         Elbow breadth:</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytext">&nbsp;<br>
+                    <input NAME="wrist" SIZE="5" maxlength="6" class="HSquestion">
+                    <input NAME="elbow" SIZE="5" maxlength="6" class="HSquestion">
+				  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Flexibility number</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input class="HSquestion" type="text" name="flexibility" size="7" maxlength="2">
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Pulse rate</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input class="HSquestion" type="text" name="pulse_rate_30_seconds" size="7" maxlength="3">
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Sit-up number</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input class="HSquestion" type="text" name="sit_up" size="7" maxlength="3">
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Push-up number</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input class="HSquestion" type="text" name="push_ups" size="7" maxlength="3">
+                  </td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td></td>
+                </tr>
+               <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input type="image" border="0" name="assess" {$submit}>
+					<input type=hidden name="page" value="1">
+					<input type=hidden name="restrict" value="">
+					<input type=hidden name="modify" value="">
+					<input type="hidden" name="assessment" value="FIT">
+					<input type=hidden name="output_format" value="BATCH">
+					<input type=hidden name="db_batch_entered_by" value="">
+					<input type=hidden name="db_batch_count" value="">
+					<input type=hidden name="db_batch_count_crc" value="">
+					<input type=hidden name="db_batch_count_drc" value="">
+					<input type=hidden name="db_batch_count_fit" value="">
+					<input type=hidden name="db_batch_count_gha" value="">
+					<input type=hidden name="db_batch_count_gwb" value="">
+					<input type=hidden name="db_batch_count_hra" value="">
+					<input type=hidden name="db_batch_count_mr" value="">
+					<input type=hidden name="db_batch_count_pt" value="">
+					<input type=hidden name="db_batch_number" value="">
+					<input type=hidden name="db_number" value="">
+					{ if($modify){ '<input type=hidden name="xnum" value="">';} }
+                  </td>
+                </tr>
+              </table>
+            </form>
+            <!--Form and form table END here.-->
+          </td>
+        </tr>
+        <tr>
+          <td width="12" height="30">&nbsp;</td>
+          <td align="center" valign="top" height="30">&nbsp;</td>
+        </tr>
+      </table>
+      </div>
+      {$copyright}<p>&nbsp;</p>
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}batch_footer.tmpl", PACKAGE => __PACKAGE__ );
+}
+
+

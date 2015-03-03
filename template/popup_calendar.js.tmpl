@@ -1,0 +1,18 @@
+<script>	
+	function PopUpCalendar(formName, fieldName, openDate, submitIt) \{
+		var h = 250;
+		var w = 250;
+		var winl = (screen.width - w) / 2;
+		var wint = (screen.height - h) / 2;
+		winprops = "height="+h+",width="+w+",top="+wint+",left="+winl+",scrollbars=yes,toolbar=no,location=no,menu=no";
+		window.theForm = eval("document." + formName);
+		window.dateField = eval("document." + formName + "." + fieldName);
+		window.submitIt = eval(submitIt);
+		calendar = window.open("{$config{html_base}}popupcalendar.html", "PopUpCalendar", winprops);
+			  
+		if (parseInt(navigator.appVersion) >= 4) \{ 
+			calendar.window.focus(); 
+		\}
+		return false;	
+	\}
+</script>

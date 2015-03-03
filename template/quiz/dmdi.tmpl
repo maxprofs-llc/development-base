@@ -1,0 +1,220 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( $directory.$input_variables, PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( $directory.$header_file, PACKAGE => __PACKAGE__ );
+}
+<!--Form and form table START here. Table max width no more than 560 pixels.-->
+					<form id="quiz" method="POST" action="{$cgi}adv_calculator.cgi" >						
+						<div class="col-md-12 col-lg-6 col-xs-12 c_form_left">
+							{$question{dmdi}{$current_lang}{$current_lang."_1"}}
+						</div>
+						<div class="col-md-12 col-lg-6 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="lowspirits" class="c_select" required>
+									<option selected="selected"></option>
+									<option value="5">{$question{dmdi}{$current_lang}{$current_lang."_13"}}</option>
+									<option value="4">{$question{dmdi}{$current_lang}{$current_lang."_14"}}</option>
+									<option value="3">{$question{dmdi}{$current_lang}{$current_lang."_15"}}</option>
+									<option value="2">{$question{dmdi}{$current_lang}{$current_lang."_16"}}</option>
+									<option value="1">{$question{dmdi}{$current_lang}{$current_lang."_17"}}</option>
+									<option value="0">{$question{dmdi}{$current_lang}{$current_lang."_18"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-6 col-xs-12 c_form_left">
+							{$question{dmdi}{$current_lang}{$current_lang."_2"}}
+						</div>
+						<div class="col-md-12 col-lg-6 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="lossofinterest" class="c_select" required>
+									<option selected="selected"></option>
+									<option value="5">{$question{dmdi}{$current_lang}{$current_lang."_13"}}</option>
+									<option value="4">{$question{dmdi}{$current_lang}{$current_lang."_14"}}</option>
+									<option value="3">{$question{dmdi}{$current_lang}{$current_lang."_15"}}</option>
+									<option value="2">{$question{dmdi}{$current_lang}{$current_lang."_16"}}</option>
+									<option value="1">{$question{dmdi}{$current_lang}{$current_lang."_17"}}</option>
+									<option value="0">{$question{dmdi}{$current_lang}{$current_lang."_18"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-6 col-xs-12 c_form_left">
+							{$question{dmdi}{$current_lang}{$current_lang."_3"}}
+						</div>
+						<div class="col-md-12 col-lg-6 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="energy" class="c_select" required>
+									<option selected="selected"></option>
+									<option value="5">{$question{dmdi}{$current_lang}{$current_lang."_13"}}</option>
+									<option value="4">{$question{dmdi}{$current_lang}{$current_lang."_14"}}</option>
+									<option value="3">{$question{dmdi}{$current_lang}{$current_lang."_15"}}</option>
+									<option value="2">{$question{dmdi}{$current_lang}{$current_lang."_16"}}</option>
+									<option value="1">{$question{dmdi}{$current_lang}{$current_lang."_17"}}</option>
+									<option value="0">{$question{dmdi}{$current_lang}{$current_lang."_18"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-6 col-xs-12 c_form_left">
+							{$question{dmdi}{$current_lang}{$current_lang."_4"}}
+						</div>
+						<div class="col-md-12 col-lg-6 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="selfconfident" class="c_select" required>
+									<option selected="selected"></option>
+									<option value="5">{$question{dmdi}{$current_lang}{$current_lang."_13"}}</option>
+									<option value="4">{$question{dmdi}{$current_lang}{$current_lang."_14"}}</option>
+									<option value="3">{$question{dmdi}{$current_lang}{$current_lang."_15"}}</option>
+									<option value="2">{$question{dmdi}{$current_lang}{$current_lang."_16"}}</option>
+									<option value="1">{$question{dmdi}{$current_lang}{$current_lang."_17"}}</option>
+									<option value="0">{$question{dmdi}{$current_lang}{$current_lang."_18"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-6 col-xs-12 c_form_left">
+							{$question{dmdi}{$current_lang}{$current_lang."_5"}}
+						</div>
+						<div class="col-md-12 col-lg-6 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="guilt" class="c_select" required>
+									<option selected="selected"></option>
+									<option value="5">{$question{dmdi}{$current_lang}{$current_lang."_13"}}</option>
+									<option value="4">{$question{dmdi}{$current_lang}{$current_lang."_14"}}</option>
+									<option value="3">{$question{dmdi}{$current_lang}{$current_lang."_15"}}</option>
+									<option value="2">{$question{dmdi}{$current_lang}{$current_lang."_16"}}</option>
+									<option value="1">{$question{dmdi}{$current_lang}{$current_lang."_17"}}</option>
+									<option value="0">{$question{dmdi}{$current_lang}{$current_lang."_18"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-6 col-xs-12 c_form_left">
+							{$question{dmdi}{$current_lang}{$current_lang."_6"}}
+						</div>
+						<div class="col-md-12 col-lg-6 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="depress1" class="c_select" required>
+									<option selected="selected"></option>
+									<option value="5">{$question{dmdi}{$current_lang}{$current_lang."_13"}}</option>
+									<option value="4">{$question{dmdi}{$current_lang}{$current_lang."_14"}}</option>
+									<option value="3">{$question{dmdi}{$current_lang}{$current_lang."_15"}}</option>
+									<option value="2">{$question{dmdi}{$current_lang}{$current_lang."_16"}}</option>
+									<option value="1">{$question{dmdi}{$current_lang}{$current_lang."_17"}}</option>
+									<option value="0">{$question{dmdi}{$current_lang}{$current_lang."_18"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-6 col-xs-12 c_form_left">
+							{$question{dmdi}{$current_lang}{$current_lang."_7"}}
+						</div>
+						<div class="col-md-12 col-lg-6 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="concentrating" class="c_select" required>
+									<option selected="selected"></option>
+									<option value="5">{$question{dmdi}{$current_lang}{$current_lang."_13"}}</option>
+									<option value="4">{$question{dmdi}{$current_lang}{$current_lang."_14"}}</option>
+									<option value="3">{$question{dmdi}{$current_lang}{$current_lang."_15"}}</option>
+									<option value="2">{$question{dmdi}{$current_lang}{$current_lang."_16"}}</option>
+									<option value="1">{$question{dmdi}{$current_lang}{$current_lang."_17"}}</option>
+									<option value="0">{$question{dmdi}{$current_lang}{$current_lang."_18"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-6 col-xs-12 c_form_left">
+							{$question{dmdi}{$current_lang}{$current_lang."_8"}}
+						</div>
+						<div class="col-md-12 col-lg-6 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="restless" class="c_select" required>
+									<option selected="selected"></option>
+									<option value="5">{$question{dmdi}{$current_lang}{$current_lang."_13"}}</option>
+									<option value="4">{$question{dmdi}{$current_lang}{$current_lang."_14"}}</option>
+									<option value="3">{$question{dmdi}{$current_lang}{$current_lang."_15"}}</option>
+									<option value="2">{$question{dmdi}{$current_lang}{$current_lang."_16"}}</option>
+									<option value="1">{$question{dmdi}{$current_lang}{$current_lang."_17"}}</option>
+									<option value="0">{$question{dmdi}{$current_lang}{$current_lang."_18"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-6 col-xs-12 c_form_left">
+							{$question{dmdi}{$current_lang}{$current_lang."_9"}}
+						</div>
+						<div class="col-md-12 col-lg-6 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="subdued" class="c_select" required>
+									<option selected="selected"></option>
+									<option value="5">{$question{dmdi}{$current_lang}{$current_lang."_13"}}</option>
+									<option value="4">{$question{dmdi}{$current_lang}{$current_lang."_14"}}</option>
+									<option value="3">{$question{dmdi}{$current_lang}{$current_lang."_15"}}</option>
+									<option value="2">{$question{dmdi}{$current_lang}{$current_lang."_16"}}</option>
+									<option value="1">{$question{dmdi}{$current_lang}{$current_lang."_17"}}</option>
+									<option value="0">{$question{dmdi}{$current_lang}{$current_lang."_18"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-6 col-xs-12 c_form_left">
+							{$question{dmdi}{$current_lang}{$current_lang."_10"}}
+						</div>
+						<div class="col-md-12 col-lg-6 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="sleeping" class="c_select" required>
+									<option selected="selected"></option>
+									<option value="5">{$question{dmdi}{$current_lang}{$current_lang."_13"}}</option>
+									<option value="4">{$question{dmdi}{$current_lang}{$current_lang."_14"}}</option>
+									<option value="3">{$question{dmdi}{$current_lang}{$current_lang."_15"}}</option>
+									<option value="2">{$question{dmdi}{$current_lang}{$current_lang."_16"}}</option>
+									<option value="1">{$question{dmdi}{$current_lang}{$current_lang."_17"}}</option>
+									<option value="0">{$question{dmdi}{$current_lang}{$current_lang."_18"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-6 col-xs-12 c_form_left">
+							{$question{dmdi}{$current_lang}{$current_lang."_11"}}
+						</div>
+						<div class="col-md-12 col-lg-6 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="appetite" class="c_select" required>
+									<option selected="selected"></option>
+									<option value="5">{$question{dmdi}{$current_lang}{$current_lang."_13"}}</option>
+									<option value="4">{$question{dmdi}{$current_lang}{$current_lang."_14"}}</option>
+									<option value="3">{$question{dmdi}{$current_lang}{$current_lang."_15"}}</option>
+									<option value="2">{$question{dmdi}{$current_lang}{$current_lang."_16"}}</option>
+									<option value="1">{$question{dmdi}{$current_lang}{$current_lang."_17"}}</option>
+									<option value="0">{$question{dmdi}{$current_lang}{$current_lang."_18"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-6 col-xs-12 c_form_left">
+							{$question{dmdi}{$current_lang}{$current_lang."_12"}}
+						</div>
+						<div class="col-md-12 col-lg-6 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="increased" class="c_select" required>
+									<option selected="selected"></option>
+									<option value="5">{$question{dmdi}{$current_lang}{$current_lang."_13"}}</option>
+									<option value="4">{$question{dmdi}{$current_lang}{$current_lang."_14"}}</option>
+									<option value="3">{$question{dmdi}{$current_lang}{$current_lang."_15"}}</option>
+									<option value="2">{$question{dmdi}{$current_lang}{$current_lang."_16"}}</option>
+									<option value="1">{$question{dmdi}{$current_lang}{$current_lang."_17"}}</option>
+									<option value="0">{$question{dmdi}{$current_lang}{$current_lang."_18"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-6 col-xs-12 c_form_left">
+							
+						</div>
+						<div class="col-md-12 col-lg-6 col-xs-12 c_form_right">
+							<input type="submit" name="submit" class="c_button orange-bg-white-col f_right" value="Calculate" />
+							<input type="hidden" name="measure" value="Imperial" />
+							<input type="hidden" name="calculator" value="dmdi" />
+							<input type="hidden" name="snum" value="{$snum}" />
+							<input type="hidden" name="lang" value="{$lang}"/>
+						</div>
+						<div class="clear"></div>
+					</form>
+				</div>
+					<p>HealthStatus.com health quizzes and calculators and tools do not provide medical advice and do not replace the advice of a medical professional. Care has been taken to make sure the calculators and tools are generating correct results, but no guarantee is made that the results are accurate. The health tools use professionally accepted and peer reviewed algorithms to calculate their results or simple mathematical equations.</p>
+<!--Form and form table END here.-->
+{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $footer_file, PACKAGE => __PACKAGE__ );
+}

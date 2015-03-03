@@ -1,0 +1,118 @@
+{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+
+<h1>ADD COLUMNS ADMINISTRATION</h1>
+<hr>
+{if($data_message) {"<b><span style=\"color: red;\">$data_msg</span></b>"}}
+{if($column_exist) {"<b><span style=\"color: blue;\">$data_msg</span></b>"}}
+{if($column_added) {"<b><span style=\"color: blue;\">$column_added_msg</span></b>"}}
+{
+		$html;
+		$html .= qq| <form method="POST" action="$config{admin_dir}add_column.cgi" name="frm" >
+						
+           	<table width="500px" cellspacing="4" cellpadding="4" border="0">
+			<tr>
+			    <td class="maintext-b" width="20px">Config Tables</td>
+				<td class="maintext-b" width="20px" >Columns that can be added</td>
+			</tr> |;			
+             $html .= qq|<tr><td valign="top">|;				
+             foreach my $hs_table (keys %hs_tables) {
+				 # push (@element,$hs_tables{$hs_table});              			  
+				 $html .= qq|<div><input type="radio" name="add_radio" value="$hs_tables{$hs_table}" onClick="get_radio_value()" onMouseOver="style.cursor='hand'"> $hs_tables{$hs_table}</div>|;            
+             } 
+				  $html .= qq| </td><td valign="top">|;	 
+                                       					
+			 foreach my $add_field (keys %field_hash) {                    			 
+				  $html .= qq| <b>$field_hash{$add_field}</b><br><div><input type="checkbox" name="add_check" value="$add_field"> $add_field  </div>|;            
+				 }			    
+		
+			  if($column_exist){
+			  $html .= qq| <br><input class="maintext-b" type="submit" name="column_add" value="Add" onClick="return get_checkbox_value()" /></td></tr>|;			  
+			  }else{
+			   $html .= qq|</td></tr>|;			  
+			  }
+			  $html .= qq| <tr><td><input type="hidden" name="add_table"  value=""></td></tr>
+			 <tr><td><input type="hidden" name="add_column"  value=""></td></tr>
+			  <b><span style=\"color: red;\">$add_msg</span></b>
+			  <tr><td class="maintext-b"> OR</td></tr>
+			</table>
+			</form>
+			
+			<hr> 
+      <form method="POST" action="$config{admin_dir}add_column.cgi" name="frm1" enctype="multipart/form-data" > 
+		<table width="700px" cellspacing="2" cellpadding="6" border="0">			
+			<tr>
+				<td class="maintext-b" width="150">Upload a new db_hs.conf and healthstatus_db.conf :</td>
+				<td><input class="maintext-b" type="file" name="data_file" />
+				</td>
+			</tr>			
+		</table>
+			
+			<table width="700px" cellspacing="2" cellpadding="6" border="0">
+			<tr><td class="maintext-b" width="180px"></td>
+				<td> <input class="maintext-b" type="submit" name="submit" value="Upload" onClick="return check_form()" /></td></tr>
+			</table>		 	
+		</form>			
+		
+		<script type="text/javascript">
+			function check_form() {
+				var str = document.frm1.data_file.value;				
+				if(str == ''){
+					alert('Please upload the files to proceed.');
+					return false;
+				}
+				
+				if(str.lastIndexOf(".conf") == -1 ) {
+				   alert("Please upload only .conf file");
+				   return false;
+				}
+			}
+			
+			function tablename(id)
+			{
+			 document.frm1.add_table.value = id;			 
+			// alert(id);
+			}
+            function get_radio_value()
+			{
+			 var len = document.frm.add_radio.length;
+			 for (var i=0; i < len; i++)
+			   {
+			   if (document.frm.add_radio[i].checked)
+				  {
+				  var rad_val = document.frm.add_radio[i].value;
+				  document.frm.add_column.value = rad_val;
+				   document.frm.submit();
+				  //alert(rad_val);
+				  }
+			   }
+			}
+			
+			function get_checkbox_value(){    
+			 var len=document.frm.add_check.length;
+             var rad_val = "";  			 
+			 //alert(len);
+			 if(!len){	
+                    			 
+					if (document.frm.add_check.checked == true) {
+						return document.frm.add_check.value;			
+				}			 
+			}else {
+				for (var i=0; i < len; i++) {
+					if (document.frm.add_check[i].checked) {
+						var rad_val = document.frm.add_check[i].value;
+						//alert(rad_val);
+						//return rad_val;
+					}
+					if (rad_val== "")
+					{
+					  alert("Please select field(s) to add");
+					  return false;
+					}
+				  }
+			   }
+			}
+		</script>
+		<hr> |;
+		$html;		
+}
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

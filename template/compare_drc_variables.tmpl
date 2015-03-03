@@ -1,0 +1,37 @@
+{
+use vars qw( $weight_target $weight_desc @weight_habits $exer_target $exer_desc $disp_desc
+		$female_desc $body_graphic $weight_graphic $exer_graphic $baby_graphic 
+		$drc_cover_letter $fact $status_message $time_since);
+
+require HealthStatus::Constants;
+use Date::Calc qw(:all);
+use DateTime::Format::MySQL;
+use DateTime;
+use DateTime::Format::Duration;
+
+#my $d = DateTime::Format::Duration->new(pattern => '%j total days, %Y years, %m months, %e days');
+my $d = DateTime::Format::Duration->new(pattern => ' %j days ago');
+$status_message = 'Assessment taken on ';
+if($x_user{'db_sortdate'} gt $y_user{'db_sortdate'}){
+	my $dt1 = DateTime::Format::MySQL->parse_datetime($x_user{'db_sortdate'});
+	my $dt2 = DateTime::Format::MySQL->parse_datetime($y_user{'db_sortdate'});
+	my $dur = $dt1->subtract_datetime($dt2);
+	$status_message .= 'x ' . $x_user{'db_sortdate'} . ' is greater than y ' . $y_user{'db_sortdate'} . '<br>' . $d->format_duration($dur) . ' <br>';
+	$status_message .= $dt2->mdy('/') . ' was compared to one taken ' . $dt1->mdy('/');
+	$time_since = $d->format_duration($dur);
+	}
+elsif($x_user{'db_sortdate'} lt $y_user{'db_sortdate'}){
+	my $dt1 = DateTime::Format::MySQL->parse_datetime($x_user{'db_sortdate'});
+	my $dt2 = DateTime::Format::MySQL->parse_datetime($y_user{'db_sortdate'});
+	my $dur = $dt2->subtract_datetime($dt1);
+	$status_message .= 'y ' . $y_user{'db_sortdate'} . ' is greater than x ' . $x_user{'db_sortdate'} . '<br>' . $d->format_duration($dur) . ' <br>';
+	$status_message .= $dt1->mdy('/') . ' was compared to one taken ' . $dt2->mdy('/');
+	$time_since = $d->format_duration($dur);
+	}
+else {
+	$status_message .= 'x is equal to y<br>' . "$x_user{'db_sortdate'} - $y_user{'db_sortdate'}<br>";
+	#$time_since = $d->format_duration($dur);
+	}
+	
+'';
+}

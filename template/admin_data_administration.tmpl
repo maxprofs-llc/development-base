@@ -1,0 +1,23 @@
+{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+
+<h1>Data Administration</h1>
+<hr />
+<form method="POST" action="{$config{admin_dir}}create_import_profile.cgi" name="frm">
+
+	<table width="700px" cellspacing="2" cellpadding="6" border="0">
+		
+		<tr><td class="maintext-b" >{$display_message}</td></tr><tr><td class="maintext-b" width="180">User Option :</td>
+			<td><input type="radio" name="data_type1" value="biometric" onmouseover="showhint('Select it to merge biometric and demographic data', this, event, '150px');">Merge Biometric Data </td>
+			<td><input type="radio" name="data_type1" value="historical" onmouseover="showhint('Select it to import 3rd party data', this, event, '150px');">Import Historical Data</td></tr>
+		
+					
+	</table>
+		
+		<table width="700px" cellspacing="2" cellpadding="6" border="0">
+		<tr><td class="maintext-b" width="180px"></td>
+			<td> <input class="maintext-b" type="submit" name="Submit" value="Next" /></td></tr>
+		</table>
+<input type=hidden name="Process" value="Next" />
+</form>
+<hr>
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

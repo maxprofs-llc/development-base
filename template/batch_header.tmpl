@@ -1,0 +1,17 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+<TITLE>Batch data entry for healthstatus</TITLE>
+<base href="{$base}">
+<link rel="stylesheet" href="styles/admin.css" type="text/css">
+<link rel="stylesheet" href="{$styles}" type="text/css">
+<script language="javascript" src="styles/hs_batch_validate.js"></script>
+</HEAD>
+<body onLoad="document.theForm.siteid.focus();">
+<table width="95%" id="main_table"><tr><td id="sidebar">
+{ # Include sidebar
+Text::Template::fill_in_file("$config{template_directory}admin_sidebar.tmpl", PACKAGE => __PACKAGE__ );
+}     
+
+
+</td><td id="main_pane">

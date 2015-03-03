@@ -1,0 +1,120 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$home_header_in_file", PACKAGE => __PACKAGE__ );
+}       <!-- Template: reg.tmpl -->
+	<!-- Templates called: {$footer_file}, {$config{variables_template}},  {$header_in_file} -->
+
+{my $html;
+    my $maint_time = $config{maintenance_time} || '8 hours';
+    if($config{maintenance_mode} && $db_ip_address ne $config{maintenance_mode_ip}){
+    	$html=qq|<div id="title" class="steptxt">
+		<p class="pad17">Temporarily Closed for Maintenanance</p>
+		</div>
+		<div class="content">
+		<p class="pad4">The system is currently undergoing maintenance.  We are sorry for any inconvenience this may have caused.  Please check back $maint_time</p></div>|;
+    	}
+    else{
+    	$html=qq|<!-- your next step section start here-->
+<div id="title" class="steptxt">
+<p class="pad17">Register Now</p>
+</div>
+
+<div class="content">|;
+
+    	$html.= qq|<p class="pad4">The system is currently in maintenance mode - Telling users to come back $maint_time</p>
+        | if($config{maintenance_mode});
+    	   $html.=qq|<p class="pad4"><font color="red">$error_msg</font></p>
+           <p class="pad4">|;
+        if($config{reg_temp_msg}){
+		    $html.= qq| $config{show_reg_msg}|;
+        }else{
+			$html.= qq| This site is for employees of $client and their spouse, domestic partner, or significant other.<br />
+			To register for our site, please fill in each of the following fields and click on SUBMIT. Your registration number was 
+			given to you by your $client representative. To access this site, you must have this number. |;    
+        }
+        $html.= qq|</p></div>
+
+<div id="step-inn-bg" class="content1">
+<table width="506" cellspacing="0" style="margin-left: 30px">
+<form action="$register" method="post" name="theForm" onSubmit="return checkRegFormCMOG(this)">|;
+    if(!$config{show_reg_no}){
+      $html.= qq|<tr>
+        <td class="lbl" width=400 style="padding-top: 10px">Registration number</td>
+        <td width=90 style="padding-top: 10px"><input name="db_employer" type="text" size="18" class="textBox" /></td>
+        </tr>|;
+	  }
+    $html.=qq| <tr>
+        <td class="lbl" width=400 style="padding-top: 10px">Full Name</td>
+        <td width=90 style="padding-top: 10px"><input name="db_fullname" type="text" size="18" class="textBox" /></td> 
+      </tr>
+	<tr>
+	   <td align="right" class="lbl" style="padding-top: 10px">Status</td>
+	   <td style="padding-top: 10px"><select name="db_relation" size="1"> 
+		<option value="">Select your status</option>
+		<option value="FTE">CMoG Employee</option>
+		<option value="FAM">Household Member with CMoG Employee</option>
+	       </select>
+	       <span class="HSbodytext"> </span>
+	   </td>
+	</tr>
+      <tr>
+        <td class="lbl" width=400 style="padding-top: 10px">Email Address</td>
+        <td width=90 style="padding-top: 10px"><input name="db_email" type="text" size="18" class="textBox" /></td>
+      </tr>
+      <tr>
+        <td class="lbl" width=400 style="padding-top: 10px">User name <br />(6 to 12 characters)</td>
+        <td width=90 style="padding-top: 10px"><input name="db_id" type="text" size="18" class="textBox" /></td>
+      </tr>
+      <tr>
+        <td class="lbl" width=400 style="padding-top: 10px">Password <br />(6 to 12 characters)</td>
+        <td width=90 style="padding-top: 10px"><input name="auth_password" type="password" size="18" class="textBox" /></td>
+      </tr>
+      <tr>
+        <td class="lbl" width=400 style="padding-top: 10px">Re-enter password</td>
+        <td width=90 style="padding-top: 10px"><input name="auth_password_entry" type="password" size="18" class="textBox" /></td>
+      </tr>
+      <tr>
+        <td colspan=2 class="content"><p  class="pad4">This survey contains questions covered under Title II of the Genetic Information Nondiscrimination Act (GINA).  These questions include information about certain diseases such as cancer, diabetes, heart disease, high blood pressure, high cholesterol and stroke within your immediate family, which is defined as parents and siblings.</p>
+<p class="pad4">You have the option to not answer the GINA-related questions and your decision will not affect your ability to be entered into the drawing for the grand prize; all regular and Project employees who complete the survey, regardless of whether they answer the GINA-related questions or not, will be entered into the grand prize drawing.</p>
+<p class="pad4">Further, any wellness or disease management programs offered by the Museum will be available to all staff, regardless of whether they answered GINA-related questions or not.</p>
+<p class="pad4">Answers to all questions on the survey are strictly confidential.  Your individual results are given to you only.  The Museum will receive only aggregate data; it will never receive individual results. All information you provide for the survey is stored only on HealthStatus’ server.</p>
+<p class="pad4">HealthStatus takes the utmost care to maintain security and confidentiality.  Each client, such as CMoG, has its own database within their server. Data from multiple clients is not commingled.  Data fields that contain password, user ID, first name, last name and address information are encrypted using standard business level encryption methods.</p>
+<p class="pad4">If you are willing to answer the GINA-related questions, select Yes in the drop-down box.  If you are not willing to answer the GINA-related questions, select No and your survey will not contain GINA-related questions.</p></td>
+      </tr>
+	<tr>
+	   <td align="right" class="lbl" style="padding-top: 10px">Do you wish to provide the optional genetic information (family history of illness and conditions) in order to have the most accurate assessment results?  By saying no, we will not ask questions related to your family history of diseases, conditions or illness.  In many cases this family history is a major factor in determining your actual health risk.</td>
+	   <td style="padding-top: 10px"><select name="client1" size="1"> 
+		<option value="">Select</option>
+		<option value="FullQset">Yes</option>
+		<option value="GinaQset">No</option>
+	       </select>
+	       <span class="HSbodytext"> </span>
+	   </td>
+	</tr>
+      <tr>
+        <td>&nbsp;</td>
+
+        <td style="padding-top: 8px; padding-bottom: 10px">
+		<input type="hidden" name="siteid" value="CMOG">
+		<input type="hidden" name="action" value="add">
+        	<input name="Submit" type="image" class="HSButton" src="images/submit_17.jpg" />			
+			</td>
+        <td>&nbsp;</td>
+      </tr>
+	  </form>
+    </table>
+</div>|;
+	}
+$html;
+}
+<!-- your next step section end here-->
+
+    <!-- Template: reg.tmpl End -->
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$home_footer_file", PACKAGE => __PACKAGE__ );
+}
+

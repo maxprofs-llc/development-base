@@ -1,0 +1,22 @@
+{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+
+
+<h1>Coach Assignment</h1>
+
+{if (@coach_list == 0) {
+	$OUT .= "<span class=\"error\">Warning: There are no coaches currently in the database.</span><br /><br />";
+}}
+
+Select a coach:
+<form method="POST" name="coach_form">
+<select name="coach" on>
+{foreach (@coach_list) {
+	$OUT .= "\n<option value=\"$$_{unum}\">$$_{name}</option>";
+}}
+</select>
+
+<input type="hidden" name="action" value="view_coached">
+<input type="submit" value="Go">
+</form>
+
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

@@ -1,0 +1,68 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+<table width="770" border="0" cellspacing="0" cellpadding="2">
+	<form method="POST" action="{$ggr_adv}">
+	  <tr align="center">
+    	<td height="40" colspan="3" class="pageheading">Individual Report Details</td>
+		</tr>
+{
+	my $myhtml='';
+	if ($rpt_format eq 'PDF')
+		{
+		$myhtml = qq|<tr>
+						<td></td>
+						<td width="140" class="maintext-b">Output Templates</td>
+						<td width="596" class="maintext-n"><select name="pdf_template" size="1" class="maintext-n">|;
+		foreach my $report(sort keys %defined_templates_list){
+				$myhtml .= '<option value="' . $report . '">' . $defined_templates_list{"$report"} . '</option>';
+				}
+		$myhtml .= qq|</select><br><hr></td></tr>|;
+	 	}
+	else{
+		$myhtml = qq|<tr>
+						<td></td>
+						<td width="140" class="maintext-b">Predefined Field Groups</td>
+						<td width="596" class="maintext-n"><select name="field_groups" size="1" class="maintext-n">|;
+
+		foreach my $report(sort keys %defined_reports_list){
+			$myhtml .= '<option value="' . $report . '">' . $defined_reports_list{"$report"} . '</option>';
+			}
+		$myhtml .= qq|</select><br><hr></td>
+						</tr>
+						<tr>
+						<td><input type="checkbox" name="rpt_email" value="ON"></td>
+						<td colspan="2" class="maintext-b">Email report:</td>
+						</tr>
+						<tr>
+						<td class="maintext-n">&nbsp;</td>
+						<td class="maintext-n">Email addresses:</td>
+						<td class="maintext-n"><input name="email" type="text" class="maintext-n" size="63"></td>
+						</tr>|;
+		}
+$myhtml;
+}
+		<tr>
+		  <td class="maintext-n">&nbsp;</td>
+		  <td class="maintext-n">&nbsp;</td>
+		  <td class="maintext-n"><input name="Submit" type="submit" class="maintext-b" value="Submit"></td>
+	  </tr>
+	  <input value="" type="hidden" name="rpt_type">
+  	  <input value="" type="hidden" name="rpt_format">
+  	  <input value="" type="hidden" name="date">
+  	  <input value="" type="hidden" name="s_month">
+  	  <input value="" type="hidden" name="s_day">
+  	  <input value="" type="hidden" name="s_year">
+  	  <input value="" type="hidden" name="e_month">
+  	  <input value="" type="hidden" name="e_day">
+  	  <input value="" type="hidden" name="e_year">
+  	  <input value="" type="hidden" name="date_range">
+  	  <input value="" type="hidden" name="all_assessment">
+  {$hidden_values}
+  	  <input value="" type="hidden" name="records">
+  	  <input value="" type="hidden" name="max_records">
+  	  <input value="" type="hidden" name="max">
+  	  <input name="query" type="hidden" value="Submit_query_ind">
+	</form>
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

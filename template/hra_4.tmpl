@@ -1,0 +1,158 @@
+{
+# this part fills in a file that sets language variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}language.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}hra_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}hra_links.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE => __PACKAGE__ );
+}    <!-- Template: hra_4.tmpl -->
+	<!-- Templates called: hra_variables.tmpl, hra_links.tmpl, {$footer_file}, {$config{variables_template}},  {$header_file} -->
+	       <div class="HSstyle">
+		<table class="HSassessments">
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td align=left><img src="images/global/trans.gif" width="1" height="22"><br>
+            {$hra_title}<br>
+            <img src="images/global/trans.gif" width="1" height="8"><br>
+            <span class="HSintro">{$lang{$current_language}{hra_msg18}} <br>
+            </span><br>
+            <img src="images/global/trans.gif" width="1" height="18"><br>
+            {$hra_subtitle}<br>
+            {$continued}<br>
+            <img src="images/global/trans.gif" width="1" height="10"></td>
+        </tr>
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td valign="top"><form method="post" action="{$pager}">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td colspan="2" class="HSbodytext1">
+                 <p>{$date} {$lang{$current_language}{for}} {$name}</p>
+                </td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right" colspan="2" height="30">&nbsp;</td>
+              </tr>
+             <tr>
+                <td colspan="2" class="HSbodytext">
+                  <p><span class="HStitle">{$lang{$current_language}{hra_msg19}}</span><br><span class="HSbodytextbold">{$sex} - {$lang{$current_language}{age}}: {$actual_age} - {$lang{$current_language}{dob}}: {$birth_month}/{$birth_date}/{$birth_year}</span></p>
+		<p><span class="HSsubtitle">{$lang{$current_language}{hra_msg20}}</span><br>
+		   {$lang{$current_language}{weight}}:&nbsp;&nbsp;<span class="HSbodytextbold">{$weight}</span><br>
+		   {$lang{$current_language}{height}}:&nbsp;&nbsp;<span class="HSbodytextbold">{$height_imperial}</span><br>
+		   {$lang{$current_language}{calculated_bmi}}:&nbsp;&nbsp;<span class="HSbodytextbold">{$bmi}</span><br>
+		   {$lang{$current_language}{blood_pressure}}:&nbsp;&nbsp;<span class="HSbodytextbold">
+		   {my $html;
+		    if($bp_sys) {$html = $bp_sys."/".$bp_dias;}else{$html= $lang{$current_language}{hra_msg21}. lc($bp_check)}
+		    
+		    $html;
+		    }</span><br>
+		   {$lang{$current_language}{bp_medicine}	}:&nbsp;&nbsp;<span class="HSbodytextbold">{$bp_meds || $lang{$current_language}{no}}</span><br>
+		   {$lang{$current_language}{cholesterol}}:&nbsp;&nbsp;<span class="HSbodytextbold">{my $html;
+		    if($cholesterol) {$html = $cholesterol;}else{$html= $lang{$current_language}{hra_msg21}. lc($chol_check)}
+		    
+		    $html;
+		    }</span><br>
+		   {$lang{$current_language}{hdl}}:&nbsp;&nbsp;<span class="HSbodytextbold">{$hdl || "No value entered."}</span><br>
+		   {if($hdl && $cholesterol){ 'Cholesterol Ratio: <span class="HSbodytextbold">'. sprintf("%.1f",$cholesterol/$hdl). '</span><br>' }}
+		   {$lang{$current_language}{diabetes}}:&nbsp;&nbsp;<span class="HSbodytextbold">{$diabetes}</span><br>
+		   {$lang{$current_language}{tobacco_use}}:&nbsp;&nbsp;<span class="HSbodytextbold">{ $sm='';
+								     if ($smoke_flag == 0){
+									$sm=$lang{$current_language}{none};
+								     }elsif($smoke_flag == 1){
+									$sm="Ex-smoker for $cigarette_years_quit years";
+								     }elsif($smoke_flag == 2){
+									$sm="Smoke $cigs_a_day cigarettes a day.";
+								     }
+								     if ($smoke_other == 2){
+									if($chews_flag){$sm.= "; ".$lang{$current_language}{chew_tobacco}}
+									if($pipes_flag){$sm.= "; ".$lang{$current_language}{smoke_a_pipe}}
+									if($cigars_flag){$sm.= "; ".$lang{$current_language}{smoke_cigars}}
+								     }
+								     $sm;
+								   }</span><br>
+		   {$lang{$current_language}{alcohol_use}}:&nbsp;&nbsp;<span class="HSbodytextbold">{$drinks_week || $lang{$current_language}{none}} {$lang{$current_language}{per_week}}</span><br>
+		   {$lang{$current_language}{physical_activity}}:&nbsp;&nbsp;<span class="HSbodytextbold">{$exercise}</span><br>
+		   {$lang{$current_language}{overall_health}}:&nbsp;&nbsp;<span class="HSbodytextbold">{$overall_health}</span><br>
+		   {$lang{$current_language}{life_satisfaction}}:&nbsp;&nbsp;<span class="HSbodytextbold">{$life_satisfaction}</span><br>
+		   {$lang{$current_language}{personal_loss}}:&nbsp;&nbsp;<span class="HSbodytextbold">{$loss}</span><br>
+		   {$lang{$current_language}{fiber_in_diet}}:&nbsp;&nbsp;<span class="HSbodytextbold">{$fiber}</span><br>
+		   {$lang{$current_language}{fat_in_diet}}:&nbsp;&nbsp;<span class="HSbodytextbold">{$fat}</span><br>
+		   { $mh='';
+		     if($sex eq FEMALE){
+			$mh=qq|$lang{$current_language}{hysterectomy}:&nbsp;&nbsp;<span class="HSbodytextbold">$hyst_female</span><br>|;
+			$mh.=qq|$lang{$current_language}{family_breast_cancer}:&nbsp;&nbsp;<span class="HSbodytextbold">$fam_breast_cancer</span><br>|;
+			$mh.=qq|$lang{$current_language}{age_of_menarch}:&nbsp;&nbsp;<span class="HSbodytextbold">$menarche_female</span><br>|;
+		     }
+		     $mh;
+		     }
+		   {$lang{$current_language}{family_history}}: <span class="HSbodytextbold">{$family_short}</span>
+		   </span></p>
+		   <p><span class="HSsubtitle">{$lang{$current_language}{hra_msg22}}</span><br>
+			<span class="HSbodytext">{ $pm='';
+						if ($sex eq MALE){
+							$pm = qq|$lang{$current_language}{last_rectal_exam}: <span class="HSbodytextbold">$rectal_male</span><br>|;
+						}else{
+							$pm = qq|$lang{$current_language}{last_pap_exam}: <span class="HSbodytextbold">$pap_female</span><br>|;
+							$pm .= qq|$lang{$current_language}{last_mammogram}: <span class="HSbodytextbold">$mammogram_female</span><br>|;
+							$pm .= qq|$lang{$current_language}{last_rectal_exam}: <span class="HSbodytextbold">$rectal_female</span><br>|;
+							$pm .=  qq|$lang{$current_language}{last_clinical_breast_exam}: <span class="HSbodytextbold">$clinic_breast_exam</span><br>|;
+							$pm .= qq|$lang{$current_language}{self_breast_exam}: <span class="HSbodytextbold">$self_breast_exam</span><br>|;
+						}
+						$pm;
+						}
+			</span></P>
+		   <p class="HSbodytext"><span class="HSsubtitle">Readiness to Change</span><br>
+			<span class="HSbodytext">{ my $html='';
+						if ($r2c_autosafety){$html .= qq|$lang{$current_language}{drive_more_safely}: <span class="HSbodytextbold">$r2c_autosafety</span><br>|;}
+						if ($r2c_bp){$html .= qq|$lang{$current_language}{lower_blood_pressure}: <span class="HSbodytextbold">$r2c_bp</span><br>|;}
+						if ($r2c_checkups){$html .= qq|$lang{$current_language}{regular_examinations}: <span class="HSbodytextbold">$r2c_checkups</span><br>|;}
+						if ($r2c_cholesterol){$html .= qq|$lang{$current_language}{lower_cholesterol}: <span class="HSbodytextbold">$r2c_cholesterol</span><br>|;}
+						if ($r2c_exercise){$html .= qq|$lang{$current_language}{exercise_more}: <span class="HSbodytextbold">$r2c_exercise</span><br>|;}
+						if ($r2c_fat){$html .= qq|$lang{$current_language}{reduce_dietary_fat}: <span class="HSbodytextbold">$r2c_fat</span><br>|;}
+						if ($r2c_smoking){$html .= qq|$lang{$current_language}{stop_smoking}: <span class="HSbodytextbold">$r2c_smoking</span><br>|;}
+						if ($html eq ''){$html = $lang{$current_language}{hra_msg23}}
+						
+						$html;
+						}</span><br></td>
+
+			</span></P><p>&nbsp;</p>
+		</td>
+              </tr>
+              <tr>
+          	<td class="HSassessmentsGap" colspan=2></td>
+              </tr>
+              <tr>
+          	<td class="HSassessmentsGap" colspan=2></td>
+              </tr>
+              <tr valign="bottom">
+                <td height="50" align="left"><input type="image" border=0 name="hra_3.tmpl" value="hra_3.tmpl" {$back}></td>
+                <td align="right" height="50">&nbsp;{my $html = qq|<a href="$member">$lang{$current_language}{assessment_records}</a>| unless $status eq 'retake';$html;}
+			{ $hidden_cgi_fields }
+		</td>
+              </tr>
+            </table></form>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td class="HSassessmentsGap"></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td class="HScopyright">{$copyright}</td>
+        </tr>
+      </table>
+      </div>
+    <!-- Template: hra_4.tmpl End -->
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$footer_file", PACKAGE => __PACKAGE__ );
+}

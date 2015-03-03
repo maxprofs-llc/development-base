@@ -1,0 +1,659 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}batch_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}gwb_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}batch_header.tmpl", PACKAGE => __PACKAGE__ );
+}       <div class="HSstyle">
+		<table width="660" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td align=left class="HSbodytext">Quick entry tips:<br>* tab key moves you from field to field<br>* enter is the same as clicking submit<br>* repeated pressing of the first key moves you down a drop down list (press M twice to get to May in the month field)<br> <br></td>
+        </tr>
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td align=left class="HStitle"><img src="images/global/trans.gif" width="1" height="22">Batch Entry General Well-being Assessment</td>
+        </tr>
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td align="center" valign="top">
+            <!--Form and form table START here. Table max width no more than 560 pixels.-->
+            <form METHOD="POST" action="/cgi-bin/hs/batch_entry.cgi" name="theForm">
+              <table border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td align="right" class="HSbodytext" colspan=3>
+                    Switch assessment <a href="{$crc_batch}">[ cardiac ]</a> <a href="{$fit_batch}">[ fit ]</a> <a href="{$drc_batch}">[ diabetes ]</a> <a href="{$gha_batch}">[ health risk ]</a><br />&nbsp;<br />
+					Batch Number {$db_batch_number}<br />Well-being Assessments entered {$db_batch_count_gwb}<br />Total Assessments entered {$db_batch_count}<br />&nbsp;<br />
+                    <a href="{$end_batch}">[ close batch ]</a><br />
+                    <a href="{$print_batch}">[ close and print batch ]</a><br />&nbsp;<br />
+                    <a href="{$member}">[ assessment records page ]</a><br />&nbsp;<br />
+					<input type="hidden" name="assessment" value="GWB">
+					<input type=hidden name="output_format" value="BATCH">
+					<input type=hidden name="db_batch_entered_by" value="">
+					<input type=hidden name="db_batch_count" value="">
+					<input type=hidden name="db_batch_count_crc" value="">
+					<input type=hidden name="db_batch_count_drc" value="">
+					<input type=hidden name="db_batch_count_fit" value="">
+					<input type=hidden name="db_batch_count_gha" value="">
+					<input type=hidden name="db_batch_count_gwb" value="">
+					<input type=hidden name="db_batch_count_hra" value="">
+					<input type=hidden name="db_batch_count_mr" value="">
+					<input type=hidden name="db_batch_count_pt" value="">
+					<input type=hidden name="db_batch_number" value="">
+					<input type=hidden name="db_number" value="">
+					<input type=hidden name="page" value="1">
+					</td>
+				</tr>
+                <tr>
+                  <td align="right" class="HSbodytext">User ID:</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input NAME="db_id" SIZE="15" maxlength="25" type="text"  class="HSquestion" />
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+				<tr>
+					<td align="right" class="HSbodytext">Registration/Location Number:</td>
+					<td>&nbsp;</td>
+					<td><input name="siteid" type="text" size="18"  class="HSquestion" /></td>
+				</tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+				<tr>
+                  <td align="right" class="HSbodytext">First name:</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input NAME="first_name" SIZE="28" value="" class="HSquestion">
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Last name:</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input NAME="last_name" SIZE="28" value="" class="HSquestion">
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Date of Birth:</td>
+                  <td><img src="images/global/trans.gif" width="10" height="1"></td>
+                  <td>
+                    <select class="HSquestion" name="birth_month" size="1">
+							<option value="01">Jan</option>
+							<option value="02">Feb</option>
+							<option value="03">Mar</option>
+							<option value="04">Apr</option>
+							<option value="05">May</option>
+							<option value="06">Jun</option>
+							<option value="07">Jul</option>
+							<option value="08">Aug</option>
+							<option value="09">Sep</option>
+							<option value="10">Oct</option>
+							<option value="11">Nov</option>
+							<option value="12">Dec</option>
+					</select>
+					<select class="HSquestion" name="birth_date" size="1">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+							<option value="12">12</option>
+							<option value="13">13</option>
+							<option value="14">14</option>
+							<option value="15">15</option>
+							<option value="16">16</option>
+							<option value="17">17</option>
+							<option value="18">18</option>
+							<option value="19">19</option>
+							<option value="20">20</option>
+							<option value="21">21</option>
+							<option value="22">22</option>
+							<option value="23">23</option>
+							<option value="24">24</option>
+							<option value="25">25</option>
+							<option value="26">26</option>
+							<option value="27">27</option>
+							<option value="28">28</option>
+							<option value="29">29</option>
+							<option value="30">30</option>
+							<option value="31">31</option>
+		  			</select>
+		  			<input class="HSquestion" NAME="birth_year" SIZE="4" maxlength="4" value="19xx">
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Sex:</td>
+                  <td>&nbsp;</td>
+                  <td>
+					<select class="HSquestion" NAME="sex">
+						<option value="">&nbsp;</option>
+						<option value="Female">Female</option>
+						<option value="Male">Male</option>
+					</select>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">How have you been feeling in general during the past month?</td>
+                  <td>&nbsp;</td>
+                  <td>
+					<select class="HSquestion" name="q1">
+						<option value="">&nbsp;</option>
+						<option value="5">excellent spirits</option>
+						<option value="4">very good spirits</option>
+						<option value="3">good spirits mostly</option>
+						<option value="2">up and down in spirits</option>
+						<option value="1">in low spirits mostly </option>
+						<option value="0">in very low spirits</option>
+					</select>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">How often were you bothered by any illness, bodily disorder, aches or pains during the past month?</td>
+                  <td>&nbsp;</td>
+                  <td>
+					<select class="HSquestion" name="q2">
+						<option value="">&nbsp;</option>
+						<option value="0">every day </option>
+						<option value="1">almost every day</option>
+						<option value="2">about half of the time</option>
+						<option value="3">now and then, but less than half</option>
+						<option value="4">rarely</option>
+						<option value="5">none of the time</option>
+					</select>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Did you feel depressed during the past month?</td>
+                  <td>&nbsp;</td>
+                  <td>
+					<select class="HSquestion" name="q3">
+						<option value="">&nbsp;</option>
+						<option value="0">Yes - to the point that I felt like taking my life</option>
+						<option value="1">Yes - to the point that I didn't care about anything</option>
+						<option value="2">Yes - very depressed almost every day</option>
+						<option value="3">Yes - quite depressed several times</option>
+						<option value="4">Yes - a little depressed now and then</option>
+						<option value="5">No - never felt depressed at all</option>
+					</select>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Have you been in firm control of your behavior, thoughts, emotions or feelings during the past month?</td>
+                  <td>&nbsp;</td>
+                  <td>
+					<select class="HSquestion" name="q4">
+						<option value="">&nbsp;</option>
+						<option value="5">Yes, definitely so </option>
+						<option value="4">Yes, for the most part </option>
+						<option value="3">generally so </option>
+						<option value="2">not too well</option>
+						<option value="1">No, and I am somewhat disturbed</option>
+						<option value="0">No, and I am very disturbed</option>
+					</select>
+                  </td>
+                </tr>
+               <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr valign="top">
+                  <td align="left" height="50"></td>
+                  <td align="right" height="50">&nbsp;</td>
+                  <td align="right" height="50"><input type="image" border=0 name="next" value="next" $next>
+					<input type=hidden name="page" value="1">
+					<input type=hidden name="output_format" value="HTML">
+					<input type=hidden name="q5" value=" ">
+					<input type=hidden name="q6" value=" ">
+					<input type=hidden name="q7" value=" ">
+					<input type=hidden name="q8" value=" ">
+					<input type=hidden name="q9" value=" ">
+					<input type=hidden name="q10" value=" ">
+					<input type=hidden name="q11" value=" ">
+					<input type=hidden name="q12" value=" ">
+					<input type=hidden name="q13" value=" ">
+					<input type=hidden name="q14" value=" ">
+					<input type=hidden name="q15" value=" ">
+					<input type=hidden name="q16" value=" ">
+					<input type=hidden name="q17" value=" ">
+					<input type=hidden name="q18" value=" ">
+					<input type=hidden name="q19" value=" ">
+					<input type=hidden name="q20" value=" ">
+					<input type=hidden name="q21" value=" ">
+					<input type=hidden name="q22" value=" ">
+					<input type=hidden name="assessment" value="GWB">
+				  </td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Have you been bothered by nervousness during the past month?</td>
+                  <td>&nbsp;</td>
+                  <td>
+					<select class="HSquestion" name="q5">
+						<option value="">&nbsp;</option>
+						<option value="0">every day </option>
+						<option value="1">almost every day</option>
+						<option value="2">about half of the time</option>
+						<option value="3">now and then, but less than half</option>
+						<option value="4">rarely</option>
+						<option value="5">none of the time</option>
+					</select>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">How much energy, pep, or vitality did you have during the past month?</td>
+                  <td><img src="images/global/trans.gif" width="10" height="1"></td>
+                  <td>
+					<select class="HSquestion" name="q6">
+						<option value="">&nbsp;</option>
+						<option value="5">very full of energy-lots of pep</option>
+						<option value="4">fairly energetic most of the time</option>
+						<option value="3">my energy varied quite a bit</option>
+						<option value="2">generally low energy or pep</option>
+						<option value="1">very low in energy or pep most of the time</option>
+						<option value="0">no energy or pep at all - I felt drained, sapped</option>
+					</select>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">I felt downhearted and blue during the past month:</td>
+                  <td>&nbsp;</td>
+                  <td>
+					<select class="HSquestion" name="q7">
+						<option value="">&nbsp;</option>
+						<option value="5">none of the time</option>
+						<option value="4">a little of the time</option>
+						<option value="3">some of the time</option>
+						<option value="2">a good bit of the time</option>
+						<option value="1">most of the time</option>
+						<option value="0">all of the time</option>
+					</select>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Were you generally tense or did you feel any tension during the past month?</td>
+                  <td>&nbsp;</td>
+                  <td>
+					<select class="HSquestion" name="q8">
+						<option value="">&nbsp;</option>
+						<option value="0">Yes - extremely tense, most or all of the time</option>
+						<option value="1">Yes - very tense most of the time</option>
+						<option value="2">did feel fairly tense several times</option>
+						<option value="3">I felt a little tense a few times </option>
+						<option value="4">My general tension level was quite low</option>
+						<option value="5">I never felt tense or any tension at all</option>
+					</select>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">How happy, satisfied, or pleased have you been with your personal life during the past month?</td>
+                  <td>&nbsp;</td>
+                  <td>
+					<select class="HSquestion" name="q9">
+						<option value="">&nbsp;</option>
+						<option value="5">extremely happy</option>
+						<option value="4">very happy most of the time</option>
+						<option value="3">generally satisfied - pleased</option>
+						<option value="2">sometimes fairly happy</option>
+						<option value="1">generally dissatisfied, unhappy</option>
+						<option value="0">very dissatisfied or unhappy most of the time</option>
+					</select>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Did you feel healthy enough to carry out the things you like to do or had to do during the past month?</td>
+                  <td>&nbsp;</td>
+                  <td>
+					<select class="HSquestion" name="q10">
+						<option value="">&nbsp;</option>
+						<option value="5">Yes - definitely so</option>
+						<option value="4">for the most part</option>
+						<option value="3">health problems limited me in important ways</option>
+						<option value="2">I was only healthy enough to take care of myself </option>
+						<option value="1">I needed some help in taking care of myself</option>
+						<option value="0">I needed help with most things I do</option>
+					</select>
+				  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Have you felt so sad, discouraged, or hopeless or had so many problems that you wondered if anything was worthwhile during the past month?</td>
+                  <td>&nbsp;</td>
+                  <td>
+					<select class="HSquestion" name="q11">
+						<option value="">&nbsp;</option>
+						<option value="0">extremely so - I have just about given up</option>
+						<option value="1">very much so</option>
+						<option value="2">quite a bit</option>
+						<option value="3">some - enough to bother me</option>
+						<option value="4">a little bit</option>
+						<option value="5">not at all</option>
+					</select>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">I woke up feeling fresh and rested during the past month:</td>
+                  <td>&nbsp;</td>
+                  <td>
+					<select class="HSquestion" name="q12">
+						<option value="">&nbsp;</option>
+						<option value="0">none of the time</option>
+						<option value="1">a little of the time</option>
+						<option value="2">some of the time </option>
+						<option value="3">a good bit of the time </option>
+						<option value="4">most of the time </option>
+						<option value="5">all of the time </option>
+					</select>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Have you been concerned, worried or had any fears about your health during the past month?</td>
+                  <td><img src="images/global/trans.gif" width="10" height="1"></td>
+                  <td>
+					<select class="HSquestion" name="q13">
+						<option value="">&nbsp;</option>
+						<option value="0">extremely so</option>
+						<option value="1">very much so</option>
+						<option value="2">quite a bit</option>
+						<option value="3">some but not a lot</option>
+						<option value="4">practically never</option>
+						<option value="5">not at all</option>
+					</select>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Have you had any reason to wonder if you were losing your mind, or losing control over the way you act, talk, think, feel or of your memory during the past month?</td>
+                  <td>&nbsp;</td>
+                  <td>
+					<select class="HSquestion" name="q14">
+						<option value="">&nbsp;</option>
+						<option value="5">not at all</option>
+						<option value="4">only a little</option>
+						<option value="3">some but not enough to be concerned about</option>
+						<option value="2">some, and I'm a little concerned</option>
+						<option value="1">some and I'm quite concerned</option>
+						<option value="0">very much so and I am very concerned</option>
+					</select>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">My daily life was full of things that were interesting to me during the past month.</td>
+                  <td>&nbsp;</td>
+                  <td>
+					<select class="HSquestion" name="q15">
+						<option value="">&nbsp;</option>
+						<option value="0">none of the time</option>
+						<option value="1">a little of the time</option>
+						<option value="2">some of the time</option>
+						<option value="3">a good bit of the time</option>
+						<option value="4">most of the time</option>
+						<option value="5">all of the time</option>
+					</select>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Did you feel active, vigorous, or dull sluggish during the past month?</td>
+                  <td>&nbsp;</td>
+                  <td>
+					<select class="HSquestion" name="q16">
+						<option value="">&nbsp;</option>
+						<option value="5">very active, vigorous every day</option>
+						<option value="4">mostly active, vigorous - never dull or sluggish</option>
+						<option value="3">fairly active, vigorous - seldom dull, sluggish</option>
+						<option value="2">fairly dull, sluggish - seldom active, vigorous </option>
+						<option value="1">mostly dull, sluggish - never really active</option>
+						<option value="0">very dull, sluggish every day</option>
+					</select>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Have you been anxious, worried, or upset during the past month?</td>
+                  <td>&nbsp;</td>
+                  <td>
+					<select class="HSquestion" name="q17">
+						<option value="">&nbsp;</option>
+						<option value="0">extremely so - to the point of being sick</option>
+						<option value="1">very much so</option>
+						<option value="2">quite a bit</option>
+						<option value="3">some - enough to bother me</option>
+						<option value="4">a little bit</option>
+						<option value="5">not at all</option>
+					</select>
+				  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">I was emotionally stable and sure of myself during the past month:</td>
+                  <td>&nbsp;</td>
+                  <td>
+					<select class="HSquestion" name="q18">
+						<option value="">&nbsp;</option>
+						<option value="0">none of the time</option>
+						<option value="1">a little of the time</option>
+						<option value="2">some of the time</option>
+						<option value="3">a good bit of the time</option>
+						<option value="4">most of the time</option>
+						<option value="5">all of the time</option>
+					</select>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Did you feel relaxed, at ease or high strung, tight or keyed up during the past month?</td>
+                  <td>&nbsp;</td>
+                  <td>
+					<select class="HSquestion" name="q19">
+						<option value="">&nbsp;</option>
+						<option value="5">relaxed and at ease all month</option>
+						<option value="4">relaxed and at ease most of the time</option>
+						<option value="3">generally felt relaxed, at times felt high strung</option>
+						<option value="2">generally felt high strung but at times felt relaxed </option>
+						<option value="1">high strung, tight or keyed-up most of the time</option>
+						<option value="0">felt high strung, tight or keyed-up the whole month</option>
+					</select>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">I felt cheerful, lighthearted during the past month:</td>
+                  <td><img src="images/global/trans.gif" width="10" height="1"></td>
+                  <td>
+					<select class="HSquestion" name="q20">
+						<option value="">&nbsp;</option>
+						<option value="0">none of the time</option>
+						<option value="1">a little of the time</option>
+						<option value="2">some of the time</option>
+						<option value="3">a good bit of the time</option>
+						<option value="4">most of the time</option>
+						<option value="5">all of the time</option>
+					</select>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">I felt tired, worn out, used up or exhausted during the past month:</td>
+                  <td>&nbsp;</td>
+                  <td>
+					<select class="HSquestion" name="q21">
+						<option value="">&nbsp;</option>
+						<option value="5">none of the time</option>
+						<option value="4">a little of the time</option>
+						<option value="3">some of the time</option>
+						<option value="2">a good bit of the time</option>
+						<option value="1">most of the time</option>
+						<option value="0">all of the time</option>
+					</select>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Have you been under or felt you were under any strain, stress or pressure during the past month?</td>
+                  <td>&nbsp;</td>
+                  <td>
+					<select class="HSquestion" name="q22">
+						<option value="">&nbsp;</option>
+						<option value="0">Yes - almost more than I could bear or stand</option>
+						<option value="1">Yes - quite a bit of pressure</option>
+						<option value="2">Yes, some - more than usual</option>
+						<option value="3">Yes, some - but about usual</option>
+						<option value="4">Yes - a little</option>
+						<option value="5">not at all</option>
+					</select>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input type="image" border=0 name="assess" value="assess" {$submit}>
+                  </td>
+                </tr>
+              </table>
+            </form>
+            <!--Form and form table END here.-->
+          </td>
+        </tr>
+      </table>
+      </div>
+      {$copyright}<p>&nbsp;</p>
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$footer_file", PACKAGE => __PACKAGE__ );
+}

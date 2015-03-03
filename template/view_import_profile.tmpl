@@ -1,0 +1,15 @@
+{
+                my $html;
+                $html .= qq|
+<tr>
+                <td align=left class="HStitle" colspan=3><b>View Import Administration</b></td>
+<hr />
+                $message
+                </form>
+                |;
+                $html;
+}
+<hr>
+
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}
+

@@ -1,0 +1,171 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}gha_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}gha_links.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE => __PACKAGE__ );
+}       <!-- Template: gha_9.tmpl -->
+	<!-- Templates called: gha_variables.tmpl, gha_links.tmpl, {$footer_file}, {$config{variables_template}},  {$header_file} -->
+	       <div class="HSstyle">
+		<table class="HSassessments">
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td valign="top"><form method="post" action="{$pager}">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td colspan="2" class="HSbodytext1">
+                 <p>{$date} for {$name} - Results from {$ass_title}<br>Contact: <a href="mailto:{$db_email}">{$db_email}</a></p>
+                </td>
+              </tr>
+              <tr>
+          	<td class="HSassessmentsGap"></td>
+              </tr>
+             <tr>
+                <td colspan="2" class="HSbodytext">
+                  <p><span class="HStitle">Summary Report</span><br><span class="HSbodytextbold">{$sex} - Age: {$actual_age} - DOB: {$birth_month}/{$birth_date}/{$birth_year}</span></p>
+		<p class="HSbodytext"><span class="HSsubtitle">Self Reported Measures and Habits</span><br>
+		   Weight:&nbsp;&nbsp;<span class="HSbodytextbold">{$weight}</span><br>
+		   Height:&nbsp;&nbsp;<span class="HSbodytextbold">{my $html; if($units eq "Metric"){$html=$height_metric} else {$html=$height_imperial} $html;}</span><br>
+		   {if($waist){'Waist:&nbsp;&nbsp;<span class="HSbodytextbold">'.$waist.'"</span><br>';}}
+		   
+		   Calculated body mass index:&nbsp;&nbsp;<span class="HSbodytextbold">{$bmi}</span><br>
+		   Blood Pressure:&nbsp;&nbsp;<span class="HSbodytextbold">
+		   {my $html;
+		    if($bp_sys) {$html = $bp_sys."/".$bp_dias;}else{$html= "Do not know exact numbers but selected ". lc($bp_check) if $bp_check}
+		    
+		    $html;
+		    }</span><br>
+		   On blood pressure medicine:&nbsp;&nbsp;<span class="HSbodytextbold">{$bp_meds || "No"}</span><br>
+		   Cholesterol:&nbsp;&nbsp;<span class="HSbodytextbold">{my $html;
+		    if($cholesterol) {$html = $cholesterol;}else{$html= "Do not know exact numbers but selected ". lc($chol_check) if ($chol_check)}
+		    
+		    $html;
+		    }</span><br>
+		   { if($ldl){ 'LDL:&nbsp;&nbsp;<span class="HSbodytextbold">'.$ldl.'</span><br>';}}
+		   HDL:&nbsp;&nbsp;<span class="HSbodytextbold">{$hdl || "No value entered."}</span><br>
+		   {if($hdl && $cholesterol){ 'Cholesterol Ratio: <span class="HSbodytextbold">'. $cholesterol_ratio. '</span><br>'; }}
+		   { if($triglycerides){ 'Triglycerides:&nbsp;&nbsp;<span class="HSbodytextbold">'.$triglycerides.'</span><br>';}}
+		   Diabetes:&nbsp;&nbsp;<span class="HSbodytextbold">{$diabetes || $diabetes_flag}</span><br>
+		   {if($glucose){ 'Fasting Glucose:&nbsp;&nbsp;<span class="HSbodytextbold">'.$glucose. '</span><br>';}}
+		   Tobacco use:&nbsp;&nbsp;<span class="HSbodytextbold">{ $sm='';
+								     if ($smoke_flag == 0){
+									$sm="None";
+								     }elsif($smoke_flag == 1){
+									$sm="Ex-smoker for $cigarette_years_quit years";
+								     }elsif($smoke_flag == 2){
+									$sm="Smoke $cigs_a_day cigarettes a day.";
+								     }
+								     if ($smoke_other == 2){
+									if($chews_flag){$sm.= "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Chew tobacco"}
+									if($pipes_flag){$sm.= "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Smoke a pipe"}
+									if($cigars_flag){$sm.= "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Smoke cigars"}
+								     }
+								     $sm;
+								   }</span><br>
+		   Alcohol use:&nbsp;&nbsp;<span class="HSbodytextbold">{$drinks_week || 'None'} per week</span><br>
+		   Physical activity:&nbsp;&nbsp;<span class="HSbodytextbold">{$exercise}</span><br>
+		   Overall health:&nbsp;&nbsp;<span class="HSbodytextbold">{$overall_health}</span><br>
+		   Life satisfaction:&nbsp;&nbsp;<span class="HSbodytextbold">{$life_satisfaction}</span><br>
+		   Personal loss:&nbsp;&nbsp;<span class="HSbodytextbold">{$loss}</span><br>
+		   Fiber in diet daily:&nbsp;&nbsp;<span class="HSbodytextbold">{$fiber}</span><br>
+		   Fat in diet daily:&nbsp;&nbsp;<span class="HSbodytextbold">{$fat}</span><br>
+		   {my $html;
+		   	if($assessment eq 'GHA' || $assessment eq 'HRA' ||$assessment eq 'CRC' ){
+		   		$html .= 'Previous Heart Attack:&nbsp;&nbsp;<span class="HSbodytextbold">'.$heart_attack.'</span><br>' if $heart_attack;
+		   		$html .= 'Family History Heart Attack:&nbsp;&nbsp;<span class="HSbodytextbold">'.$family_heart_attack.'</span><br>' if $family_heart_attack;
+		   		}
+		   }
+		   { $mh='';
+		     if($sex eq FEMALE){
+			$mh=qq|Hysterectomy:&nbsp;&nbsp;<span class="HSbodytextbold">$hyst_female</span><br>|;
+			$mh.=qq|Family breast cancer:&nbsp;&nbsp;<span class="HSbodytextbold">$fam_breast_cancer</span><br>|;
+			$mh.=qq|Age of menarch:&nbsp;&nbsp;<span class="HSbodytextbold">$menarche_female</span><br>|;
+		     }
+		     $mh;
+		     }
+		   </span></p>
+		   <p class="HSbodytext"><span class="HSsubtitle">Self Reported Preventative Services</span><br>
+			<span class="HSbodytext">{ $pm='';
+						if ($sex eq MALE){
+							$pm = qq|Last rectal exam: <span class="HSbodytextbold">$rectal_male</span><br>|;
+						}else{
+							$pm = qq|Last Pap exam: <span class="HSbodytextbold">$pap_female</span><br>|;
+							$pm .= qq|Last mammogram: <span class="HSbodytextbold">$mammogram_female</span><br>|;
+							$pm .= qq|Last rectal exam: <span class="HSbodytextbold">$rectal_female</span><br>|;
+							$pm .=  qq|Last clinical breast exam: <span class="HSbodytextbold">$clinic_breast_exam</span><br>|;
+							$pm .= qq|Self breast exam: <span class="HSbodytextbold">$self_breast_exam</span><br>|;
+						}
+						$pm;
+						}
+			</span></P>
+		   <p class="HSbodytext"><span class="HSsubtitle">Readiness to Change</span><br>
+			<span class="HSbodytext">{ my $html='';
+						if ($r2c_autosafety){$html .= qq|Drive more safely: <span class="HSbodytextbold">$r2c_autosafety</span><br>|;}
+						if ($r2c_bp){$html .= qq|Lower Blood pressure: <span class="HSbodytextbold">$r2c_bp</span><br>|;}
+						if ($r2c_checkups){$html .= qq|Regular examinations: <span class="HSbodytextbold">$r2c_checkups</span><br>|;}
+						if ($r2c_cholesterol){$html .= qq|Lower Cholesterol: <span class="HSbodytextbold">$r2c_cholesterol</span><br>|;}
+						if ($r2c_exercise){$html .= qq|Exercise more: <span class="HSbodytextbold">$r2c_exercise</span><br>|;}
+						if ($r2c_fat){$html .= qq|Reduce dietary fat: <span class="HSbodytextbold">$r2c_fat</span><br>|;}
+						if ($r2c_smoking){$html .= qq|Stop smoking: <span class="HSbodytextbold">$r2c_smoking</span><br>|;}
+						if ($html eq ''){$html = "Major habits meet standard recommendations."}
+						
+						$html;
+						}
+			</span></P>
+		  <p class="HSBodytext"><span class="HSsubtitle">Calculated Values</span><br>
+		  { my $html;
+		  	if($assessment eq 'GHA' || $assessment eq 'HRA'){
+		  		$html .= 'Wellness Score = '. $wellness .'  (below 70 is high risk, 85 or above is low risk)';}
+		  	elsif($assessment eq 'DRC'){
+		  		$html .= 'Diabetes Risk Score = '. $diabetes_points . '  (9 or over is high risk, 6 to 8.9 is moderate risk, below 6 is low risk)';}
+		  	elsif($assessment eq 'CRC'){
+		  		$html .= do{
+						if ($cardiac_risk < ($cardiac_average_risk * .50)) 	{ "Very low risk" }
+						elsif ($cardiac_risk < ($cardiac_average_risk * .65))	{ "Half the risk for an average $age-year-old $lc_sex" }
+						elsif ($cardiac_risk < ($cardiac_average_risk * .85))	{ "Less than average risk" }
+						elsif ($cardiac_risk > ($cardiac_average_risk * 1.35))	{ "Significantly above average risk" }
+						elsif ($cardiac_risk > ($cardiac_average_risk * 1.15))	{ "Above average risk" }
+						else 							{ "About average risk" }
+						};
+						my $cardiac_risk_rounded  = sprintf( "%.0f", $cardiac_risk  * 1000 ) || sprintf("%.2f", $cardiac_risk    * 1000 );
+
+					$html .= "<br>chances of dying over the next 10 years from heart disease are $cardiac_risk_rounded in 1,000";
+					}
+
+		  }		
+		<p>&nbsp;</p>
+		</td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right" colspan="2" height="10">&nbsp;</td>
+              </tr>
+              <tr valign="bottom">
+                <td height="50" align="left"> </td>
+                <td align="right" height="50">&nbsp; 
+			{ $hidden_cgi_fields }
+		</td>
+              </tr>
+            </table></form>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td class="HSassessmentsGap"></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td class="HScopyright">{$copyright}</td>
+        </tr>
+      </table>
+      </div>
+    <!-- Template: gha_9.tmpl End -->
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$footer_file", PACKAGE => __PACKAGE__ );
+}

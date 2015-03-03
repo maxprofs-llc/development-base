@@ -1,0 +1,46 @@
+{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+
+
+<h1>Coach Assignment</h1>
+
+{if ($msg) {"<span class=\"message\">$msg</span><hr />"}else{""}}
+
+<b>Coach</b>: {"$coach_user{full_name} ($coach_user{hs_uid})"}
+
+{
+## Only show this form if there are current coachees
+if (@coached_list) {
+	$OUT .= qq|<br /><br />Currently coaching:
+
+<form method="POST" name="coach_form">
+<ul>|;
+
+foreach (@coached_list) {
+	$OUT .= qq|\n<li><input type="checkbox" name="select_coached" value="$$_{unum}" />$$_{name}</li>|;
+}
+
+$OUT .= qq|</ul>
+<input type="submit" name="remove_button" onClick="return confirm('Are you sure you want to remove the selected user(s) from this coach\\'s list?');" value="Remove selected user(s) from coaching list" />
+<input type="hidden" name="action" value="remove_coachees">
+<input type="hidden" name="coach" value="$coach_user{unum}">
+</form>|;
+}else{"";}}
+
+
+
+<form method="POST" name="coach_form">
+<br /><br />
+Add new coachee: 
+<select name="new_coachee">
+{foreach (@potential_coachees_list) {
+	$OUT .= "\n<option value=\"$$_{unum}\">$$_{name}</option>";
+}}
+</select>
+
+<input type="hidden" name="coach" value="$coach_user{unum}">
+<input type="hidden" name="action" value="add_coachee">
+<input type="submit" value="Add" />
+</form>
+
+<br /><br /><a href="assign_coaches.cgi">Back to coach list</a>
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

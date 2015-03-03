@@ -1,0 +1,1600 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}gha_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$header_in_file", PACKAGE => __PACKAGE__ );
+}   <!-- Template: gha_metric_qset.tmpl -->
+	<!-- Templates called: gha_variables.tmpl, {$footer_file}, {$config{variables_template}},  {$header_in_file} -->
+	       <div class="HSstyle">
+		<table class="HSassessments">
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td align=left><img src="images/global/trans.gif" width="1" height="22"><br>
+            {$gha_title}<br>
+            <img src="images/global/trans.gif" width="1" height="8"><br>
+            <span class="HSintro">Our General Health Risk Assessment provides
+            you with your health risks and key habits that you can change to live
+            healthier.<br>
+            </span><br>
+            <img src="images/global/trans.gif" width="1" height="18"><br>
+            {$gha_subtitle_in}<br>
+             &nbsp;<br><span class="HSbodytext1">Page {$curr_page} of 7<br>&nbsp;<br>Use the back and next buttons at the bottom of the page to move between the pages, DO NOT use the buttons on your browser or keyboard to change pages.</span><br>
+           <img src="images/global/trans.gif" width="1" height="10"></td>
+        </tr>
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td align="center" valign="top">
+            <!--Form and form table START here. Table max width no more than 560 pixels.-->
+            <form METHOD="POST" action="{$collector}" name="theForm" onSubmit="return checkWholeForm(this)">
+              <table border="0" cellspacing="0" cellpadding="0" width="550">
+{
+my $html_page;
+if ($curr_page == 1) {
+	$html_page = qq|<tr>
+                  <td align="right" class="HSbodytext">First name:</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ">
+                    <input class="HSquestion" NAME="first_name" SIZE="28" value="" onKeyup="if(this.value.match(/[^A-Za-z \.]/))this.value=this.value.replace(/[^A-Za-z \.]/g,'')"> <span id="firstnameStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Last name:</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ">
+                    <input class="HSquestion" NAME="last_name" SIZE="28" value="" onKeyup="if(this.value.match(/[^A-Za-z \.\-]/))this.value=this.value.replace(/[^A-Za-z \.\-]/g,'')"> <span id="lastnameStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td><img src="images/global/trans.gif" height="5" width="220"></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Date of Birth:</td>
+                  <td><img src="images/global/trans.gif" width="10" height="1"></td>
+                  <td class="HSbodytextQ">
+                    <select class="HSquestion" name="birth_month" size="1">
+							<option value="01">Jan</option>
+							<option value="02">Feb</option>
+							<option value="03">Mar</option>
+							<option value="04">Apr</option>
+							<option value="05">May</option>
+							<option value="06">Jun</option>
+							<option value="07">Jul</option>
+							<option value="08">Aug</option>
+							<option value="09">Sep</option>
+							<option value="10">Oct</option>
+							<option value="11">Nov</option>
+							<option value="12">Dec</option>
+					</select>
+					<select class="HSquestion" name="birth_date" size="1">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+							<option value="12">12</option>
+							<option value="13">13</option>
+							<option value="14">14</option>
+							<option value="15">15</option>
+							<option value="16">16</option>
+							<option value="17">17</option>
+							<option value="18">18</option>
+							<option value="19">19</option>
+							<option value="20">20</option>
+							<option value="21">21</option>
+							<option value="22">22</option>
+							<option value="23">23</option>
+							<option value="24">24</option>
+							<option value="25">25</option>
+							<option value="26">26</option>
+							<option value="27">27</option>
+							<option value="28">28</option>
+							<option value="29">29</option>
+							<option value="30">30</option>
+							<option value="31">31</option>
+		  			</select>
+		  			<input class="HSquestion" NAME="birth_year" SIZE="4" maxlength="4" value="19xx" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> <span id="birthStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Sex:</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ">
+					<select class="HSquestion" NAME="sex">
+						<option value="">&nbsp;</option>
+						<option value="Female">Female</option>
+						<option value="Male">Male</option>
+					</select> <span id="genderStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">What is your weight?<br>
+                    (in Kilograms)</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ">
+                    <input class="HSquestion" NAME="weight" SIZE="5" maxlength="3" onKeyup="if(this.value.match(/[^0-9\.]/))this.value=this.value.replace(/[^0-9\.]/g,'')"> <span id="weightStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">What is your height?</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ">
+					<select class="HSquestion" size="1" name="height">
+						<option value="124">124cm</option>
+						<option value="127">127cm</option>
+						<option value="130">130cm</option>
+						<option value="132">132cm</option>
+						<option value="135">135cm</option>
+						<option value="137">137cm</option>
+						<option value="140">140cm</option>
+						<option value="142">142cm</option>
+						<option value="145">145cm</option>
+						<option value="147">147cm</option>
+						<option value="150">150cm</option>
+						<option value="152">152cm</option>
+						<option value="155">155cm</option>
+						<option value="157">157cm</option>
+						<option value="160">160cm</option>
+						<option value="163">163cm</option>
+						<option value="165">165cm</option>
+						<option value="168" selected>168cm</option>
+						<option value="170">170cm</option>
+						<option value="173">173cm</option>
+						<option value="175">175cm</option>
+						<option value="178">178cm</option>
+						<option value="180">180cm</option>
+						<option value="183">183cm</option>
+						<option value="185">185cm</option>
+						<option value="188">188cm</option>
+						<option value="190">190cm</option>
+						<option value="193">193cm</option>
+						<option value="196">196cm</option>
+						<option value="198">198cm</option>
+						<option value="201">201cm</option>
+						<option value="203">203cm</option>
+						<option value="206">206cm</option>
+						<option value="208">208cm</option>
+						<option value="211">211cm</option>
+						<option value="213">213cm</option>
+						<option value="216">216cm</option>
+						<option value="218">218cm</option>
+						<option value="221">221cm</option>
+						<option value="223">223cm</option>
+						<option value="226">226cm</option>
+					</select> <span id="heightStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Body frame size?</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ">
+					<select class="HSquestion" NAME="frame_size">
+						<option value="">&nbsp;</option>
+						<option value="Small">Small</option>
+						<option value="Medium">Medium</option>
+						<option value="Large">Large</option>
+					</select> <span id="bodyframeStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Please indicate your race:</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ">
+					<select class="HSquestion" size="1" NAME="race">
+						<option value="">&nbsp;</option>
+						<option VALUE="African American">African American</option>
+						<option VALUE="Aleutian, Eskimo or American Indian">Aleutian</option>
+						<option VALUE="Aleutian, Eskimo or American Indian">American Indian</option>
+						<option VALUE="Asian"> Asian</option>
+						<option VALUE="Caucasian">Caucasian</option>
+						<option VALUE="Aleutian, Eskimo or American Indian">Eskimo</option>
+						<option VALUE="Hispanic">Hispanic/Latino</option>
+						<option VALUE="Other">Other </option>
+						<option VALUE="Don't know">Don't know</option>
+					</select> <span id="raceStatus" ></span>
+                  </td>
+                </tr>
+               <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Describe your smoking habits:</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ">
+					<select class="HSquestion" NAME="smoke_status">
+						<option value="">&nbsp;</option>
+						<option value="Never smoked">Never smoked</option>
+						<option value="Used to smoke">Used to smoke</option>
+						<option value="Still smoke">Still smoke</option>
+					</select> <span id="smokeStatus" ></span>
+                  </td>
+                </tr>
+               <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr valign="top">
+                  <td align="left" height="50"></td>
+                  <td align="right" height="50">&nbsp;</td>
+                  <td align="right" height="50"><input type="image" name="next" value="next" $next onmousedown="doValidate=true;">
+					<input type=hidden name="page" value="1">
+					<input type="hidden" name="assessment" value="GHA">
+					<input type=hidden name="output_format" value="HTML">
+					<input type=hidden value="" name="diabetes">
+					<input type=hidden value="" name="bp_meds">
+					<input type=hidden value="" name="bp_sys">
+					<input type=hidden value="" name="bp_dias">
+					<input type=hidden value="" name="bp_check">
+					<input type=hidden value="" name="cholesterol">
+					<input type=hidden value="" name="hdl">
+					<input type=hidden value="" name="cholesterol_check">
+					<input type=hidden value="" name="cigars_day">
+					<input type=hidden value="" name="pipes_day">
+					<input type=hidden value="" name="chews_day">
+					<input type=hidden value="" name="cigarette_years_quit">
+					<input type=hidden value="" name="cigs_a_day">
+					<input type=hidden value="" name="miles_car">
+					<input type=hidden value="" name="miles_motorcycle">
+					<input type=hidden value="" name="travel_mode">
+					<input type=hidden value="" name="seat_belt">
+					<input type=hidden value="" name="speed">
+					<input type=hidden value="" name="drink_and_drive">
+					<input type=hidden value="" name="drinks_week">
+					<input type=hidden value="" name="menarche_female">
+					<input type=hidden value="" name="birth_age_female">
+					<input type=hidden value="" name="mammogram_female">
+					<input type=hidden value="" name="fam_breast_cancer">
+					<input type=hidden value="" name="pap_female">
+					<input type=hidden value="" name="hyst_female">
+					<input type=hidden value="" name="self_breast_exam">
+					<input type=hidden value="" name="clinic_breast_exam">
+					<input type=hidden value="" name="rectal_female">
+					<input type=hidden value="" name="rectal_male">
+					<input type=hidden value="" name="exercise">
+					<input type=hidden value="" name="helmet">
+					<input type=hidden value="" name="fiber">
+					<input type=hidden value="" name="fat">
+					<input type=hidden value="" name="violence">
+					<input type=hidden value="" name="overall_health">
+					<input type=hidden value="" name="life_satisfaction">
+					<input type=hidden value="" name="job">
+					<input type=hidden value="" name="grade">
+					<input type=hidden value="" name="loss">
+					<input type=hidden value="" name="r2c_autosafety">
+					<input type=hidden value="" name="r2c_bp">
+					<input type=hidden value="" name="r2c_checkups">
+					<input type=hidden value="" name="r2c_cholesterol">
+					<input type=hidden value="" name="r2c_drink">
+					<input type=hidden value="" name="r2c_exercise">
+					<input type=hidden value="" name="r2c_fat">
+					<input type=hidden value="" name="r2c_smoke">
+					<input type=hidden value="" name="r2c_stress">
+					<input type=hidden value="" name="r2c_weight">
+					<input type=hidden value="Metric" name="units">
+					<input type=hidden value="metric" name="qset">
+                  </td>
+                </tr>|;
+	}
+elsif ($curr_page == 2) {
+	$html_page = qq|               <tr>
+                  <td align="right" class="HSbodytext">Have you ever been told that you have diabetes?</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ">
+					<select class="HSquestion" name="diabetes">
+						<option value="">&nbsp;</option>
+						<option value="No">No</option>
+						<option value="Yes">Yes</option>
+					</select> <span id="diabetesStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Are you now taking medicine for high blood pressure?</td>
+                  <td><img src="images/global/trans.gif" width="10" height="1"></td>
+                  <td class="HSbodytextQ">
+					<select class="HSquestion" name="bp_meds">
+						<option value="">&nbsp;</option>
+						<option value="No">No</option>
+						<option value="Yes">Yes</option>
+					</select> <span id="bpmedsStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">What is your blood pressure now?<br>
+					Systolic (high number):<br>Diastolic (low number):</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ">&nbsp;<br>
+                    <input type="TEXT"  class="HSquestion" name="bp_sys" SIZE="3" MAXLENGTH="3"  onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> <span id="bpsysStatus" ></span><br>
+					<input type="TEXT"  class="HSquestion" name="bp_dias" SIZE="3" MAXLENGTH="3"  onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> <span id="bpdiasStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">If you do not know the numbers, which describes your blood pressure?</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ">
+					<select class="HSquestion" name="bp_check">
+						<option value="">&nbsp;</option>
+						<option value="High">High</option>
+						<option value="Normal or low">Normal or low</option>
+						<option value="Don't know">Don't know</option>
+					</select> <span id="bpcheckStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">What is your TOTAL cholesterol level?</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ">
+					<input type="TEXT"  class="HSquestion" name="cholesterol" SIZE="3" MAXLENGTH="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> <span class="HSbodytext">mg/dl</span> <span id="cholStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">What is your HDL cholesterol (also known as good cholesterol)?</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ">
+					<input type="TEXT"  class="HSquestion" name="hdl" SIZE="3" MAXLENGTH="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> <span class="HSbodytext">mg/dl</span> <span id="hdlStatus" ></span>
+                  </td>
+                </tr>
+               <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">If you do not know the numbers, which describes your cholesterol?</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ">
+					<select class="HSquestion" name="cholesterol_check">
+						<option value="">&nbsp;</option>
+						<option value="High">High</option>
+						<option value="Normal or low">Normal or low</option>
+						<option value="Don't know">Don't know</option>
+					</select> <span id="cholcheckStatus" ></span>
+                  </td>
+                </tr>
+               <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr valign="top">
+                  <td align="left" height="50"><input type="image" name="prev" value="prev" $back onmousedown="doValidate=false;"></td>
+                  <td align="right" height="50">&nbsp;</td>
+                  <td align="right" height="50"><input type="image" name="next" value="next" $next onmousedown="doValidate=true;">
+					<input type=hidden name="page" value="2">
+					<input type="hidden" name="assessment" value="GHA">
+					<input type=hidden name="output_format" value="HTML">
+					<input type=hidden value="" name="first_name">
+					<input type=hidden value="" name="last_name">
+					<input type=hidden value="" name="birth_month">
+					<input type=hidden value="" name="birth_date">
+					<input type=hidden value="" name="birth_year">
+					<input type=hidden value="" name="sex">
+					<input type=hidden value="" name="height">
+					<input type=hidden value="" name="weight">
+					<input type=hidden value="" name="frame_size">
+					<input type=hidden value="" name="race">
+					<input type=hidden value="" name="cigars_day">
+					<input type=hidden value="" name="pipes_day">
+					<input type=hidden value="" name="chews_day">
+					<input type=hidden value="" name="smoke_status">
+					<input type=hidden value="" name="cigarette_years_quit">
+					<input type=hidden value="" name="cigs_a_day">
+					<input type=hidden value="" name="miles_car">
+					<input type=hidden value="" name="miles_motorcycle">
+					<input type=hidden value="" name="travel_mode">
+					<input type=hidden value="" name="seat_belt">
+					<input type=hidden value="" name="speed">
+					<input type=hidden value="" name="drink_and_drive">
+					<input type=hidden value="" name="drinks_week">
+					<input type=hidden value="" name="menarche_female">
+					<input type=hidden value="" name="birth_age_female">
+					<input type=hidden value="" name="mammogram_female">
+					<input type=hidden value="" name="fam_breast_cancer">
+					<input type=hidden value="" name="pap_female">
+					<input type=hidden value="" name="hyst_female">
+					<input type=hidden value="" name="self_breast_exam">
+					<input type=hidden value="" name="clinic_breast_exam">
+					<input type=hidden value="" name="rectal_female">
+					<input type=hidden value="" name="rectal_male">
+					<input type=hidden value="" name="exercise">
+					<input type=hidden value="" name="helmet">
+					<input type=hidden value="" name="fiber">
+					<input type=hidden value="" name="fat">
+					<input type=hidden value="" name="violence">
+					<input type=hidden value="" name="overall_health">
+					<input type=hidden value="" name="life_satisfaction">
+					<input type=hidden value="" name="job">
+					<input type=hidden value="" name="grade">
+					<input type=hidden value="" name="loss">
+					<input type=hidden value="" name="r2c_autosafety">
+					<input type=hidden value="" name="r2c_bp">
+					<input type=hidden value="" name="r2c_checkups">
+					<input type=hidden value="" name="r2c_cholesterol">
+					<input type=hidden value="" name="r2c_drink">
+					<input type=hidden value="" name="r2c_exercise">
+					<input type=hidden value="" name="r2c_fat">
+					<input type=hidden value="" name="r2c_smoke">
+					<input type=hidden value="" name="r2c_stress">
+					<input type=hidden value="" name="r2c_weight">
+					<input type=hidden value="Metric" name="units">
+					<input type=hidden value="metric" name="qset">
+                  </td>
+                </tr>|;
+	}
+elsif ($curr_page == 3) {
+	$html_page = qq|               <tr>
+                  <td align="right" class="HSbodytext">How many cigars do you smoke each day?</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ">
+					<select class="HSquestion" name="cigars_day">
+						<option value="">&nbsp;</option>
+						<option value="None">None</option>
+						<option value="One">One</option>
+						<option value="Two or More">Two or More</option>
+					</select> <span id="cigarStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">How many pipes of tobacco do you usually smoke each day?</td>
+                  <td><img src="images/global/trans.gif" width="10" height="1"></td>
+                  <td class="HSbodytextQ">
+					<select class="HSquestion" name="pipes_day">
+						<option value="">&nbsp;</option>
+						<option value="None">None</option>
+						<option value="One">One</option>
+						<option value="Two or More">Two or More</option>
+					</select> <span id="pipeStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">How many times per day do you usually use smokeless tobacco?</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ">
+					<select class="HSquestion" name="chews_day">
+						<option value="">&nbsp;</option>
+						<option value="None">None</option>
+						<option value="One">One</option>
+						<option value="Two or More">Two or More</option>
+					</select> <span id="chewStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>|;
+	$html_page .= qq|<tr>
+						  <td align="right" class="HSbodytext">How many years has it been since you smoked cigarettes fairly regularly?</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ">&nbsp;<br>
+							<input type="TEXT"  class="HSquestion" name="cigarette_years_quit" SIZE="3" value="" onKeyup="if(this.value.match(/[^0-9\.]/))this.value=this.value.replace(/[^0-9\.]/g,'')"> years <span id="cigyearsquitStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>| if ($smoke_status eq USE_TO_SMOKE);
+	$html_page .= qq|<tr>
+						  <td align="right" class="HSbodytext">How many cigarettes a day do you, or did you, smoke?</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ">
+							<input type="TEXT"  class="HSquestion" name="cigs_a_day" SIZE="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> cigarettes <span id="cigsdayStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>| if ($smoke_status eq USE_TO_SMOKE || $smoke_status eq "Still smoke");
+	$html_page .= qq|<tr>
+                  <td align="right" class="HSbodytext">Do you eat some food every day that is high in fiber, such as whole grain bread, cereal, fresh fruits or vegetables?</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ">
+					<select class="HSquestion" name="fiber">
+						<option value="">&nbsp;</option>
+						<option value="No">No</option>
+						<option value="Yes">Yes</option>
+					</select> <span id="fiberfoodsStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">Do you eat foods every day that are high in dietary cholesterol or fat, such as fatty meat, cheese, fried foods, butter or whole milk?
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ">
+					<select class="HSquestion" name="fat">
+						<option value="">&nbsp;</option>
+						<option value="No">No</option>
+						<option value="Yes">Yes</option>
+					</select> <span id="fatfoodsStatus" ></span>
+                  </td>
+                </tr>
+               <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr valign="top">
+                  <td align="left" height="50"><input type="image" name="prev" value="prev" $back onmousedown="doValidate=false;"></td>
+                  <td align="right" height="50">&nbsp;</td>
+                  <td align="right" height="50"><input type="image" name="next" value="next" $next onmousedown="doValidate=true;">
+					<input type=hidden name="page" value="3">
+					<input type="hidden" name="assessment" value="GHA">
+					<input type=hidden name="output_format" value="HTML">
+					<input type=hidden value="" name="first_name">
+					<input type=hidden value="" name="last_name">
+					<input type=hidden value="" name="birth_month">
+					<input type=hidden value="" name="birth_date">
+					<input type=hidden value="" name="birth_year">
+					<input type=hidden value="" name="sex">
+					<input type=hidden value="" name="height">
+					<input type=hidden value="" name="weight">
+					<input type=hidden value="" name="frame_size">
+					<input type=hidden value="" name="race">
+					<input type=hidden value="" name="diabetes">
+					<input type=hidden value="" name="bp_meds">
+					<input type=hidden value="" name="bp_sys">
+					<input type=hidden value="" name="bp_dias">
+					<input type=hidden value="" name="bp_check">
+					<input type=hidden value="" name="cholesterol">
+					<input type=hidden value="" name="hdl">
+					<input type=hidden value="" name="cholesterol_check">
+					<input type=hidden value="" name="smoke_status">
+					<input type=hidden value="" name="miles_car">
+					<input type=hidden value="" name="miles_motorcycle">
+					<input type=hidden value="" name="travel_mode">
+					<input type=hidden value="" name="seat_belt">
+					<input type=hidden value="" name="speed">
+					<input type=hidden value="" name="drink_and_drive">
+					<input type=hidden value="" name="drinks_week">
+					<input type=hidden value="" name="menarche_female">
+					<input type=hidden value="" name="birth_age_female">
+					<input type=hidden value="" name="mammogram_female">
+					<input type=hidden value="" name="fam_breast_cancer">
+					<input type=hidden value="" name="pap_female">
+					<input type=hidden value="" name="hyst_female">
+					<input type=hidden value="" name="self_breast_exam">
+					<input type=hidden value="" name="clinic_breast_exam">
+					<input type=hidden value="" name="rectal_female">
+					<input type=hidden value="" name="rectal_male">
+					<input type=hidden value="" name="exercise">
+					<input type=hidden value="" name="helmet">
+					<input type=hidden value="" name="violence">
+					<input type=hidden value="" name="overall_health">
+					<input type=hidden value="" name="life_satisfaction">
+					<input type=hidden value="" name="job">
+					<input type=hidden value="" name="grade">
+					<input type=hidden value="" name="loss">
+					<input type=hidden value="" name="r2c_autosafety">
+					<input type=hidden value="" name="r2c_bp">
+					<input type=hidden value="" name="r2c_checkups">
+					<input type=hidden value="" name="r2c_cholesterol">
+					<input type=hidden value="" name="r2c_drink">
+					<input type=hidden value="" name="r2c_exercise">
+					<input type=hidden value="" name="r2c_fat">
+					<input type=hidden value="" name="r2c_smoke">
+					<input type=hidden value="" name="r2c_stress">
+					<input type=hidden value="" name="r2c_weight">
+                    <input type=hidden value="Metric" name="units">
+					<input type=hidden value="metric" name="qset">
+                  </td>
+                </tr>|;
+	}
+elsif ($curr_page == 4) {
+	$html_page = qq|                <tr>
+                  <td align="right" class="HSbodytext">How many miles per year do you drive in a:<br>Car, truck or van:<br>&nbsp;<br>Motorcycle</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ">&nbsp;<br>
+					<input type="TEXT" class="HSquestion" name="miles_car" SIZE="6" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> <span id="milesStatus" ></span><br>
+					<input type="TEXT" class="HSquestion" name="miles_motorcycle" SIZE="6" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> <span id="motomilesStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">On a typical day how do you USUALLY travel?</td>
+                  <td><img src="images/global/trans.gif" width="10" height="1"></td>
+                  <td class="HSbodytextQ">
+					<select class="HSquestion" name="travel_mode">
+						<option value="">&nbsp;</option>
+						<option value="Mostly stay at home">Mostly stay at home</option>
+						<option value="Bus, subway or train">Bus, subway or train</option>
+						<option value="Walk">Walk</option>
+						<option value="Bicycle">Bicycle</option>
+						<option value="Motorcycle">Motorcycle</option>
+						<option value="Sub-compact or compact car">Sub-compact or compact car</option>
+						<option value="Mid or full-size car">Mid or full-size car</option>
+						<option value="Truck or van">Truck or van</option>
+					</select> <span id="travleStatus" ></span>
+						  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">What percent of the time do you usually buckle your safety belt when driving or riding?</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ">
+					<select class="HSquestion" name="seat_belt">
+						<option value="">&nbsp;</option>
+						<option value="Never, 0%">Never, 0%</option>
+						<option value="Seldom, 1%-40%">Seldom, 1%-40%</option>
+						<option value="Sometimes, 41%-80%">Sometimes, 41%-80%</option>
+						<option value="Nearly always, 81%-99%">Nearly always, 81%-99%</option>
+						<option value="Always, 100%">Always, 100%</option>
+					</select> <span id="seatbeltStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+				<tr>
+				  <td align="right" class="HSbodytext">If you ride a motorcycle or ATV (all-terrain vehicle) what percent of the time do you wear a helmet?</td>
+				  <td>&nbsp;</td>
+				  <td class="HSbodytextQ">&nbsp;<br>
+					<select class="HSquestion" name="helmet">
+						<option value="">&nbsp;</option>
+						<option value="Do not ride">Do not ride</option>
+						<option value="Never, 0%">Never, 0%</option>
+						<option value="Seldom, 1%-25%">Seldom, 1%-25%</option>
+						<option value="Sometimes, 26%-75%">Sometimes, 26%-75%</option>
+						<option value="Nearly always, 76%-99%">Nearly always, 76%-99%</option>
+						<option value="Always, 100%">Always, 100%</option>
+					</select> <span id="helmetStatus" ></span>
+				  </td>
+				</tr>
+				<tr>
+				  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+				  <td></td>
+				  <td></td>
+				</tr>
+				<tr>
+				  <td align="right" class="HSbodytext">On the average, how close to the speed limit do you usually drive?</td>
+				  <td>&nbsp;</td>
+				  <td class="HSbodytextQ">
+					<select class="HSquestion" name="speed">
+						<option value="">&nbsp;</option>
+						<option value="Within 5 mph of limit">Within 5 mph of limit</option>
+						<option value="6-10 mph over limit">6-10 mph over limit</option>
+						<option value="11-15 mph over limit">11-15 mph over limit</option>
+						<option value="More than 15 mph over limit">More than 15 mph over limit</option>
+					</select> <span id="speedStatus" ></span>
+				  </td>
+				</tr>
+				<tr>
+				  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+				  <td></td>
+				  <td></td>
+				</tr>
+                <tr>
+                  <td align="right" class="HSbodytext">How many times in the last month did you drive or ride when the driver had perhaps too much alcohol to drink?</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ">
+					<input type="TEXT"  class="HSquestion" name="drink_and_drive" SIZE="3" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> <span id="drinkndriveStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr valign="top">
+                  <td align="left" height="50"><input type="image" name="prev" value="prev" $back onmousedown="doValidate=false;"></td>
+                  <td align="right" height="50">&nbsp;</td>
+                  <td align="right" height="50"><input type="image" name="next" value="next" $next onmousedown="doValidate=true;">
+					<input type=hidden name="page" value="4">
+					<input type="hidden" name="assessment" value="GHA">
+					<input type=hidden name="output_format" value="HTML">
+					<input type=hidden value="" name="first_name">
+					<input type=hidden value="" name="last_name">
+					<input type=hidden value="" name="birth_month">
+					<input type=hidden value="" name="birth_date">
+					<input type=hidden value="" name="birth_year">
+					<input type=hidden value="" name="sex">
+					<input type=hidden value="" name="height">
+					<input type=hidden value="" name="weight">
+					<input type=hidden value="" name="frame_size">
+					<input type=hidden value="" name="race">
+					<input type=hidden value="" name="diabetes">
+					<input type=hidden value="" name="bp_meds">
+					<input type=hidden value="" name="bp_sys">
+					<input type=hidden value="" name="bp_dias">
+					<input type=hidden value="" name="bp_check">
+					<input type=hidden value="" name="cholesterol">
+					<input type=hidden value="" name="hdl">
+					<input type=hidden value="" name="cholesterol_check">
+					<input type=hidden value="" name="cigars_day">
+					<input type=hidden value="" name="pipes_day">
+					<input type=hidden value="" name="chews_day">
+					<input type=hidden value="" name="smoke_status">
+					<input type=hidden value="" name="cigarette_years_quit">
+					<input type=hidden value="" name="cigs_a_day">
+					<input type=hidden value="" name="drinks_week">
+					<input type=hidden value="" name="menarche_female">
+					<input type=hidden value="" name="birth_age_female">
+					<input type=hidden value="" name="mammogram_female">
+					<input type=hidden value="" name="fam_breast_cancer">
+					<input type=hidden value="" name="pap_female">
+					<input type=hidden value="" name="hyst_female">
+					<input type=hidden value="" name="self_breast_exam">
+					<input type=hidden value="" name="clinic_breast_exam">
+					<input type=hidden value="" name="rectal_female">
+					<input type=hidden value="" name="rectal_male">
+					<input type=hidden value="" name="exercise">
+					<input type=hidden value="" name="fiber">
+					<input type=hidden value="" name="fat">
+					<input type=hidden value="" name="violence">
+					<input type=hidden value="" name="overall_health">
+					<input type=hidden value="" name="life_satisfaction">
+					<input type=hidden value="" name="job">
+					<input type=hidden value="" name="grade">
+					<input type=hidden value="" name="loss">
+					<input type=hidden value="" name="r2c_autosafety">
+					<input type=hidden value="" name="r2c_bp">
+					<input type=hidden value="" name="r2c_checkups">
+					<input type=hidden value="" name="r2c_cholesterol">
+					<input type=hidden value="" name="r2c_drink">
+					<input type=hidden value="" name="r2c_exercise">
+					<input type=hidden value="" name="r2c_fat">
+					<input type=hidden value="" name="r2c_smoke">
+					<input type=hidden value="" name="r2c_stress">
+					<input type=hidden value="" name="r2c_weight">
+					<input type=hidden value="Metric" name="units">
+					<input type=hidden value="metric" name="qset">
+                  </td>
+                </tr>|;
+	}
+elsif ($curr_page == 5) {
+	$html_page = qq|               <tr>
+                  <td align="right" class="HSbodytext">How many drinks of alcoholic beverages do you have in a typical week?</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ">
+                  	<input type="TEXT"  class="HSquestion" name="drinks_week" SIZE="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> drinks <span id="drinksStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">How many times do you engage in physical activity in a typical week?</td>
+                  <td><img src="images/global/trans.gif" width="10" height="1"></td>
+                  <td class="HSbodytextQ">
+					<select class="HSquestion" name="exercise">
+						<option value="">&nbsp;</option>
+						<option value="Less than one time per week">Less than one time per week</option>
+						<option value="One or two times per week">One or two times per week</option>
+						<option value="At least three times per week">At least three times per week</option>
+					</select> <span id="exerStatus" ></span>
+				  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>|;
+	$html_page .= qq|<td align="right" class="HSbodytext">About how long has it been since you had a rectal or prostate exam?</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ">
+							<select class="HSquestion" name="rectal_male">
+								<option value="">&nbsp;</option>
+								<option value="Less than one year ago">Less than one year ago</option>
+								<option value="One year ago">One year ago</option>
+								<option value="Two years ago">Two years ago</option>
+								<option value="Three or more years ago">Three or more years ago</option>
+								<option value="Never">Never</option>
+							</select> <span id="rectalmaleStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>| if ($sex eq MALE);
+	$html_page .= qq|<tr>
+						  <td align="right" class="HSbodytext">At what age did you have your first menstrual period?</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ">
+							<select class="HSquestion" name="menarche_female">
+								<option value="">&nbsp;</option>
+								<option value="11 or under">11 or under</option>
+								<option value="12-13">12-13</option>
+								<option value="14 or older">14 or older</option>
+							</select> <span id="menarcheStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>
+						<tr>
+						  <td align="right" class="HSbodytext">How old were you when your first child was born?</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ">
+							<select class="HSquestion" name="birth_age_female">
+								<option value="">&nbsp;</option>
+								<option value="No children">No children</option>
+								<option value="Under 20">Under 20</option>
+								<option value="20-24">20-24</option>
+								<option value="25-29">25-29</option>
+								<option value="Over 30">Over 30</option>
+							</select> <span id="birthageStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>
+						<tr>
+						  <td align="right" class="HSbodytext">About how long has it been since your last mammogram (breast x-ray)?</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ">
+							<select class="HSquestion" name="mammogram_female">
+								<option value="">&nbsp;</option>
+								<option value="Less than one year ago">Less than one year ago</option>
+								<option value="One year ago">One year ago</option>
+								<option value="Two years ago">Two years ago</option>
+								<option value="Three or more years ago">Three or more years ago</option>
+								<option value="Never">Never</option>
+							</select> <span id="mammogramStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>
+						<tr>
+						  <td align="right" class="HSbodytext">How many women in your natural family (mother and sisters only) have had breast cancer?</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ">
+							<select class="HSquestion" name="fam_breast_cancer">
+								<option value="">&nbsp;</option>
+								<option value="None">None</option>
+								<option value="One">One</option>
+								<option value="Two or more">Two or more</option>
+								<option value="Don't know">Don't know</option>
+							</select> <span id="fambreastStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>
+						<tr>
+						  <td align="right" class="HSbodytext">How often do you examine your breasts for lumps?</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ">
+							<select class="HSquestion" name="self_breast_exam">
+								<option value="">&nbsp;</option>
+								<option value="Monthly">Monthly</option>
+								<option value="Once every few months">Once every few months</option>
+								<option value="Rarely or never">Rarely or never</option>
+							</select> <span id="selfbreastStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>
+						<tr>
+						  <td align="right" class="HSbodytext">When did you last have your breasts examined by a nurse or physician?</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ">
+							<select class="HSquestion" name="clinic_breast_exam">
+								<option value="">&nbsp;</option>
+								<option value="Less than one year ago">Less than one year ago</option>
+								<option value="One year ago">One year ago</option>
+								<option value="Two years ago">Two years ago</option>
+								<option value="Three or more years ago">Three or more years ago</option>
+								<option value="Never">Never</option>
+							</select> <span id="clinicbreastStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>
+						<tr>
+						  <td align="right" class="HSbodytext">Have you had a hysterectomy operation (Removal of your uterus)?</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ">
+							<select class="HSquestion" name="hyst_female">
+								<option value="">&nbsp;</option>
+								<option value="No">No</option>
+								<option value="Yes">Yes</option>
+							</select> <span id="hystStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>
+						<tr>
+						  <td align="right" class="HSbodytext">When did you last have a pap smear?</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ">
+							<select class="HSquestion" name="pap_female">
+								<option value="">&nbsp;</option>
+								<option value="Less than one year ago">Less than one year ago</option>
+								<option value="One year ago">One year ago</option>
+								<option value="Two years ago">Two years ago</option>
+								<option value="Three or more years ago">Three or more years ago</option>
+								<option value="Never">Never</option>
+							</select> <span id="papStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>
+						<tr>
+						  <td align="right" class="HSbodytext">About how long has it been since you had a rectal exam?</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ">
+							<select class="HSquestion" name="rectal_female">
+								<option value="">&nbsp;</option>
+								<option value="Less than one year ago">Less than one year ago</option>
+								<option value="One year ago">One year ago</option>
+								<option value="Two years ago">Two years ago</option>
+								<option value="Three or more years ago">Three or more years ago</option>
+								<option value="Never">Never</option>
+							</select> <span id="rectalfemaleStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>| if ($sex eq FEMALE);
+	$html_page .= qq|<tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr valign="top">
+                  <td align="left" height="50"><input type="image" name="prev" value="prev" $back onmousedown="doValidate=false;"></td>
+                  <td align="right" height="50">&nbsp;</td>
+                  <td align="right" height="50"><input type="image" name="next" value="next" $next onmousedown="doValidate=true;">
+					<input type=hidden name="page" value="5">
+					<input type="hidden" name="assessment" value="GHA">
+					<input type=hidden name="output_format" value="HTML">
+					<input type=hidden value="" name="first_name">
+					<input type=hidden value="" name="last_name">
+					<input type=hidden value="" name="birth_month">
+					<input type=hidden value="" name="birth_date">
+					<input type=hidden value="" name="birth_year">
+					<input type=hidden value="" name="sex">
+					<input type=hidden value="" name="height">
+					<input type=hidden value="" name="weight">
+					<input type=hidden value="" name="frame_size">
+					<input type=hidden value="" name="race">
+					<input type=hidden value="" name="diabetes">
+					<input type=hidden value="" name="bp_meds">
+					<input type=hidden value="" name="bp_sys">
+					<input type=hidden value="" name="bp_dias">
+					<input type=hidden value="" name="bp_check">
+					<input type=hidden value="" name="cholesterol">
+					<input type=hidden value="" name="hdl">
+					<input type=hidden value="" name="cholesterol_check">
+					<input type=hidden value="" name="cigars_day">
+					<input type=hidden value="" name="pipes_day">
+					<input type=hidden value="" name="chews_day">
+					<input type=hidden value="" name="smoke_status">
+					<input type=hidden value="" name="cigarette_years_quit">
+					<input type=hidden value="" name="cigs_a_day">
+					<input type=hidden value="" name="miles_car">
+					<input type=hidden value="" name="miles_motorcycle">
+					<input type=hidden value="" name="travel_mode">
+					<input type=hidden value="" name="seat_belt">
+					<input type=hidden value="" name="speed">
+					<input type=hidden value="" name="drink_and_drive">
+					<input type=hidden value="" name="helmet">
+					<input type=hidden value="" name="fiber">
+					<input type=hidden value="" name="fat">
+					<input type=hidden value="" name="violence">
+					<input type=hidden value="" name="overall_health">
+					<input type=hidden value="" name="life_satisfaction">
+					<input type=hidden value="" name="job">
+					<input type=hidden value="" name="grade">
+					<input type=hidden value="" name="loss">
+					<input type=hidden value="" name="r2c_autosafety">
+					<input type=hidden value="" name="r2c_bp">
+					<input type=hidden value="" name="r2c_checkups">
+					<input type=hidden value="" name="r2c_cholesterol">
+					<input type=hidden value="" name="r2c_drink">
+					<input type=hidden value="" name="r2c_exercise">
+					<input type=hidden value="" name="r2c_fat">
+					<input type=hidden value="" name="r2c_smoke">
+					<input type=hidden value="" name="r2c_stress">
+					<input type=hidden value="" name="r2c_weight">
+					<input type=hidden value="Metric" name="units">
+					<input type=hidden value="metric" name="qset">
+                  </td>
+                </tr>|;
+	}
+elsif ($curr_page == 6) {
+	$html_page = qq|               <tr>
+                  <td align="right" class="HSbodytext">Considering your age, how would you describe your overall physical health?</td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ">
+					<select class="HSquestion" name="overall_health">
+						<option value="">&nbsp;</option>
+						<option value="Excellent">Excellent</option>
+						<option value="Good">Good</option>
+						<option value="Fair">Fair</option>
+						<option value="Poor">Poor</option>
+					</select> <span id="overallhealthStatus" ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td align="right" class="HSbodytext">In general, how satisfied are you with your life?</td>
+                  <td><img src="images/global/trans.gif" width="10" height="1"></td>
+                  <td class="HSbodytextQ">
+					<select class="HSquestion" name="life_satisfaction">
+						<option value="">&nbsp;</option>
+						<option value="Mostly satisfied">Mostly satisfied</option>
+						<option value="Partly satisfied">Partly satisfied</option>
+						<option value="Not satisfied">Not satisfied</option>
+					</select> <span id="satisfiedStatus" ></span>
+				  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+				<td align="right" class="HSbodytext">Have you suffered a personal loss or misfortune in the past year that had a serious impact on your life?</td>
+				  <td>&nbsp;</td>
+				  <td class="HSbodytextQ">
+					<select class="HSquestion" name="loss">
+						<option value="">&nbsp;</option>
+						<option value="Yes, one serious loss or misfortune">Yes, one serious loss or misfortune</option>
+						<option value="Yes, two or more">Yes, two or more</option>
+						<option value="No">No</option>
+					</select> <span id="lossStatus" ></span>
+				  </td>
+				</tr>
+				<tr>
+				  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+				  <td></td>
+				  <td></td>
+				</tr>
+				<tr>
+				  <td align="right" class="HSbodytext">How many times in the last year did you witness or become involved in a violent fight or attack where there was a good chance of a serious injury to someone?</td>
+				  <td>&nbsp;</td>
+				  <td class="HSbodytextQ">
+					<select class="HSquestion" name="violence">
+						<option value="">&nbsp;</option>
+						<option value="Not sure">Not sure</option>
+						<option value="One time or Never">Never</option>
+						<option value="One time or Never">One time</option>
+						<option value="Two or three times">Two or three times</option>
+						<option value="Four or more times">Four or more times</option>
+					</select> <span id="violenceStatus" ></span>
+				  </td>
+				</tr>
+				<tr>
+				  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+				  <td></td>
+				  <td></td>
+				</tr>
+				<tr>
+				  <td align="right" class="HSbodytext">What is the highest grade you completed in school?</td>
+				  <td>&nbsp;</td>
+				  <td class="HSbodytextQ">
+					<select class="HSquestion" name="grade">
+						<option value="">&nbsp;</option>
+						<option value="Grade school or less">Grade school or less</option>
+						<option value="Some high school">Some high school</option>
+						<option value="High school graduate">High school graduate</option>
+						<option value="Some college">Some college</option>
+						<option value="College graduate">College graduate</option>
+						<option value="Post graduate or professional degree">Post graduate or professional degree</option>
+					</select> <span id="gradeStatus" ></span>
+				  </td>
+				</tr>
+				<tr>
+				  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+				  <td></td>
+				  <td></td>
+				</tr>
+				<tr>
+				  <td align="right" class="HSbodytext">What is your job or occupation?</td>
+				  <td>&nbsp;</td>
+				  <td class="HSbodytextQ">
+					<select class="HSquestion" name="job">
+						<option value="">&nbsp;</option>
+						<option value="Retired">Retired</option>
+						<option value="Student">Student</option>
+						<option value="Unemployed">Unemployed</option>
+						<option value="Homemaker">Homemaker</option>
+						<option value="Operator, fabricator, laborer">Operator, fabricator, laborer</option>
+						<option value="Skilled crafts">Skilled crafts</option>
+						<option value="Service">Service</option>
+						<option value="Technical, sales or administrative support">Technical, sales or administrative support</option>
+						<option value="Manager, educator, professional">Manager, educator, professional</option>
+						<option value="Health professional">Health professional</option>
+					</select> <span id="occupationStatus" ></span>
+				  </td>
+				</tr>
+               <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr valign="top">
+                  <td align="left" height="50"><input type="image" name="prev" value="prev" $back onmousedown="doValidate=false;"></td>
+                  <td align="right" height="50">&nbsp;</td>
+                  <td align="right" height="50"><input type="image" name="next" value="next" $next onmousedown="doValidate=true;">
+					<input type=hidden name="page" value="6">
+					<input type="hidden" name="assessment" value="GHA">
+					<input type=hidden name="output_format" value="HTML">
+					<input type=hidden value="" name="first_name">
+					<input type=hidden value="" name="last_name">
+					<input type=hidden value="" name="birth_month">
+					<input type=hidden value="" name="birth_date">
+					<input type=hidden value="" name="birth_year">
+					<input type=hidden value="" name="sex">
+					<input type=hidden value="" name="height">
+					<input type=hidden value="" name="weight">
+					<input type=hidden value="" name="frame_size">
+					<input type=hidden value="" name="race">
+					<input type=hidden value="" name="diabetes">
+					<input type=hidden value="" name="bp_meds">
+					<input type=hidden value="" name="bp_sys">
+					<input type=hidden value="" name="bp_dias">
+					<input type=hidden value="" name="bp_check">
+					<input type=hidden value="" name="cholesterol">
+					<input type=hidden value="" name="hdl">
+					<input type=hidden value="" name="cholesterol_check">
+					<input type=hidden value="" name="cigars_day">
+					<input type=hidden value="" name="pipes_day">
+					<input type=hidden value="" name="chews_day">
+					<input type=hidden value="" name="smoke_status">
+					<input type=hidden value="" name="cigarette_years_quit">
+					<input type=hidden value="" name="cigs_a_day">
+					<input type=hidden value="" name="miles_car">
+					<input type=hidden value="" name="miles_motorcycle">
+					<input type=hidden value="" name="travel_mode">
+					<input type=hidden value="" name="seat_belt">
+					<input type=hidden value="" name="speed">
+					<input type=hidden value="" name="drink_and_drive">
+					<input type=hidden value="" name="drinks_week">
+					<input type=hidden value="" name="menarche_female">
+					<input type=hidden value="" name="birth_age_female">
+					<input type=hidden value="" name="mammogram_female">
+					<input type=hidden value="" name="fam_breast_cancer">
+					<input type=hidden value="" name="pap_female">
+					<input type=hidden value="" name="hyst_female">
+					<input type=hidden value="" name="self_breast_exam">
+					<input type=hidden value="" name="clinic_breast_exam">
+					<input type=hidden value="" name="rectal_female">
+					<input type=hidden value="" name="rectal_male">
+					<input type=hidden value="" name="exercise">
+					<input type=hidden value="" name="helmet">
+					<input type=hidden value="" name="fiber">
+					<input type=hidden value="" name="fat">
+					<input type=hidden value="" name="r2c_autosafety">
+					<input type=hidden value="" name="r2c_bp">
+					<input type=hidden value="" name="r2c_checkups">
+					<input type=hidden value="" name="r2c_cholesterol">
+					<input type=hidden value="" name="r2c_drink">
+					<input type=hidden value="" name="r2c_exercise">
+					<input type=hidden value="" name="r2c_fat">
+					<input type=hidden value="" name="r2c_smoke">
+					<input type=hidden value="" name="r2c_stress">
+					<input type=hidden value="" name="r2c_weight">
+					<input type=hidden value="Metric" name="units">
+					<input type=hidden value="metric" name="qset">
+                  </td>
+                </tr>|;
+	}
+elsif ($curr_page == 7) {
+	if ($r2c_issues == 0 || $config{r2c} == 0){
+	$html_page = qq|               <tr>
+                  <td align="right" class="HSbodytext">You have completed the assessment, <br>press submit to receive your personalized report.<br></td>
+                  <td>&nbsp;</td>
+                  <td class="HSbodytextQ">
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+                  <td></td>
+                  <td></td>
+                </tr>|;
+                }
+    else		{
+
+			$html_page = qq|               <tr>
+						  <td align="right" class="HSbodytext">In regards to the following activities and habits, are you planning to make any changes to keep yourself healthy or improve your health?</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ">
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>|;
+		$html_page .= qq|               <tr>
+						  <td align="right" class="HSbodytext">Lose weight in the next 6 months?</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ">
+							<select class="HSquestion" name="r2c_weight">
+								<option value="">&nbsp;</option>
+								<option value="Yes">Yes</option>
+								<option value="No">No</option>
+								<option value="Don't know">Don't know</option>
+							</select> <span id="r2c_weightStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>| if ($r2c_weight_flag);
+		$html_page .= qq|               <tr>
+						  <td align="right" class="HSbodytext">Quit smoking in the next 6 months?</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ">
+							<select class="HSquestion" name="r2c_smoke">
+								<option value="">&nbsp;</option>
+								<option value="Yes">Yes</option>
+								<option value="No">No</option>
+								<option value="Don't know">Don't know</option>
+							</select> <span id="r2c_smokeStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>| if ($r2c_smoke_flag);
+		$html_page .= qq|               <tr>
+						  <td align="right" class="HSbodytext">Reduce alcohol use in the next 6 months?</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ">
+							<select class="HSquestion" name="r2c_drink">
+								<option value="">&nbsp;</option>
+								<option value="Yes">Yes</option>
+								<option value="No">No</option>
+								<option value="Don't know">Don't know</option>
+							</select> <span id="r2c_drinkStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>| if ($r2c_drink_flag);
+		$html_page .= qq|               <tr>
+						  <td align="right" class="HSbodytext">Start driving more safely in the next 6 months?</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ">
+							<select class="HSquestion" name="r2c_autosafety">
+								<option value="">&nbsp;</option>
+								<option value="Yes">Yes</option>
+								<option value="No">No</option>
+								<option value="Don't know">Don't know</option>
+							</select> <span id="r2c_autosafetyStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>| if ($r2c_autosafety_flag);
+		$html_page .= qq|               <tr>
+						  <td align="right" class="HSbodytext">Increase exercise levels in the next 6 months?</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ">
+							<select class="HSquestion" name="r2c_exercise">
+								<option value="">&nbsp;</option>
+								<option value="Yes">Yes</option>
+								<option value="No">No</option>
+								<option value="Don't know">Don't know</option>
+							</select> <span id="r2c_exerciseStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>| if ($r2c_exercise_flag);
+		$html_page .= qq|               <tr>
+						  <td align="right" class="HSbodytext">Reduce the amount of fat in your diet in the next 6 months?</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ">
+							<select class="HSquestion" name="r2c_fat">
+								<option value="">&nbsp;</option>
+								<option value="Yes">Yes</option>
+								<option value="No">No</option>
+								<option value="Don't know">Don't know</option>
+							</select> <span id="r2c_fatStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>| if ($r2c_fat_flag);
+		$html_page .= qq|               <tr>
+						  <td align="right" class="HSbodytext">Lower your blood pressure in the next 6 months?</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ">
+							<select class="HSquestion" name="r2c_bp">
+								<option value="">&nbsp;</option>
+								<option value="Yes">Yes</option>
+								<option value="No">No</option>
+								<option value="Don't know">Don't know</option>
+							</select> <span id="r2c_bpStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>| if ($r2c_bp_flag);
+		$html_page .= qq|               <tr>
+						  <td align="right" class="HSbodytext">Lower your cholesterol in the next 6 months?</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ">
+							<select class="HSquestion" name="r2c_cholesterol">
+								<option value="">&nbsp;</option>
+								<option value="Yes">Yes</option>
+								<option value="No">No</option>
+								<option value="Don't know">Don't know</option>
+							</select> <span id="r2c_cholesterolStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>| if ($r2c_cholesterol_flag);
+		$html_page .= qq|               <tr>
+						  <td align="right" class="HSbodytext">Get regular checkups done in the next 6 months?</td>
+						  <td>&nbsp;</td>
+						  <td class="HSbodytextQ">
+							<select class="HSquestion" name="r2c_checkups">
+								<option value="">&nbsp;</option>
+								<option value="Yes">Yes</option>
+								<option value="No">No</option>
+								<option value="Don't know">Don't know</option>
+							</select> <span id="r2c_checkupStatus" ></span>
+						  </td>
+						</tr>
+						<tr>
+						  <td><img src="images/global/trans.gif" height="5" width="1"></td>
+						  <td></td>
+						  <td></td>
+						</tr>| if ($r2c_checkups_flag);
+                }
+$html_page .= qq|                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr valign="top">
+                  <td align="left" height="50"><input type="image" name="prev" value="prev" $back onmousedown="doValidate=false;"></td>
+                  <td align="right" height="50">&nbsp;</td>
+                  <td align="right" height="50">
+                    <input type="image" border=0 name="assess" value="assess" $submit onmousedown="doValidate=true;">
+					<input type=hidden name="page" value="7">
+					<input type="hidden" name="assessment" value="GHA">
+					<input type=hidden name="output_format" value="HTML">
+					<input type=hidden value="" name="age">
+					<input type=hidden value="" name="first_name">
+					<input type=hidden value="" name="last_name">
+					<input type=hidden value="" name="birth_month">
+					<input type=hidden value="" name="birth_date">
+					<input type=hidden value="" name="birth_year">
+					<input type=hidden value="" name="sex">
+					<input type=hidden value="" name="height">
+					<input type=hidden value="" name="weight">
+					<input type=hidden value="" name="frame_size">
+					<input type=hidden value="" name="race">
+					<input type=hidden value="" name="diabetes">
+					<input type=hidden value="" name="bp_meds">
+					<input type=hidden value="" name="bp_sys">
+					<input type=hidden value="" name="bp_dias">
+					<input type=hidden value="" name="bp_check">
+					<input type=hidden value="" name="cholesterol">
+					<input type=hidden value="" name="hdl">
+					<input type=hidden value="" name="cholesterol_check">
+					<input type=hidden value="" name="cigars_day">
+					<input type=hidden value="" name="pipes_day">
+					<input type=hidden value="" name="chews_day">
+					<input type=hidden value="" name="smoke_status">
+					<input type=hidden value="" name="cigarette_years_quit">
+					<input type=hidden value="" name="cigs_a_day">
+					<input type=hidden value="" name="miles_car">
+					<input type=hidden value="" name="miles_motorcycle">
+					<input type=hidden value="" name="travel_mode">
+					<input type=hidden value="" name="seat_belt">
+					<input type=hidden value="" name="speed">
+					<input type=hidden value="" name="drink_and_drive">
+					<input type=hidden value="" name="drinks_week">
+					<input type=hidden value="" name="menarche_female">
+					<input type=hidden value="" name="birth_age_female">
+					<input type=hidden value="" name="mammogram_female">
+					<input type=hidden value="" name="fam_breast_cancer">
+					<input type=hidden value="" name="pap_female">
+					<input type=hidden value="" name="hyst_female">
+					<input type=hidden value="" name="self_breast_exam">
+					<input type=hidden value="" name="clinic_breast_exam">
+					<input type=hidden value="" name="rectal_female">
+					<input type=hidden value="" name="rectal_male">
+					<input type=hidden value="" name="exercise">
+					<input type=hidden value="" name="helmet">
+					<input type=hidden value="" name="fiber">
+					<input type=hidden value="" name="fat">
+					<input type=hidden value="" name="violence">
+					<input type=hidden value="" name="overall_health">
+					<input type=hidden value="" name="life_satisfaction">
+					<input type=hidden value="" name="job">
+					<input type=hidden value="" name="grade">
+					<input type=hidden value="" name="loss">
+					<input type=hidden value="Metric" name="units">
+					<input type=hidden value="metric" name="qset">
+                  </td>
+                </tr>|;
+	}
+
+$html_page;
+}              </table>
+            </form>
+            <!--Form and form table END here.-->
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td class="HSassessmentsGap"></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td class="HScopyright">{$copyright}</td>
+        </tr>
+      </table>
+      </div>
+    <!-- Template: gha_metric_qset.tmpl End -->
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$footer_file", PACKAGE => __PACKAGE__ );
+}

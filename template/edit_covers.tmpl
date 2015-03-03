@@ -1,0 +1,88 @@
+<!--2010/06/09,template_directory-->
+{Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title>HealthStatus Cover Letter Editing</title>
+<base href={$base}>
+<link rel="stylesheet" href="{$config{conf_html_dir} . "styles/admin.css"}" type="text/css">
+<script language="javascript" type="text/javascript" src="/styles/edit/jscripts/tiny_mce/tiny_mce.js"></script>
+<script language="javascript" type="text/javascript">
+tinyMCE.init(\{
+	mode : "textareas",
+	theme : "advanced",
+	preformatted : "true",
+	remove_linebreaks : false,
+	plugins:"tokens",
+	theme_advanced_buttons1 : "undo,redo",
+	theme_advanced_buttons2:"tokens",
+	theme_advanced_buttons3 : "",
+	theme_advanced_toolbar_location : "top",
+	theme_advanced_toolbar_align : "left",
+	theme_advanced_path_location : "bottom",
+	tokens_token_list:"User Age=\{$age\};User First Name=\{$fname\};User Last Name=\{$lname\};User Sex=\{$sex\};HomePage=\{$home\};Your Company=\{$client\};",
+	extended_valid_elements : "a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],font[face|size|color|style],span[class|align|style]"
+\});
+function set_values(new_target,assessment,flag,format,save) \{
+document.cover_letter_form.action				= "{$edit_covers}?rand="+Math.random();
+document.cover_letter_form.target 				= new_target ;
+document.cover_letter_form.assessment.value		= assessment;
+document.cover_letter_form.preview.value		= flag;
+document.cover_letter_form.output_format.value	= format;
+document.cover_letter_form.save.value			= save;
+\}
+</script>
+</head>
+<body>
+<table border=0, width=770 id="main_table">
+<tr>
+<td colspan=2 id="headbar">
+<img src="/images/global/logo_hs.gif" border=0><br>
+<h1>Make changes to the cover letters for each of the assessments.  To insert a paragraph use &lt;p&gt;.  Do not use any other HTML code.  <br><br></h1>
+</td></tr>
+<tr>
+<td width=50% id="main_pane">
+<form name="cover_letter_form" method="post" action="{$edit_covers}" ><input type=submit value="Save Changes"><br><br><a href="{$config{admin_path}}">Cancel Editing and Return to Administration Screen</a><br>
+{ 
+	my @assessments_allowed = split /\s+/, $config{ggr_adv_tables};	
+	my $tbox1;
+	if(grep(/CRC/,@assessments_allowed)){ 
+		$tbox1 = qq|<p>Cardiac Risk Cover Letter<br>
+		<textarea name="crc_text" cols="55" rows="25">$crc_cover</textarea><br><input type=submit value="Save Changes" onclick="set_values('_self','','','','letter')"><br><input type="button" value="Preview Cardiac" onclick="window.open('$edit_covers?preview=1&assessment=CRC', 'popup', '');"/><input type="submit" value="Preview Cardiac PDF" onclick="set_values('_blank','CRC','1','PDF','')"/><br>|;
+		}
+	if(grep(/DRC/,@assessments_allowed)){ 
+		$tbox1 .= qq|<p><A NAME="drc">Diabetes Risk Cover Letter<br>
+		<textarea name="drc_text" cols="55" rows="25">$drc_cover</textarea><br><input type=submit value="Save Changes" onclick="set_values('_self','','','','letter')"><br><input type="button" value="Preview Diabetes" onclick="window.open('$edit_covers?preview=1&assessment=DRC', 'popup', '');"/> <input type="submit" value="Preview Diabetes PDF" onclick="set_values('_blank','DRC','1','PDF','')"/><br>|;
+		}
+	if(grep(/FIT/,@assessments_allowed)){ 
+		$tbox1 .= qq|<p><A NAME="fit">Fitness Assessment Cover Letter<br>
+		<textarea name="fit_text" cols="55" rows="25">$fit_cover</textarea><br><input type=submit value="Save Changes" onclick="set_values('_self','','','','letter')"><br><input type="button" value="Preview Fitness" onclick="window.open('$edit_covers?preview=1&assessment=FIT', 'popup', '');"/> <input type="submit" value="Preview Fitness PDF" onclick="set_values('_blank','FIT','1','PDF','')"/><br>|;
+		}
+	if(grep(/HRA/,@assessments_allowed)){ 
+		$tbox1 .= qq|<p><A NAME="hra">General Health Assessment Cover Letter<br>
+		<textarea name="hra_text" cols="55" rows="25">$hra_cover</textarea><br><input type=submit value="Save Changes" onclick="set_values('_self','','','','letter')"><br><input type="button" value="Preview General Health" onclick="window.open('$edit_covers?preview=1&assessment=HRA', 'popup', '');"/> <input type="submit" value="Preview General Health PDF" onclick="set_values('_blank','HRA','1','PDF','')"/><br>|;
+	if(grep(/GWB/,@assessments_allowed)){ 
+		$tbox1 .= qq|<p><A NAME="gwb">General Well-being Assessment Cover Letter<br>
+		<textarea name="gwb_text" cols="55" rows="25">$gwb_cover</textarea><br><input type=submit value="Save Changes" onclick="set_values('_self','','','','letter')"><br><input type="button" value="Preview Well-being" onclick="window.open('$edit_covers?preview=1&assessment=GWB', 'popup', '');"/> <input type="submit" value="Preview Well-being PDF" onclick="set_values('_blank','GWB','1','PDF','')"/><br>|;
+		}
+	if(grep(/GHA/,@assessments_allowed)){ 
+		$tbox1 .= qq|<p><A NAME="gha">Health Risk Assessment Cover Letter<br>
+		<textarea name="gha_text" cols="55" rows="25">$gha_cover</textarea><br><input type=submit value="Save Changes" onclick="set_values('_self','','','','letter')"><br><input type="button" value="Preview Health Risk" onclick="window.open('$edit_covers?preview=1&assessment=GHA', 'popup', '');"/> <input type="submit" value="Preview Health Risk PDF" onclick="set_values('_blank','GHA','1','PDF','')"/><br>|;
+		}
+		}
+	
+	
+$tbox1;
+}
+<input type=hidden name=assessment value="">
+<input type=hidden name=preview value="">
+<input type=hidden name=output_format value="">
+<input type=hidden name=save value=""><br>
+<a href="{$edit_covers}?revert_back=letter">Revert back to the original default templates</a><br><br><a href="{$config{admin_path}}">Cancel Editing and Return to Administration Screen</a>
+</form>
+</td>
+<td width=50% id="main_pane">
+{Text::Template::fill_in_file( "$config{template_directory}/edit_tokens.tmpl", PACKAGE => __PACKAGE__ );}
+</td></tr></table>
+</body>
+</html>

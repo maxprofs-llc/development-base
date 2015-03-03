@@ -1,0 +1,25 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( $directory . $input_variables, PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $header_file, PACKAGE => __PACKAGE__ );
+}
+ 
+<div id="step-inn-bg" class="content1">
+<table width="630" cellspacing="0" style="margin-left: 30px">
+<tr>
+<td width="300" style="padding-top: 10px; padding-right: 50px " class="content">
+<p class="step_hemen">{$intro}</p>
+<p>&nbsp;</p>
+<p>{$menu_body}</p>
+
+</td>
+</tr>
+</table>
+</div>
+			
+{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $footer_file, PACKAGE => __PACKAGE__ );
+}

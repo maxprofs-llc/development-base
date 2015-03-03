@@ -1,0 +1,65 @@
+{
+use vars qw(@links);
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+@links =  ();
+
+push @links, [ $lang{$current_language}{National_Women_Health},
+	"http://www.4woman.org/" ]
+	if $sex eq FEMALE || $checkme;
+push @links, [ $lang{$current_language}{Heart_Truth_for_Women},
+	$config{html_base}."resource/heart_truth_for_women.pdf" ]
+	if $sex eq FEMALE ;
+push @links, [ $lang{$current_language}{Staying_Healthy},
+	$config{html_base}."resource/Staying_healthy_adult.pdf" ] 
+	if $sex eq MALE && $age < 50;
+push @links, [ $lang{$current_language}{Staying_Healthy},
+	$config{html_base}."resource/Staying_healthy_50plus.pdf"]
+	if $age >= 50 ;
+push @links, [ $lang{$current_language}{American_Diabetes_Association},
+	"http://www.diabetes.org/" ]
+	if $diabetes_flag || $checkme;
+push @links, [ $lang{$current_language}{Aim_for_health_weight},
+	$config{html_base}."resource/aim_for_healthy_weight.pdf" ]
+	if $bmi > 29.5 ;
+push @links, [ $lang{$current_language}{Overeaters_Anonymous},
+	"http://www.overeatersanonymous.org/" ]
+	if $bmi > 29.5 || $checkme;
+push @links, [ $lang{$current_language}{Quit_Smoking_Today},
+	$config{html_base}."resource/Clearing-The-Air_acc.pdf" ]
+	if $cigs_a_day > 1;
+push @links, [ $lang{$current_language}{High_Cholesterol_need},
+	$config{html_base}."resource/high_cholesterol_what_you_need_to_know.pdf " ]
+	if $cholesterol_flag;
+push @links, [ $lang{$current_language}{Guide_lowering_Blood_Pressure},
+	$config{html_base}."resource/bp_lower_guide.pdf" ]
+	if $bp_flag ;
+push @links, [ $lang{$current_language}{American_Heart_Association},
+	"http://www.amhrt.org" ]
+	if $cholesterol_flag || $bmi > 25 || $checkme;
+push @links, [ $lang{$current_language}{Men_depression_fact_sheet},
+	$config{html_base}."resource/men_depression.pdf" ]
+	if $loss ne NO && $sex eq MALE;
+push @links, [$lang{$current_language}{Women_and_Depression},
+	$config{html_base}."resource/women_depression.pdf" ]
+	if $loss ne NO && $sex eq FEMALE;
+push @links, [$lang{$current_language}{Dietary_Guidelines},
+	$config{html_base}."resource/dietaryguidelines.pdf" ]
+	if $cholesterol_flag || $bmi > 25 || $bmi < 20 || $fiber eq NO 
+		|| $fats eq YES || $checkme;
+push @links, [ $lang{$current_language}{Getting_Older_Eating_Better},
+	$config{html_base}."resource/oldereating.pdf" ]
+	if ($age > 65 && ( $cholesterol_flag || $bmi > 25 || $bmi < 20 
+		|| $fiber > 2 || $fats < 3)) || $checkme;
+push @links, [ $lang{$current_language}{Keys_Choosing_Healthful_Foods} ,
+	$config{html_base}."resource/keytohealthfulfood.pdf" ]
+	if $cholesterol_flag || $bmi > 25 || $bmi < 20 || $fiber > 2 
+		|| $fats < 3;
+push @links, [ $lang{$current_language}{Indian_Health_Services},
+	"http://www.ihs.gov/" ]
+	if $race eq NATIVE_AMERICAN || $checkme;
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+'';
+}
+

@@ -1,0 +1,384 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( $directory."quiz_language.tmpl", PACKAGE => __PACKAGE__ );
+}
+{ # set the values we will use below
+
+use vars qw( $title $form_title $basics $details $back $styles $trans $hs_java
+             $submit $popup $menu_img $qmark $cal_input_body $menu_body $menu
+             $back_link $hiddens $calc $tip $image_root $faq $base $output $current_lang);
+
+$calc = $calculator;
+
+$current_lang = lc $lang || 'en';
+my $snum_link;
+if ($snum){
+	$snum_link = '&snum=' . $snum;}
+else	{
+	$snum_link = '';}
+	
+$output=1;
+
+#links to the other calculators
+$menu = $link_dir . $cgi . "adv_calc.cgi?calc=men" . $snum_link;
+$menu = $menu_page if ($menu_page gt '');
+
+$base = $html;
+
+my $link = $link_dir . $cgi;
+
+my $link = $link_dir . $cgi;
+$back_link = $link_dir . $cgi . "reload.cgi";
+
+$styles = $html . "styles/" . $css;
+$hs_java = $html . "styles/" . $java;
+
+if (!$faq) { $faq = $html . 'calcquest.html'}
+
+#$image_root = $html . "images/" . $template_set . "/" .$color_set;
+$image_root = $html . "images/";
+$trans = "src=" . $image_root . "global/trans.gif";
+$submit = "src=" . $image_root . "calculate.gif";
+$back = "src=" . $image_root . "back.gif";
+$menu_img = "src=" . $image_root . "menu.gif ";
+$qmark = "src=" . $image_root . "qmark.gif ";
+
+$popup = "";
+
+$hiddens = qq|<input type="hidden" name="measure" value="$measure" /><input type="hidden" name="calc" value="$calculator" /><input type="hidden" name="snum" value="$snum" /><input type="hidden" name="lang" value="$lang">|;
+
+
+my ( $wt_units, $feet, $inches, $height_display, $ln_units );
+if ( $metric )
+	{
+	$wt_units = 'kilograms';
+	$height_display = qq|$mheight meters|;
+	$ln_units = 'centimeters';
+	}
+else
+	{
+	$wt_units = 'pounds';
+	$ln_units = 'inches';
+	$feet = int($height/12);
+	$inches = $height%12;
+	$height_display = qq|$feet' $inches"|;
+	}
+
+########Calculator Specific Sections
+my $sex_question = $question{gender}{label}{$current_lang};
+my ($sex_option_female,$sex_option_male) = split /\|/,$question{gender}{options}{$current_lang};
+
+$tip = qq|<a href="$menu">Click here</a> for a complete list of calculators.|;
+
+######### blood alcohol concentration estimator ####
+if ( $calculator eq 'alcohol' )
+	{
+
+# $form_title = 'AUDIT - Alcohol Use Disorder Identification';
+# my $levels = "4 drinks on any day or more than 14 drinks per week";
+# $levels = "3 drinks on any day or more than 7 drinks per week" if( $sex eq 'females' );
+# $basics = qq|
+# <p>For healthy $sex in general, drinking more than $levels is considered "at-risk" or "heavy"" drinking. About 1 in 4 people who drink this much already has alcoholism or alcohol abuse, and the rest are at greater risk for developing these and other problems. It makes a difference both how much you drink on any day and how often you have a "heavy drinking day"-that is, more than 4 drinks in a day for men or more than 3 drinks for women. The more drinks in a day and the more heavy drinking days over time, the greater the chances for problems.
+# |;
+
+# $details .= do {
+		# if( $alcoholic ){ "Your drinking patterns suggest that you HAVE a drinking problem.  Your regular doctor, primary care and mental health practitioners can provide effective alcoholism treatment by combining new medications with brief counseling visits."}
+		# else { "<p>Based on your responses you are not showing signs of having a drinking problem." }
+		# };
+
+$sex = $sex eq 'females' ? $sex_option_female : $sex_option_male;		
+		
+$form_title = $answer{alcohol}{output_title}{$current_lang};
+my $levels = $answer{alcohol}{output}{$current_lang}{$current_lang."_1"};	
+$levels = $answer{alcohol}{output}{$current_lang}{$current_lang."_2"} if( $sex eq 'females' );	
+$basics = $answer{alcohol}{output}{$current_lang}{$current_lang."_3"};
+$basics =~ s/SEX/$sex/;
+$basics =~ s/LEVELS/$levels/;
+
+$details .= do {
+		if( $alcoholic ){ $answer{alcohol}{output}{$current_lang}{$current_lang."_4"};}
+		else { $answer{alcohol}{output}{$current_lang}{$current_lang."_5"};}
+		};		
+
+$hiddens .= qq|<input type="hidden" name="type" value="$type" /><input type="hidden" name="drink1" value="$drink1" /><input type="hidden" name="drink2" value="$drink2" /><input type="hidden" name="drink3" value="$drink3" /><input type="hidden" name="drink4" value="$drink4" /><input type="hidden" name="drink5" value="$drink5" /><input type="hidden" name="drink6" value="$drink6" /><input type="hidden" name="drink7" value="$drink7" /><input type="hidden" name="drink8" value="$drink8" /><input type="hidden" name="drink9" value="$drink9" /><input type="hidden" name="drink10" value="$drink10" /><input type="hidden" name="sex" value="$sex" />|;
+
+	}
+######### END OF blood alcohol #####################
+######### Adult Self Report####
+if ( $calculator eq 'adultsr' )
+	{
+
+# $form_title = 'Adult ADHD Profile';
+# $basics = <<"HERE";
+# Common behaviors of Adult ADHD may include: procrastination, chronic lateness, easily frustrated, unstable moods, disorganized, anxious, low self-esteem, hot temper, impulsive behavior, depression, substance abuse or addiction, antisocial, unable to be alone, difficulty in following directions, and the inability to concentrate.
+# HERE
+# $details .= do {
+	# if( $adultsr_adhd ) { 
+		# "Based on your responses you are showing signs of having ADHD.  Based on this it would be a good idea to:<ul>
+		# <li>Get evaluated. You need a clinician experienced in diagnosing adult ADHD. Also, find out if there's an ADHD support group or organization active in your area. </li>
+		# <li>Get medication. For many adults, medications lessen the disorder's internal noise and outward chaos, helping them to gain some sense of self-control. The same drugs used for ADHD children can be used for adults. </li>
+		# <li>Get educated. There is a large and helpful body of literature on adult ADHD you can tap into. </li>
+		# <li>Get organized. Get a calendar or personal organizer to help you build schedules and routines. </li>
+		# <li>Get counseling. Adult ADHD can put tremendous strain on a marriage, a relationship, or an entire family. Talking it out can help. </li>
+		# <li>Get moving. For ADHD adults, exercise is a healthy way to burn off excess energy. </li>
+		# </ul>" }
+	# else { "Based on your responses you are not showing signs of having ADHD." }
+# };
+$form_title = $answer{adultsr}{output_title}{$current_lang};
+$basics = $answer{adultsr}{output}{$current_lang}{$current_lang."_1"};
+$details .= do {
+	if( $adultsr_adhd ) { 
+		$answer{adultsr}{output}{$current_lang}{$current_lang."_2"}.$answer{adultsr}{output}{$current_lang}{$current_lang."_3"}.$answer{adultsr}{output}{$current_lang}{$current_lang."_4"}.$answer{adultsr}{output}{$current_lang}{$current_lang."_5"}.$answer{adultsr}{output}{$current_lang}{$current_lang."_6"}.$answer{adultsr}{output}{$current_lang}{$current_lang."_7"}.$answer{adultsr}{output}{$current_lang}{$current_lang."_8"};
+		}
+	else { $answer{adultsr}{output}{$current_lang}{$current_lang."_9"};}
+};
+
+$hiddens .= qq|<input type="hidden" name="organization" value="$organization" /><input type="hidden" name="challengingparts" value="$challengingparts" /><input type="hidden" name="appointments" value="$appointments" /><input type="hidden" name="delay" value="$delay" /><input type="hidden" name="restless" value="$restless" /><input type="hidden" name="feeloverly" value="$feeloverly" />|;
+
+	}
+######### END OF Adult Self Report #####################
+######### COPD vs Asthma####
+if ( $calculator eq 'copdas' )
+	{
+
+$form_title = 'COPD vs Asthma';
+
+$basics = <<"HERE";
+Common behaviors of Adult ADHD may include: procrastination, chronic lateness, easily frustrated, unstable moods, disorganized, anxious, low self-esteem, hot temper, impulsive behavior, depression, substance abuse or addiction, antisocial, unable to be alone, difficulty in following directions, and the inability to concentrate.
+adult sr count $copd_as.
+HERE
+
+
+#$hiddens .= qq|<input type="hidden" name="type" value="$type" /><input type="hidden" name="weight" value="$weight" /><input type="hidden" name="sex" value="$sex" /><input type="hidden" name="number" value="$number" /><input type="hidden" name="time" value="$time" />|;
+
+	}
+######### END OF COPDAS #####################
+######### Chronic Obstructive Pulmonary Disease####
+if ( $calculator eq 'copddx' )
+	{
+
+# $form_title = 'Risk for Chronic Obstructive Pulmonary Disease ( COPD )';
+# $basics = <<"HERE";
+# <p>COPD is the 4th leading cause of death in the United States. The disease kills more than 120,000 Americans each year - that’s 1 death every 4 minutes- and causes serious, long-term disability. The number of people with COPD is increasing. More than 12 million people are diagnosed with COPD and an additional 12 million likely have the disease and don’t even know it.
+# HERE
+# $details .= do {
+		# if($copd_dx >= 27 ){ "Based on your responses, you are at VERY HIGH RISK and it is recommended that you see your health care provider and have a spirometry test.  This simple test checks the amount of air (volume) and the speed (flow) you can blow out from your lungs." }
+		# elsif($copd_dx >= 17 ){ "Based on your responses, you are AT RISK and it is recommended that you see your health care provider and have a spirometry test.  This simple test checks the amount of air (volume) and the speed (flow) you can blow out from your lungs." }
+		# else { "<p>Based on your responses you are not showing signs of having COPD." }
+		# };
+
+$form_title = $answer{copddx}{output_title}{$current_lang};
+$basics = $answer{copddx}{output}{$current_lang}{$current_lang."_1"};
+
+$details .= do {
+		if($copd_dx >= 27 ){ $answer{copddx}{output}{$current_lang}{$current_lang."_2"}; }
+		elsif($copd_dx >= 17 ){ $answer{copddx}{output}{$current_lang}{$current_lang."_3"};}
+		else { $answer{copddx}{output}{$current_lang}{$current_lang."_4"}; }
+		};		
+
+$hiddens .= qq|<input type="hidden" name="type" value="$type" /><input type="hidden" name="age" value="$age" /><input type="hidden" name="years" value="$years" /><input type="hidden" name="weight" value="$weight" /><input type="hidden" name="height" value="$height" /><input type="hidden" name="packsperday" value="$packsperday" /><input type="hidden" name="cold" value="$cold" /><input type="hidden" name="allergies" value="$allergies" /><input type="hidden" name="cough" value="$cough" /><input type="hidden" name="wheezing" value="$wheezing" />|;
+
+	}
+######### END OF COPDDX #####################
+######### DMDI####
+if ( $calculator eq 'dmdi' )
+	{
+
+# $form_title = 'Depression results using the Major Depression Inventory';
+# $basics = <<"HERE";
+# There are several forms of depressive disorders. The most common are major depressive disorder and dysthymic disorder.
+# <p>Major depressive disorder, also called major depression, is characterized by a combination of symptoms that interfere with a person's ability to work, sleep, study, eat, and enjoy once-pleasurable activities. Major depression is disabling and prevents a person from functioning normally. An episode of major depression may occur only once in a person's lifetime, but more often, it recurs throughout a person's life.
+# <p>Dysthymic disorder, also called dysthymia, is characterized by long-term (two years or longer) but less severe symptoms that may not disable a person but can prevent one from functioning normally or feeling well. People with dysthymia may also experience one or more episodes of major depression during their lifetimes.
+# HERE
+# $details .= do {
+		# if($dmdi_level ne 'no' ){ "Based on your responses, you may be suffering from $dmdi_level depression. It is recommended that you see your health care provider and seek treatment.  The doctor or mental health professional will conduct a complete diagnostic evaluation. He or she should discuss any family history of depression, and get a complete history of symptoms, e.g., when they started, how long they have lasted, their severity, and whether they have occurred before and if so, how they were treated. He or she should also ask if you are using alcohol or drugs, and whether you are thinking about death or suicide." }
+		# elsif($dmdi_dsmiv ){ "Based on your responses, you may be suffering from depression. It is recommended that you see your health care provider and seek treatment.  The doctor or mental health professional will conduct a complete diagnostic evaluation. He or she should discuss any family history of depression, and get a complete history of symptoms, e.g., when they started, how long they have lasted, their severity, and whether they have occurred before and if so, how they were treated. He or she should also ask if you are using alcohol or drugs, and whether you are thinking about death or suicide." }
+		# else { "<p>Based on your responses you are not showing signs of depression." }
+		# };
+my $dmdilevel;
+if($dmdi_level eq 'severe'){
+	$dmdilevel = $common{severe}{$current_lang};		
+}elsif($dmdi_level eq 'moderate'){
+	$dmdilevel = $answer{moderate}{$current_lang};
+}elsif($dmdi_level eq 'mild'){
+	$dmdilevel = $answer{mild}{$current_lang};
+}
+$form_title = $answer{dmdi}{output_title}{$current_lang};
+$basics = $answer{dmdi}{output}{$current_lang}{$current_lang."_1"}.$answer{dmdi}{output}{$current_lang}{$current_lang."_2"}.$answer{dmdi}{output}{$current_lang}{$current_lang."_3"};
+
+$details .= do {
+		if($dmdi_level ne 'no' ){ $answer{dmdi}{output}{$current_lang}{$current_lang."_4"} }
+		elsif($dmdi_dsmiv ){ $answer{dmdi}{output}{$current_lang}{$current_lang."_5"}}
+		else { $answer{dmdi}{output}{$current_lang}{$current_lang."_6"} }
+		};
+
+$details =~ s/DMDILEVEL/$dmdilevel/;
+$hiddens .= qq|<input type="hidden" name="type" value="$type" /><input type="hidden" name="lowspirits" value="$lowspirits" /><input type="hidden" name="lossofinterest" value="$lossofinterest" /><input type="hidden" name="energy" value="$energy" /><input type="hidden" name="selfconfident" value="$selfconfident" /><input type="hidden" name="guilt" value="$guilt" /><input type="hidden" name="lowspirits" value="$lowspirits" /><input type="hidden" name="concentrating" value="$concentrating" /><input type="hidden" name="restless" value="$restless" /><input type="hidden" name="subdued" value="$subdued" /><input type="hidden" name="sleeping" value="$sleeping" /><input type="hidden" name="appetite" value="$appetite" /><input type="hidden" name="increased" value="$increased" />|;
+
+	}
+######### END OF DMDI #####################
+######### Eating disorder####
+if ( $calculator eq 'edisorder' )
+	{
+
+# $form_title = 'Eating Disorder Survey';
+# $basics = <<"HERE";
+# <p>Also called: Anorexia nervosa, Binge eating, Bulimia 
+# <p>Eating disorders are serious behavior problems. They include
+# <ul><li>Anorexia nervosa, in which you become too thin, but you don't eat enough because you think you are fat </li>
+# <li>Bulimia nervosa, involving periods of overeating followed by purging, sometimes through self-induced vomiting or using laxatives </li>
+# <li>Binge-eating, which is out-of-control eating </li></ul>
+# <p>Women are more likely than men to have eating disorders. They usually start in the teenage years and often occur along with depression, anxiety disorders and substance abuse. 
+# <p>Eating disorders can cause heart and kidney problems and even death. Getting help early is important. Treatment involves monitoring, mental health therapy, nutritional counseling and sometimes medicines.
+# HERE
+# $details .= do {
+		# if($badeater ){ "Based on your responses, you are SHOWING SIGNS of an eating disorder, it is recommended that you see your health care provider.  Psychological and medicinal treatments are effective for many eating disorders. However, in more chronic cases, specific treatments have not yet been identified." }
+		# else { "<p>Based on your responses you are not showing signs of having an eating disorder." }
+		# };
+
+$form_title = $answer{edisorder}{output_title}{$current_lang};
+$basics = $answer{edisorder}{output}{$current_lang}{$current_lang."_1"}.$answer{edisorder}{output}{$current_lang}{$current_lang."_2"}.$answer{edisorder}{output}{$current_lang}{$current_lang."_3"}.$answer{edisorder}{output}{$current_lang}{$current_lang."_4"}.$answer{edisorder}{output}{$current_lang}{$current_lang."_5"}.$answer{edisorder}{output}{$current_lang}{$current_lang."_6"}.$answer{edisorder}{output}{$current_lang}{$current_lang."_7"};
+
+$details .= do {
+		if($badeater ){ $answer{edisorder}{output}{$current_lang}{$current_lang."_8"} }
+		else { $answer{edisorder}{output}{$current_lang}{$current_lang."_9"} }
+		};
+
+$hiddens .= qq|<input type="hidden" name="type" value="$type" /><input type="hidden" name="screening" value="$screening" /><input type="hidden" name="eatingworry" value="$eatingworry" /><input type="hidden" name="stone" value="$stone" /><input type="hidden" name="fooddominates" value="$fooddominates" /><input type="hidden" name="fat" value="$fat" /><input type="hidden" name="feeluncomfortable" value="$feeluncomfortable" />|;
+}
+######### END OF Eating disorder #####################
+######### Eating low back####
+if ( $calculator eq 'lbp' || $calculator eq 'lbw')
+	{
+
+# $form_title = 'Low Back Pain Disability Questionnaire';
+# $basics = <<"HERE";
+# Acute or short-term low back pain generally lasts from a few days to a few weeks. Most acute back pain is mechanical in nature - the result of trauma to the lower back or a disorder such as arthritis. Pain from trauma may be caused by a sports injury, work around the house or in the garden, or a sudden jolt such as a car accident or other stress on spinal bones and tissues. Symptoms may range from muscle ache to shooting or stabbing pain, limited flexibility and/or range of motion, or an inability to stand straight. Occasionally, pain felt in one part of the body may "radiate" from a disorder or injury elsewhere in the body. Some acute pain syndromes can become more serious if left untreated. 
+# <p>Chronic back pain is measured by duration - pain that persists for more than 3 months is considered chronic. It is often progressive and the cause can be difficult to determine. 
+# HERE
+# my @levels = ( "", "minimal disabled", "moderately disabled", "severely disabled", "crippled", "bedridden or exaggerating");
+# $details .= do {
+		# if( $backscore > 1 ){ "Your responses suggest that you are $levels[$backscore] with back pain.  If you have not seen a health care provider you should do so now, as they can provide some options for relief of your back pain."}
+		# else { "<p>Based on your responses you are not showing signs of having any disability related to back pain." }
+		# };
+
+$form_title = $answer{lbw}{output_title}{$current_lang};
+$basics = $answer{lbw}{output}{$current_lang}{$current_lang."_1"}.$answer{lbw}{output}{$current_lang}{$current_lang."_2"};
+my @levels = ( "", $answer{lbw}{output}{$current_lang}{$current_lang."_5"}, $answer{lbw}{output}{$current_lang}{$current_lang."_6"}, $answer{lbw}{output}{$current_lang}{$current_lang."_7"}, $answer{lbw}{output}{$current_lang}{$current_lang."_8"}, $answer{lbw}{output}{$current_lang}{$current_lang."_9"});
+$details .= do {
+		if( $backscore > 1 ){ $answer{lbw}{output}{$current_lang}{$current_lang."_3"};}
+		else { $answer{lbw}{output}{$current_lang}{$current_lang."_4"};}
+		};		
+$details =~ s/LEVELS/$levels[$backscore]/;
+$hiddens .= qq|<input type="hidden" name="type" value="$type" /><input type="hidden" name="painintensity" value="$painintensity" /><input type="hidden" name="personalcare" value="$personalcare" /><input type="hidden" name="lifting" value="$lifting" /><input type="hidden" name="walking" value="$walking" /><input type="hidden" name="sitting" value="$sitting" /><input type="hidden" name="standing" value="$standing" /><input type="hidden" name="travelling" value="$travelling" /><input type="hidden" name="sleeping" value="$sleeping" /><input type="hidden" name="sexlife" value="$sexlife" /><input type="hidden" name="sociallife" value="$sociallife" />|;
+
+	}
+######### END OF lowback #####################
+#########Leisure time exercise####
+if ( $calculator eq 'lexercise' )
+	{
+
+$form_title = 'Leisure-time physical activity';
+
+$basics = <<"HERE";
+leisure time exercise count $lex, $sweat_freq
+HERE
+
+
+#$hiddens .= qq|<input type="hidden" name="type" value="$type" /><input type="hidden" name="weight" value="$weight" /><input type="hidden" name="sex" value="$sex" /><input type="hidden" name="number" value="$number" /><input type="hidden" name="time" value="$time" />|;
+
+	}
+######### END OF Leisure time exercise#####################
+#########Motion Sick####
+if ( $calculator eq 'motionsick' )
+	{
+
+$form_title = 'Motion Sick';
+
+$basics = <<"HERE";
+Motion sick count $subscore.
+HERE
+
+
+#$hiddens .= qq|<input type="hidden" name="type" value="$type" /><input type="hidden" name="weight" value="$weight" /><input type="hidden" name="sex" value="$sex" /><input type="hidden" name="number" value="$number" /><input type="hidden" name="time" value="$time" />|;
+
+	}
+######### END OF Vehicle old Driver#####################
+if ( $calculator eq 'vod' )
+	{
+
+$form_title = 'Vehicle Old Driver';
+
+$basics = <<"HERE";
+vod count $vod.
+HERE
+
+
+#$hiddens .= qq|<input type="hidden" name="type" value="$type" /><input type="hidden" name="weight" value="$weight" /><input type="hidden" name="sex" value="$sex" /><input type="hidden" name="number" value="$number" /><input type="hidden" name="time" value="$time" />|;
+
+	}
+######### END OF Motion sick#####################
+######### waist to hip ratio  ##########################
+if ( $calculator eq 'whr' )
+	{
+
+$form_title = 'Waist to Hip Ratio';
+
+$basics = <<"HERE";
+You have a waist to hip ratio of $ratio.  The information you
+entered: Sex = $sex, waist = $waist $ln_units and hip = $hip $ln_units.
+HERE
+
+if ( $shape eq 'pear' )
+		{
+$details = <<"HERE";
+Your shape puts you at reduced risk of coronary heart disease, diabetes
+and stroke.  Frequently referred to as pear shape, you tend to keep fat
+off your midsection and more on your hips. Our bodies do not convert
+this lower body fat as readily as midsection fat, which keeps
+cholesterol down.
+HERE
+		}
+else
+		{
+$details = <<"HERE";
+Your shape puts you at increased risk of coronary heart disease,
+diabetes and stroke. Frequently referred to as apple shape, you
+tend to keep fat at your midsection and less on your hips. Our
+bodies convert this upper body fat to energy whenever your body
+runs short.  This raises cholesterol and blood pressure.
+HERE
+		}
+
+$hiddens .= qq|<input type="hidden" name="waist" value="$waist" /><input type="hidden" name="sex" value="$sex" /><input type="hidden" name="hip" value="$hip" />|;
+
+	}
+######### END OF waist to hip ratio  ##########################
+###########Alcohol specific calculator########################
+if( $calculator eq 'acohol')
+{
+}
+
+######### END OF calculator specific sections #################
+
+$title = $form_title;
+
+######### Here we format the output, just take the pieces we built
+######### above and dump them into $calc_results,
+
+
+$calc_results = <<"HERE";
+$basics<br /> <br />$details</p>
+HERE
+
+####### All done setting values, now we open the standard header and fill that in.
+###### DO NOT REMOVE THESE EMPTY QUOTES ###################################
+
+'';
+}{
+# this is the standard header for the calculator output. You can either
+# have an HTML page with $calc_results enclosed in braces and use the default format
+# for each calculator or you can drop in each result element yourself.
+Text::Template::fill_in_file($directory.$template_set."/adv_output.tmpl", PACKAGE => __PACKAGE__ ) or die $Text::Template::ERROR;
+}
+

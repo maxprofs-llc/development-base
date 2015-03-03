@@ -1,0 +1,1048 @@
+{
+use vars qw( 	$fact $wellness_bar @good_habits @bad_habits
+		$Wellness $risks_short $WeightLine $smoke_message
+		$other_smoke_message $chew_message
+		$weight_message $drink_and_drive_message $speed_message
+		$seat_belt_message $bp_message $cholesterol_message
+		$exercise_message $diabetes_message $loss_message
+		$breast_cancer_message $mammogram_message $pap_message
+		$fat_message $fiber_message $alcohol_message $helmet_message
+		@recommendations $risks_bars %attrib_points %attrib_points2 %attrib_percents
+		%attrib_name $weight_short $my_short $family_short
+		$smk_short_risk $nutrition_short_risk $fitness_short_risk
+		$alcohol_short_risk $injury_short_risk $wellbeing_short_risk
+		@health_risk_habits $bp_short $cholesterol_short $mood_message
+		$anxiety_message $hs_at_points_out $lc_sex $nutrition_message
+ 		$r2c_issues $r2c_autosafety_flag $r2c_bp_flag $r2c_checkups_flag 
+		$r2c_cholesterol_flag $r2c_drink_flag $r2c_exercise_flag 
+		$r2c_fat_flag $r2c_smoke_flag $r2c_stress_flag $r2c_weight 
+		@ready_2_change @ready_not_change @ready_ignorant
+		$hra_cover_letter @ready_2_change_doc
+		$my_links $family_links $sex_links $bmi_links $smoke_links
+		$nutrition_links $alcohol_links $injury_links $fitness_links
+		$wellbeing_links $my_links_pdf $family_links_pdf $sex_links_pdf
+		$bmi_links_pdf $smoke_links_pdf $nutrition_links_pdf
+		$alcohol_links_pdf $injury_links_pdf $fitness_links_pdf
+		$wellbeing_links_pdf );
+
+require HealthStatus::CalcRisk;
+require HealthStatus;
+require HealthStatus::Constants;
+require CGI::Carp;
+
+my %hra_cover_letters;
+$hra_cover_letters{'html'} = $config{hra_cover_letter_html} || "/hra_cover_letter_html.tmpl";
+$hra_cover_letters{'pdf'} = $config{hra_cover_letter_pdf} || "/hra_cover_letter_pdf.tmpl";
+$hra_cover_letters{'pdfe'} = $config{hra_cover_letter_pdf} || "/hra_cover_letter_pdf.tmpl";
+
+$current_title = $hra_title;
+$current_subtitle = $hra_subtitle;
+$current_subtitle_in = $hra_subtitle_in;
+$current_desc = qq|Our General Health Risk Assessment provides you with your health risks and key habits that you can change to live healthier.|;
+
+$output_format = 'HTML' if ($output_format ne 'HTML' && $output_format ne 'PDF' && $output_format ne 'PDFE' && $output_format ne 'XML' && $output_format ne 'TEXT' );
+$hra_cover_letter = $hra_cover_letters{lc $output_format};
+
+my $bp_avg 		= 120; # U.S. average blood pressure level(120/80) - National Institutes of Health
+my $bp_target 		= 119; # target blood pressure - National Institutes of Health
+my $cholesterol_avg 	= 210; # U.S. average for cholesterol level - National Institutes of Health
+my $cholesterol_target 	= CHOL_MARGINAL; # target cholesterol - American Heart Association
+my $cholesterol_low 	= CHOL_LOW; # target cholesterol - American Heart Association
+my $hdl_avg_men 	= 45; # U.S. average for cholesterol level men - National Institutes of Health
+my $hdl_avg_women 	= 55; # U.S. average for cholesterol level women - National Institutes of Health
+my $hdl_target 		= HDL_LOW_FEMALE if $sex eq FEMALE; # target HDL cholesterol - American Heart Association
+$hdl_target 		= HDL_LOW_MALE if $sex eq MALE; # target HDL cholesterol - American Heart Association
+my $exercise_avg 	= 1; # U.S. average 30 minute exercise sessions - Surgeon General
+my $exercise_target 	= 3; # target 30 minute exercise sessions - Surgeon General
+
+my @weightflg 		= ('within', 'over', 'significantly over', 'under');
+my @smoke_habits 	= ( 'not smoking','quit smoking','smoking','smoking heavily' );
+my @weight_habits 	= ( 'healthy weight', 'slightly overweight', 'overweight', 'significantly overweight', 'under weight' );
+my @fat_habits 		= ( '', 'eating too many fats', 'eating too many fats', '', 'low fat diet' );
+my @bp_habits 		= ( 'safe blood pressure', 'don\'t know blood pressure', 'high blood pressure', 'high blood pressure' );
+my @chol_habits 	= ( 'low cholesterol', 'unknown cholesterol', 'too low cholesterol', 'elevated cholesterol', 'high cholesterol' );
+my @hdl_habits 		= ( 'healthy HDL', 'unknown HDL', 'low HDL' );
+my @exer_habits 	= ( 'regular exercise', 'not enough regular exercise', 'not enough regular exercise', 'no regular exercise' );
+my @fiber_habits 	= ( 'diet includes plenty of fiber', 'diet includes fiber', 'not enough fiber', 'very little fiber' );
+
+$WeightLine = $lang{$current_language}{hra_weightLine_msg1};
+$WeightLine =~ s/HEIGHT_IMPERIAL/$height_imperial/;
+$WeightLine .= do
+		{
+		if	( $bmi <= BMI_LOW) 	{ $lang{$current_language}{weight_msg5} }
+		elsif	( $bmi <= BMI_GOOD ) 	{ $lang{$current_language}{weight_msg1} }
+		elsif   ( $bmi <= BMI_OBESE )	{ $lang{$current_language}{weight_msg3} }
+		else				{ $lang{$current_language}{weight_msg4} }
+		};
+$WeightLine .= $lang{$current_language}{hra_weightLine_msg2};
+
+my $start = "$name, $lang{$current_language}{hra_fact_msg1}";
+$start =~ s/LC_SEX/$lc_sex/;
+$fact = do 	{
+		if ($diabetes eq YES &&
+			( $FBC_flag == 1 || $FBC_flag == 2 ) )	{ "$start, $lang{$current_language}{hra_fact_msg2}"}
+		elsif ($diabetes eq YES  ) 			{ "$start $lang{$current_language}{hra_fact_msg3}" }
+		elsif (( $FBC_flag == 1 || $FBC_flag == 2 )) 	{ "$start $lang{$current_language}{hra_fact_msg4}" }
+		else						{ "$start." }
+		};
+
+push @good_habits, $lang{$current_language}{hra_good_habits1} if ($weight_flag == 0);
+push @bad_habits, $lang{$current_language}{hra_bad_habits1} if ($weight_flag == 4);
+
+if ($weight_flag == 1){
+	if ($r2c_weight eq YES ){
+		push @bad_habits, $lang{$current_language}{hra_bad_habits2}	;
+		}
+	else {
+		push @bad_habits, $lang{$current_language}{hra_bad_habits3};
+		}
+	}
+if ($weight_flag == 2){
+	if ($r2c_weight eq YES ){
+		push @bad_habits, $lang{$current_language}{hra_bad_habits4};
+		}
+	else {
+		push @bad_habits, $lang{$current_language}{hra_bad_habits5};
+		}
+	}
+push @good_habits, $lang{$current_language}{hra_good_habits2} if (!$smoke_count && !$smoke_other);
+push @good_habits, $lang{$current_language}{hra_good_habits3} if ($smoke_flag == 1);
+push @bad_habits, $lang{$current_language}{hra_bad_habits6} if ($smoke_flag == 2);
+push @bad_habits, $lang{$current_language}{hra_bad_habits7} if ($chews_flag == 1);
+push @bad_habits, $lang{$current_language}{hra_bad_habits8} if ($pipes_flag == 1);
+push @bad_habits, $lang{$current_language}{hra_bad_habits9} if ($cigars_flag == 1);
+push @good_habits, $lang{$current_language}{hra_good_habits4} if ($bp_flag == 0);
+push @bad_habits, $lang{$current_language}{hra_bad_habits10} if ($bp_flag == 1 || $bp_flag == 2);
+if ($bp_flag == 2 || $bp_flag == 3 || $bp_flag == 4){
+	if ($r2c_bp eq YES ){
+		push @bad_habits, $lang{$current_language}{hra_bad_habits17} ;
+		}
+	else {
+		push @bad_habits, $lang{$current_language}{hra_bad_habits18} ;
+		}
+	}
+push @good_habits, $lang{$current_language}{hra_good_habits5} if ($seat_belt_flag == 0);
+push @bad_habits, $lang{$current_language}{hra_bad_habits11} if ($seat_belt_flag == 1);
+push @good_habits, $lang{$current_language}{hra_good_habits6} if ($speed_flag == 0);
+push @bad_habits, $lang{$current_language}{hra_bad_habits12} if ($speed_flag == 1);
+push @good_habits, $lang{$current_language}{hra_good_habits7} if ($helmet_flag == 1);
+push @bad_habits, $lang{$current_language}{hra_bad_habits13} if ($helmet_flag == 2);
+push @bad_habits, $lang{$current_language}{hra_bad_habits14} if ($drink_and_drive_flag == 1);
+push @good_habits, $lang{$current_language}{hra_good_habits8} if ($pap_flag <= 1  && $sex eq FEMALE);
+push @bad_habits, $lang{$current_language}{hra_bad_habits15} if ($pap_flag > 1  && $sex eq FEMALE);
+push @good_habits, $lang{$current_language}{hra_good_habits9} if ($mammogram_flag <= 1  && $sex eq FEMALE);
+push @bad_habits, $lang{$current_language}{hra_bad_habits16} if ($mammogram_flag > 1  && $sex eq FEMALE && $age >= 50);
+push @bad_habits, $lang{$current_language}{hra_bad_habits16} if ($mammogram_flag > 2  && $sex eq FEMALE && $age >= 40  && $age < 50);
+push @bad_habits, $lang{$current_language}{hra_bad_habits19} if ($mammogram_flag > 2  && $sex eq FEMALE && $FBC_flag && $age < 40);
+push @good_habits, $lang{$current_language}{hra_good_habits10} if (!$self_breast_exam_flag  && $sex eq FEMALE);
+push @good_habits, $lang{$current_language}{hra_good_habits11} if ($self_breast_exam_flag == 1  && $sex eq FEMALE);
+push @bad_habits, $lang{$current_language}{hra_bad_habits20} if (self_breast_exam_flag == 2  && $sex eq FEMALE);
+push @good_habits, $lang{$current_language}{hra_good_habits12} if ($alcohol_flag == 0);
+push @good_habits, $lang{$current_language}{hra_good_habits13} if ($alcohol_flag == 1);
+push @bad_habits, $lang{$current_language}{hra_bad_habits21} if ($alcohol_flag == 2 && $sex eq MALE);
+push @bad_habits, $lang{$current_language}{hra_bad_habits22} if ($alcohol_flag == 3 && $sex eq MALE);
+push @bad_habits, $lang{$current_language}{hra_bad_habits23} if ($alcohol_flag == 3 && $sex eq MALE && $drinks_week >= (MALE_ALCOHOL_UPPER_LIMIT * 1.7));
+push @bad_habits, $lang{$current_language}{hra_bad_habits24} if ($alcohol_flag == 2 && $sex eq FEMALE);
+push @bad_habits, $lang{$current_language}{hra_bad_habits25} if ($alcohol_flag == 3 && $sex eq FEMALE);
+push @bad_habits, $lang{$current_language}{hra_bad_habits26} if ($alcohol_flag == 3 && $sex eq FEMALE && $drinks_week >= (FEMALE_ALCOHOL_UPPER_LIMIT * 1.7));
+push @good_habits, $lang{$current_language}{hra_good_habits14} if ($cholesterol_flag == 1);
+if ($cholesterol_flag == 3 || $cholesterol_flag == 2){
+	if ($r2c_cholesterol eq YES ){
+		push @bad_habits, $lang{$current_language}{hra_bad_habits27} ;
+		}
+	else	{
+		push @bad_habits, $lang{$current_language}{hra_bad_habits28};
+		}
+	}
+push @bad_habits, $lang{$current_language}{hra_bad_habits29} if ($cholesterol_flag == 0);
+push @good_habits, $lang{$current_language}{hra_good_habits15} if ($exercise_flag == 0);
+push @bad_habits, $lang{$current_language}{hra_bad_habits30} if ($exercise_flag == 1 && $exercise_unable ne YES);
+push @bad_habits, $lang{$current_language}{hra_bad_habits30} if ($exercise_flag == 2 && $exercise_unable ne YES);
+push @good_habits, $lang{$current_language}{hra_good_habits16} if ($fiber_flag == 1);
+push @bad_habits, $lang{$current_language}{hra_bad_habits31} if ($fiber_flag == 0);
+push @good_habits, $lang{$current_language}{hra_good_habits17} if ($fat_flag == 1);
+push @bad_habits, $lang{$current_language}{hra_bad_habits32} if ($fat_flag == 0);
+push @bad_habits, $lang{$current_language}{hra_bad_habits33} if ($violence_flag > 1);
+push @good_habits, $lang{$current_language}{hra_good_habits18} if ($diabetes_chk);
+push @bad_habits, $lang{$current_language}{hra_bad_habits34} if ($sex eq MALE && ($rectal_male ne "One year ago" && $rectal_male ne "Less than one year ago") && $age >= 40);
+push @bad_habits, $lang{$current_language}{hra_bad_habits34} if ($sex eq FEMALE && (
+					(($rectal_female ne "One year ago" && $rectal_female ne "Less than one year ago") && $age >= 40) || 
+					(($pap_female ne "One year ago" && $pap_female ne "Less than one year ago") && $age >= 20) ||
+					(($mammogram_female ne "One year ago" && $mammogram_female ne "Less than one year ago") && $age >= 40) ||
+					(($clinic_breast_exam ne "One year ago" && $clinic_breast_exam ne "Less than one year ago") && $age >= 35) ) );
+push @good_habits, $lang{$current_language}{hra_good_habits19} if ($sex eq MALE && ($rectal_male eq "One year ago" || $rectal_male eq "Less than one year ago") && $age >= 40);
+push @good_habits, $lang{$current_language}{hra_good_habits19} if ($sex eq FEMALE && (
+					(($rectal_female eq "One year ago" || $rectal_female eq "Less than one year ago") && $age >= 40) || 
+					(($pap_female eq "One year ago" || $pap_female eq "Less than one year ago") && $age >= 20) ||
+					(($mammogram_female eq "One year ago" || $mammogram_female eq "Less than one year ago") && $age >= 40) ||
+					(($clinic_breast_exam eq "One year ago" || $clinic_breast_exam eq "Less than one year ago") && $age >= 35) ) );
+
+
+push @ready_2_change, $lang{$current_language}{hra_ready_msg1} 		if ($r2c_autosafety eq YES);
+push @ready_2_change, $lang{$current_language}{hra_ready_msg2} 		if ($r2c_bp eq YES);
+push @ready_2_change, $lang{$current_language}{hra_ready_msg3} 		if ($r2c_checkups eq YES);
+push @ready_2_change, $lang{$current_language}{hra_ready_msg4} 		if ($r2c_cholesterol eq YES);
+push @ready_2_change, $lang{$current_language}{hra_ready_msg5} 		if ($r2c_drink eq YES);
+push @ready_2_change, $lang{$current_language}{hra_ready_msg6} 		if ($r2c_exercise eq YES);
+push @ready_2_change, $lang{$current_language}{hra_ready_msg7} 		if ($r2c_fat eq YES);
+push @ready_2_change, $lang{$current_language}{hra_ready_msg8} 		if ($r2c_smoke eq YES);
+push @ready_2_change, $lang{$current_language}{hra_ready_msg9} 		if ($r2c_stress eq YES);
+push @ready_2_change, $lang{$current_language}{hra_ready_msg10} 		if ($r2c_weight eq YES);
+
+push @ready_2_change_doc, $lang{$current_language}{hra_ready_msg1} 		if ($r2c_autosafety eq YES);
+push @ready_2_change_doc, $lang{$current_language}{hra_ready_msg2} 		if ($r2c_bp eq YES);
+push @ready_2_change_doc, $lang{$current_language}{hra_ready_msg3} 		if ($r2c_checkups eq YES);
+push @ready_2_change_doc, $lang{$current_language}{hra_ready_msg11}		if ($r2c_cholesterol eq YES);
+push @ready_2_change_doc, $lang{$current_language}{hra_ready_msg12} 		if ($r2c_drink eq YES);
+push @ready_2_change_doc, $lang{$current_language}{hra_ready_msg6} 			if ($r2c_exercise eq YES);
+push @ready_2_change_doc, $lang{$current_language}{hra_ready_msg13}	 if ($r2c_fat eq YES);
+push @ready_2_change_doc, $lang{$current_language}{hra_ready_msg8} 				if ($r2c_smoke eq YES);
+push @ready_2_change_doc, $lang{$current_language}{hra_ready_msg14} 		if ($r2c_stress eq YES);
+push @ready_2_change_doc, $lang{$current_language}{hra_ready_msg15} if ($r2c_weight eq YES);
+
+push @ready_not_change, $lang{$current_language}{hra_ready_msg1} 		if ($r2c_autosafety eq NO);
+push @ready_not_change, $lang{$current_language}{hra_ready_msg2} 		if ($r2c_bp eq NO);
+push @ready_not_change, $lang{$current_language}{hra_ready_msg3} 		if ($r2c_checkups eq NO);
+push @ready_not_change, $lang{$current_language}{hra_ready_msg4} 		if ($r2c_cholesterol eq NO);
+push @ready_not_change, $lang{$current_language}{hra_ready_msg5} 		if ($r2c_drink eq NO);
+push @ready_not_change, $lang{$current_language}{hra_ready_msg6} 		if ($r2c_exercise eq NO);
+push @ready_not_change, $lang{$current_language}{hra_ready_msg7} 		if ($r2c_fat eq NO);
+push @ready_not_change, $lang{$current_language}{hra_ready_msg8} 		if ($r2c_smoke eq NO);
+push @ready_not_change, $lang{$current_language}{hra_ready_msg9} 		if ($r2c_stress eq NO);
+push @ready_not_change, $lang{$current_language}{hra_ready_msg10} 	if ($r2c_weight eq NO);
+
+push @ready_ignorant, $lang{$current_language}{hra_ready_msg1} 		if ($r2c_autosafety eq DONT_KNOW);
+push @ready_ignorant, $lang{$current_language}{hra_ready_msg2} 		if ($r2c_bp eq DONT_KNOW);
+push @ready_ignorant, $lang{$current_language}{hra_ready_msg3} 		if ($r2c_checkups eq DONT_KNOW);
+push @ready_ignorant, $lang{$current_language}{hra_ready_msg4} 		if ($r2c_cholesterol eq DONT_KNOW);
+push @ready_ignorant, $lang{$current_language}{hra_ready_msg5} 		if ($r2c_drink eq DONT_KNOW);
+push @ready_ignorant, $lang{$current_language}{hra_ready_msg6} 		if ($r2c_exercise eq DONT_KNOW);
+push @ready_ignorant, $lang{$current_language}{hra_ready_msg7} 		if ($r2c_fat eq DONT_KNOW);
+push @ready_ignorant, $lang{$current_language}{hra_ready_msg8} 		if ($r2c_smoke eq DONT_KNOW);
+push @ready_ignorant, $lang{$current_language}{hra_ready_msg9} 		if ($r2c_stress eq DONT_KNOW);
+push @ready_ignorant, $lang{$current_language}{hra_ready_msg10} 		if ($r2c_weight eq DONT_KNOW);
+
+if($curr_page == 13){
+	$r2c_issues = 0;
+	$r2c_smoke_flag = 1 if ($smoke_status eq "Still smoke");
+	$r2c_fat_flag = 1 if ($fat eq YES);
+	$r2c_drink_flag = 1 if ($drinks_week > MALE_ALCOHOL_UPPER_LIMIT || ($drinks_week > FEMALE_ALCOHOL_UPPER_LIMIT && $sex eq FEMALE));
+	$r2c_exercise_flag = 1 if ($exercise ne "At least three times per week");
+	$r2c_autosafety_flag = 1 if ($seat_belt ne "Always, 100%" || $speed ne "Within 5 mph of limit" || $drink_and_drive > 0);
+	$r2c_bp_flag = 1 if ($bp_sys > BP_OPTIMUM_SYSTOLIC || $bp_dias > BP_OPTIMUM_DIASTOLIC || $bp_check eq "Don't know" || $bp_check eq "High");
+	$r2c_cholesterol_flag = 1 if  ($cholesterol >= CHOL_MARGINAL || $cholesterol_check eq "Don't know" || $cholesterol_check eq "High");
+	$r2c_weight_flag = 1 if ($bmi > 25);
+	$r2c_checkups_flag = 1 if ($sex eq MALE && ($rectal_male ne "One year ago" && $rectal_male ne "Less than one year ago") && $age >= 40);
+	$r2c_checkups_flag = 1 if ($sex eq FEMALE && (
+					(($rectal_female ne "One year ago" && $rectal_female ne "Less than one year ago") && $age >= 40) || 
+					(($pap_female ne "One year ago" && $pap_female ne "Less than one year ago") && $age >= 20) ||
+					(($mammogram_female ne "One year ago" && $mammogram_female ne "Less than one year ago") && $age >= 40) ||
+					(($clinic_breast_exam ne "One year ago" && $clinic_breast_exam ne "Less than one year ago") && $age >= 35) ) );
+	$r2c_stress_flag = 0 ;
+	$r2c_issues = 1 if ($r2c_autosafety_flag || $r2c_bp_flag || $r2c_checkups_flag || $r2c_cholesterol_flag || $r2c_drink_flag || $r2c_exercise_flag || 
+				$r2c_fat_flag || $r2c_smoke_flag || $r2c_stress_flag || $r2c_weight);
+	}
+
+my $well = '';
+if ($wellness >= 85 &&
+	$#bad_habits <= 2)	{ $well = $lang{$current_language}{hra_well_msg1} }
+elsif ($wellness > 85 &&
+	$#bad_habits > 2)	{
+	$well = $lang{$current_language}{hra_well_msg2};
+	if ($diabetes eq YES ||
+		( $FBC_flag == 1 || $FBC_flag == 2 )) 		{ $well .= $lang{$current_language}{hra_well_msg3} }
+	if ($smoke_flag == 2)	{ $well .= $lang{$current_language}{hra_well_msg4} }
+	if ($alcohol_flag >=1)	{
+		if ($smoke_flag == 2)	{ $well .= $lang{$current_language}{hra_well_msg5} }
+		else			{ $well .= $lang{$current_language}{hra_well_msg6} }
+	}
+	if ($smoke_flag == 2 || $alcohol_flag >=1) { $well .= $lang{$current_language}{hra_well_msg7} }
+	$well .= $lang{$current_language}{hra_well_msg8}
+	}
+elsif ($wellness < 70){
+	$well = $lang{$current_language}{hra_well_msg9};
+	if ($diabetes eq YES ||
+		( $FBC_flag == 1 || $FBC_flag == 2 ) ) 	{ $well .= $lang{$current_language}{hra_well_msg3} }
+	if ($smoke_flag == 2)				{ $well .= $lang{$current_language}{hra_well_msg4} }
+	if ($alcohol_flag >=1){
+		if ($smoke_flag == 2)	{ $well .= $lang{$current_language}{hra_well_msg5} }
+		else			{ $well .= $lang{$current_language}{hra_well_msg6} }
+	}
+	if ($smoke_flag == 2 ||
+		$alcohol_flag >=1)			{ $well .= $lang{$current_language}{hra_well_msg10} }
+	$well .= $lang{$current_language}{hra_well_msg11};
+	}
+else{
+	$well = $lang{$current_language}{hra_well_msg12};
+	if ($diabetes eq YES ||
+		( $FBC_flag == 1 || $FBC_flag == 2 ) ) 	{ $well .= $lang{$current_language}{hra_well_msg3} }
+	if ($smoke_flag == 2)				{ $well .= $lang{$current_language}{hra_well_msg4} }
+	if ($alcohol_flag >=1)	{
+		if ($smoke_flag == 2)	{ $well .= $lang{$current_language}{hra_well_msg5} }
+		else			{ $well .= $lang{$current_language}{hra_well_msg6} }
+	}
+	if ($smoke_flag == 2 ||
+		$alcohol_flag >=1)			{ $well .= $lang{$current_language}{hra_well_msg10} }
+	$well .= $lang{$current_language}{hra_well_msg11};
+	}
+if ($appraised_age < $actual_age){
+	$well .= $lang{$current_language}{hra_well_msg13};
+	$well .= $lang{$current_language}{hra_well_msg14} if($achievable_age < $appraised_age);
+	}
+elsif($appraised_age > $actual_age){
+	$well .= $lang{$current_language}{hra_well_msg15};
+	$well .= $lang{$current_language}{hra_well_msg14} if($achievable_age < $appraised_age);
+	}
+else	{
+	$well .= $lang{$current_language}{hra_well_msg16};
+	$well .= $lang{$current_language}{hra_well_msg14} if( $achievable_age < $appraised_age );
+	}
+$well =~ s/WELLNESS_SCORE/$wellness/g;
+$Wellness = $well;
+
+
+# condition specific messages
+## smoking
+my $smk ='';
+	{
+	if ($smoke_flag == 0)  					{ $smk .= $lang{$current_language}{hra_smk_msg1} }
+	elsif($smoke_flag == 1){
+				if ($cigarette_years_quit <= 2)	{ $smk .= $lang{$current_language}{hra_smk_msg2} }
+				else				{ $smk .= $lang{$current_language}{hra_smk_msg3} }
+				}
+	elsif($smoke_flag == 2){
+				if ($cigs_a_day == 1 )		{ $smk .= $lang{$current_language}{hra_smk_msg4} }
+				elsif ($cigs_a_day < 1 )	{ $smk .= $lang{$current_language}{hra_smk_msg5} }
+				else 				{ $smk .= $lang{$current_language}{hra_smk_msg6} }
+				if ($cigs_a_day < 21) 		{ $smk .= $lang{$current_language}{hra_smk_msg7} }
+				else 				{ $smk .= $lang{$current_language}{hra_smk_msg8} }
+				$smk .= $lang{$current_language}{hra_smk_msg9};
+				$smk .= $lang{$current_language}{hra_smk_msg10} if ($r2c_smoke eq YES);
+				$smk .= $lang{$current_language}{hra_smk_msg11} if ($r2c_smoke eq DONT_KNOW);
+				}
+	};
+$smoke_message = $smk;
+
+$smk_short_risk = do
+		{
+		if($smoke_status eq STILL_SMOKE) 			{ $lang{$current_language}{high_risk} }
+		elsif($smoke_status eq NEVER_SMOKED &&
+			($pipes_day eq NONE || $pipes_day eq '') &&
+			($chews_day eq NONE  || $chews_day eq '')&&
+			($cigars_day eq NONE || $cigars_day eq '')) 	{ $lang{$current_language}{low_risk} }
+		elsif($smoke_status eq USE_TO_SMOKE &&
+			$pipes_day eq NONE  &&
+			$chews_day eq NONE  &&
+			$cigars_day eq NONE ) 				{ $lang{$current_language}{low_risk} }
+		else							{ $lang{$current_language}{moderate_risk} }
+		};
+
+
+## smoking cigars, pipes or chewing tobacco
+$chew_message = $lang{$current_language}{hra_chew_msg}
+	if $chews_flag;
+
+my $smk_other;
+	{
+		if ($cigars_flag ||
+			$pipes_flag) {
+					$smk_other = $lang{$current_language}{hra_smk_msg12};
+					if ($cigars_flag ) 		{ $smk_other .= " $lang{$current_language}{cigars}"}
+					if ($pipes_flag &&
+						$cigars_flag) 		{ $smk_other .= " $lang{$current_language}{and}" }
+					if ($pipes_flag) 		{ $smk_other .= " $lang{$current_language}{a} $lang{$current_language}{pipe}.  " }
+					else 				{ $smk_other .= ".  " }
+				      }
+		if ( $cigars_flag ||
+			$pipes_flag ||
+			$chews_flag ) { $smk_other .= $lang{$current_language}{hra_smk_msg13} }
+	}
+$other_smoke_message = $smk_other;
+
+## diabetes
+my $DiabMsg='';
+{
+	if ($diabetes_flag == 1) {
+				$DiabMsg = $lang{$current_language}{hra_diab_msg1};
+				if ($bmi > 24.9) 	{ $DiabMsg .= $lang{$current_language}{hra_diab_msg2} }
+				else			{ $DiabMsg .= $lang{$current_language}{hra_diab_msg3} }
+				}
+}
+$diabetes_message = $DiabMsg;
+
+## loss
+my $LossMsg='';
+{
+	if ($loss_flag > 0) {
+		$LossMsg = $lang{$current_language}{hra_loss_msg1};
+		if ($loss_flag == 1)	{ $LossMsg .= " $lang{$current_language}{a}" }
+		else 			{ $LossMsg .= " $lang{$current_language}{hra_loss_msg2}" }
+		$LossMsg .= $lang{$current_language}{hra_loss_msg3};
+		$LossMsg .= $lang{$current_language}{hra_loss_msg4};
+		$LossMsg .= $lang{$current_language}{hra_loss_msg5};
+	}
+}
+$loss_message = $LossMsg;
+
+## stress and depression
+my $t_wellbeing = $q5 + $q8 + $q17 + $q19 + $q22;
+my $t_depression = $q3 + $q7 + $q11;
+
+my $stress_flag = do
+	{
+	if(    $t_wellbeing > 18) { $Good++; 0 }
+	elsif( $t_wellbeing <  8) { $Bad++;  2 }
+	else                 {          1 }
+	};
+
+my $depression_flag = do
+	{
+	if(    $t_depression > 10 ) { $Good++; 0 }
+	elsif( $t_depression <  6 ) { $Bad++;  2 }
+	else                      {          1 }
+	};
+
+$wellbeing_short_risk = do
+			{
+			if	( $stress_flag  == 0 )	{ "Low stress $line_end" }
+			elsif	( $stress_flag  == 2 )	{ "Very stressed $line_end" }
+			else				{ "Some stress $line_end" }
+			};
+$wellbeing_short_risk .= do
+			{
+			if	( $depression_flag == 0 )	{ 'Not depressed' }
+			elsif	( $depression_flag == 2 )	{ 'Very depressed' }
+			else					{ 'Some depression' }
+			};
+{
+if($stress_flag == 0)
+	{
+	$anxiety_message = $lang{$current_language}{hra_anxiety_msg1};
+	$anxiety_message =~ s/BOLD_ON/$bold_on/;
+	$anxiety_message =~ s/BOLD_OFF/$bold_off/;
+	}
+elsif ($stress_flag == 2)
+	{
+	$anxiety_message = $lang{$current_language}{hra_anxiety_msg2};
+	}
+else
+	{
+	$anxiety_message = $lang{$current_language}{hra_anxiety_msg3};
+	}
+	$anxiety_message =~ s/PARA/$para/;
+	$anxiety_message = qq|| if ($r2c_stress eq YES);
+}
+{
+if($depression_flag == 0)
+	{
+	$mood_message = $lang{$current_language}{hra_mood_msg1};
+	$mood_message =~ s/BOLD_ON/$bold_on/;
+	$mood_message =~ s/BOLD_OFF/$bold_off/;
+	}
+elsif ($depression_flag == 2)
+	{
+	$mood_message = $lang{$current_language}{hra_mood_msg2};
+	}
+else
+	{
+	$mood_message = $lang{$current_language}{hra_mood_msg2};
+	}
+	$mood_message =~ s/PARA/$para/;
+}
+
+# body measure messages
+## weight
+if(!$bmi && $height && $weight ) { $bmi = HealthStatus::compute_body_mass_index($weight, $height, 'Imperial') }
+
+$weight_short = do
+		{
+		if	( $bmi <= BMI_LOW) 	{ $lang{$current_language}{hra_weight_msg1} }
+		elsif	( $bmi <= BMI_GOOD ) 	{ $lang{$current_language}{hra_weight_msg2} }
+		elsif   ( $bmi <= BMI_OBESE )	{ $lang{$current_language}{hra_weight_msg3} }
+		else				{ $lang{$current_language}{hra_weight_msg4} }
+		};
+
+$weight_message = "Your weight of $weight pounds is ";
+$weight_message .= do
+		{
+		if	( $bmi <= BMI_LOW) 	{ $lang{$current_language}{weight_msg5} }
+		elsif	( $bmi <= BMI_GOOD ) 	{ $lang{$current_language}{weight_msg1} }
+		elsif   ( $bmi <= BMI_OBESE )	{ $lang{$current_language}{weight_msg3} }
+		else				{ $lang{$current_language}{weight_msg4} }
+		};
+$weight_message .= $lang{$current_language}{hra_weight_msg6};
+$weight_message =~ s/HEIGHT_IMPERIAL/$height_imperial/;
+## blood pressure
+$bp_target =  BP_OPTIMUM_SYSTOLIC;
+$bp_dtarget = BP_OPTIMUM_DIASTOLIC;
+
+$bp_show = do
+	{
+		if ($bp_flag == 2 || $bp_flag == 1 || $bp_sys < 1) 	{ "$bp_check" }
+		else 							{ "$bp_sys/$bp_dias" }
+	};
+
+$bp_message = do
+	{
+	if ($bp_flag == 3) 	{ $BPMsg = $lang{$current_language}{hra_bp_msg1} }
+	elsif ($bp_flag == 4) 	{ $BPMsg = $lang{$current_language}{hra_bp_msg2}	}
+	elsif ($bp_flag == 2) 	{ $BPMsg = $lang{$current_language}{hra_bp_msg3} }
+	elsif ($bp_flag == 1)	{ $BPMsg = $lang{$current_language}{hra_bp_msg4} }
+	elsif ($bp_flag == 0)	{ $BPMsg = $lang{$current_language}{hra_bp_msg5}}
+	};
+
+$bp_short = $lang{$current_language}{hra_bp_msg6}	 if ($bp_flag == 0 );
+$bp_short = $lang{$current_language}{hra_bp_msg7}.$line_end if ($bp_flag == 1 || $bp_flag == 2);
+$bp_short =  $lang{$current_language}{hra_bp_msg8} if ($bp_flag == 2 || $bp_flag == 3|| $bp_flag == 4);
+
+## cholesterol
+my $CholMsg;
+{
+	$CholMsg='';
+	if ($cholesterol_flag == 0) {
+		$CholMsg = $lang{$current_language}{hra_chol_msg1};
+		if ($cholesterol_check eq DONT_KNOW) {
+			$CholMsg = $lang{$current_language}{hra_chol_msg2};
+		}
+	}
+	if ($cholesterol_flag == 1) {
+		my $t_chol = $cholesterol || "Normal or low";
+		if($t_chol ne "Normal or low"){
+			$CholMsg = "$t_chol $lang{$current_language}{hra_chol_msg3}"}
+		else	{
+			$CholMsg = "$t_chol $lang{$current_language}{hra_chol_msg4}"}
+		}
+	elsif ($cholesterol_flag == 2) {
+		$CholMsg = "$cholesterol $lang{$current_language}{hra_chol_msg5}";
+		$CholMsg .= $lang{$current_language}{hra_chol_msg6};}
+	elsif ($cholesterol_flag == 3){
+		my $t_chol = $cholesterol || "High";
+		if($t_chol ne "High"){
+			$CholMsg = "$t_chol $lang{$current_language}{hra_chol_msg7}";}
+		else	{
+			$CholMsg = "$t_chol $lang{$current_language}{hra_chol_msg8}";}
+		$CholMsg .= $lang{$current_language}{hra_chol_msg9};
+		$CholMsg .= $lang{$current_language}{hra_chol_msg10};}
+	elsif ($cholesterol_flag == 4){
+		$CholMsg = "$cholesterol $lang{$current_language}{hra_chol_msg11}";
+		$CholMsg .= $lang{$current_language}{hra_chol_msg12};
+		$CholMsg .= $lang{$current_language}{hra_chol_msg13};	}
+	if ($hdl_flag == 2) 	{ $CholMsg .= $lang{$current_language}{hra_chol_msg14} }
+	elsif ($hdl_flag == 0 &&
+		$cholesterol > 1) 	{ $CholMsg .= $lang{$current_language}{hra_chol_msg15} }
+	elsif ($hdl_flag == 0) 	{ $CholMsg .= $lang{$current_language}{hra_chol_msg16} }
+	else 			{ $CholMsg .= $lang{$current_language}{hra_chol_msg17} }
+	$CholMsg .= $lang{$current_language}{hra_chol_msg18} if ($r2c_cholesterol eq YES);
+	$CholMsg .= $lang{$current_language}{hra_chol_msg19}  if ($r2c_cholesterol eq DONT_KNOW);
+}
+$CholMsg =~ s/CHOLESTEROL_TARGET/$cholesterol_target/g;
+$CholMsg =~ s/HDL_TARGET/$hdl_target/g;
+$cholesterol_message = $CholMsg;
+
+$cholesterol_short =  $lang{$current_language}{hra_chol_msg20} if ($cholesterol_flag == 1);
+$cholesterol_short =  $lang{$current_language}{hra_chol_msg21} if ($cholesterol_flag == 3);
+$cholesterol_short =  $lang{$current_language}{hra_chol_msg21} if ($cholesterol_flag == 2);
+$cholesterol_short =  $lang{$current_language}{hra_chol_msg22} if ($cholesterol_flag == 0);
+
+# Habits
+## Driving related messages
+if($age < 41 && $seat_belt_flag) { $seat_belt_message = $lang{$current_language}{hra_seat_belt_msg1}}
+$seat_belt_message .= $lang{$current_language}{hra_seat_belt_msg2} 
+	if $seat_belt_flag ;
+$seat_belt_message =~ s/BOLD_ON/$bold_on/;
+$seat_belt_message =~ s/BOLD_OFF/$bold_off/;
+if ($speed_flag && $seat_belt_flag) {$speed_message = $lang{$current_language}{hra_speed_msg1}; }
+elsif ($speed_flag){$speed_message = $lang{$current_language}{hra_seat_belt_msg1} if $age < 41;
+	$speed_message .= $lang{$current_language}{hra_speed_msg2}; }
+
+$drink_and_drive_message = $lang{$current_language}{hra_drink_and_drive_msg}
+	if $drink_and_drive_flag ;
+
+$helmet_message = $lang{$current_language}{hra_helmet_msg}
+	if $helmet_flag > 1;
+$helmet_message =~ s/BOLD_ON/$bold_on/;
+$helmet_message =~ s/BOLD_OFF/$bold_off/;
+my $t_injury = 0;
+$t_injury += 4 if( $seat_belt eq ALWAYS_100 );
+$t_injury += 3 if( $seat_belt eq NEARLY_ALWAYS );
+$t_injury = $t_injury - 5 if( $drink_and_drive > 0 );
+$t_injury += 4 if( $drink_and_drive == 0 );
+$t_injury += 4 if( $speed eq WITHIN_5_MPH );
+$t_injury += 2 if( $speed eq WITHIN_6_10_MPH );
+$t_injury += 3 if( $helmet eq DO_NOT_RIDE || $HELMET eq ALWAYS_100 );
+
+$injury_short_risk = do
+			{
+			if	($t_injury > 10) { $lang{$current_language}{low_risk} }
+			elsif	($t_injury <= 6) { $lang{$current_language}{high_risk} }
+			else    		 { $lang{$current_language}{moderate_risk} }
+			};
+
+## Exercise
+my @ExerMsg = ( $lang{$current_language}{hra_exercise_msg0}, "", "", "", "");
+$exercise_message = do
+		{
+		if ($exercise_flag == 0) 	{ $lang{$current_language}{hra_exercise_msg1} }
+		elsif ($exercise_flag == 1)	{ $lang{$current_language}{hra_exercise_msg2} }
+		else				{ $lang{$current_language}{hra_exercise_msg2} }
+		};
+$exercise_message =~ s/EXEC_MSG/$ExerMsg[$weight_flag]/;
+$fitness_short_risk = do
+		{
+		if 	($exercise eq THREE_TIMES_A_WEEK)	{ $lang{$current_language}{low_risk} }
+		elsif	($exercise eq LESS_THAN_ONCE_WEEK)	{ $lang{$current_language}{high_risk} }
+		else						{ $lang{$current_language}{moderate_risk} }
+		};
+
+
+# Female messages
+if ($sex eq FEMALE){
+$sex_check = '';
+## Mammogram
+$mammogram_message = do
+			{
+			if ($actual_age > 50 &&
+				($mammogram_female ne LESS_THAN_A_YEAR &&
+				 $mammogram_female ne ONE_YEAR_AGO)) 		{ $lang{$current_language}{hra_mammogram_msg1} }
+			elsif ($actual_age > 40 &&
+				($mammogram_female ne LESS_THAN_A_YEAR &&
+				 $mammogram_female ne ONE_YEAR_AGO &&
+				 $mammogram_female ne TWO_YEARS_AGO)) 		{ $lang{$current_language}{hra_mammogram_msg2} }
+			};
+$sex_check .= do
+			{
+			if    ($mammogram_female eq LESS_THAN_A_YEAR ||
+				 $mammogram_female eq ONE_YEAR_AGO) 		{ "$lang{$current_language}{hra_sex_check_msg1}$line_end" }
+			elsif ($actual_age > 50 &&
+				($mammogram_female ne LESS_THAN_A_YEAR &&
+				 $mammogram_female ne ONE_YEAR_AGO)) 		{ "$lang{$current_language}{hra_sex_check_msg2}$line_end" }
+			elsif ($actual_age > 40 &&
+				($mammogram_female ne LESS_THAN_A_YEAR &&
+				 $mammogram_female ne ONE_YEAR_AGO &&
+				 $mammogram_female ne TWO_YEARS_AGO)) 		{ "$lang{$current_language}{hra_sex_check_msg2}$line_end" }
+			elsif($actual_age < 40)					{ "$lang{$current_language}{hra_sex_check_msg3}$line_end" }
+			};
+
+## Breast cancer
+my $bc;
+{
+	if ($FBC_flag == 1 ||
+		$FBC_flag == 2 ||
+		$no_gina_question){
+			if($no_gina_question){
+				$bc = $lang{$current_language}{hra_bc_msg1};}
+			else{
+				$bc = $lang{$current_language}{hra_bc_msg2} unless $no_gina_question;
+				if($mammogram_flag < 2)		{ $bc .= $lang{$current_language}{hra_bc_msg3} }
+				elsif($actual_age >= 35 &&
+					$mammogram_flag > 1)	{ $bc .= $lang{$current_language}{hra_bc_msg4} }
+				}
+			}
+}
+$breast_cancer_message = $bc;
+
+## Pap examination
+$pap_message = do
+		{
+		if ($hyst_female eq NO &&
+			$pap_flag > 1) 		{ $lang{$current_language}{hra_pap_msg1} }
+		elsif ($hyst_female eq NO &&
+			$pap_flag <= 1) 	{ $lang{$current_language}{hra_pap_msg2} }
+		elsif ($hyst_female eq YES)	{ $lang{$current_language}{hra_pap_msg3} }
+		};
+
+$sex_check .= do
+		{
+		if ($hyst_female eq NO &&
+			$pap_flag > 1) 		{ "$lang{$current_language}{hra_sex_check_msg4}$line_end" }
+		elsif( $hyst_female eq NO &&
+			$pap_flag <= 1) 	{ "$lang{$current_language}{hra_sex_check_msg5}$line_end" }
+		};
+
+$sex_check .= do
+		{
+		if ($rectal_female eq LESS_THAN_A_YEAR ||
+			$rectal_female eq ONE_YEAR_AGO ) 		{ "$lang{$current_language}{hra_sex_check_msg6} $line_end" }
+		elsif ( $actual_age < 40 &&
+			$rectal_female eq TWO_YEARS_AGO)		{ "$lang{$current_language}{hra_sex_check_msg6} $line_end" }
+		elsif ( $actual_age >= 40 )				{ "$lang{$current_language}{hra_sex_check_msg7} $line_end" }
+		};
+
+# end of Female
+}else{
+$sex_check = do
+		{
+		if ($rectal_male eq LESS_THAN_A_YEAR ||
+			$rectal_male eq ONE_YEAR_AGO ) 		{ "$lang{$current_language}{hra_sex_check_msg8} $line_end" }
+		elsif ( $actual_age < 40 &&
+			$rectal_male eq TWO_YEARS_AGO)		{ "$lang{$current_language}{hra_sex_check_msg8} $line_end" }
+		elsif ( $actual_age >= 40 )			{ "$lang{$current_language}{hra_sex_check_msg9} $line_end" }
+		elsif ( $actual_age < 40 )			{ "$lang{$current_language}{hra_sex_check_msg10} $line_end" }
+		};
+# end of Male
+}
+
+# Personal and Family history
+$my_short = "$lang{$current_language}{cancer} $line_end" if ($cancer_chk);
+$my_short .= "$lang{$current_language}{diabetes} $line_end" if ($diabetes_chk);
+$my_short .= "$lang{$current_language}{heart_attack} $line_end" if ($heart_attack_chk);
+$my_short .= "$lang{$current_language}{heart_disease} $line_end" if ($heart_disease_chk);
+$my_short .= "$lang{$current_language}{high_bp} $line_end" if ($high_bp_chk == 1 || $bp_check eq HIGH || $bp_sys > BP_HIGH_SYSTOLIC);
+$my_short .= "$lang{$current_language}{high_cholesterol} $line_end" if ( $high_cholesterol_chk == 1 || $cholesterol_flag == 3 || $cholesterol > $cholesterol_target || $cholesterol_check eq "High" );
+$my_short .= "$lang{$current_language}{stroke} $line_end" if ($stroke_chk);
+
+if(!$my_short) { $my_short = "No reported issues." }
+
+$family_short = "$lang{$current_language}{cancer} $line_end" if ($fh_cancer_chk);
+$family_short .= "$lang{$current_language}{diabetes} $line_end" if ($fh_diabetes_chk);
+$family_short .= "$lang{$current_language}{heart_attack} $line_end" if ($fh_heart_attack_chk);
+$family_short .= "$lang{$current_language}{heart_disease} $line_end" if ($fh_heart_disease_chk);
+$family_short .= "$lang{$current_language}{heigh_bp} $line_end" if ($fh_high_bp_chk);
+$family_short .= "$lang{$current_language}{high_cholesterol} $line_end" if ($fh_high_cholesterol_chk);
+$family_short .= "$lang{$current_language}{stroke} $line_end" if ($fh_stroke_chk);
+
+if(!$family_short) { $family_check = $lang{$current_language}{hra_family_check_msg1} }
+else		   { $family_check = $lang{$current_language}{hra_family_check_msg2} }
+if(!$family_short) { $family_short = $lang{$current_language}{low_risk} }
+
+if($no_gina_question){$family_short = $lang{$current_language}{hra_family_short_msg1} }
+
+# Dietary intake
+## Alcohol
+
+my $alc_sex = do
+		{
+		if ($sex eq MALE) 	{ $lang{$current_language}{hra_alc_msg9} }
+		else			{ $lang{$current_language}{hra_alc_msg10} }
+		};
+my $AlcMsg;
+{
+	if($alcohol_flag == 0)	{  }
+	elsif($alcohol_flag == 1){
+				if ($drinks_week == 1)	{ $AlcMsg = $lang{$current_language}{hra_alc_msg1} }
+				else 			{ $AlcMsg = $lang{$current_language}{hra_alc_msg2} }
+				$AlcMsg .= $lang{$current_language}{hra_alc_msg3};
+				}
+	elsif ($alcohol_flag == 2){
+				$AlcMsg = $lang{$current_language}{hra_alc_msg4};
+				$AlcMsg =~ s/ACL_SEX/$alc_sex/;
+				$AlcMsg .= $lang{$current_language}{hra_alc_msg5};
+				}
+	elsif ($alcohol_flag == 3){
+				$AlcMsg = $lang{$current_language}{hra_alc_msg6};
+				$AlcMsg .= $lang{$current_language}{hra_alc_msg7};
+				$AlcMsg .= $lang{$current_language}{hra_alc_msg8};
+				}
+}
+$alcohol_message = $AlcMsg;
+
+$alcohol_short_risk = do
+			{
+			if (($sex eq MALE &&
+				$drinks_week < MALE_ALCOHOL_LOWER_LIMIT ) ||
+				($sex eq FEMALE &&
+				$drinks_week < FEMALE_ALCOHOL_LOWER_LIMIT ))	{ $lang{$current_language}{low_risk} }
+			elsif (($sex eq MALE &&
+				$drinks_week >= MALE_ALCOHOL_UPPER_LIMIT ) ||
+				($sex eq FEMALE &&
+				$drinks_week >= FEMALE_ALCOHOL_UPPER_LIMIT ))	{ $lang{$current_language}{high_risk} }
+			else							{ $lang{$current_language}{moderate_risk} }
+			};
+
+## Nutrition Message
+$nutrition_short_risk = do
+		{
+		if(    $breads_check + $vegetables_check + $fruits_check + $meats_check + $fatty_meats_check + $rich_breads_check + $desserts_check >= 16) 	{ $lang{$current_language}{low_risk} }
+		elsif( $breads_check + $vegetables_check + $fruits_check + $meats_check + $fatty_meats_check + $rich_breads_check + $desserts_check >= 12 ) 	{ $lang{$current_language}{moderate_risk} }
+		else 																		{ $lang{$current_language}{high_risk} }
+		};
+
+
+## Fiber
+$nutrition_message = do
+		{
+		if ($nutrition_short_risk eq 'Low risk') 	{ $lang{$current_language}{hra_nutrition_msg1} }
+		elsif ($nutrition_short_risk eq 'Moderate risk'){ $lang{$current_language}{hra_nutrition_msg2} }
+		else						{ $lang{$current_language}{hra_nutrition_msg3} }
+		};
+
+## Fiber
+$fiber_message = do
+		{
+		if ($fiber_flag == 0) 	{ $lang{$current_language}{hra_fiber_msg1} }
+		else 			{ 		  $lang{$current_language}{hra_fiber_msg1}}
+		};
+
+## Fat intake
+$fat_message = do
+		{
+		if ($fat_flag == 1) 	{ $lang{$current_language}{hra_fat_msg1} }
+		else 			{ $lang{$current_language}{hra_fat_msg2} }
+		};
+
+# Recommendations for checkups
+#status messages
+@recommendations = ();
+@recommendations = ( $lang{$current_language}{hra_recommendation1},$lang{$current_language}{hra_recommendation2},$lang{$current_language}{hra_recommendation3},$lang{$current_language}{hra_recommendation4},$lang{$current_language}{hra_recommendation5},$lang{$current_language}{hra_recommendation6},$lang{$current_language}{hra_recommendation7} )
+	if $sex eq MALE &&
+		$actual_age < 40;
+
+@recommendations = ( $lang{$current_language}{hra_recommendation1},$lang{$current_language}{hra_recommendation2},$lang{$current_language}{hra_recommendation3},$lang{$current_language}{hra_recommendation4},$lang{$current_language}{hra_recommendation8},$lang{$current_language}{hra_recommendation6},$lang{$current_language}{hra_recommendation9} )
+	if $sex eq MALE &&
+		($actual_age >= 40 && $actual_age < 50);
+
+@recommendations = ( $lang{$current_language}{hra_recommendation1},$lang{$current_language}{hra_recommendation2},$lang{$current_language}{hra_recommendation3},$lang{$current_language}{hra_recommendation4},$lang{$current_language}{hra_recommendation8},$lang{$current_language}{hra_recommendation6},$lang{$current_language}{hra_recommendation9} )
+	if $sex eq MALE &&
+		($actual_age >= 50 && $actual_age < 65);
+
+@recommendations = ( $lang{$current_language}{hra_recommendation1},$lang{$current_language}{hra_recommendation3},$lang{$current_language}{hra_recommendation8},$lang{$current_language}{hra_recommendation6},$lang{$current_language}{hra_recommendation11},$lang{$current_language}{hra_recommendation9},$lang{$current_language}{hra_recommendation10} )
+	if $sex eq MALE &&
+		$actual_age >= 65;
+
+@recommendations = ( $lang{$current_language}{hra_recommendation1},$lang{$current_language}{hra_recommendation2},$lang{$current_language}{hra_recommendation3},$lang{$current_language}{hra_recommendation4},$lang{$current_language}{hra_recommendation12},$lang{$current_language}{hra_recommendation13},$lang{$current_language}{hra_recommendation6},$lang{$current_language}{hra_recommendation7} )
+	if $sex eq FEMALE &&
+		$actual_age < 35;
+
+@recommendations = ( $lang{$current_language}{hra_recommendation1},$lang{$current_language}{hra_recommendation2},$lang{$current_language}{hra_recommendation3},$lang{$current_language}{hra_recommendation4},$lang{$current_language}{hra_recommendation12},$lang{$current_language}{hra_recommendation14},$lang{$current_language}{hra_recommendation13},$lang{$current_language}{hra_recommendation6},$lang{$current_language}{hra_recommendation7} )
+	if $sex eq FEMALE &&
+		($actual_age >= 35 && $actual_age < 40);
+
+@recommendations = ( $lang{$current_language}{hra_recommendation1},$lang{$current_language}{hra_recommendation2},$lang{$current_language}{hra_recommendation3},$lang{$current_language}{hra_recommendation4},$lang{$current_language}{hra_recommendation12},$lang{$current_language}{hra_recommendation15},$lang{$current_language}{hra_recommendation16},$lang{$current_language}{hra_recommendation9},$lang{$current_language}{hra_recommendation6} )
+	if $sex eq FEMALE &&
+		($actual_age >= 40 && $actual_age < 50);
+
+@recommendations = ( $lang{$current_language}{hra_recommendation1},$lang{$current_language}{hra_recommendation2},$lang{$current_language}{hra_recommendation3},$lang{$current_language}{hra_recommendation4},$lang{$current_language}{hra_recommendation12},$lang{$current_language}{hra_recommendation15},$lang{$current_language}{hra_recommendation17},$lang{$current_language}{hra_recommendation9},$lang{$current_language}{hra_recommendation6} )
+	if $sex eq FEMALE &&
+		($actual_age >= 50 && $actual_age < 65);
+
+@recommendations = ( $lang{$current_language}{hra_recommendation1},$lang{$current_language}{hra_recommendation3},$lang{$current_language}{hra_recommendation17},$lang{$current_language}{hra_recommendation15},$lang{$current_language}{hra_recommendation6},$lang{$current_language}{hra_recommendation9},$lang{$current_language}{hra_recommendation11},$lang{$current_language}{hra_recommendation10} )
+	if $sex eq FEMALE &&
+		$actual_age >= 65;
+
+my $t_risk = $risk_data || $hs_risk_data;
+my $risks_object = HealthStatus::CalcRisk::unpack_risk_data($t_risk) ;
+my @risks_list = $risks_object->HealthStatus::CalcRisk::sort('average_risk');
+my $cntx = 1;
+$risks_short = "<ol>";
+$risks_short = "" if(uc($output_format) eq 'PDF');
+foreach (@risks_list){
+	$risks_hash = $risks_object->HealthStatus::CalcRisk::record($_);
+	next if ($_ == 43);
+	if(uc($output_format) eq 'PDF') {
+		$risks_short .= "^ p ^f:size=8&face=Arial" . $cntx . ". " . $risks_hash->{name} . " ^F ^P ";
+		}
+	else	{
+		$risks_short .= "<li>" . $risks_hash->{name} . "</li>";
+		}
+	last if($cntx >= 10);
+	++$cntx;
+}
+$risks_short .= "</ol>";
+
+my $point_baseline = 0;
+my $point_total = 0;
+my $wellness_baseline = 100-$wellness;
+
+if ($config{CalcAttrib} && $risks_object->{attribs} > 0){
+	$attrib_names{cigarettes} = $lang{$current_language}{tobacco_use};
+	$attrib_names{cholesterol} = $lang{$current_language}{cholesterol_levels};
+	$attrib_names{bp} = $lang{$current_language}{blood_pressure};
+	$attrib_names{drinks} = $lang{$current_language}{alcohol_use};
+	$attrib_names{speeding} = $lang{$current_language}{driving_speed};
+	$attrib_names{seatbelts} = $lang{$current_language}{seat_belt_use};
+	$attrib_names{weight} = $lang{$current_language}{weight} ;
+	$attrib_names{checks} = $lang{$current_language}{regular_checkups};
+
+	$attrib_points2{cigarettes} = sprintf( "%.10f", ( $risks_object->{cigars} + $risks_object->{pipes} + $risks_object->{chews} + $risks_object->{smoke_flag}) );
+	$attrib_points2{cholesterol} = sprintf("%.10f",($risks_object->{cholesterol} + $risks_object->{hdl}) );
+	$attrib_points2{bp} = sprintf("%.10f",($risks_object->{bp_sys}) );
+	$attrib_points2{drinks} = sprintf("%.10f",($risks_object->{drinks_week}) );
+	$attrib_points2{speeding} = sprintf("%.10f",($risks_object->{speed}) );
+	$attrib_points2{seatbelts} = sprintf("%.10f",($risks_object->{seat_belt}) );
+	$attrib_points2{weight} = sprintf("%.10f",($risks_object->{bmi}) );
+	$attrib_points2{checks} = sprintf("%.10f",($risks_object->{mammogram_female} + $risks_object->{pap_female}) );
+	foreach my $i (keys %attrib_points2){
+		$point_baseline += $attrib_points2{$i};
+		}
+
+	$attrib_percent{cigarettes} = sprintf("%.2f",( ($attrib_points2{cigarettes}/$point_baseline)*100 ));
+	$attrib_percent{cholesterol} = sprintf("%.2f",( ($attrib_points2{cholesterol}/$point_baseline)*100 ));
+	$attrib_percent{bp} = sprintf("%.2f",( ($attrib_points2{bp}/$point_baseline)*100 ));
+	$attrib_percent{drinks} = sprintf("%.2f",( ($attrib_points2{drinks}/$point_baseline)*100 ));
+	$attrib_percent{speeding} = sprintf("%.2f",( ($attrib_points2{speeding}/$point_baseline)*100 ));
+	$attrib_percent{seatbelts} = sprintf("%.2f",( ($attrib_points2{seatbelts}/$point_baseline)*100 ));
+	$attrib_percent{weight} = sprintf("%.2f",( ($attrib_points2{weight}/$point_baseline)*100 ));
+	$attrib_percent{checks} = sprintf("%.2f",( ($attrib_points2{checks}/$point_baseline)*100 ));
+
+	$attrib_points{cigarettes} = sprintf( "%.1f",( $attrib_percent{cigarettes}/100 * $wellness_baseline ));
+	$attrib_points{cholesterol} =  sprintf( "%.1f",( $attrib_percent{cholesterol}/100 * $wellness_baseline ));
+	$attrib_points{bp} =  sprintf( "%.1f",( $attrib_percent{bp}/100 * $wellness_baseline ));
+	$attrib_points{drinks} =  sprintf( "%.1f",( $attrib_percent{drinks}/100 * $wellness_baseline ));
+	$attrib_points{speeding} =  sprintf( "%.1f",( $attrib_percent{speeding}/100 * $wellness_baseline ));
+	$attrib_points{seatbelts} =  sprintf( "%.1f",( $attrib_percent{seatbelts}/100 * $wellness_baseline ));
+	$attrib_points{weight} =  sprintf( "%.1f",( $attrib_percent{weight}/100 * $wellness_baseline ));
+	$attrib_points{checks} =  sprintf( "%.1f",( $attrib_percent{checks}/100 * $wellness_baseline ));
+	foreach my $i (keys %attrib_points){
+		$point_total += $attrib_points{$i};
+		}
+
+	}
+
+@risks_list = $risks_object->HealthStatus::CalcRisk::sort('user_risk');
+
+$cntx = 1;
+my $scale = 1;
+
+foreach my $i (sort { $attrib_points{$b} <=> $attrib_points{$a} } keys %attrib_points)
+	{
+	if ($attrib_points{$i} > 0 && uc($output_format) ne 'PDF')
+		{
+		$hs_att_out .= "<li>$attrib_points{$i} $lang{$current_language}{points} - $attrib_names{$i} " ;
+		$hs_att_out .= "$lang{$current_language}{which_is} $attrib_percent{$i}% $lang{$current_language}{of_your_risk}" if $attrib_percent{$i} > 0  && $attrib_percent{$i} < 100;
+		$hs_att_out .= "</li>";
+		}
+	elsif($attrib_points{$i} > 0 && uc($output_format) eq 'PDF')
+		{
+		$hs_att_out .= "^p ^t ^f:face=ZapfDingbats&color=Darkblue u ^F ^f:face=Arial&size=8 $attrib_points{$i} $lang{$current_language}{points} - $attrib_names{$i} ";
+		$hs_att_out .= "$lang{$current_language}{which_is} $attrib_percent{$i}% $lang{$current_language}{of_your_risk}" if $attrib_percent{$i} > 0  && $attrib_percent{$i} < 100;
+		$hs_att_out .= " ^F ^P  ";
+		}
+	}
+
+$hs_at_points_out = do
+		{
+		if ($hs_att_out eq '' && uc($output_format) eq 'PDF' )		{ "^p ^t ^f:face=ZapfDingbats&color=Darkblue u ^F ^f:face=Arial&size=8 You have healthy habits. Keep up the good work! ^F ^P" }
+		elsif ($hs_att_out eq '' && uc($output_format) ne 'PDF')	{ '<li>You have healthy habits. Keep up the good work!</li>' }
+		else 								{ $hs_att_out }
+		};
+
+
+# Personal Information
+$my_links = qq|<a href="http://www.caregiver.org/caregiver/jsp/content_node.jsp?nodeid=847" target="popup">Self-care centers</a><br>
+		<a href="http://www.healthfinder.gov/" target="popup">Ills and conditions</a><br>|;
+$my_links_pdf = qq|^p ^f:size=8&face=Arial http://www.caregiver.org/caregiver/jsp/content_node.jsp?nodeid=847 -- Self-care centers ^P
+		^p http://www.healthfinder.gov/ -- Ills and conditions ^F ^P  ^p      ^P|;
+
+$family_links = qq|<a href="$config{html_base}/resource/otcguide" target="popup">Self-care centers</a><br>
+		<a href="http://www.healthfinder.gov/" target="popup">Ills and conditions</a><br>|;
+$family_links .= qq|<a href="http://www.cdc.gov/diabetes/" target="popup">Diabetes</a><br>|if ($fh_diabetes_chk);
+$family_links_pdf = qq|^p ^f:size=8&face=Arial "$base$config{cgi_dir}/view_resource.cgi?file_name=otcguide" -- Self-care centers ^P
+			^p http://www.healthfinder.gov/ -- Ills and conditions ^F ^P  ^p      ^P|;
+$family_links_pdf .= qq|^p ^f:size=8&face=Arial http://www.cdc.gov/diabetes/ -- Diabetes ^F ^P  ^p      ^P|if ($fh_diabetes_chk);
+
+$sex_links = qq|<a href="http://www.nlm.nih.gov/medlineplus/menshealthissues.html" target="popup">Men's health</a><br>
+		<a href="http://www.mayoclinic.com/health/health-screening/WO00112" target="popup">Tests men shouldn't miss</a><br>
+		<a href="http://menanddepression.nimh.nih.gov" target="popup">Men and depression| if $sex eq MALE;
+$sex_links_pdf = qq|^p ^f:size=8&face=Arial http://www.nlm.nih.gov/medlineplus/menshealthissues.html -- Men's health ^P
+		^p http://www.mayoclinic.com/health/health-screening/WO00112 -- Tests men shouldn't miss ^P
+		^p http://menanddepression.nimh.nih.gov/ -- Men and depression ^P ^p      ^P| if $sex eq MALE;
+
+
+$sex_links = qq|<a href="http://www.4woman.gov" target="popup">Women's health</a><br>
+		<a href="http://www.4woman.gov/tools/" target="popup">Tools women shouldn't miss</a><br>| if $sex eq FEMALE;
+$sex_links_pdf = qq|^p ^f:size=8&face=Arial http://www.4woman.gov -- Women's health ^P
+		^p http://www.4woman.gov/tools/ -- Tools women shouldn't miss ^F ^P  ^p      ^P| if $sex eq FEMALE;
+
+$bmi_links = qq|<a href="$home/$calc_dir/calc.cgi?calc=bmi" target="popup">BMI calculator</a><br>
+		<a href="$home/$calc_dir/calc.cgi?calc=whr" target="popup">Waist-to-Hip ratio</a><br>
+		<a href="$home/$calc_dir/calc.cgi?calc=iwc" target="popup">Ideal weight</a><br>|;
+$bmi_links_pdf = qq|^p ^f:size=8&face=Arial $home/$calc_dir/calc.cgi?calc=bmi -- BMI calculator ^P
+		^p $home/$calc_dir/calc.cgi?calc=whr -- Waist-to-Hip ratio ^P
+		^p $home/$calc_dir/calc.cgi?calc=iwc -- Ideal weight ^F ^P  ^p      ^P|;
+
+# Health Risks
+$smoke_links = do
+		{
+		if ($smoke_status eq NEVER_SMOKED)	{ qq|<a href="$home/resource/secondhandsmoke.pdf" target="popup">Second Hand Smoke</a><br>| }
+		else					{ qq|<a href="$home/resource/secondhandsmoke.pdf" target="popup">Second Hand Smoke</a><br>
+								<a href="http://smoking.drugabuse.gov/" target="popup">Nicotine addiction</a><br>
+								<a href="$base$config{cgi_dir}/view_resource.cgi?file_name=cigs_and_cancer" target="popup">Cigarette Smoking and Cancer</a><br>| }
+		};
+$smoke_links_pdf = do
+		{
+		if ($smoke_status eq NEVER_SMOKED)	{ qq|^p ^f:size=8&face=Arial $home/resource/secondhandsmoke.pdf -- Second Hand Smoke ^F ^P  ^p      ^P| }
+		else					{ qq|^p ^f:size=8&face=Arial $home/resource/secondhandsmoke.pdf -- Second Hand Smoke ^P
+								^p http://smoking.drugabuse.gov -- Nicotine addiction ^P
+								^p $home/resource/cigs_and_cancer.pdf -- Cigarette Smoking and Cancer ^F ^P  ^p      ^P| }
+		};
+
+$nutrition_links =  qq|<a href="http://www.fruitsandveggiesmatter.gov" target="popup">Fitness and nutrition</a><br>
+			<a href="$config{html_base}resource/nutrition_for_healthier_you.pdf" target="popup">Nutrition Rx</a><br>
+			<a href="$home/$calc_dir/calc.cgi?calc=dee" target="popup">Calorie need calculator</a><br>| ;
+$nutrition_links_pdf =  qq|^p ^f:size=8&face=Arial http://www.fruitsandveggiesmatter.gov -- Fitness and nutrition ^P
+			^p $home/resource/nutrition_for_healthier_you.pdf -- Nutrition Rx ^P
+			^p $home/$calc_dir/calc.cgi?calc=dee -- Calorie need calculator ^F ^P  ^p      ^P| ;
+
+$alcohol_links = do
+		{
+		if (($sex eq MALE &&
+			$drinks_week <= MALE_ALCOHOL_LOWER_LIMIT ) ||
+			($sex eq FEMALE &&
+			$drinks_week <= FEMALE_ALCOHOL_LOWER_LIMIT ))	{ qq|<a href="http://www.niaaa.nih.gov/" target="popup">National Institute on Alcohol Abuse and Addiction</a><br>| }
+		else							{ qq|<a href="http://www.niaaa.nih.gov/" target="popup">National Institute on Alcohol Abuse and Addiction</a><br>
+											<a href="http://www.recoverymonth.gov/" target="popup">Recovery Month</a><br>
+											<a href="http://www.samhsa.gov/" target="popup">Substance Abuse</a><br>
+											<a href="http://www.ncadd.org/" target="popup">National Council on Alcoholism and Drug Dependance</a><br>|}
+		};
+$alcohol_links_pdf = do
+		{
+		if (($sex eq MALE &&
+			$drinks_week <= MALE_ALCOHOL_LOWER_LIMIT ) ||
+			($sex eq FEMALE &&
+			$drinks_week <= FEMALE_ALCOHOL_LOWER_LIMIT ))	{ qq|^p ^f:size=8&face=Arial http://www.niaaa.nih.gov -- National Institute on Alcohol Abuse and Addiction ^F ^P  ^p      ^P| }
+		else							{ qq|^p ^f:size=8&face=Arial http://www.niaaa.nih.gov -- National Institute on Alcohol Abuse and Addiction ^P
+											^p http://www.recoverymonth.gov -- Recovery Month ^P
+											^p http://www.samhsa.gov -- Substance Abuse ^P
+											^p http://www.ncadd.org -- National Council on Alcoholism and Drug Dependance ^F ^P  ^p      ^P|}
+		};
+
+$injury_links =  qq|<a href="http://www.nlm.nih.gov/medlineplus/sportsinjuries.html" target="popup">Sports injuries</a><br>
+			<a href="http://www.shapeup.org" target="popup">Body work</a><br>| ;
+$injury_links_pdf =  qq|^p ^f:size=8&face=Arial http://www.nlm.nih.gov/medlineplus/sportsinjuries.html -- Sports injuries ^P
+			^p http://www.shapeup.org -- Body work ^F ^P  ^p      ^P| ;
+
+$bp_links =  qq|<a href="http://www.nhlbi.nih.gov/hbp/index.html" target="popup">High blood pressure</a><br>| ;
+$bp_links_pdf =  qq|^p ^f:size=8&face=Arial http://www.nhlbi.nih.gov/hbp/index.html -- High blood pressure ^F ^P  ^p      ^P| ;
+
+$cholesterol_links =  qq|<a href="http://www.nhlbi.nih.gov/chd/" target="popup">High cholesterol</a><br>| ;
+$cholesterol_links_pdf =  qq|^p ^f:size=8&face=Arial http://www.nhlbi.nih.gov/chd/ -- High cholesterol ^F ^P  ^p      ^P| ;
+
+$fitness_links = do
+		{
+		if ($exercise eq THREE_TIMES_A_WEEK)	{ qq|<a href="http://www.cdc.gov/nccdphp/dnpa/physical/index.htm" target="popup">Physical activity</a><br>
+								<a href="http://www.hsph.harvard.edu/nutritionsource/weight.html" target="popup">Healthy weight</a><br>	| }
+		else					{ qq|<a href="http://www.cdc.gov/nccdphp/dnpa/physical/index.htm" target="popup">Physical activity</a><br>
+								<a href="http://www.hsph.harvard.edu/nutritionsource/weight.html" target="popup">Healthy weight</a><br>
+								<a href="http://www.shapeup.org/" target="popup">Fitness Rx</a><br>| }
+		};
+$fitness_links_pdf = do
+		{
+		if ($exercise eq THREE_TIMES_A_WEEK)	{ qq|^p ^f:size=8&face=Arial http://www.cdc.gov/nccdphp/dnpa/physical/index.htm -- Physical activity ^P
+								^p http://www.hsph.harvard.edu/nutritionsource/weight.html -- Healthy weight ^F ^P  ^p      ^P| }
+		else					{ qq|^p ^f:size=8&face=Arial http://www.cdc.gov/nccdphp/dnpa/physical/index.htm -- Physical activity ^P
+								^p http://www.hsph.harvard.edu/nutritionsource/weight.html -- Healthy weight ^P
+								^p http://www.shapeup.org/ -- Fitness Rx ^F ^P  ^p      ^P| }
+		};
+
+my $t_wellbeing = $q5 + $q8 + $q17 + $q19 + $q22;
+
+my $t_depression = $q3 + $q7 + $q11;
+
+$wellbeing_links = do
+		{
+		if ($t_wellbeing + $t_depression > 28)	{ qq|| }
+		else					{ qq|<a href="http://www.nimh.nih.gov/publicat/depression.cfm" target="popup">Depression center</a><br>
+								<a href="http://www.nami.org/Content/ContentGroups/Helpline1/Major_Depression.htm" target="popup">Mental and emotional health</a><br>
+								<br>| }
+		};
+$wellbeing_links_pdf = do
+		{
+		if ($t_wellbeing + $t_depression > 28)	{ qq|| }
+		else					{ qq|^p ^f:size=8&face=Arial http://www.nimh.nih.gov/publicat/depression.cfm -- Depression center ^P
+								^p http://www.nami.org/Content/ContentGroups/Helpline1/Major_Depression.htm -- Mental and emotional health ^F  ^P
+								 ^p      ^P| }
+		};
+
+
+' ';
+}

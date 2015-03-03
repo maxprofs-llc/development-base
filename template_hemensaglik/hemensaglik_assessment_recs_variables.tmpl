@@ -1,0 +1,250 @@
+{
+use vars qw(
+		%need $title $assessment_recs_header_file $show_all $directions %ar_assessment
+		$view_admin $view_coach $view_clerk %alinks @view_order $assessment_recs
+	);
+
+use Date::Calc qw(Delta_Days);
+if($subdomain eq 'hemensaglik'){
+$assessment_recs_header_file = 'hemensaglik_calc_header.tmpl';
+}else{
+$assessment_recs_header_file = 'assessment_recs_header.tmpl';
+}
+$assessment_recs = 1;
+
+$name = $db_fullname || "$first_name $last_name";
+
+
+my %a_titles = ( FIT => $lang{$current_language}{fitness},
+                 GHA => $lang{$current_language}{health_risks},
+                 HRA => $lang{$current_language}{General_health},
+                 DRC => $lang{$current_language}{Diabetes_risk},
+                 CRC => $lang{$current_language}{Cardiac_risk},
+                 GWB => 'General well-being',
+                 PT  => 'Personal Tracker');
+                 
+
+my $lc_sex = lc $sex;
+
+%need = ( 	     FIT => $lang{$current_language}{You_not_taken_assessment},
+                 GHA => $lang{$current_language}{You_not_taken_assessment},
+                 HRA => $lang{$current_language}{You_not_taken_assessment},
+                 DRC => $lang{$current_language}{You_not_taken_assessment},
+                 CRC => $lang{$current_language}{You_not_taken_assessment},
+                 GWB => $lang{$current_language}{You_not_taken_assessment} ,
+                 PT =>  $lang{$current_language}{You_not_taken_assessment} );
+                 
+# this sets the view order on the default assessment records template                 
+if($config{show_order}){
+	@view_order = split /\s+/, $config{show_order};	
+	}
+else	{
+	@view_order = ("GHA", "CRC", "DRC", "FIT");
+	} 
+
+my( $year, $month, $day ) = (localtime)[5,4,3];
+
+$year  += 1900;
+$month += 1;
+
+my $cutoff_date;
+my $cutoff_date;
+my $cod;
+my $com;
+my $coy;
+# this uses the set cutoff date to reset that they have to fill an assessment
+if($config{restrict_cutoff}){
+	$cutoff_date = $config{restrict_cutoff}."-".$year;
+	$com = substr($cutoff_date, 0, 2);
+	$cod = substr($cutoff_date, 3, 2);
+	$coy = $year;
+	my $today = sprintf("%02d-%02d-%04d", $month, $day, $year);
+	# this checks to see if the cutoff date is midyear that it is possible to have taken this assessment at this point in the year
+	if($cutoff_date > $today){ 
+		$year = $year - 1;
+		$coy = $year;
+		$cutoff_date = $config{restrict_cutoff}."-".$year;
+		}		
+	}
+	
+$view_old = '';
+$view_admin = '';
+
+$show_all = 0;
+
+if($hs_administration eq 'admin' || $hs_administration eq 'coach' || $hs_administration eq 'clerk'){
+$directions .= qq|<div id="resources-topimg" class="helptxt">
+<p class="pad13">$lang{$current_language}{Administration}</p>
+</div>
+<div id="resources-bg">
+<ul class="pad14">
+|;
+$view_admin = qq|<li style="list-style-image:url(https://hemensaglik.hra.net/images/healthstatus_33.jpg);"><a href="$ggr_adv" class="ex1_link">$lang{$current_language}{Run_group_reports}.</a></li>| if($hs_administration eq 'admin');
+$view_admin .= qq|<li style="list-style-image:url(https://hemensaglik.hra.net/images/healthstatus_33.jpg);"><a href="$config{admin_path}" class="ex1_link">$lang{$current_language}{Go_to_Admin_area}.</a></li>|;
+
+$directions .= $view_admin;
+$directions .= qq|</ul>
+</div>|;
+	
+	}
+	
+$directions .= qq|<div id="helpful-topimg" class="helptxt">
+<p class="pad11">$lang{$current_language}{Assessment_History}</p>
+</div>
+<div id="helpful-bg">
+<ul class="pad12">
+|;
+my $j = 1;
+
+if($records_cnt){
+       
+		if (defined(@assessment_list) && @assessment_list != 0){		 
+		  foreach my $a(@assessment_list) {
+		       
+				my $tname = "$$a{first_name} $$a{last_name}";
+				$tname =~ s/\s+$//;
+			    #$pretty_date =  substr($$a{adate},5,2) . "-" . substr($$a{adate},8,2) . "-" . substr($$a{adate},0,4);
+				my $pretty_date =  substr($$a{adate},8,2) . "-" . substr($$a{adate},5,2) . "-" . substr($$a{adate},0,4);
+				my $pom = substr($$a{adate},5,2);
+				my $pod = substr($$a{adate},8,2);
+				my $poy = substr($$a{adate},0,4);
+				if($config{restrict_cutoff} && $config{restrict_first}){
+					if($$a{assessment_type} eq $config{restrict_first} && Delta_Days($coy,$com,$cod,$poy,$pom,$pod) >= 0){ $show_all = 1;}}
+				  
+				   $need{$$a{assessment_type}} = $tname ." $lang{$current_language}{took_assessment} $pretty_date." if ($need{$$a{assessment_type}} eq 'Bu degerlendirmeyi almadiniz.');
+					if($j > $config{max_assessments} && !$view_all){
+					  next;
+					  }
+					  else {
+						$view_old .= qq|<li style="list-style-image:url(https://hemensaglik.hra.net/images/healthstatus_33.jpg);" class="ex1_link">$lang{$current_language}{Taken}: $pretty_date - $tname<br />
+								$a_titles{$$a{assessment_type}} <a href="javascript: myLightWindow.activateWindow(\{href: '$config{cgi_dir}\/review_any.cgi?status=retake&admin_status=hs&assessment=$$a{assessment_type}&xnum=$$a{xnum}&user_hs_ident=$$a{hs_uid}', type: 'external', title: '$a_titles{$$a{assessment_type}} - $pretty_date',width:990,height:700\});" class="ex1_link">[Review]</a>|;
+						$view_old .= qq|&nbsp;&nbsp;<a href="$config{cgi_dir}\/review_any.cgi?status=retake&assessment=$$a{assessment_type}&xnum=$$a{xnum}&user_hs_ident=$$a{hs_uid}&output_format=PDF \" target="_blank" onclick="if(navigator.appName == 'Netscape')\{ return true;\} else \{myLightWindow.activateWindow(\{href: '$config{cgi_dir}\/review_any.cgi?assessment=$$a{assessment_type}&xnum=$$a{xnum}&user_hs_ident=$$a{hs_uid}&output_format=PDF \', type: 'external', title: '$a_titles{$$a{assessment_type}} - $pretty_date',width:990,height:700\}); return false;\}" class="ex1_link">[Printable PDF Version]</a>| unless ($config{no_pdf_option});
+						$view_old .= qq|&nbsp;&nbsp;<a href="$config{cgi_dir}\/review_any.cgi?status=retake&assessment=$$a{assessment_type}&xnum=$$a{xnum}&user_hs_ident=$$a{hs_uid}&output_format=PDF&template=completion_certx_1.tmpl \" target="_blank" onclick="if(navigator.appName == 'Netscape')\{ return true;\} else \{myLightWindow.activateWindow(\{href: '$config{cgi_dir}\/review_any.cgi?assessment=$$a{assessment_type}&xnum=$$a{xnum}&user_hs_ident=$$a{hs_uid}&output_format=PDF&template=completion_certx_1.tmpl \', type: 'external', title: '$a_titles{$$a{assessment_type}} - $pretty_date',width:990,height:700\}); return false;\}" class="ex1_link">[Completion Certificate]</a>| unless ($config{no_cert_option});
+						if($config{maintenance_mode}){ $view_old .= qq|&nbsp;&nbsp;<a href="$review?status=retake&assessment=$temp_hash{assessment}&xnum=$temp_hash{xnum}&HS_Debug=1"  class="ex1_link">[Debug]</a>|;}
+						$view_old .= qq|</li>|;
+						++$j;
+					  }	   
+		   }
+		 
+		}else{ }
+}else{
+my $rec_cnt = @records;
+if ($rec_cnt < 1){
+	$view_old = '<li style="list-style-image:url(https://hemensaglik.hra.net/images/healthstatus_33.jpg);" class="ex1_link">$lang{$current_language}{You_not_taken_assessment}.</li>';
+	}
+
+for (@records)
+	{
+	my %temp_hash = ();
+	%temp_hash = %$_;
+	my $tname = "$temp_hash{first_name} $temp_hash{last_name}";
+	$tname =~ s/\s+$//;
+	#$pretty_date =  substr($temp_hash{adate},5,2) . "-" . substr($temp_hash{adate},8,2) . "-" . substr($temp_hash{adate},0,4);
+	my $pretty_date =  substr($temp_hash{adate},8,2) . "-" . substr($temp_hash{adate},5,2) . "-" . substr($temp_hash{adate},0,4);
+	my $pom = substr($temp_hash{adate},5,2);
+	my $pod = substr($temp_hash{adate},8,2);
+	my $poy = substr($temp_hash{adate},0,4);
+	if($config{restrict_cutoff} && $config{restrict_first}){
+		if($temp_hash{assessment} eq $config{restrict_first} && Delta_Days($coy,$com,$cod,$poy,$pom,$pod) >= 0){ $show_all = 1;}}
+		if($hs_administration eq 'admin'){
+	      $need{$temp_hash{assessment}} = $tname." $lang{$current_language}{took_assessment} $pretty_date." if ($need{$temp_hash{assessment}} eq 'Bu degerlendirmeyi almadiniz.');
+	    }else{ 
+		  $need{$temp_hash{assessment}} = "$lang{$current_language}{You_took_assessment} $pretty_date." if ($need{$temp_hash{assessment}} eq 'Bu degerlendirmeyi almadiniz.');
+	    }
+        if($j > $config{max_assessments} && !$view_all){
+		  next;
+		  }
+		  else {
+			$view_old .= qq|<li style="list-style-image:url(https://hemensaglik.hra.net/images/healthstatus_33.jpg);" class="ex1_link">Taken: $pretty_date - $tname<br />
+					$a_titles{$temp_hash{assessment}} <a href="$review?status=retake&assessment=$temp_hash{assessment}&xnum=$temp_hash{xnum}"  class="ex1_link">[$lang{$current_language}{Review}]</a>|;
+			$view_old .= qq|&nbsp;&nbsp;<a href="$review?status=retake&assessment=$temp_hash{assessment}&xnum=$temp_hash{xnum}&output_format=PDF" target="_blank" onclick="if(navigator.appName == 'Netscape')\{ return true;\} else if(navigator.appName == 'chrome')\{alert('Hello Chrome'); return true;\} else \{myLightWindow.activateWindow(\{href: '$review?status=retake&assessment=$temp_hash{assessment}&xnum=$temp_hash{xnum}&output_format=PDF', type: 'external', title: '$a_titles{$temp_hash{assessment}} - $pretty_date',width:995,height:700\}); return false;\}"  class="ex1_link">[Printable PDF Version]</a>| unless ($config{no_pdf_option});
+			$view_old .= qq|<br /><a href="$review?status=retake&assessment=$temp_hash{assessment}&xnum=$temp_hash{xnum}&output_format=PDF&template=completion_certx_1.tmpl\" target="_blank" onclick="if(navigator.appName == 'Netscape')\{ return true;\} else \{myLightWindow.activateWindow(\{href: '$review?status=retake&assessment=$temp_hash{assessment}&xnum=$temp_hash{xnum}&output_format=PDF&template=completion_certx_1.tmpl \', type: 'external', title: '$a_titles{$$a{assessment_type}} - $pretty_date',width:990,height:700\}); return false;\}" class="ex1_link">[Completion Certificate]</a>| unless ($config{no_cert_option});
+			if($config{maintenance_mode}){ $view_old .= qq|&nbsp;&nbsp;<a href="$review?status=retake&assessment=$temp_hash{assessment}&xnum=$temp_hash{xnum}&HS_Debug=1"  class="ex1_link">[Debug]</a>|;}
+			$view_old .= qq|</li>|;
+			++$j;
+		  }
+	}
+} 
+
+if($j > $config{max_assessments} && !$view_all){ 
+	  $view_old .= qq|<br />&nbsp;<br /><a href="$cgi_dir/assessment_recs.cgi?view_all=1" class="ex1_link">[View All Assessments Taken]</a></p>|;
+}
+
+
+$directions .= $view_old;
+$directions .= qq|</ul>
+</div>|;
+
+
+$alinks{HRA} =  qq|<p class="pad6"><a href="$collector?assessment=HRA&page=0&qset=metric&units=Metric"><img src="https://hemensaglik.hra.net/images/healthstatus_18.jpg" align="top" alt="" /><span class="risktxt"> General Health Assessment</a></p>  
+<p class="pad6"><img src="https://hemensaglik.hra.net/images/healthstatus_28.jpg" alt="" /></p></a>
+<p class="pad7" style=" padding-right: 383px;">
+<span class="tooktxt">$need{HRA}</span><br/>$lang{$current_language}{General_health_information}.<br /></p>
+<p class="pad8"></p>|;
+if($config{'allow_metrics'}){ $alinks{HRA} .=  qq| <a href="$collector?assessment=HRA&page=0&qset=metric&units=Metric">[ Metric Version ]</a> |;}
+
+
+$alinks{GHA} =  qq|<a href="$collector?assessment=GHA&page=0&qset=metric&units=Metric"><img src="https://hemensaglik.hra.net/images/healthstatus_18.jpg" align="top" alt="" /><span class="risktxt"> $lang{$current_language}{gha_title}</span></p> 
+<p class="pad6"><img src="https://hemensaglik.hra.net/images/healthstatus_28.jpg" alt="" /></p></a>
+<p class="pad7" style=" padding-right: 383px;">
+<span class="tooktxt">$need{GHA}</span><br />$lang{$current_language}{assessment_records_gha}</p>
+<p class="pad8">
+|;
+if($config{'allow_metrics'}){ $alinks{GHA} .=  qq|<img src="https://hemensaglik.hra.net/images/aro_47.jpg" alt="" /> &nbsp;<a href="$collector?assessment=GHA&page=0&qset=metric&units=Metric">[ Metric Version ]</a> |;}
+if($config{'allow_metrics'} && $config{'allow_spanish_inputs'}){ $alinks{GHA} .= "&nbsp;&nbsp;&nbsp;&nbsp;";}
+if($config{'allow_spanish_inputs'}){ $alinks{GHA} .=  qq|<img src="https://hemensaglik.hra.net/images/aro_47.jpg" alt="" /> &nbsp;<a href="$collector?assessment=GHA&page=0&subdir=$db_id&qset=espanol&language=espanol">[ Español ]</a> |;}
+
+$alinks{CRC} =  qq|<a href="$collector?assessment=CRC&page=0&qset=metric&units=Metric"><img src="https://hemensaglik.hra.net/images/healthstatus_18.jpg" align="top" alt="" /><span class="risktxt"> $lang{$current_language}{crc_title} </span></p> 
+<p class="pad6"><img src="https://hemensaglik.hra.net/images/healthstatus_31.jpg" alt="" /></p></a>
+<p class="pad7" style=" padding-right: 383px;">
+<span class="tooktxt">$need{CRC}</span><br />$lang{$current_language}{assessment_records_crc}</p>
+<p class="pad8">
+|;
+if($config{'allow_metrics'}){ $alinks{CRC} .=  qq|<img src="https://hemensaglik.hra.net/images/aro_47.jpg" alt="" /> &nbsp;<a href="$collector?assessment=CRC&page=0&qset=metric&units=Metric">[ Metric Version ]</a> |;}
+
+$alinks{DRC} =  qq|<a href="$collector?assessment=DRC&page=0&qset=metric&units=Metric"><img src="https://hemensaglik.hra.net/images/healthstatus_18.jpg" align="top" alt="" /><span class="risktxt"> $lang{$current_language}{drc_title}</span></p> 
+<p class="pad6"><img src="https://hemensaglik.hra.net/images/healthstatus_40.jpg" alt="" /></p></a>
+<p class="pad7" style=" padding-right: 383px;">
+<span class="tooktxt">$need{DRC}</span><br />$lang{$current_language}{assessment_records_drc}</p>
+<p class="pad8">
+|;
+if($config{'allow_metrics'}){ $alinks{DRC} .=  qq|<img src="https://hemensaglik.hra.net/images/aro_47.jpg" alt="" /> &nbsp;<a href="$collector?assessment=DRC&page=0&qset=metric&units=Metric">[ Metric Version ]</a> |;}
+
+$alinks{FIT} =  qq|<a href="$cgi_dir/fitme.cgi?assessment=FIT&page=hemensaglik_fit_pre.html&curr_page=1&qset=metric&units=Metric"><img src="https://hemensaglik.hra.net/images/healthstatus_18.jpg" align="top" alt="" /><span class="risktxt"> $lang{$current_language}{fit_title}</span></p> 
+<p class="pad6"><img src="https://hemensaglik.hra.net/images/healthstatus_42.jpg" alt="" /></p></a>
+<p class="pad7" style=" padding-right: 383px;">
+<span class="tooktxt">$need{FIT}</span><br />$lang{$current_language}{fit_intro}</p>
+<p class="pad8">
+|;
+if($config{'allow_metrics'}){ $alinks{FIT} .=  qq|<img src="https://hemensaglik.hra.net/images/aro_47.jpg" alt="" /> &nbsp;<a href="$cgi_dir/fitme.cgi?assessment=FIT&page=fit_pre.html&qset=metric&units=Metric&curr_page=1">[ Metric Version ]</a> |;}
+
+$alinks{PT} =  qq|<p><a href="$ptrack?action=ptshow">Enter Personal Tracker Data</a><br>Enter your new or updated personal tracker details.<br /></p>|;
+$alinks{PT} .=  qq|<p><a href="$ptrack?action=review">View Personal Tracker Data</a><br>View the results of your personal tracker inputs.<br /></p>|;
+
+my $filler;
+if($need{GHA} eq 'Bu degerlendirmeyi almadiniz.'){ 
+	$filler = $lang{$current_language}{assessment_records_msg1} ."<br /> <br />".$lang{$current_language}{assessment_records_msg2};
+}
+elsif($need{FIT} eq 'Bu degerlendirmeyi almadiniz.')	{
+	$filler = $lang{$current_language}{assessment_records_msg3};
+}	
+else{
+	$filler = $lang{$current_language}{assessment_records_msg4};
+}
+{if ($config{restrict_first} && !$show_all){ 
+		if(uc $config{restrict_first} eq 'CRC'){ $filler = qq|** You must complete the cardiac risk assessment before you can take any of the other assessments.|;}
+		elsif(uc $config{restrict_first} eq 'DRC'){ $filler = qq|** You must complete the diabetes risk assessment before you can take any of the other assessments.|;}
+		elsif(uc $config{restrict_first} eq 'FIT'){ $filler = qq|** You must complete the fitness assessment before you can take any of the other assessments.|;}
+		elsif(uc $config{restrict_first} eq 'HRA'){ $filler = qq|** You must complete the general health assessment before you can take any of the other assessments.|;}
+		elsif(uc $config{restrict_first} eq 'GHA'){ $filler = qq|** You must complete the health risk assessment before you can take any of the other assessments.<br />It will be helpful to have your latest blood pressure, cholesterol and other measures from your most recent doctor visit or health screening.|;}
+		else {}
+		}
+}
+$next_steps =qq|<div id="step-bg" class="content">
+<p class="pad4">
+$filler
+</p>|;
+
+  	  	
+'';
+}

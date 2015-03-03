@@ -1,0 +1,1239 @@
+</div>
+<div class="pagebtt">
+</div>
+</div>					
+	</div>
+<!-- ****************************CONTENT SON******************** -->
+</div>
+<div class="alt-sayfa-alt1"> </div>
+</div>
+</div>
+
+
+
+<div class="sag-panel">
+             <div class="sag-panel-ust-google-reklami">
+			<script src="http://run.admost.com/adx/get.ashx?k=7775&amp;preredir={amClickThru}&amp;r='+Math.random()+'"></script>	
+			</div>
+		 <div class="blok-ayrac"></div>
+				 <div class="sag-panel-blok">
+			
+					<table width="306" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td colspan="3"><img src="http://www.hemensaglik.com/content/uploads/1/images/sagvitrinust_bg.png" width="306" height="39"></td>
+		</tr>
+		<tr>
+			<td width="3" style="background:url(http://www.hemensaglik.com/content/uploads/1/images/vitrin_blog_sol.png) repeat-y"></td>
+			<td width="300" style="background:#FFF url(http://www.hemensaglik.com/content/uploads/1/images/vitrin_blok_arka.png) bottom no-repeat">
+			<div class="tabssag">
+	<ul class="tabNavigation">
+<li>
+			<a href="#first">Vitrin</a></li>
+<li>
+			<a href="#second">Yeni Gelenler</a></li>
+        </ul>
+			<div id="first">
+			<div id="VitrinUrunleri" class="vitrinurunlerietrafi"></div></div>
+<div id="second">
+<div id="yeniurunler" class="yeniurunler"></div>
+</div>
+			</td>
+			<td width="3" style="background:url(http://www.hemensaglik.com/content/uploads/1/images/vitrin_blog_sag.png) repeat-y"> </td>
+		</tr>
+		<tr>
+			<td colspan="3"><img src="http://www.hemensaglik.com/content/uploads/1/images/vitrin_blog_alt.png" width="306" height="25"></td>
+		</tr>
+	</table>
+
+<script language="javascript">
+function listvitrin($curpage)\{
+if(!$curpage) $curpage=1;
+$.ajax(\{
+url : "http://www.hemensaglik.com/lib/pages/store/vitrinurunleri.asp?top=10",
+type : "GET",
+data : "curpage="+$curpage,
+success : function($VitrinUrunleri)
+\{
+$('#VitrinUrunleri').html($VitrinUrunleri);
+\}
+\});
+\}
+
+function listyeni($curpage)\{
+if(!$curpage) $curpage=1;
+$.ajax(\{
+url : "http://www.hemensaglik.com/lib/pages/store/yeniurunler.asp?top=10",
+type : "GET",
+data : "curpage="+$curpage,
+success : function($yeniurunler)
+\{
+$('#yeniurunler').html($yeniurunler);
+\}
+\});
+\}
+listvitrin('1');
+listyeni('1');
+
+</script>
+				
+			</div>
+			 <div class="blok-ayrac"></div>
+			<div class="sag-panel-blok">
+				<div class="firsatkosesi">
+				<div class="anket_icerik" style=" padding: 35px 0;">
+					<script type="text/javascript">
+/*
+	AnythingSlider v1.5.7.3
+
+	By Chris Coyier: http://css-tricks.com
+	with major improvements by Doug Neiner: http://pixelgraphics.us/
+	based on work by Remy Sharp: http://jqueryfordesigners.com/
+	crazy mods by Rob Garrison (aka Mottie): https://github.com/ProLoser/AnythingSlider
+
+	To use the navigationFormatter function, you must have a function that
+	accepts two paramaters, and returns a string of HTML text.
+
+	index = integer index (1 based);
+	panel = jQuery wrapped LI item this tab references
+	@return = Must return a string of HTML/Text
+
+	navigationFormatter: function(index, panel)\{
+		return "Panel #" + index; // This would have each tab with the text 'Panel #X' where X = index
+	\}
+*/
+
+(function($) \{
+
+	$.anythingSlider = function(el, options) \{
+
+		// To avoid scope issues, use 'base' instead of 'this'
+		// to reference this class from internal events and functions.
+		var base = this;
+
+		// Wraps the ul in the necessary divs and then gives Access to jQuery element
+		base.$el = $(el).addClass('anythingBase').wrap('<div class="anythingSlider"><div class="anythingWindow" /></div>');
+
+		// Add a reverse reference to the DOM object
+		base.$el.data("AnythingSlider", base);
+
+		base.init = function()\{
+
+			base.options = $.extend(\{\}, $.anythingSlider.defaults, options);
+
+			if ($.isFunction(base.options.onBeforeInitialize)) \{ base.$el.bind('before_initialize', base.options.onBeforeInitialize); \}
+			base.$el.trigger('before_initialize', base);
+
+			// Cache existing DOM elements for later
+			// base.$el = original ul
+			// for wrap - get parent() then closest in case the ul has "anythingSlider" class
+			base.$wrapper = base.$el.parent().closest('div.anythingSlider').addClass('anythingSlider-' + base.options.theme);
+			base.$window = base.$el.closest('div.anythingWindow');
+			base.$controls = $('<div class="anythingControls"></div>').appendTo( (base.options.appendControlsTo !== null && $(base.options.appendControlsTo).length) ? $(base.options.appendControlsTo) : base.$wrapper); // change so this works in jQuery 1.3.2
+			base.win = window;
+			base.$win = $(base.win);
+
+			base.$nav = $('<ul class="thumbNav" />').appendTo(base.$controls);
+
+			// Set up a few defaults & get details
+			base.timer   = null;  // slideshow timer (setInterval) container
+			base.flag    = false; // event flag to prevent multiple calls (used in control click/focusin)
+			base.playing = false; // slideshow state
+			base.hovered = false; // actively hovering over the slider
+			base.panelSize = [];  // will contain dimensions and left position of each panel
+			base.currentPage = base.options.startPanel;
+			base.adjustLimit = (base.options.infiniteSlides) ? 0 : 1; // adjust page limits for infinite or limited modes
+			if (base.options.playRtl) \{ base.$wrapper.addClass('rtl'); \}
+
+			// save some options
+			base.original = [ base.options.autoPlay, base.options.buildNavigation, base.options.buildArrows];
+			base.updateSlider();
+
+			base.$currentPage = base.$items.eq(base.currentPage);
+			base.$lastPage = base.$currentPage;
+
+			// Get index (run time) of this slider on the page
+			base.runTimes = $('div.anythingSlider').index(base.$wrapper) + 1;
+			base.regex = new RegExp('panel' + base.runTimes + '-(\\d+)', 'i'); // hash tag regex
+
+			// Make sure easing function exists.
+			if (!$.isFunction($.easing[base.options.easing])) \{ base.options.easing = "swing"; \}
+
+			if (base.options.pauseOnHover) \{
+				base.$wrapper.hover(function() \{
+					if (base.playing) \{
+						base.$el.trigger('slideshow_paused', base);
+						base.clearTimer(true);
+					\}
+				\}, function() \{
+					if (base.playing) \{
+						base.$el.trigger('slideshow_unpaused', base);
+						base.startStop(base.playing, true);
+					\}
+				\});
+			\}
+
+			// If a hash can not be used to trigger the plugin, then go to start panel
+			var startPanel = (base.options.hashTags) ? base.gotoHash() || base.options.startPanel : base.options.startPanel;
+			base.setCurrentPage(startPanel, false); // added to trigger events for FX code
+
+			// Hide/Show navigation & play/stop controls
+			base.slideControls(false);
+			base.$wrapper.bind('mouseenter mouseleave', function(e)\{
+				base.hovered = (e.type === "mouseenter") ? true : false;
+				base.slideControls( base.hovered, false );
+			\});
+
+			// Add keyboard navigation
+			if (base.options.enableKeyboard) \{
+				$(document).keyup(function(e)\{
+					if (base.$wrapper.is('.activeSlider')) \{
+						switch (e.which) \{
+							case 39: // right arrow
+								base.goForward();
+								break;
+							case 37: //left arrow
+								base.goBack();
+								break;
+						\}
+					\}
+				\});
+			\}
+
+			// Binds events
+			var triggers = "slideshow_paused slideshow_unpaused slide_init slide_begin slideshow_stop slideshow_start initialized swf_completed".split(" ");
+			$.each("onShowPause onShowUnpause onSlideInit onSlideBegin onShowStop onShowStart onInitialized onSWFComplete".split(" "), function(i,o)\{
+				if ($.isFunction(base.options[o]))\{
+					base.$el.bind(triggers[i], base.options[o]);
+				\}
+			\});
+			if ($.isFunction(base.options.onSlideComplete))\{
+				// Added setTimeout (zero time) to ensure animation is complete... see this bug report: http://bugs.jquery.com/ticket/7157
+				base.$el.bind('slide_complete', function()\{
+					setTimeout(function()\{ base.options.onSlideComplete(base); \}, 0);
+				\});
+			\}
+			base.$el.trigger('initialized', base);
+
+		\};
+
+		// called during initialization & to update the slider if a panel is added or deleted
+		base.updateSlider = function()\{
+			// needed for updating the slider
+			base.$el.find('li.cloned').remove();
+			base.$nav.empty();
+
+			base.$items = base.$el.find('> li'); 
+			base.pages = base.$items.length;
+
+			// Set the dimensions of each panel
+			if (base.options.resizeContents) \{
+				if (base.options.width) \{ base.$wrapper.add(base.$items).css('width', base.options.width); \}
+				if (base.options.height) \{ base.$wrapper.add(base.$items).css('height', base.options.height); \}
+			\}
+
+			// Remove navigation & player if there is only one page
+			if (base.pages === 1) \{
+				base.options.autoPlay = false;
+				base.options.buildNavigation = false;
+				base.options.buildArrows = false;
+				base.$controls.hide();
+				base.$nav.hide();
+				if (base.$forward) \{ base.$forward.add(base.$back).hide(); \}
+			\} else \{
+				base.options.autoPlay = base.original[0];
+				base.options.buildNavigation = base.original[1];
+				base.options.buildArrows = base.original[2];
+				base.$controls.show();
+				base.$nav.show();
+				if (base.$forward) \{ base.$forward.add(base.$back).show(); \}
+			\}
+
+			// Build navigation tabs
+			base.buildNavigation();
+
+			// If autoPlay functionality is included, then initialize the settings
+			if (base.options.autoPlay) \{
+				base.playing = !base.options.startStopped; // Sets the playing variable to false if startStopped is true
+				base.buildAutoPlay();
+			\}
+
+			// Build forwards/backwards buttons
+			if (base.options.buildArrows) \{ base.buildNextBackButtons(); \}
+
+			// Top and tail the list with 'visible' number of items, top has the last section, and tail has the first
+			// This supports the "infinite" scrolling, also ensures any cloned elements don't duplicate an ID
+			base.$el.prepend( (base.options.infiniteSlides) ? base.$items.filter(':last').clone().addClass('cloned').removeAttr('id') : $('<li class="cloned" />') );
+			base.$el.append( (base.options.infiniteSlides) ? base.$items.filter(':first').clone().addClass('cloned').removeAttr('id') : $('<li class="cloned" />') );
+			base.$el.find('li.cloned').each(function()\{
+				// replace <a> with <span> in cloned panels to prevent shifting the panels by tabbing - modified so this will work with jQuery 1.3.2
+				$(this).html( $(this).html().replace(/<a/gi, '<span').replace(/\/a>/gi, '/span>') );
+				$(this).find('[id]').removeAttr('id');
+			\});
+
+			// We just added two items, time to re-cache the list, then get the dimensions of each panel
+			base.$items = base.$el.find('> li').addClass('panel');
+			base.setDimensions();
+			if (!base.options.resizeContents) \{ base.$win.load(function()\{ base.setDimensions(); \}); \} // set dimensions after all images load
+
+			if (base.currentPage > base.pages) \{
+				base.currentPage = base.pages;
+				base.setCurrentPage(base.pages, false);
+			\}
+			base.$nav.find('a').eq(base.currentPage - 1).addClass('cur'); // update current selection
+
+			base.hasEmb = base.$items.find('embed[src*=youtube]').length; // embedded youtube objects exist in the slider
+			base.hasSwfo = (typeof(swfobject) !== 'undefined' && swfobject.hasOwnProperty('embedSWF') && $.isFunction(swfobject.embedSWF)) ? true : false; // is swfobject loaded?
+
+			// Initialize YouTube javascript api, if YouTube video is present
+			if (base.hasEmb && base.hasSwfo) \{
+				base.$items.find('embed[src*=youtube]').each(function(i)\{
+					// Older IE doesn't have an object - just make sure we are wrapping the correct element
+					var $tar = ($(this).parent()[0].tagName === "OBJECT") ? $(this).parent() : $(this);
+					$tar.wrap('<div id="ytvideo' + i + '"></div>');
+					// use SWFObject if it exists, it replaces the wrapper with the object/embed
+					swfobject.embedSWF($(this).attr('src') + '&enablejsapi=1&version=3&playerapiid=ytvideo' + i, 'ytvideo' + i,
+						$tar.attr('width'), $tar.attr('height'), '10', null, null,
+						\{ allowScriptAccess: "always", wmode : base.options.addWmodeToObject, allowfullscreen : true \},
+						\{ 'class' : $tar.attr('class'), 'style' : $tar.attr('style') \}, 
+						function()\{ if (i >= base.hasEmb - 1) \{ base.$el.trigger('swf_completed', base); \} \} // swf callback
+					);
+				\});
+			\}
+
+			// Fix tabbing through the page
+			base.$items.find('a').unbind('focus').bind('focus', function(e)\{
+				base.$items.find('.focusedLink').removeClass('focusedLink');
+				$(this).addClass('focusedLink');
+				var panel = $(this).closest('.panel');
+				if (!panel.is('.activePage')) \{
+					base.gotoPage(base.$items.index(panel));
+					e.preventDefault();
+				\}
+			\});
+
+		\};
+
+		// Creates the numbered navigation links
+		base.buildNavigation = function() \{
+
+			if (base.options.buildNavigation && (base.pages > 1)) \{
+				base.$items.filter(':not(.cloned)').each(function(i,el) \{
+					var index = i + 1,
+						klass = ((index === 1) ? 'first' : '') + ((index === base.pages) ? 'last' : ''),
+						$a = $('<a href="#"></a>').addClass('panel' + index).wrap('<li class="' + klass + '" />');
+					base.$nav.append($a.parent()); // use $a.parent() so IE will add <li> instead of only the <a> to the <ul>
+
+					// If a formatter function is present, use it
+					if ($.isFunction(base.options.navigationFormatter)) \{
+						var tmp = base.options.navigationFormatter(index, $(this));
+						$a.html(tmp);
+						// Add formatting to title attribute if text is hidden
+						if (parseInt($a.css('text-indent'),10) < 0) \{ $a.addClass(base.options.tooltipClass).attr('title', tmp); \}
+					\} else \{
+						$a.text(index);
+					\}
+
+					$a.bind(base.options.clickControls, function(e) \{
+						if (!base.flag && base.options.enableNavigation) \{
+							// prevent running functions twice (once for click, second time for focusin)
+							base.flag = true; setTimeout(function()\{ base.flag = false; \}, 100);
+							base.gotoPage(index);
+							if (base.options.hashTags) \{ base.setHash(index); \}
+						\}
+						e.preventDefault();
+					\});
+				\});
+			\}
+		
+		\};
+
+		// Creates the Forward/Backward buttons
+		base.buildNextBackButtons = function() \{
+			if (base.$forward) \{ return; \}
+			base.$forward = $('<span class="arrow forward"><a href="#">' + base.options.forwardText + '</a></span>');
+			base.$back = $('<span class="arrow back"><a href="#">' + base.options.backText + '</a></span>');
+
+			// Bind to the forward and back buttons
+			base.$back.bind(base.options.clickArrows, function(e) \{
+				base.goBack();
+				e.preventDefault();
+			\});
+			base.$forward.bind(base.options.clickArrows, function(e) \{
+				base.goForward();
+				e.preventDefault();
+			\});
+			// using tab to get to arrow links will show they have focus (outline is disabled in css)
+			base.$back.add(base.$forward).find('a').bind('focusin focusout',function()\{
+			 $(this).toggleClass('hover');
+			\});
+
+			// Append elements to page
+			base.$wrapper.prepend(base.$forward).prepend(base.$back);
+			base.$arrowWidth = base.$forward.width();
+		\};
+
+		// Creates the Start/Stop button
+		base.buildAutoPlay = function()\{
+			if (base.$startStop) \{ return; \}
+			base.$startStop = $("<a href='#' class='start-stop'></a>").html(base.playing ? base.options.stopText : base.options.startText);
+			base.$controls.prepend(base.$startStop);
+			base.$startStop
+				.bind(base.options.clickSlideshow, function(e) \{
+					if (base.options.enablePlay) \{
+						base.startStop(!base.playing);
+						if (base.playing) \{
+							if (base.options.playRtl) \{
+								base.goBack(true);
+							\} else \{
+								base.goForward(true);
+							\}
+						\}
+					\}
+					e.preventDefault();
+				\})
+				// show button has focus while tabbing
+				.bind('focusin focusout',function()\{
+					$(this).toggleClass('hover');
+				\});
+
+			// Use the same setting, but trigger the start;
+			base.startStop(base.playing);
+		\};
+
+		// Set panel dimensions to either resize content or adjust panel to content
+		base.setDimensions = function()\{
+			var w, h, c, cw, dw, leftEdge = 0, bww = base.$window.width(), winw = base.$win.width();
+			base.$items.each(function(i)\{
+				c = $(this).children('*');
+				if (base.options.resizeContents)\{
+					// get viewport width & height from options (if set), or css
+					w = parseInt(base.options.width,10) || bww;
+					h = parseInt(base.options.height,10) || base.$window.height();
+					// resize panel
+					$(this).css(\{ width: w, height: h \});
+					// resize panel contents, if solitary (wrapped content or solitary image)
+					if (c.length === 1)\{
+						c.css(\{ width: '100%', height: '100%' \});
+						if (c[0].tagName === "OBJECT") \{ c.find('embed').andSelf().attr(\{ width: '100%', height: '100%' \}); \}
+					\}
+				\} else \{
+					// get panel width & height and save it
+					w = $(this).width(); // if not defined, it will return the width of the ul parent
+					dw = (w >= winw) ? true : false; // width defined from css?
+					if (c.length === 1 && dw)\{
+						cw = (c.width() >= winw) ? bww : c.width(); // get width of solitary child
+						$(this).css('width', cw); // set width of panel
+						c.css('max-width', cw);   // set max width for all children
+						w = cw;
+					\}
+					w = (dw) ? base.options.width || bww : w;
+					$(this).css('width', w);
+					h = $(this).outerHeight(); // get height after setting width
+					$(this).css('height', h);
+				\}
+				base.panelSize[i] = [w,h,leftEdge];
+				leftEdge += w;
+			\});
+			// Set total width of slider, but don't go beyond the set max overall width (limited by Opera)
+			base.$el.css('width', (leftEdge < base.options.maxOverallWidth) ? leftEdge : base.options.maxOverallWidth);
+		\};
+
+		base.gotoPage = function(page, autoplay, callback) \{
+			if (base.pages === 1) \{ return; \}
+			base.$lastPage = base.$items.eq(base.currentPage);
+			if (typeof(page) !== "number") \{
+				page = base.options.startPage;
+				base.setCurrentPage(base.options.startPage);
+			\}
+
+			// pause YouTube videos before scrolling or prevent change if playing
+			if (base.hasEmb && base.checkVideo(base.playing)) \{ return; \}
+			if (page > base.pages + 1 - base.adjustLimit) \{ page = (!base.options.infiniteSlides && !base.options.stopAtEnd) ? 1 : base.pages; \}
+			if (page < base.adjustLimit ) \{ page = (!base.options.infiniteSlides && !base.options.stopAtEnd) ? base.pages : 1; \}
+			base.$currentPage = base.$items.eq(page);
+			base.currentPage = page; // ensure that event has correct target page
+			base.$el.trigger('slide_init', base);
+
+			base.slideControls(true, false);
+
+			// When autoplay isn't passed, we stop the timer
+			if (autoplay !== true) \{ autoplay = false; \}
+			// Stop the slider when we reach the last page, if the option stopAtEnd is set to true
+			if (!autoplay || (base.options.stopAtEnd && page === base.pages)) \{ base.startStop(false); \}
+
+			base.$el.trigger('slide_begin', base);
+
+			// resize slider if content size varies
+			if (!base.options.resizeContents) \{
+				// animating the wrapper resize before the window prevents flickering in Firefox
+				base.$wrapper.filter(':not(:animated)').animate(
+					\{ width: base.panelSize[page][0], height: base.panelSize[page][1] \},
+					\{ queue: false, duration: base.options.animationTime, easing: base.options.easing \}
+				);
+			\}
+
+			// Animate Slider
+			base.$window.filter(':not(:animated)').animate(
+				\{ scrollLeft : base.panelSize[page][2] \},
+				\{ queue: false, duration: base.options.animationTime, easing: base.options.easing, complete: function()\{ base.endAnimation(page, callback); \} \}
+			);
+		\};
+
+		base.endAnimation = function(page, callback)\{
+			if (page === 0) \{
+				base.$window.scrollLeft(base.panelSize[base.pages][2]);
+				page = base.pages;
+			\} else if (page > base.pages) \{
+				// reset back to start position
+				base.$window.scrollLeft(base.panelSize[1][2]);
+				page = 1;
+			\}
+			base.setCurrentPage(page, false);
+			// Add active panel class
+			base.$items.removeClass('activePage').eq(page).addClass('activePage');
+
+			if (!base.hovered) \{ base.slideControls(false); \}
+
+			// continue YouTube video if in current panel
+			if (base.hasEmb)\{
+				var emb = base.$currentPage.find('object[id*=ytvideo], embed[id*=ytvideo]');
+				// player states: unstarted (-1), ended (0), playing (1), paused (2), buffering (3), video cued (5).
+				if (emb.length && $.isFunction(emb[0].getPlayerState) && emb[0].getPlayerState() > 0 && emb[0].getPlayerState() !== 5) \{
+					emb[0].playVideo();
+				\}
+			\}
+
+			base.$el.trigger('slide_complete', base);
+			// callback from external slide control: $('#slider').anythingSlider(4, function(slider){ })
+			if (typeof callback === 'function') \{ callback(base); \}
+			// Continue slideshow after a delay
+			if (base.options.autoPlayLocked && !base.playing) \{
+				setTimeout(function()\{
+					base.startStop(true);
+				// subtract out slide delay as the slideshow waits that additional time.
+				\}, base.options.resumeDelay - base.options.delay);
+			\}
+		\};
+
+		base.setCurrentPage = function(page, move) \{
+			if (page > base.pages + 1 - base.adjustLimit) \{ page = base.pages - base.adjustLimit; \}
+			if (page < base.adjustLimit ) \{ page = 1; \}
+
+			// Set visual
+			if (base.options.buildNavigation)\{
+				base.$nav.find('.cur').removeClass('cur');
+				base.$nav.find('a').eq(page - 1).addClass('cur');
+			\}
+
+			// hide/show arrows based on infinite scroll mode
+			if (!base.options.infiniteSlides && base.options.stopAtEnd)\{
+				base.$wrapper.find('span.forward')[ page === base.pages ? 'addClass' : 'removeClass']('disabled');
+				base.$wrapper.find('span.back')[ page === 1 ? 'addClass' : 'removeClass']('disabled');
+				if (page === base.pages && base.playing) \{ base.startStop(); \}
+			\}
+
+			// Only change left if move does not equal false
+			if (!move) \{
+				base.$wrapper.css(\{
+					width: base.panelSize[page][0],
+					height: base.panelSize[page][1]
+				\});
+				base.$wrapper.scrollLeft(0); // reset in case tabbing changed this scrollLeft
+				base.$window.scrollLeft( base.panelSize[page][2] );
+			\}
+			// Update local variable
+			base.currentPage = page;
+
+			// Set current slider as active so keyboard navigation works properly
+			if (!base.$wrapper.is('.activeSlider'))\{
+				$('.activeSlider').removeClass('activeSlider');
+				base.$wrapper.addClass('activeSlider');
+			\}
+		\};
+
+		base.goForward = function(autoplay) \{
+			if (autoplay !== true) \{ autoplay = false; base.startStop(false); \}
+			base.gotoPage(base.currentPage + 1, autoplay);
+		\};
+
+		base.goBack = function(autoplay) \{
+			if (autoplay !== true) \{ autoplay = false; base.startStop(false); \}
+			base.gotoPage(base.currentPage - 1, autoplay);
+		\};
+
+		// This method tries to find a hash that matches panel-X
+		// If found, it tries to find a matching item
+		// If that is found as well, then that item starts visible
+		base.gotoHash = function()\{
+			var n = base.win.location.hash.match(base.regex);
+			return (n===null) ? '' : parseInt(n[1],10);
+		\};
+
+		base.setHash = function(n)\{
+			var s = 'panel' + base.runTimes + '-',
+				h = base.win.location.hash;
+			if ( typeof h !== 'undefined' ) \{
+				base.win.location.hash = (h.indexOf(s) > 0) ? h.replace(base.regex, s + n) : h + "&" + s + n;
+			\}
+		\};
+
+		// Slide controls (nav and play/stop button up or down)
+		base.slideControls = function(toggle, playing)\{
+			var dir = (toggle) ? 'slideDown' : 'slideUp',
+				t1 = (toggle) ? 0 : base.options.animationTime,
+				t2 = (toggle) ? base.options.animationTime: 0,
+				sign = (toggle) ? 0 : 1; // 0 = visible, 1 = hidden
+			if (base.options.toggleControls) \{
+				base.$controls.stop(true,true).delay(t1)[dir](base.options.animationTime/2).delay(t2); 
+			\}
+			if (base.options.buildArrows && base.options.toggleArrows) \{
+				if (!base.hovered && base.playing) \{ sign = 1; t2 = 0; \} // don't animate arrows during slideshow
+				base.$forward.stop(true,true).delay(t1).animate(\{ right: sign * base.$arrowWidth, opacity: t2 \}, base.options.animationTime/2);
+				base.$back.stop(true,true).delay(t1).animate(\{ left: sign * base.$arrowWidth, opacity: t2 \}, base.options.animationTime/2);
+			\}
+		\};
+
+		base.clearTimer = function(paused)\{
+			// Clear the timer only if it is set
+			if (base.timer) \{ 
+				base.win.clearInterval(base.timer); 
+				if (!paused) \{
+					base.$el.trigger('slideshow_stop', base); 
+				\}
+			\}
+		\};
+
+		// Handles stopping and playing the slideshow
+		// Pass startStop(false) to stop and startStop(true) to play
+		base.startStop = function(playing, paused) \{
+			if (playing !== true) \{ playing = false; \} // Default if not supplied is false
+
+			if (playing && !paused) \{
+				base.$el.trigger('slideshow_start', base);
+			\}
+
+			// Update variable
+			base.playing = playing;
+
+			// Toggle playing and text
+			if (base.options.autoPlay) \{
+				base.$startStop.toggleClass('playing', playing).html( playing ? base.options.stopText : base.options.startText );
+				// add button text to title attribute if it is hidden by text-indent
+				if (parseInt(base.$startStop.css('text-indent'),10) < 0) \{
+					base.$startStop.addClass(base.options.tooltipClass).attr('title', playing ? 'Stop' : 'Start');
+				\}
+			\}
+
+			if (playing)\{
+				base.clearTimer(true); // Just in case this was triggered twice in a row
+				base.timer = base.win.setInterval(function() \{
+					// prevent autoplay if video is playing
+					if (!(base.hasEmb && base.checkVideo(playing))) \{
+						if (base.options.playRtl) \{
+							base.goBack(true);
+						\} else \{
+							base.goForward(true);
+						\}
+					\}
+				\}, base.options.delay);
+			\} else \{
+				base.clearTimer();
+			\}
+		\};
+
+		base.checkVideo = function(playing)\{
+			// pause YouTube videos before scrolling?
+			var emb, ps, stopAdvance = false;
+			base.$items.find('object[id*=ytvideo], embed[id*=ytvideo]').each(function()\{ // include embed for IE; if not using SWFObject, old detach/append code needs "object embed" here
+				emb = $(this);
+				if (emb.length && $.isFunction(emb[0].getPlayerState)) \{
+					// player states: unstarted (-1), ended (0), playing (1), paused (2), buffering (3), video cued (5).
+					ps = emb[0].getPlayerState();
+					// if autoplay, video playing, video is in current panel and resume option are true, then don't advance
+					if (playing && (ps === 1 || ps > 2) && base.$items.index(emb.closest('li.panel')) === base.currentPage && base.options.resumeOnVideoEnd) \{
+						stopAdvance = true;
+					\} else \{
+						// pause video if not autoplaying (if already initialized)
+						if (ps > 0) \{ emb[0].pauseVideo(); \}
+					\}
+				\}
+			\});
+			return stopAdvance;
+		\};
+
+		// Trigger the initialization
+		base.init();
+	\};
+
+	$.anythingSlider.defaults = \{
+		// Appearance
+		width               : null,      // Override the default CSS width
+		height              : null,      // Override the default CSS height
+		resizeContents      : true,      // If true, solitary images/objects in the panel will expand to fit the viewport
+		tooltipClass        : 'tooltip', // Class added to navigation & start/stop button (text copied to title if it is hidden by a negative text indent)
+		theme               : 'default', // Theme name
+		themeDirectory      : 'http://www.hemensaglik.com/css/theme-{themeName}.css', // Theme directory & filename {themeName} is replaced by the theme value above
+
+		// Navigation
+		startPanel          : 1,         // This sets the initial panel
+		hashTags            : true,      // Should links change the hashtag in the URL?
+		infiniteSlides      : true,      // if false, the slider will not wrap
+		enableKeyboard      : true,      // if false, keyboard arrow keys will not work for the current panel.
+		buildArrows         : true,      // If true, builds the forwards and backwards buttons
+		toggleArrows        : false,     // If true, side navigation arrows will slide out on hovering & hide @ other times
+		buildNavigation     : true,      // If true, builds a list of anchor links to link to each panel
+		enableNavigation    : true,      // if false, navigation links will still be visible, but not clickable.
+		toggleControls      : false,     // if true, slide in controls (navigation + play/stop button) on hover and slide change, hide @ other times
+		appendControlsTo    : null,      // A HTML element (jQuery Object, selector or HTMLNode) to which the controls will be appended if not null
+		navigationFormatter : null,      // Details at the top of the file on this use (advanced use)
+		forwardText         : "&raquo;", // Link text used to move the slider forward (hidden by CSS, replaced with arrow image)
+		backText            : "&laquo;", // Link text used to move the slider back (hidden by CSS, replace with arrow image)
+
+		// Slideshow options
+		enablePlay          : true,      // if false, the play/stop button will still be visible, but not clickable.
+		autoPlay            : true,      // This turns off the entire slideshow FUNCTIONALY, not just if it starts running or not
+		autoPlayLocked      : false,     // If true, user changing slides will not stop the slideshow
+		startStopped        : false,     // If autoPlay is on, this can force it to start stopped
+		pauseOnHover        : true,      // If true & the slideshow is active, the slideshow will pause on hover
+		resumeOnVideoEnd    : true,      // If true & the slideshow is active & a youtube video is playing, it will pause the autoplay until the video is complete
+		stopAtEnd           : false,     // If true & the slideshow is active, the slideshow will stop on the last page. This also stops the rewind effect when infiniteSlides is false.
+		playRtl             : false,     // If true, the slideshow will move right-to-left
+		startText           : "Start",   // Start button text
+		stopText            : "Stop",    // Stop button text
+		delay               : 3000,      // How long between slideshow transitions in AutoPlay mode (in milliseconds)
+		resumeDelay         : 15000,     // Resume slideshow after user interaction, only if autoplayLocked is true (in milliseconds).
+		animationTime       : 600,       // How long the slideshow transition takes (in milliseconds)
+		easing              : "swing",   // Anything other than "linear" or "swing" requires the easing plugin
+
+		// Callbacks - removed from options to reduce size - they still work
+
+		// Interactivity
+		clickArrows         : "click",         // Event used to activate arrow functionality (e.g. "click" or "mouseenter")
+		clickControls       : "click focusin", // Events used to activate navigation control functionality
+		clickSlideshow      : "click",         // Event used to activate slideshow play/stop button
+
+		// Misc options
+		addWmodeToObject    : "opaque", // If your slider has an embedded object, the script will automatically add a wmode parameter with this setting
+		maxOverallWidth     : 32766     // Max width (in pixels) of combined sliders (side-to-side); set to 32766 to prevent problems with Opera
+	\};
+
+	$.fn.anythingSlider = function(options, callback) \{
+
+		return this.each(function(i)\{
+			var anySlide = $(this).data('AnythingSlider');
+
+			// initialize the slider but prevent multiple initializations
+			if ((typeof(options)).match('object|undefined'))\{
+				if (!anySlide) \{
+					(new $.anythingSlider(this, options));
+				\} else \{
+					anySlide.updateSlider();
+				\}
+			// If options is a number, process as an external link to page #: $(element).anythingSlider(#)
+			\} else if (/\d/.test(options) && !isNaN(options) && anySlide) \{
+				var page = (typeof(options) === "number") ? options : parseInt($.trim(options),10); // accepts "  2  "
+				// ignore out of bound pages
+				if ( page >= 1 && page <= anySlide.pages ) \{
+					anySlide.gotoPage(page, false, callback); // page #, autoplay, one time callback
+				\}
+			\}
+		\});
+	\};
+
+\})(jQuery);
+
+/* AnythingSlider works with works with jQuery 1.4+, but you can uncomment the code below to make it
+   work with jQuery 1.3.2. You'll have to manually add the code below to the minified copy if needed */
+/*
+ // Copied from jQuery 1.4.4 to make AnythingSlider backwards compatible to jQuery 1.3.2
+ if (typeof jQuery.fn.delay === 'undefined') \{
+  jQuery.fn.extend(\{
+   delay: function\( time, type ) \{
+    time = jQuery.fx ? jQuery.fx.speeds[time] || time : time; type = type || "fx";
+    return this.queue( type, function() \{ var elem = this; setTimeout(function() \{ jQuery.dequeue( elem, type ); \}, time ); \});
+   \}
+  \});
+ \}
+*/
+</script>
+<script type="text/javascript">
+$(document).ready(function()\{
+$('#tema92').anythingSlider(\{
+  // Appearance
+  width               : 297,      // Override the default CSS width
+  height              : 214,      // Override the default CSS height
+  resizeContents      : true,      // If true, solitary images/objects in the panel will expand to fit the viewport
+  tooltipClass        : 'tooltip', // Class added to navigation & start/stop button (text copied to title if it is hidden by a negative text indent)
+  theme               : 'tema92', // Theme name
+  themeDirectory      : 'http://www.hemensaglik.com/css/theme-{themeName}.css', // Theme directory & filename {themeName} is replaced by the theme value above
+
+  // Navigation
+  startPanel          : 1,         // This sets the initial panel
+  hashTags            : true,      // Should links change the hashtag in the URL?
+  infiniteSlides      : false,      // if false, the slider will not wrap
+  enableKeyboard      : true,      // if false, keyboard arrow keys will not work for the current panel.
+  buildArrows         : true,      // If true, builds the forwards and backwards buttons
+  toggleArrows        : false,     // if true, side navigation arrows will slide out on hovering & hide @ other times
+  buildNavigation     : false,      // If true, builds a list of anchor links to link to each panel
+  enableNavigation    : false,      // if false, navigation links will still be visible, but not clickable.
+  toggleControls      : false,     // if true, slide in controls (navigation + play/stop button) on hover and slide change, hide @ other times
+  appendControlsTo    : null,      // A HTML element (jQuery Object, selector or HTMLNode) to which the controls will be appended if not null
+  navigationFormatter : null,      // Details at the top of the file on this use (advanced use)
+  forwardText         : "&raquo;", // Link text used to move the slider forward (hidden by CSS, replaced with arrow image)
+  backText            : "&laquo;", // Link text used to move the slider back (hidden by CSS, replace with arrow image)
+
+  // Slideshow options
+  enablePlay          : true,      // if false, the play/stop button will still be visible, but not clickable.
+  autoPlay            : true,      // This turns off the entire slideshow FUNCTIONALY, not just if it starts running or not
+  autoPlayLocked      : false,     // If true, user changing slides will not stop the slideshow
+  startStopped        : false,     // If autoPlay is on, this can force it to start stopped
+  pauseOnHover        : true,      // If true & the slideshow is active, the slideshow will pause on hover
+  resumeOnVideoEnd    : true,      // If true & the slideshow is active & a youtube video is playing, the autoplay will pause until the video completes
+  stopAtEnd           : false,     // If true & the slideshow is active, the slideshow will stop on the last page. This also stops the rewind effect when infiniteSlides is false.
+  playRtl             : false,     // If true, the slideshow will move right-to-left
+  startText           : "Baþlat",   // Start button text
+  stopText            : "Durdur",    // Stop button text
+  delay               : 6000,      // How long between slideshow transitions in AutoPlay mode (in milliseconds)
+  resumeDelay         : 15000,     // Resume slideshow after user interaction, only if autoplayLocked is true (in milliseconds).
+  animationTime       : 600,       // How long the slideshow transition takes (in milliseconds)
+  easing              : "swing",   // Anything other than "linear" or "swing" requires the easing plugin
+
+  // Callbacks
+  onBeforeInitialize  : null,      // Callback before the plugin initializes
+  onInitialized       : null,      // Callback when the plugin finished initializing
+  onShowStart         : null,      // Callback on slideshow start
+  onShowStop          : null,      // Callback after slideshow stops
+  onShowPause         : null,      // Callback when slideshow pauses
+  onShowUnpause       : null,      // Callback when slideshow unpauses - may not trigger properly if user clicks on any controls
+  onSlideInit         : null,      // Callback when slide initiates, before control animation
+  onSlideBegin        : null,      // Callback before slide animates
+  onSlideComplete     : null,      // Callback when slide completes
+
+  // Interactivity
+  clickArrows         : "click",         // Event used to activate arrow functionality (e.g. "click" or "mouseenter")
+  clickControls       : "click focusin", // Events used to activate navigation control functionality
+  clickSlideshow      : "click",         // Event used to activate slideshow play/stop button
+
+  // Misc options
+  addWmodeToObject    : "opaque", // If there is an embedded object & swfobject.js is active, the script will automatically add this wmode parameter
+  maxOverallWidth     : 32766     // Max width (in pixels) of combined sliders (side-to-side); set to 32766 to prevent problems with Opera
+\});
+\});
+</script>
+<style>
+/*
+    AnythingSlider v1.4.1+ Default (base) theme
+
+    By Chris Coyier: http://css-tricks.com
+    with major improvements by Doug Neiner: http://pixelgraphics.us/
+    based on work by Remy Sharp: http://jqueryfordesigners.com/
+*/
+
+/******* SET DEFAULT DIMENSIONS HERE ********/
+div.anythingSlider-tema92 \{
+	width: 700px;
+	height: 390px;
+	margin: 0 auto;
+	overflow: hidden; /* needed for Opera and Safari */
+\}
+
+/**** DO NOT CHANGE BELOW THIS LINE ****/
+/* anythingSlider viewport window */
+div.anythingSlider .anythingWindow \{
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	height: 100%;
+\}
+/* wrapper: 45px right & left padding for the arrows, 28px @ bottom for navigation */
+div.anythingSlider \{
+	position: relative;
+\}
+/* anythingSlider base UL */
+ul.anythingBase \{
+	background: transparent;
+	list-style: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin: 0;
+	padding: 0;
+\}
+ul.anythingBase li.panel \{
+	background: transparent;
+	display: block;
+	overflow: hidden;
+	float: left;
+	padding: 0;
+	margin: 0;
+\}
+
+</style>
+<style>
+/* AnythingSlider v1.41 tema92 Theme
+   By Rob Garrison
+*/
+
+/****** SET COLORS HERE *******/
+/* Default State */
+div.anythingSlider-tema92 .thumbNav a \{
+	border: 1px solid #000;
+\}
+div.anythingSlider-tema92 .start-stop \{
+	border: 1px solid #000;
+\}
+div.anythingSlider-tema92 .start-stop.playing \{
+	background-color: #300;
+\}
+div.anythingSlider-tema92 .start-stop:hover, div.anythingSlider-tema92 .start-stop.hover \{
+	color: #ddd;
+\}
+
+/* Active State */
+div.anythingSlider-tema92.activeSlider .anythingWindow \{
+	border-color: #0355a3;
+\}
+div.anythingSlider-tema92.activeSlider .thumbNav a \{
+	background-color: transparent;
+	background-position: -68px -40px;
+\}
+div.anythingSlider-tema92.activeSlider .thumbNav a:hover, div.anythingSlider-tema92.activeSlider .thumbNav a.cur \{
+	background-position: -76px -57px;
+/*	background: #fff; */
+\}
+div.anythingSlider-tema92.activeSlider .start-stop.playing \{
+	background-color: #f00;
+\}
+div.anythingSlider-tema92 .start-stop:hover, div.anythingSlider-tema92 .start-stop.hover \{
+	color: #fff;
+\}
+
+/* Navigation Arrows */
+div.anythingSlider-tema92 .arrow \{
+	top: 45%;
+	position: absolute;
+	display: block;
+	z-index: 100;
+\}
+div.anythingSlider-tema92 .arrow a \
+	display: block;
+	height: 38px;
+	width: 12px;
+	outline: 0;
+	background: url(http://www.hemensaglik.com/content/uploads/2/ozellestirme/galeritema/tema92/images/sag_sol.png) no-repeat;
+	text-indent: -9999px;
+\}
+div.anythingSlider-tema92 .forward \{ right: 0; \}
+div.anythingSlider-tema92 .back \{ left: 0; \}
+div.anythingSlider-tema92 .forward a \{ background-position: right top; \}
+div.anythingSlider-tema92 .back a \{ background-position: left top; \}
+div.anythingSlider-tema92 .forward a:hover, div.anythingSlider-tema92 .forward a.hover \{ background-position: right top; \}
+div.anythingSlider-tema92 .back a:hover, div.anythingSlider-tema92 .back a.hover \{ background-position: left top; \}
+
+/* Navigation Links */
+div.anythingSlider-tema92 .anythingControls \{
+	position: absolute;
+	width: 90%;
+	bottom: 15px;
+	right: 15px;
+	z-index: 100;
+	opacity: 0.90;
+	filter: alpha(opacity=90);
+\}
+div.anythingSlider-tema92 .thumbNav \{
+	float: right;
+	margin: 0;
+	z-index: 100;
+\}
+div.anythingSlider-tema92 .thumbNav li \{
+	display: inline;
+\}
+div.anythingSlider-tema92 .thumbNav a \{
+	display: inline-block;
+	height: 10px;
+	width: 10px;
+	margin: 3px;
+	padding: 0;
+	text-indent: -9999px;
+	outline: 0;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+\}
+
+/* Autoplay Start/Stop button */
+div.anythingSlider-tema92 .start-stop \{
+	display:none;
+\}
+
+/* Extra - replace defaults */
+div.anythingSlider-tema92 \{
+	padding:0;
+\}
+.jqueryslidemenu \{
+    display: table;
+    height: 25px;
+    line-height: 25px;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    width: 995px;
+\}
+.ustmenu \{
+    padding-left: 8px;
+\}
+</style>
+ <ul id="tema92">
+<li>
+	<div id="vipurunler">
+	<div class="baslik" align="center"><a href="http://www.hemensaglik.com/doga_arinma/63-LYPO-345_BITKISEL_GIDA_DESTEGI.html" alt="LYPO-345 BÝTKÝSEL GIDA DESTEÐÝ">LYPO-345 BÝTKÝSEL GIDA DESTEÐÝ</a></div>
+	<div class="resim" align="center"><a href="http://www.hemensaglik.com/doga_arinma/63-LYPO-345_BITKISEL_GIDA_DESTEGI.html"><img border="0" src="http://www.hemensaglik.com/../shop.hemensaglik.com/content/uploads/2/products/-2_2_63_1_imageUrl_LYPO-345.jpg" alt="LYPO-345 BÝTKÝSEL GIDA DESTEÐÝ"  width="100"/></a></div>	
+	
+	
+	<div class="vip-listefiyat" align="center">85.00 TL</div>
+	<div class="fiyat" align="center">68.00 TL</div>
+	<div class="vip_mintaksit" align="center">5.83 TL'den baþlayan taksitlerle</div>
+	</div>
+</li>
+<li>
+	<div id="vipurunler">
+	<div class="baslik" align="center"><a href="http://www.hemensaglik.com/doga_arinma/113-GUNES_SONRASI_SUTU.html" alt="GÜNEÞ SONRASI SÜTÜ">GÜNEÞ SONRASI SÜTÜ</a></div>
+	<div class="resim" align="center"><a href="http://www.hemensaglik.com/doga_arinma/113-GUNES_SONRASI_SUTU.html"><img border="0" src="http://www.hemensaglik.com/../shop.hemensaglik.com/content/uploads/2/products/-2_2_113_1_imageUrl_Gunessutu.JPG" alt="GÜNEÞ SONRASI SÜTÜ"  width="100"/></a></div>	
+	
+	
+	<div class="vip-listefiyat" align="center"></div>
+	<div class="fiyat" align="center">33.00 TL</div>
+	<div class="vip_mintaksit" align="center">2.83 TL'den baþlayan taksitlerle</div>
+	</div>
+</li>
+<li>
+	<div id="vipurunler">
+	<div class="baslik" align="center"><a href="http://www.hemensaglik.com/biopro/152-BIOPRO_Cell_Chip.html" alt="BIOPRO Cell Chip">BIOPRO Cell Chip</a></div>
+	<div class="resim" align="center"><a href="http://www.hemensaglik.com/biopro/152-BIOPRO_Cell_Chip.html"><img border="0" src="http://shop.hemensaglik.com/content/uploads/2/products/-2_2_152_1_imageUrl_getfile.asp.jpeg" alt="BIOPRO Cell Chip"  width="100"/></a></div>	
+	
+	
+	<div class="vip-listefiyat" align="center">119.00 TL</div>
+	<div class="fiyat" align="center">99.00 TL</div>
+	<div class="vip_mintaksit" align="center">8.49 TL'den baþlayan taksitlerle</div>
+	</div>
+</li>
+<li>
+	<div id="vipurunler">
+	<div class="baslik" align="center"><a href="http://www.hemensaglik.com/dogal724/170-PEPTIQUE_KIRISIK_KREMI.html" alt="PEPTÝQUE KIRIÞIK KREMÝ">PEPTÝQUE KIRIÞIK KREMÝ</a></div>
+	<div class="resim" align="center"><a href="http://www.hemensaglik.com/dogal724/170-PEPTIQUE_KIRISIK_KREMI.html"><img border="0" src="http://www.hemensaglik.com/../shop.hemensaglik.com/content/uploads/2/products/-2_2_170_1_imageUrl_peptique.jpg" alt="PEPTÝQUE KIRIÞIK KREMÝ"  width="100"/></a></div>	
+	
+	
+	<div class="vip-listefiyat" align="center"></div>
+	<div class="fiyat" align="center">199.00 TL</div>
+	<div class="vip_mintaksit" align="center">17.08 TL'den baþlayan taksitlerle</div>
+	</div>
+</li>
+<li>
+	<div id="vipurunler">
+	<div class="baslik" align="center"><a href="http://www.hemensaglik.com/dogal724/194-MFM_Guarana_Kofre.html" alt="MFM Guarana Kofre">MFM Guarana Kofre</a></div>
+	<div class="resim" align="center"><a href="http://www.hemensaglik.com/dogal724/194-MFM_Guarana_Kofre.html"><img border="0" src="../../shop.hemensaglik.com/content/uploads/2/products/-2_2_194_1_imageUrl_guarana%20kofre-500x500.jpg" alt="MFM Guarana Kofre"  width="100"/></a></div>	
+	
+	
+	<div class="vip-listefiyat" align="center"></div>
+	<div class="fiyat" align="center">149.98 TL</div>
+	<div class="vip_mintaksit" align="center">12.87 TL'den baþlayan taksitlerle</div>
+	</div>
+</li>
+ </ul>
+	
+				</div>
+			</div>
+			
+			<div class="fbook">
+				<iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fhemensaglik&amp;width=300&amp;height=258&amp;colorscheme=light&amp;show_faces=true&amp;border_color=%23D1E2EC&amp;stream=false&amp;header=false" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:258px;" allowTransparency="true"></iframe>			</div>
+		</div>
+<div class="sagblokreklamalt">
+		<span id="reklamspananasayfasagalt">Y&uuml;kleniyor...</span><script language="JavaScript" type="text/javascript">ajaxpage( 'http://www.hemensaglik.com/lib/pages/getReklamGroup.asp?groupName=anasayfasagalt', 'reklamspananasayfasagalt') ;</script>
+		</div>
+</div>
+
+<!--Sitegenel-->
+</div>	
+
+<div style="clear:both;height:20px"></div>
+<div class="footer">
+	<div class="foot1">
+		<div class="foot1ic">
+			<img src="http://www.hemensaglik.com/content/uploads/1/images/sagmer.png" style="margin-top:10px;">
+			<div style="clear:both;"></div>
+			<ul class="footmenu">
+				<li><a href="http://www.hemensaglik.com/adan-zye-saglik/adet-oncesi-sendromu-pms-merkezi" title="Adet Öncesi Sendromu (PMS) Merkezi">Adet Öncesi Sendromu</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/agiz-sagligi" title="Aðýz Saðlýðý">Aðýz Saðlýðý</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/agri-yonetimi-merkezi" title="Aðrý Yönetimi Merkezi">Aðrý Yönetimi</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/alerji-merkezi" title="Alerji Merkezi">Alerji</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/alzheimer-merkezi" title="Alzheimer Merkezi">Alzheimer</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/astim-merkezi" title="Astým Merkezi">Astým</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/ayak-sagligi-merkezi" title="Ayak Saðlýðý Merkezi">Ayak Saðlýðý</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/bagimlilik-merkezi" title="Baðýmlýlýk Merkezi">Baðýmlýlýk</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/saglikli-beslenme" title="Saðlýklý Beslenme">Beslenme & Diyet</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/beyin-ve-sinir-sistemi-merkezi" title="Beyin ve Sinir Sistemi Merkezi">Beyin ve Sinir Sistemi Merkezi</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/bobrek-hastaliklari-merkezi" title="Böbrek Hastalýklarý Merkezi">Böbrek Hastalýklarý</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/cilt-ve-guzellik/cilt-bakimi-merkezi" title="Cilt Bakýmý Merkezi">Cilt Bakýmý</a></li>
+			</ul>
+			<ul class="footmenu">
+				<li><a href="http://www.hemensaglik.com/adan-zye-saglik/cilt-ve-guzellik/cilt-hastaliklari-merkezi" title="Cilt Hastalýklarý Merkezi">Cilt Hastalýklarý</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/cilt-ve-guzellik/cilt-problemleri-merkezi" title="Cilt Problemleri Merkezi">Cilt Problemleri</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/cilt-ve-guzellik" title="Cilt ve Güzellik">Cilt ve Güzellik</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/cinsel-saglik-merkezi" title="Cinsel Saðlýk Merkezi">Cinsel Saðlýk</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/cocuk-hastaliklari-merkezi" title="Çocuk Hastalýklarý Merkezi">Çocuk Hastalýklarý</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/cocuk-sagligi" title="Çocuk Saðlýðý">Çocuk Saðlýðý</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/cocuk-yetistirme-merkezi" title="Çocuk Yetiþtirme Merkezi">Çocuk Yetiþtirme</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/endometriyoz-merkezi" title="Endometriyoz Merkezi">Endometriyoz</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/erkek-sagligi" title="Erkek Saðlýðý">Erkek</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/cilt-ve-guzellik/estetik-operasyonlar-merkezi" title="Estetik operasyonlar Merkezi">Estetik Operasyon</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/gebelik-merkezi" title="Gebelik Merkezi">Gebelik Merkezi</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/gelisim-bozukluklari" title="Geliþim Bozukluklarý">Geliþim Bozukluklarý</a></li>
+			</ul>
+			<ul class="footmenu">
+				<li><a href="http://www.hemensaglik.com/adan-zye-saglik/goz-sagligi" title="Göz Saðlýðý">Göz Saðlýðý</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/grip-ve-nezle-merkezi" title="Grip ve Nezle Merkezi">Grip & Nezle</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/cilt-ve-guzellik/guzellik-merkezi" title="Güzellik Merkezi">Güzellik</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/hepatit-merkezi" title="Hepatit Merkezi">Hepatit</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/ilk-yardim-ve-acil-servis-merkezi" title="Ýlk Yardým ve Acil Servis Merkezi">Ýlk Yardým</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/iltihabi-bagirsak-hastaligi-merkezi" title="Ýltihabi Baðýrsak Hastalýðý Merkezi">Ýltihabi Baðýrsak</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/kadin-sagligi" title="Kadýn Saðlýðý">Kadýn</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/kalp-sagligi-merkezi" title="Kalp Saðlýðý Merkezi">Kalp Saðlýðý</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/kanser-merkezi" title="Kanser Merkezi">Kanser Merkezi</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/kemik-eklem-ve-kas-sagligi-merkezi" title="Kemik, Eklem ve Kas Saðlýðý Merkezi">Kemik, Eklem, Kas</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/romatizmal-hastaliklar-merkezi/lupus-merkezi" title="Lupus Merkezi">Lupus</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/meme-kanseri-merkezi" title="Meme Kanseri Merkezi">Meme Kanseri</a></li>
+			</ul>
+			<ul class="footmenu">
+				<li><a href="http://www.hemensaglik.com/adan-zye-saglik/parkinson-hastaligi-merkezi" title="Parkinson Hastalýðý Merkezi">Parkinson Hastalýðý</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/romatizmal-hastaliklar-merkezi" title="Romatizmal Hastalýklar Merkezi">Romatizmal Hastalýklar</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/ruh-sagligi" title="Ruh Saðlýðý">Ruh Saðlýðý</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/cilt-ve-guzellik/sac-bakimi-merkezi" title="Saç Bakýmý Merkezi">Saç Bakýmý</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/saglik-ve-zindelik-merkezi" title="Saðlýk ve Zindelik Merkezi">Saðlýk ve Zindelik Merkezi</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/saglikli-yaslanma-merkezi" title="Saðlýklý Yaþlanma Merkezi">Saðlýklý Yaþlanma</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/sindirim-bozukluklari-merkezi" title="Sindirim Bozukluklarý Merkezi">Sindirim Sorunlarý</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/akciger-hastaliklari-ve-solunum-merkezi" title="Akciðer Hastalýklarý ve Solunum Merkezi">Solunum Sorunlarý</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/seker-hastaliklari-merkezi" title="Þeker Hastalýklarý Merkezi">Þeker Hastalýklarý</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/sifa-mutfagi" title="Þifa Mutfaðý">Þifa Mutfaðý</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/uyku-bozukluklari-merkezi" title="Uyku Bozukluklarý Merkezi">Uyku Sorunlarý</a></li>
+                                
+            	<li><a href="http://www.hemensaglik.com/adan-zye-saglik/yuksek-tansiyon-merkezi" title="Yüksek Tansiyon Merkezi">Yüksek Tansiyon</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="foot2">
+		<div class="foot2ic">
+			<div class='simple-purple'><ul id='Menualt-menu' class='Malt-menu'>
+<li><a href='http://www.hemensaglik.com/default.asp' target="">Ana Sayfa</a>
+</li>
+<li><a href='http://www.hemensaglik.com/adan-zye-saglik' target="">A-Z Saðlýk</a>
+</li>
+<li><a href='http://www.hemensaglik.com/adan-zye-saglik/saglikli-yasam' target="">Saðlýklý Yaþam</a>
+</li>
+<li><a href='http://www.hemensaglik.com/adan-zye-saglik/kadin-sagligi' target="">Kadýn</a>
+</li>
+<li><a href='http://www.hemensaglik.com/adan-zye-saglik/erkek-sagligi' target="">Erkek</a>
+</li>
+<li><a href='http://www.hemensaglik.com/adan-zye-saglik/bebek-cocuk' target="">Bebek & Çocuk</a>
+</li>
+<li><a href='http://www.hemensaglik.com/adan-zye-saglik/cilt-ve-guzellik' target="">Cilt & Güzellik</a>
+</li>
+<li><a href='http://www.hemensaglik.com/adan-zye-saglik/saglikli-beslenme' target="">Beslenme & Diyet</a>
+</li>
+<li><a href='http://www.hemensaglik.com/adan-zye-saglik/cinsel-saglik-merkezi' target="">Cinsel Saðlýk</a>
+</li>
+<li><a href='http://www.hemensaglik.com/adan-zye-saglik/ruh-sagligi' target="">Ruh Saðlýðý</a>
+</li>
+</ul>
+</div>
+
+		</div>
+	</div>
+	<div class="foot3">
+		<div class="foot3ic">
+			<img src="http://www.hemensaglik.com/content/uploads/1/images/takip.png"><a href="http://www.facebook.com/hemensaglik" target="_blank"><img src="http://www.hemensaglik.com/content/uploads/1/images/faceb.png"></a><a href="http://www.twitter.com/hemensaglik" target="_blank"><img src="http://www.hemensaglik.com/content/uploads/1/images/twit.png"></a><a href="http://www.hemensaglik.com/haber/rss.asp"><img src="http://www.hemensaglik.com/content/uploads/1/images/rss.png" border="0"></a><img src="http://www.hemensaglik.com/content/uploads/1/images/anadaj.png" style="float:right;">
+		</div>
+	</div>
+	<div class="foot4">
+		<div class="foot4ic">
+			<div class="smenu" style="float:left;">
+				<div class='simple-purple'><ul id='Menusalt-menu' class='Msalt-menu'>
+<li><a href='http://www.hemensaglik.com/hakkimizda/amacimiz' target="">Amacýmýz</a>
+</li>
+<li><a href='http://www.hemensaglik.com/hakkimizda/kullanim-kosullari' target="">Kullaným Koþullarý</a>
+</li>
+<li><a href='http://www.hemensaglik.com/hakkimizda/gizlilik-politikasi' target="">Gizlilik Politikasý</a>
+</li>
+<li><a href='http://www.hemensaglik.com/hakkimizda/biz-kimiz' target="">Biz Kimiz?</a>
+</li>
+<li><a href='http://www.hemensaglik.com/hakkimizda/reklam' target="">Reklam</a>
+</li>
+<li><a href='http://www.hemensaglik.com/contact.asp' target="">Bize Yazýn</a>
+</li>
+</ul>
+</div>
+
+			</div>
+			<!-- <div style="float:right;margin-top:10px;">
+				<a href="http://www.e-veri.com" target="_blank"><img src="http://www.hemensaglik.com/content/uploads/1/images/powered.png" border="0"></a>
+			</div> -->
+			<div style="float:right;color:#ffffff;margin-right:10px;">
+				© 2012 HemenSaðlýk ve Semptomatik. Tüm Haklarý Saklýdýr.
+			</div>
+			<div style="clear:both;"></div>
+			<div style="color:#8bd7ff;margin-top:10px;text-align:justify;font-size:12px;">
+				UYARI: BU SÝTEDE YER ALAN ÝÇERÝK; HÝÇBÝR ÞEKÝLDE TEÞHÝS, TEDAVÝ, TANI VEYA TIBBÝ BÝR TAVSÝYE NÝTELÝÐÝ TAÞIMAMAKTADIR. Bu SÝTE'yi kullanan her gerçek ve tüzel kiþi, <a target="" href="http://www.hemensaglik.com/hakkimizda/kullanim-kosullari" style="color:#80d7e5;">Kullaným Koþullarý</a>'nýn tamamýný okumuþ, anlamýþ ve kabul etmiþ sayýlmaktadýr. <a target="" href="http://www.hemensaglik.com/hakkimizda/kullanim-kosullari" style="color:#80d7e5;">Kullaným Koþullarý</a>'nýn tamamýný eksiksiz bir þekilde kabul etmiyor iseniz, bu SÝTE'yi kullanmayýnýz!
+<div style="float:right;margin-top:10px;">
+				<a href="http://www.e-veri.com/" target="_blank"><img src="http://www.hemensaglik.com/content/uploads/1/images/powered.png" border="0"></a>
+			</div>
+			</div>
+
+		</div>
+	</div>
+	<!-- hemensaglik_calc_footer.tmpl from dir template_hemensaglik  -->
+</div>
+
+</body>
+</html>

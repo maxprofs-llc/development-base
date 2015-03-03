@@ -1,0 +1,52 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( $directory . $input_variables, PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $header_file, PACKAGE => __PACKAGE__ );
+}
+<div id="title" class="steptxt">
+<p class="pad17">{$form_title}</p>
+</div>
+
+<div class="content" style="margin-left: 5px; background-color:#ffffff">
+<p class="pad29">{$intro}</p></div>
+
+<div id="step-inn-bg" class="content1">
+<table width="406" cellspacing="0" style="margin-left: 30px">
+<form  method="POST" action="{$cgi}calculator.cgi" name="theForm" onSubmit="return checkCalcForm(this)">
+
+      <tr>
+        <td class="lb2" width=400 style="padding-top: 10px; padding-right: 20px"></td>
+        <td width=90 class="lb2" style="padding-top: 10px">{$lang{$current_language}{what_is_weight}}
+		<input type="text" name="weight" size="4" maxlength="3" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> Kg
+		</td>
+      </tr>
+      <tr>
+		<td class="lb2" width=300 style="padding-top: 10px; padding-right: 20px; text-align:left;"></td>
+        <td width=90 style="padding-top: 10px;text-align:left;" class="lb2" >{$cal_input_body}</td>
+      </tr>
+      
+      
+      <tr>
+        <td><a href="/cgi-bin/hs/calc.cgi?calc=men" class="btn_input" align="left">YEMEK LISTESI</a></td>
+        <td style="padding-top: 8px; padding-bottom: 10px" align="center">
+        	<input type="image" border="0" name="submit" src="https://hemensaglik.hra.net/images/hemensaglik_calculate.jpg" >
+			<input type="hidden" name="measure" value="Metric">
+			<input type="hidden" name="calculator" value="cbc">
+			<input type="hidden" name="snum" value="{$snum}">
+        </td>
+        <td>&nbsp;</td>
+      </tr>
+	  
+	    <tr>
+			<td></td>
+		</tr>
+	  </form>
+    </table>
+</div>
+<!--Form and form table END here.-->
+{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $footer_file, PACKAGE => __PACKAGE__ );
+}

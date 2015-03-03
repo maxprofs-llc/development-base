@@ -1,0 +1,149 @@
+{
+#this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}batch_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}batch_header.tmpl", PACKAGE => __PACKAGE__ );
+}
+       
+       <form name="frm_search" action =""  method="post" onsubmit="return dropdown_check();">
+       <div class="HSstyle">
+		<table width="600" class="HSbodytext" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+		<td><img src="images/global/trans.gif" height="15" width="1" /></td>
+		<td colspan=5><font style=color:red>{$msg}</font></td>
+		
+		</tr>
+        <tr>
+          <td width="12"><img src="images/global/trans.gif" height="15" width="1" /></td>
+          <td align=left class="HStitle" colspan=3><img src="images/global/trans.gif" width="1" height="22"><u>Batch Quick List</u></td>
+		  <td></td>
+		  <td></td>
+		  <td></td>
+        </tr>	    
+	    <tr>
+                  <td><img src="images/global/trans.gif" height="15" width="1" /></td>
+                  <td></td>
+                  <td></td>
+				  <td></td>
+				  <td></td>
+        </tr>
+		<tr>
+                  <td><img src="images/global/trans.gif" height="15" width="1" /></td>
+                  <td></td>
+                  <td></td>
+				  <td></td>
+				  <td></td>
+        </tr>
+		<tr>
+			<td></td>
+			<td align="center" class="HSbodytext" width="150"><b>Batch Number</b></td>
+			<td align="center" class="HSbodytext"><b>Entered by</b></td>
+			<td align="center" class="HSbodytext"><b>Date and Time</b></td>
+			<td align="center" class="HSbodytext"><b>Status</b></td>
+		</tr>
+		<tr>
+		<td><img src="images/global/trans.gif" height="15" width="1" /></td>
+		<td></td>
+        <td></td>
+	    <td></td>
+		<td></td>
+		</tr>
+		 {$process_list1}
+		 {$print_list1}
+		 {$printed_list1}
+		 
+	<!--	<tr>
+		    <td> 			 
+			    {#$process_list}				
+                {#$process_close_list1}	
+			    {#$process_print_list1}					
+			</td>
+		</tr>-->
+             <tr>
+                  <td><img src="images/global/trans.gif" height="15" width="1" /></td>
+                  <td></td>
+                  <td></td>
+				  <td></td>
+             </tr>				
+		  <tr>	
+           <td><img src="images/global/trans.gif" height="15" width="1" /></td>
+           <td></td>
+           <td></td>	          		   
+	       <td  align="right" class="HSbodytext">
+		   <select name="select_batch" id="batch_select">
+		   <option value="select">Choose an Option</option>
+		   <option value="enter_more">Enter More</option>		   
+		   <option value="close">Close</option>
+		   <option value="print">Print</option>
+		   </select>	 &nbsp;
+		  <input type="submit" name="submit_batch" value="submit" > </td>
+          </tr>
+		  
+	<!--	<tr>
+			<td align = right class="HSbodytext" colspan=3>Close an Open Batch: <br />
+			<td align = right class="HSbodytext" colspan=3><br />
+			{#$process_close_list}
+			</td>
+		</tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="15" width="1" /></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+		<tr>
+			<td align = right class="HSbodytext" colspan=3>Close and Print an Open Batch: <br />
+			<td align = right class="HSbodytext" colspan=3> <br />
+		 {#$process_print_list}
+			</td>
+		</tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="15" width="1" /></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+		<tr>
+			<td align = right class="HSbodytext" colspan=3>Print a Closed Batch: <br />
+			{#$print_list}
+			</td>
+		</tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="15" width="1" /></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+		<tr>
+			<td align = right class="HSbodytext" colspan=3>Reprint a Printed Batch: <br />
+			{#$print_list}
+			</td>
+		</tr>
+                <tr>
+                  <td><img src="images/global/trans.gif" height="15" width="1" /></td>
+                  <td></td>
+                  <td></td>
+                </tr>-->
+              </table>
+            <!--Form and form table END here.-->
+          </td>
+        </tr>
+         <tr>
+          <td width="12" height="30">&nbsp;</td>
+          <td align="center" valign="top" height="30">&nbsp;</td>
+        </tr>
+      </table>
+      </div>
+	  <input type="hidden" name="batch_collector" value="{$batch_collector}">
+	  <input type="hidden" name="default_assessment" value="{$default_assessment}">
+	  <input type="hidden" name="batch_status" value="{$batch_status}">
+	 
+	  </form>
+	  
+      {$copyright}<p>&nbsp;</p>
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}batch_footer.tmpl", PACKAGE => __PACKAGE__ );
+}
+

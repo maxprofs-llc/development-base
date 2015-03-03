@@ -1,0 +1,265 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( $directory."quiz_language.tmpl", PACKAGE => __PACKAGE__ );
+}
+{ # set the values we will use below
+
+use vars qw( $title $form_title $intro $back $styles $trans $hs_java
+             $submit $popup $menu_img $qmark $cal_input_body
+             $menu_body $tip $menu $image_root $faq $base $output $current_lang $gender_question
+			 $gender_option_female $gender_option_male
+			 );
+
+my $snum_link;
+if ($snum){
+	$snum_link = '&snum=' . $snum;
+	}
+else	{
+	$snum_link = '';
+	}
+$current_lang = lc $lang || 'en';
+$measure = lc $measure || 'imperial';
+$output = 0;
+
+#links to the other calculators
+$menu = $link_dir . $cgi . "adv_calc.cgi?calc=men" . $snum_link;
+$menu = $menu_page if ($menu_page gt '');
+
+$base = $html;
+
+#my $link = 'http://www.healthstatus.com';
+my $link = 'http://base1.hra.net';
+$styles = $html . "styles/" . $css;
+$hs_java = $html . "styles/" .$java;
+
+if (!$faq) { $faq = $html . 'calcquest.html'}
+
+$image_root = $html . "images/" ;
+#$image_root = $html . "images/calc/" ;
+$trans = "src=" . $image_root . "global/trans.gif";
+$submit = "src=" . $image_root . "calculate.gif";
+$back = "src=" . $image_root . "back.gif";
+$menu_img = "src=" . $image_root . "menu.gif ";
+$qmark = "src=" . $image_root . "qmark.gif ";
+
+$popup = "";
+
+############## Common Questions ###########################
+
+$gender_question = $question{gender}{label}{$current_lang};
+($gender_option_female,$gender_option_male) = split /\|/,$question{gender}{options}{$current_lang};
+
+
+########Calculator Specific Sections
+
+######### Adult ADHD Profile ####
+if ( $calc eq 'adultsr' )
+	{
+
+# $title = 'Adult ADHD Test';
+# $form_title = 'Adult ADHD Quiz';
+# $intro = <<"HERE";
+# 4% of the total US adult population or 8 million adults have Adult ADHD. As many as 60% of all children diagnosed with ADHD will have adult ADHD. If left untreated the symptoms of ADHD may interfere with your work, negatively affect your relationships, and keep you from accomplishing your goals. An adult with ADHD is more likely to have marital problems, multiple marriages, driving violations, change employment frequently, use illegal substances, and self report maladjustment issues more often. Find out if you have traits that may indicate you have Adult ADHD with our test.
+# HERE
+$title 		= $headings{adultsr}{title}{$current_lang};
+$form_title = $headings{adultsr}{subtitle}{$current_lang};
+$intro 		= $headings{adultsr}{intro}{$current_lang}{$current_lang.'_1'}. $headings{adultsr}{intro}{$current_lang}{$current_lang.'_2'};
+
+$tip = "An adult with ADHD is highly creative, enthusiastic, quick minded, sensitive and has a high energy level.";
+ }
+	
+######### END OF Adult ADHD Profile #####################
+
+######### alcohol use disorder AUDIT ####
+if ( $calc eq 'alcohol' )
+	{
+
+# $title = 'Alcohol Abuse';
+# $form_title = 'Alcohol Abuse Quiz';
+# $intro = <<"HERE";
+# Alcohol Use Disorders are defined by drinking over a period of time and in ways that lead to problems with physical health, mental health, breakdown in social and personal relationships, and poor work function. Drinking too much and alcoholism create additional health risks, including liver failure and certain cancers.<br/><br/>
+# 75% of the adults in the U.S. use alcohol. 50% of drinking men and 33% of drinking women report some adverse effect from their drinking. Find out if you have traits that may indicate you have an alcohol use disorder.
+# HERE
+
+$title = $headings{alcohol}{title}{$current_lang};
+$form_title = $headings{alcohol}{subtitle}{$current_lang};
+$intro = $headings{alcohol}{intro}{$current_lang}{$current_lang.'_1'}.$headings{alcohol}{intro}{$current_lang}{$current_lang.'_2'};
+
+$tip = "Drinking alcohol increases your risk for liver problems and several cancers.";
+	}
+######### END OF alcohol #####################
+
+######### Eating Disorders ####
+if ( $calc eq 'edisorder' )
+	{
+
+# $title = 'Eating Disorder Quiz';
+# $form_title = 'Eating Disorder Quiz';
+# $intro = <<"HERE";
+# Do you have an eating disorder? This quick test can help you determine if you are suffering from anorexia nervosa or bulimia nervosa. Anorexia nervosa is a disorder identified by self-starvation and excessive weight loss. Bulimia nervosa is a disorder identified by binge eating and then purging by vomiting, taking laxatives or diuretics.
+# HERE
+
+$title = $headings{edisorder}{title}{$current_lang};
+$form_title = $headings{edisorder}{subtitle}{$current_lang};
+$intro = $headings{edisorder}{intro}{$current_lang};
+
+$tip = "There are healthy ways to eat while keeping your calories low.";
+	}
+######### END OF Eating Disorders #####################
+
+######### Motion Sickness ####
+if ( $calc eq 'motionsick' )
+	{
+
+$title = 'Motion Sickness Survey';
+$form_title = 'Motion Sickness Survey';
+
+$intro = <<"HERE";
+Do you suffer from motion sickness? Motion is sensed by the brain through the inner ear, eyes and muscles and joints. Motion sickness occurs when the balance center of our inner ear sends information about movement to the brain that conflicts with the information that is being visually or bodily perceived. Motion sickness includes seasickness, carsickness, simulation sickness, airsickness, and space sickness.</p>
+<br/><br/>Motion sickness has gone beyond car, plane and boat travel. More and more people are being affected by simulation sickness. Research done at the University of Minnesota had students play Halo for less than 1 hour and found up to 50% felt sick afterwards. Visually these students were perceiving movement but the rest of the body was sending messages to the brain that conflicted with that information.
+
+HERE
+
+$tip = "Sit in the front seat, look out the window, no reading, and adjust the air vent tilted to your face.";
+	}
+######### END OF Motion Sickness #####################
+
+######### Leisure time exercise ####
+if ( $calc eq 'lexercise' )
+	{
+
+$title = 'Leisure-time physical activity';
+$form_title = 'Leisure-time physical activity';
+
+$intro = <<"HERE";
+In your exercise are you putting out effort, or putting on appearances? According to the National Center for Health Statistics:  Only 30% of adults engage in regular leisure-time physical activity and 39% of adults engage in NO leisure-time physical activity.<br/><br/>Almost all sources recommend 30 minutes of moderate physical activity 5 days per week.
+HERE
+
+$tip = "Pick an activity that is FUN for you.  This will keep you moving and improve your health.";
+	}
+######### END OF Liesure time exercise #####################
+
+######### Lower back pain ####
+if ( $calc eq 'lbw' || $calc eq 'lbp' )
+	{
+
+# $title = 'Low Back Pain';
+# $form_title = 'Low Back Pain Quiz';
+# $intro = <<"HERE";
+# Americans spend $50 billion each year on low back pain. It is the most common cause of job related disability and a leading contributor to missed work. Nearly everyone will be affected by low back pain at least once in their lifetime.  It affects men and women equally. <br/><br/>This test will help you determine your disability associated with your back pain.
+# HERE
+
+$title = $headings{lbw}{title}{$current_lang};
+$form_title = $headings{lbw}{subtitle}{$current_lang};
+$intro = $headings{lbw}{intro}{$current_lang}{$current_lang."_1"}.$headings{lbw}{intro}{$current_lang}{$current_lang."_2"};
+
+$tip = "If you sit for long periods invest in a chair with great lumbar support.";
+	}
+######### END OF Lower back #####################
+
+######### Older Driver ####
+if ( $calc eq 'vod' )
+	{
+
+$title = 'Older Driver Safety';
+$form_title = 'Older Driver Safety';
+
+$intro = <<"HERE";
+Do you know an older driver? Are they safe behind the wheel? According to the American Medical Association motor vehicle injuries are a leading cause of injury related deaths for persons 65 years and older.<br/><br/>Older drivers have higher crash rates than any other driving group except for teenagers.
+HERE
+
+$tip = "The fatality rate for drivers 85 years or older is 9 times higher than the fatality rate for drivers aged 25 to 69.";
+	}
+######### END OF Older Driver #####################
+
+######### Depression Inventory ####
+if ( $calc eq 'dwho' )
+	{
+
+$title = 'Depression Inventory';
+$form_title = 'Depression Inventory';
+
+$intro = <<"HERE";
+Depression affects 14 million adults per year in the United States.  Depression results in absenteeism costing U.S. employers $51 billion per year.  Take this quick inventory and see if you have the symptoms of depression.
+HERE
+
+$tip = "Depression is a treatable illness.  At least 80% who seek treatment find relief.";
+	}
+######### END OF Depression Inventory #####################
+
+######### Major Depression Inventory ####
+if ( $calc eq 'dmdi' )
+	{
+
+# $title = 'Depression Quiz';
+# $form_title = 'Depression Quiz';
+# $intro = <<"HERE";
+# Depression affects 14 million adults per year in the United States.  Depression results in absenteeism costing U.S. employers $51 billion per year.  Take this quick test and see if you have the symptoms of depression.
+# HERE
+
+ $title = $headings{dmdi}{title}{$current_lang};
+ $form_title = $headings{dmdi}{subtitle}{$current_lang};
+ $intro = $headings{dmdi}{intro}{$current_lang}{$current_lang.'_1'}.$headings{dmdi}{intro}{$current_lang}{$current_lang.'_2'};
+
+$tip = "Depression is a treatable illness.  At least 80% who seek treatment find relief.";
+	}
+######### END OF Major Depression Inventory #####################
+
+######### COPDAS Asthma ####
+if ( $calc eq 'copddx' )
+	{
+
+# $title = 'Risk for COPD';
+# $form_title = 'Risk for Chronic Obstructive Pulmonary Disease ( COPD ) ';
+# $intro = <<"HERE";
+# <h3>What is COPD?</h3>COPD is a serious lung disease that over time makes it hard to breathe. You may have heard COPD called other names, like emphysema or chronic bronchitis.  COPD stands for Chronic Obstructive Pulmonary Disease.<br/><br/>In people who have COPD, the airways-tubes that carry air in and out of your lungs-are partly blocked, which makes it hard to get air in and out.<br/><br/>This test will help you determine if your symptoms indicate that you might have this disease.
+# HERE
+
+$title = $headings{copddx}{title}{$current_lang};
+$form_title = $headings{copddx}{subtitle}{$current_lang};
+$intro = $headings{copddx}{intro}{$current_lang};
+
+$tip = "COPD is most likely to occur with individuals that smoke.  If you smoke, quit.";
+	}
+######### END OF Major Depression Inventory #####################
+
+######### menu  ##########################
+if ( $calc eq 'men' )
+	{
+$title = 'Quiz Menu';
+$form_title = 'Quiz Menu';
+
+$intro = <<"HERE";
+The HealthStatus Quizzes provide you with useful information on your health.  These use medically reviewed algorithms to analyze your responses to the questions.
+They are for use as guidelines only and should not be construed as medical advice or diagnosis.  If you have any questions about your results or feel that you
+may be suffering from any of the disorders, we encourage you to talk with your health care provider during your next visit.<br> &nbsp;<br>
+HERE
+
+
+$menu_body = <<"HERE";
+<li><a href="${link}adv_calc.cgi?calc=adultsr$snum_link">Adult Attention Deficit Hyperactivity Disorder (ADHD)</a></li>
+<li><a href="${link}adv_calc.cgi?calc=alcohol$snum_link">Alcohol Abuse</a></li>
+<li><a href="${link}adv_calc.cgi?calc=edisorder$snum_link">Eating Disorder Survey</a></li>
+<li><a href="${link}adv_calc.cgi?calc=lbw$snum_link">Low Back Pain Disability Questionnaire</a></li>
+<li><a href="${link}adv_calc.cgi?calc=dmdi$snum_link">Depression Quiz</a></li>
+<li><a href="${link}adv_calc.cgi?calc=copddx$snum_link">Risk of COPD (chronic obstructive pulmonary disease)</a></li>
+HERE
+$menu_body = <<"HERE";
+<li><a href="${link}/test/adultadhd.html">Adult Attention Deficit Hyperactivity Disorder (ADHD)</a></li>
+<li><a href="${link}/test/alcoholabuse.html">Alcohol Abuse</a></li>
+<li><a href="${link}/test/eatingdisorder.html">Eating Disorder</a></li>
+<li><a href="${link}/test/lowbackpain.html">Low Back Pain Questionnaire</a></li>
+<li><a href="${link}/test/depressionquiz.html">Depression Quiz</a></li>
+<li><a href="${link}/test/copdsymptomquiz.html">Risk of COPD (chronic obstructive pulmonary disease)</a></li>
+HERE
+
+$tip = "If you are having trouble, click the more info button at the bottom of each quiz input screen.";
+	}
+
+######### END OF menu  ##########################
+######### END OF calculator specific sections #################
+
+###### DO NOT REMOVE THESE EMPTY QUOTES ###################################
+
+'';
+}

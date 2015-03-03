@@ -1,0 +1,84 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( $directory . $input_variables, PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $header_file, PACKAGE => __PACKAGE__ );
+}
+<!-- your next step section start here-->
+<div id="title" class="steptxt">
+<p class="pad17">{$title}</p>
+</div>
+
+<div class="content" style="margin-left: 5px; background-color:#ffffff">
+<p class="pad29">{$intro}</p></div>
+
+<div id="step-inn-bg" class="content1">
+<table width="406" cellspacing="0" style="margin-left: 30px">
+<form  method="POST" action="{$cgi}calculator.cgi" name="theForm" onSubmit="return checkWholeForm(this)">
+      <tr>
+        <td class="lb2" width=300 style="padding-top: 10px; padding-right: 20px">Are you male or female?</td>
+        <td width=90 style="padding-top: 10px"><select name="sex" size="1" style="width: 200px">
+					<option selected="selected">Select your gender</option>
+					<option value="Male">Male</option>
+					<option value="Female">Female</option>
+				</select></td>
+      </tr>
+      <tr>
+			<td class="lb2" width=300 style="padding-top: 10px; padding-right: 20px">What is your weight?</td>
+        <td width=90 style="padding-top: 10px"><input maxlength="3" name="weight" size="4" type="text" style="width: 120px"></td>
+      </tr>
+      <tr>
+        <td class="lb2" width=300 style="padding-top: 10px; padding-right: 20px">What is your beverage?</td>
+        <td width=90 style="padding-top: 10px"><select size="1" name="type" style="width: 200px">
+			<option selected="selected" value="airline miniature bottle||airline miniature bottles||.7">Airline miniature bottle</option>
+			<option value="pint of ale||pints of ale||.81">Ale (pint)</option>
+			<option value="beer||beers||.54">Beer (12 oz)</option>
+			<option value="beer||beers||.72">Beer (16 oz)</option>
+			<option value="light beer||light beers||.44">Beer - Light (12 oz)</option>
+			<option value="light beer||light beers||.59">Beer - Light (16 oz)</option>
+			<option value="reduced alcohol beer||reduced alcohol beers||.28">Beer (reduced alcohol)</option>
+			<option value="snifter of brandy||snifters of brandy||.9">Brandy (snifter)</option>
+			<option value="martini||martinis||1">Dry martini</option>
+			<option value="drink of gin||drinks of gin||.645">Gin (1.5 oz)</option>
+			<option value="higball||highballs||.6">Highball</option>
+			<option value="malt liquor||malt liqours||.71">Malt Liquor (12 oz)</option>
+			<option value="manhattan||manhattans||1.15">Manhattan</option>
+			<option value="pint of port||pints of port||1.1">Porter (pint)</option>
+			<option value="drink of rum||drinks of rum||.645">Rum (1.5 oz)</option>
+			<option value="drink of sake||drinks of sake||.8">Sake (1.5 oz)</option>
+			<option value="pint of stout||pints of stout||1.3">Stout (pint)</option>
+			<option value="drink of tequila||drinks of tequila||.645">Tequila (1.5 oz)</option>
+			<option value="drink of vodka||drinks of vodka||.645">Vodka (1.5 oz)</option>
+			<option value="drink of whiskey||drinks of whiskey||.645">Whiskey (1.5 oz)</option>
+			<option value="half a glass of wine||half glasses of wine||.55">Wine (half a large glass)</option>
+		</select></td>
+      </tr>
+      <tr>
+        <td class="lb2" width=300 style="padding-top: 10px; padding-right: 20px">How many of them?</td>
+        <td width=90 style="padding-top: 10px"><input maxlength="3" name="number" size="3" type="text" style="width: 120px"></td>
+      </tr>
+      <tr>
+        <td class="lb2" width=300 style="padding-top: 10px; padding-right: 20px">What time span?</td>
+        <td width=90 style="padding-top: 10px"><input maxlength="5" name="time" size="3" type="text" style="width: 120px"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+
+        <td style="padding-top: 8px; padding-bottom: 10px">
+        	<input name="Submit" type="image" class="HSButton" src="images/calculator_04.jpg" />
+			<input type="hidden" name="snum" value="{$snum}">
+			<input type="hidden" name="measure" value="Imperial">
+			<input type="hidden" name="calculator" value="bac">
+        </td>
+        <td>&nbsp;</td>
+      </tr>
+	  </form>
+    </table>
+</div>
+<!-- your next step section end here-->
+
+{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $footer_file, PACKAGE => __PACKAGE__ );
+}

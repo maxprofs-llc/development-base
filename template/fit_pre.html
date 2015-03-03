@@ -1,0 +1,109 @@
+{
+# this part fills in a file that sets language variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}language.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}fit_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$header_in_file", PACKAGE => __PACKAGE__ );
+}
+<!-- ass-top-img section start here-->
+<div id="ass-top-img" class="steptxt">
+<p class="pad26">{$fit_title}</p>
+</div>
+<!-- ass-top-img section end here-->
+
+<div id="ass-bg" class="content">
+<p class="pad27">
+{$lang{$current_language}{fit_intro}}
+</p>
+</div>
+
+<!-- risk-top-img section start here-->
+<div id="risk-top-img" class="steptxt">
+<p class="pad26">{$fit_subtitle_in}</p>
+</div>
+<!-- risk-top-img section end here-->
+
+
+<!-- pagination section start here-->
+<div id="pagination" class="content">
+<p class="pad28">{$lang{$current_language}{curr_page_msg}} 1 &nbsp; </p>
+</div>
+<!-- pagination section end here-->
+
+<p><img src="images/ass_06.jpg" alt="" /></p>
+
+<div id="risk-bg">
+<table width="967" cellspacing="0" style="margin-left: 30px">
+<form METHOD="POST" name="theForm" action="{$cgi_dir}/fitme.cgi">
+
+                    <tr>
+				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">Before taking a fitness assessment, you should determine whether you
+        			should see a physician prior to this or any physically demanding activity.<br />&nbsp;<br />Check all that apply:</td>
+				        <td width=617 style="padding-top: 10px"></td>
+				    </tr>
+
+					<tr>
+				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">You have heart trouble, a heart murmur, or you have had a heart attack.</td>
+				        <td width=617 style="padding-top: 10px"><input type="checkbox" name="C1" value="ON"></td>
+				    </tr>
+					<tr>
+				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">You frequently have pains or pressure in the left or mid-chest area, left side of the neck,
+          			shoulder, or arm - during or right after exercise.</td>
+				        <td width=617 style="padding-top: 10px"><input type="checkbox" name="C2" value="ON"></td>
+				    </tr>
+					<tr>
+				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">You often feel faint or have severe dizzy spells.</td>
+				        <td width=617 style="padding-top: 10px"><input type="checkbox" name="C3" value="ON"></td>
+				    </tr>
+					<tr>
+				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">You experience extreme breathlessness after mild exertion.</td>
+				        <td width=617 style="padding-top: 10px"><input type="checkbox" name="C4" value="ON"></td>
+				    </tr>
+					<tr>
+				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">Your blood pressure is too high and isn't yet under control, or you don't know what your
+          			blood pressure is.</td>
+				        <td width=617 style="padding-top: 10px"><input type="checkbox" name="C5" value="ON"></td>
+				    </tr>
+					<tr>
+				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">You have bone or joint problems such as arthritis.</td>
+				        <td width=617 style="padding-top: 10px"><input type="checkbox" name="C6" value="ON"></td>
+				    </tr>
+					<tr>
+				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">You are over age 60 and not accustomed to vigorous exercise.</td>
+				        <td width=617 style="padding-top: 10px"><input type="checkbox" name="C7" value="ON"></td>
+				    </tr>
+					<tr>
+				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">Your father, mother, brother or sister had  a heart attack before age 50.</td>
+				        <td width=617 style="padding-top: 10px"><input type="checkbox" name="C8" value="ON"></td>
+				    </tr>
+					<tr>
+				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">You have a medical condition not mentioned here that might need special attention in an
+          			exercise program (e.g., insulin-dependent diabetes).</td>
+				        <td width=617 style="padding-top: 10px"><input type="checkbox" name="C9" value="ON"></td>
+				    </tr>
+                    <tr>
+								<td width="350">&nbsp;</td>
+								<td width="617" style="padding-top: 8px; padding-bottom: 10px; padding-right: 70px; text-align:right">
+									<input type="image" name="pretest" {$submit} onClick="return CheckCheckboxes();"/>
+									<input type="hidden" value="" name="units">
+									<input type="hidden" value="" name="assessment">
+									<input type="hidden" value="" name="qset">
+									<input type="hidden" value="1" name="curr_page">
+							    </td>
+	                </tr>
+   </form>
+            </table>
+            <!--Form and form table END here.-->
+            </div>
+
+    <!-- Template: fit_qset.tmpl End -->
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file("$config{template_directory}$footer_file", PACKAGE => __PACKAGE__ );
+}

@@ -1,0 +1,19 @@
+{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+
+<h1>ADD COLUMN ADMINISTRATION</h1>
+<hr>
+{
+		$html;
+		$html .= qq| <form method="POST" action="$config{admin_dir}add_column.cgi" name="frm1" >
+					
+           	<table width="500px" cellspacing="4" cellpadding="4" border="0">
+			<tr><td class="maintext-b" width="20px"> <b><span style=\"color: red;\">$column_added_msg</span></b></td>				
+			</tr> 		
+			<tr><td><input type="image" border=0 name="prev" value="add_column.cgi" $back onmousedown="doValidate=false;"> </td>				
+			</tr>
+			</table>
+			</form>	|;
+			$html;		
+}
+<hr>
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

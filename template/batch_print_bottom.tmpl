@@ -1,0 +1,20 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}batch_variables.tmpl", PACKAGE => __PACKAGE__ );
+}			</td>
+		</tr>
+	      </table>
+	  </td>
+	</tr>
+  	</table>
+    <br />&nbsp;<br /><a href="{$batch_print}?list=1">[ batch maintenance page ]</a><br />&nbsp;<br />
+    <a href="{$member}">[ assessment records page ]</a><br />&nbsp;<br />
+    </td>
+  </tr>
+</table>
+</body>
+</html>
+

@@ -1,0 +1,69 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}assessment_recs_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}batch_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$assessment_recs_header_file", PACKAGE => __PACKAGE__ );
+}    <div class="HSstyle">
+      <table cellspacing="0" cellpadding="0" width="591" border="0">
+        <tr>
+          <td height="20">&nbsp;</td>
+        </tr>
+        <tr>
+          <td>{$title}</td>
+        </tr>
+        <tr>
+          <td height="30">&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="18" valign="top">{$ar_title}</td>
+        </tr>
+        <tr>
+          <td class="HSbodytext">{$name}</td>
+        </tr>
+        <tr>
+          <td height="20">&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="18" valign="top"><img src="images/assess_records/your_hra.gif" width="190" height="11"></td>
+        </tr>
+        <tr>
+          <td height="30" class="HSbodytext">{$view_old}</td>
+        </tr>
+        <tr>
+          <td height="20">&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="18" valign="top"><img src="images/assess_records/assessments.gif" width="83" height="11"></td>
+        </tr>
+        <tr>
+          <td class="HSbodytext">
+            <p><a href="{$batch_collector}?assessment=HRA&page=0&subdir={$db_id}">General Health Assessment</a><br>
+                Our General Health Assessment provides you with key health information and lifestyle issues, co-developed with Consumer Health Interactive.<br /></p>
+            <p><a href="{$batch_collector}?assessment=GHA&page=0&subdir={$db_id}">Health Risk Assessment</a><br>
+                Our Health Risk Assessment provides you with your health risks and key habits that you can change to live healthier.<br /></p>
+            <p><a href="{$batch_collector}?assessment=CRC&page=0&subdir={$db_id}">Cardiac Risk Assessment</a><br>
+                The Cardiac Risk Assessment help you determine your risk for heart disease and stroke.<br /></p>
+            <p><a href="{$batch_collector}?assessment=DRC&page=0&subdir={$db_id}">Diabetes Risk Assessment</a><br><br>
+                One in three people who have diabetes don't even know it. Are you at risk?<br /></p>
+            <p><a href="{$cgi_dir}/fitme.cgi?page=fit_pre.html">Fitness Assessment</a><br>
+                How fit are you? Measure your current level of fitness with our in-home assessment.<br /></p>
+            <p><a href="{$batch_collector}?assessment=GWB&page=0&subdir={$db_id}">Well-Being Assessment</a><br><br>
+                Use this tool to determine how you are dealing with mental and emotional conditions, such as stress and depression.<br></p>
+            <p><a href="{$batch_printer}">Print assessments</a><br><br>
+                Use this tool to print the report for the entered persons.<br></p>
+          </td>
+        </tr>
+      </table>
+      </div>
+{$copyright}<p>&nbsp;</p>
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$footer_file", PACKAGE => __PACKAGE__ );
+}

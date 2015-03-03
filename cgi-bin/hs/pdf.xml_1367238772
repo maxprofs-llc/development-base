@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" standalone="yes" ?>
+
+
+
+<PDF PageMode="UseNone" PageLayout="SinglePage" PageSize="Letter" FindHyperlink="1" Author="HealthStatus.com, Inc.">
+<Image Width="137" Height="105" File="/usr/local/www/vhosts/managed2/base_lang/htdocs/images/global/hs_logo_77.jpg" Name="Im0" />
+<Page Name="Pg0" Width="612" Height="792" Bookmark="Cover Letter">
+<Graph Rect="0, 0, 612, 792" Name="Gr0">
+<ShowImage Name="Im0" Left="460" Bottom="680" Width="137"  Flip="0" />
+<ShowText X="60" Y="685" Text="Your Personalized Diabetes Risk Results" FontFace="Helvetica-Bold" Color="3333cc" BorderColor="3333cc" Height="12"  />
+<ShowText X="580" Y="60" Text="Diabetes assessment" FontFace="NNN2" Color="E0E0E0" Width="350" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+</Graph>
+<Text Name="Txt0" Rect="60, 60, 552, 660" FontFace="NNN2" FontSize="10" Leading="12" FontColor="Slategray" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+
+ ^P ^p  ^P 
+  ^P ^p  ^P 
+ 
+ ^P ^p  ^P 
+ Your Personalized Diabetes Risk Assessment^P ^p  ^P  ^b As of 04/29/2013 ^B  ^P ^p  ^P 
+ ^P ^p  ^P 
+ ^P ^p  ^P 
+ Dear  ^b John Doe: ^B  ^P ^p  ^P 
+ 
+ ^P ^p  ^P 
+ The following report is an educational tool designed to identify health risk factors you can control and provide you with suggestions for making positive lifestyle changes. ^P ^p  ^P 
+  ^P ^p  ^P 
+ ^P ^p  ^P 
+ However, this evaluation is not a substitute for a health exam from a physician, and it can't identify a specific medical problem. It can only show you how you can avoid the most common causes of illnesses and injuries for a person of your age and gender. Please see a health professional for further advice. ^P ^p  ^P 
+ ^P ^p  ^P 
+ ^P ^p  ^P 
+ John Doe you are at RISK for having diabetes. You should be tested every three years for the disease, as recommended by the American Diabetes Association. But with your risk factors, you should ask your physician about getting tested more frequently. (Symptoms include unusual thirst, extreme fatigue, unusual weight changes, and increased urination, especially at night.) ^P ^p  ^P 
+ ^P ^p  ^P 
+ ^P ^p  ^P 
+  ^P ^p  ^P 
+ ^P ^p  ^P 
+ ^P ^p  ^P 
+ Thank you, ^P ^p  ^P 
+ ^P ^p  ^P  ^P ^p  ^P 
+  ^b Language EN ^B  ^P ^p  ^P 
+ 
+ ^P ^p  ^P 
+   ^P ^p  ^P 
+ 
+
+  ]]>
+</Text>
+</Page>
+<Page Name="Pg2" Width="612" Height="792" Bookmark="Details">
+<Graph Rect="0, 0, 612, 792" Name="Gr0">
+<ShowImage Name="Im0" Left="460" Bottom="680" Width="137"  Flip="0" />
+<ShowText X="60" Y="685" Text="Your Personalized Diabetes Risk Results" FontFace="Helvetica-Bold" Color="3333cc" BorderColor="3333cc" Height="12"  />
+<ShowText X="580" Y="60" Text="Diabetes assessment" FontFace="NNN2" Color="E0E0E0" Width="350" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+</Graph>
+<Text Name="Txt0" Rect="60, 60, 552, 660" FontFace="NNN2" FontSize="10" Leading="12" FontColor="Slategray" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" ContentPadding="4mm" PaddingRight="24" ExtraParaSpacing="0">
+<![CDATA[
+^f:size=12&color=3333cc ^b Body Composition ^B ^F ^P
+
+^P
+
+Height =  ^P
+
+Weight = 188 - Ideal = 136 to 174 ^P
+
+Body mass index =  27 ^P
+
+Race = Caucasian ^P
+
+sex =  ^P
+
+
+
+^P
+
+^P
+
+^P ^f:size=12&color=3333cc ^b  ^B ^F ^P
+
+^P
+
+Your target: Reduce your weight to between 136 and 174. ^P
+
+^P
+
+Your weight of 188  is slightly over the recommended range for people 5' 10" tall. Your body mass index is  27. A healthy BMI is between 19.5 and 25. The healthy weight range for your height is 136  and  174. ^P
+
+^P
+
+^P
+
+^P
+
+^P ^f:size=12&color=3333cc ^b  ^B ^F ^P
+
+^P
+
+Your target: Keep your current level of exercise. ^P
+
+^P
+
+Continue to exercise regularly, 3-5 times per week, to maintain optimal health. Ideally, take a walk or get some aerobic exercise at least 30 minutes a day. ^P
+
+
+
+^P
+
+^P
+
+^P
+
+^P ^f:size=12&color=3333cc ^b  ^B ^F ^P
+
+^P
+
+ Predispositions are risk factors you cannot control - like that you are 51. This one factor makes it more important that you keep exercising and watch your weight.   ^P
+
+^P
+
+^P
+  ]]>
+</Text>
+</Page>
+
+<Page Name="Pg3" Width="612" Height="792" Bookmark="Internet Resources">
+<Graph Rect="0, 0, 612, 792" Name="Gr0">
+<ShowImage Name="Im0" Left="460" Bottom="680" Width="137"  Flip="0" />
+<ShowText X="60" Y="685" Text="Your Personalized Diabetes Risk Results" FontFace="Helvetica-Bold" Color="3333cc" BorderColor="3333cc" Height="12"  />
+<ShowText X="580" Y="60" Text="" FontFace="NNN2" Color="E0E0E0" Width="350" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+</Graph>
+<Text Name="Txt0" Rect="60, 60, 552, 660" FontFace="NNN2" FontSize="10" Leading="12" FontColor="Slategray" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^P
+
+^f:size=14&color=3333cc ^b  ^B ^F ^P
+
+^p ^f:size=8&face=NNN2 ^F ^f:size=9&face=NNN2 http://www.diabetes.org -- American Diabetes Association ^F ^P  ^p ^f:size=8&face=NNN2 ^F ^f:size=9&face=NNN2 http://www.amhrt.org -- American Heart Association ^F ^P  ^p ^f:size=8&face=NNN2 ^F ^f:size=9&face=NNN2 https://lang-en.hra.net/resource/dietaryguidelines.pdf -- Dietary Guidelines ^F ^P  ^p ^f:size=8&face=NNN2 ^F ^f:size=9&face=NNN2 https://lang-en.hra.net/resource/Staying_healthy_50plus.pdf -- Staying Healthy ^F ^P  ^p ^f:size=8&face=NNN2 ^F ^f:size=9&face=NNN2 https://lang-en.hra.net/resource/keytohealthfulfood.pdf -- Keys to Choosing Healthful Foods ^F ^P  
+  ]]>
+</Text>
+</Page>
+</PDF>

@@ -1,0 +1,79 @@
+{
+	my ($smlev, $suslev, $smtar, $scale, $scope, $rate, $level_desc, $layout, $risk, $above, $below) ;
+	my ($mlev, $uslev, $mtar, $otar, $t, $t2, $tx);
+
+	$smlev = $vars{my_score};
+	$suslev = $vars{avg_score};
+	$smtar = $vars{target_score};
+	$scale = $vars{bar_scale};
+	$scope = $vars{scope_text};
+	$rate = $vars{rate_text};
+	$targ = $vars{target_text};
+	$risk = $vars{risk_text};
+	$title = $vars{title_text};
+	$width = $vars{width_of_table};
+	$layout = $vars{layout};
+	$above = $vars{above_text};
+	$below = $vars{below_text};
+
+
+	if(!$rate){
+		$rate = $lang{$current_language}{US_average};
+	}
+	if(!$targ){
+		$targ = $lang{$current_language}{Your_target};
+	}
+	if(!$risk){
+		$risk = $lang{$current_language}{Your_risk_is};
+	}
+	if(!$above){
+		$above = $lang{$current_language}{above};
+	}
+	if(!$below){
+		$below = $lang{$current_language}{below};
+	}
+	if($layout ne 'bullet' && $layout ne 'bar'){ $layout= 'full' }
+	$mlev = int($smlev * $scale);
+	$uslev = int($suslev * $scale);
+	if($smtar < 0 || $level_desc eq '-'){
+		$smtar = $smtar * -1;
+		$mtar = int($smtar * $scale);
+		$otar = "$below $smtar";
+	}elsif($level_desc eq '+'){
+		$mtar = int($smtar * $scale);
+		$otar = "$above $smtar";
+	}else{
+		$mtar = int($smtar * $scale);
+		$otar = $smtar;
+	}
+	$t = 0;
+	$t2 = 0;
+	$tx = 0;
+
+# change round depending on the end shape you want the bars to be, 9 makes a curve
+	my $roundend = 9;
+# change linewidth for border size 3.5 makes a good combo with the 9 roundend
+        my $linewidth = 3.5;
+
+	my $xml = '';
+	$xml .= qq|<MoveTo X="17" Y="10"/><Set LineWidth="$linewidth"/><Set Color="black" Ground="0" ColorSpace=""/><DrawRect Width="300" Height="20" Round="$roundend" Centered="0" Fill="0" Reverse="0"/>|;
+	$xml .= qq|<ShowText Text="u" X="1" Y="43" FontSize="09" FontFace="ZapfDingbats" Color="333333"/>| if($layout eq 'bullet' || $layout eq 'full');
+	$xml .= qq|<ShowText Text="$scope - $risk $smlev." X="15" Y="43" FontSize="10" FontFace="Arial" Color="333333"/>| if($layout eq 'full');
+	if ($mlev > 0){
+		$t = $mlev/2;
+		$xml .= qq|<MoveTo X="18" Y="11"/><Set Color="yellow" Ground="1" ColorSpace=""/><DrawRect Width="$mlev" Height="18" Round="$roundend" Centered="0" Fill="1" Reverse="0"/>|;
+	}
+	$t= $uslev+11;
+	$t2 = $uslev+19;
+	$tx = 0;
+	$tx = $roundend if ($uslev == 0);
+	$xml .= qq|<Set LineWidth="0.5"/><MoveTo X="$t" Y="11"/><Set Color="darkblue" Ground="1" ColorSpace=""/><DrawRect Width="9" Height="18" Round="$tx" Centered="0" Fill="1" Reverse="0"/>|;
+	$t= $mtar+12;
+	$t2= $mtar+19;
+	$tx = 0;
+	$tx = $roundend if ($mtar == 0);
+	$xml .= qq|<ShowText Text="$targ is $otar." X="15" Y="8" FontSize="09" FontFace="Helvetica" Color="333333"/>| if($layout eq 'full');;
+	$xml .= qq|<MoveTo X="$t" Y="11"/><Set Color="green" Ground="1" ColorSpace=""/><DrawRect Width="7" Height="18" Round="$tx" Centered="0" Fill="1" Reverse="0"/>|;
+
+$xml;
+}

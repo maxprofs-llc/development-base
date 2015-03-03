@@ -1,0 +1,42 @@
+{
+use vars qw( @fitness_levels @frame_sizes $body_message $body_fact
+	$weight_message $weight_challenge $step_target $sits_target
+	$push_target $flexy_target $step_desc $sits_desc $push_desc
+	$flexy_desc $step_graphic $body_graphic $sits_graphic
+	$push_graphic $flexy_graphic $Flexy_Detail $Push_Detail
+	$Sits_Detail $Step_Detail $fit_cover_letter
+	$waist_output $status_message $time_since
+	);
+
+use Date::Calc qw(:all);
+use DateTime::Format::MySQL;
+use DateTime;
+use DateTime::Format::Duration;
+#my $d = DateTime::Format::Duration->new(pattern => '%j total days, %Y years, %m months, %e days');
+my $d = DateTime::Format::Duration->new(pattern => ' %j days ago');
+
+
+$status_message = 'Assessment taken on ';
+if($x_user{'db_sortdate'} gt $y_user{'db_sortdate'}){
+	my $dt1 = DateTime::Format::MySQL->parse_datetime($x_user{'db_sortdate'});
+	my $dt2 = DateTime::Format::MySQL->parse_datetime($y_user{'db_sortdate'});
+	my $dur = $dt1->subtract_datetime($dt2);
+	$status_message .= 'x ' . $x_user{'db_sortdate'} . ' is greater than y ' . $y_user{'db_sortdate'} . '<br>' . $d->format_duration($dur) . ' <br>';
+	$status_message .= $dt2->mdy('/') . ' was compared to one taken ' . $dt1->mdy('/');
+	$time_since = $d->format_duration($dur);
+	}
+elsif($x_user{'db_sortdate'} lt $y_user{'db_sortdate'}){
+	my $dt1 = DateTime::Format::MySQL->parse_datetime($x_user{'db_sortdate'});
+	my $dt2 = DateTime::Format::MySQL->parse_datetime($y_user{'db_sortdate'});
+	my $dur = $dt2->subtract_datetime($dt1);
+	$status_message .= 'y ' . $y_user{'db_sortdate'} . ' is greater than x ' . $x_user{'db_sortdate'} . '<br>' . $d->format_duration($dur) . ' <br>';
+	$status_message .= $dt1->mdy('/') . ' was compared to one taken ' . $dt2->mdy('/');
+	$time_since = $d->format_duration($dur);
+	}
+else {
+	$status_message .= 'x is equal to y<br>' . "$x_user{'db_sortdate'} - $y_user{'db_sortdate'}<br>";
+	#$time_since = $d->format_duration($dur);
+	}
+
+'';
+}

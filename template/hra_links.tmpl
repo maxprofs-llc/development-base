@@ -1,0 +1,185 @@
+{
+use vars qw( @links );
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+@links = ();
+
+push @links, [ "National Women's Health Information Center",
+	"http://www.4woman.org/" ]
+	 if $sex eq FEMALE || $checkme;
+push @links, [ "Staying Healthy",
+	$config{html_base}."resource/Staying_healthy_adult.pdf" ]
+	if $sex eq MALE && $age < 50;
+push @links, [ "Staying Healthy",
+	$config{html_base}."resource/Staying_healthy_50plus.pdf"]
+	if $age >= 50 ;
+push @links, [ "Breast Self Exam Instructions",
+	$config{html_base}."resource/breast_self_exam.pdf" ]
+	if $breast_exam eq RARELY_OR_NEVER ;
+push @links, [ "American Diabetes Association",
+	"http://www.diabetes.org" ]
+	if $diabetes_flag || $checkme;
+push @links, [ "Aim for a health weight",
+	$config{html_base}."resource/aim_for_healthy_weight.pdf" ]
+	if $bmi > 29.5 ;
+push @links, [ "Overeaters Anonymous",
+	"http://www.overeatersanonymous.org/" ]
+	if $bmi > 29.5 || $checkme;
+push @links, [ "Eating Disorder Facts",
+	$config{html_base}."resource/eating_disorder.pdf" ] 
+	if $bmi < 20 || $bmi > 28;
+push @links, [ "CancerNet",
+	"http://cancernet.nci.nih.gov/patient.htm" ]
+	if($FBC_flag && $sex eq FEMALE) ||
+		$smoke_flag || $drinks_week > 12 || $checkme;
+push @links, [ "Y-ME National Breast Cancer Organization",
+	"http://www.y-me.org" ]
+	if $FBC_flag && $sex eq FEMALE || $checkme;
+push @links, [ "Smokefree",
+	"http://smokefree.gov/" ]
+	if $smoke_flag || $checkme;
+push @links, [ "National Heart, Lung, and Blood Institute - Lung",
+	"http://www.nhlbi.nih.gov/health/public/lung/index.htm" ]
+	if $smoke_flag || $checkme;
+push @links, [ "High Cholesterol; What you need to know",
+	$config{html_base}."resource/high_cholesterol_what_you_need_to_know.pdf" ]
+	if $cholesterol_flag;
+push @links, [ "Guide to lowering your Blood Pressure",
+	$config{html_base}."resource/bp_lower_guide.pdf" ]
+	if $bp_flag ;
+push @links, [ "Alcoholics Anonymous",
+	"http://www.aa.org" ]
+	if $drinks_week > 12 || $checkme;
+push @links, [ "Alcohol What you don't know can kill you.",
+	$config{html_base}."resource/alcohol_DontKnow.pdf" ]
+	if $drinks_week > 12 || $checkme;
+push @links, [ "Alcohol Fact Sheet",
+	$config{html_base}."resource/Alcohol_Facts.pdf" ]
+	if $drinks_week > 7 ;
+push @links, [ "Women for Sobriety",
+	"http://www.womenforsobriety.org/" ]
+	if $drinks_week > 7 && $sex eq FEMALE || $checkme;
+push @links, [ "American Heart Association",
+	"http://www.amhrt.org" ]
+	if $cholesterol_flag || $bmi > 25  || $checkme;
+push @links, [ "M.A.D.D.",
+	"http://www.madd.org/Drunk-Driving/Drunk-Driving/Statistics.aspx" ]
+	if $drink_and_drive > 0  || $checkme;
+push @links, [ "Dietary Guidelines",
+	$config{html_base}."resource/dietaryguidelines.pdf" ]
+	if $cholesterol_flag || $bmi > 25 || $bmi < 20 ||
+		$fiber eq NO || $fats eq YES || $checkme;
+push @links, [ "Getting Older, Eating Better",
+	$config{html_base}."resource/oldereating.pdf" ]
+	if $age > 65 && ($cholesterol_flag || $bmi > 25 ||
+		$bmi < 20 || $fiber eq NO || $fat eq YES) || $checkme;
+push @links, [ "Keys to Choosing Healthful Foods",
+	$config{html_base}."resource/keytohealthfulfood.pdf" ]
+	if $cholesterol_flag || $bmi > 25 || $bmi < 20 ||
+		$fiber eq NO || $fat eq YES || $checkme;
+push @links, [ "Indian Health Services",
+	"http://www.ihs.gov" ]
+	if $race eq NATIVE_AMERICAN || $checkme;
+
+push @links, [ "Self-care centers",
+	"http://www.caregiver.org/caregiver/jsp/content_node.jsp?nodeid=847" ]
+	if $checkme;
+
+push @links, [ "Self-care centers",
+	$config{html_base}."resource/otcguide.pdf" ]
+	if $checkme;
+
+push @links, [ "Men's health",
+	"http://www.nlm.nih.gov/medlineplus/menshealthissues.html" ]
+	if $checkme;
+
+push @links, [ "Ills and conditions",
+	"http://www.healthfinder.gov/" ]
+	if $checkme;
+
+push @links, [ "Tests men shouldn't miss",
+	"http://www.mayoclinic.com/health/health-screening/WO00112" ]
+	if $checkme;
+
+push @links, [ "Men and Depression",
+	$config{html_base}."resource/men_depression.pdf" ]
+	if ($sex eq MALE && ($violence_flag > 1 || $life_satisfaction eq NOT_SATISFIED
+		|| $loss_flag || $overall eq POOR)) || $checkme;
+
+push @links, [ "Women and Depression",
+	$config{html_base}."resource/women_depression.pdf" ]
+	if ($sex ne MALE && ($violence_flag > 1 || $life_satisfaction eq NOT_SATISFIED
+		|| $loss_flag || $overall eq POOR)) || $checkme;
+
+push @links, [ "Women's health",
+	"http://www.4woman.gov" ]
+	if $checkme;
+
+push @links, [ "Tools women shouldn't miss",
+	"http://www.4woman.gov/tools/" ]
+	if $checkme;
+
+push @links, [ "Smoking and tobacco center",
+	"http://smokefree.gov/" ]
+	if $checkme;
+
+push @links, [ "Nicotine addiction",
+	"http://smoking.drugabuse.gov/" ]
+	if $checkme;
+
+push @links, [ "Fitness and nutrition",
+	"http://www.fruitsandveggiesmatter.gov" ]
+	if $checkme;
+
+push @links, [ "National Institute on Alcohol Abuse and Addiction",
+	"http://www.niaaa.nih.gov" ]
+	if $checkme;
+
+push @links, [ "Recovery Month",
+	"http://www.recoverymonth.gov/" ]
+	if $checkme;
+
+push @links, [ "Substance Abuse",
+	"http://www.samhsa.gov/" ]
+	if $checkme;
+
+push @links, [ "National Council on Alcoholism and Drug Dependance",
+	"http://www.ncadd.org" ]
+	if $checkme;
+
+push @links, [ "Sports injuries",
+	"http://www.nlm.nih.gov/medlineplus/sportsinjuries.html" ]
+	if $checkme;
+
+push @links, [ "Body work",
+	"http://www.shapeup.org" ]
+	if $checkme;
+
+push @links, [ "High blood pressure",
+	"http://www.nhlbi.nih.gov/hbp/index.html" ]
+	if $checkme;
+
+push @links, [ "High cholesterol",
+	"http://www.nhlbi.nih.gov/chd/" ]
+	if $checkme;
+
+push @links, [ "Physical activity",
+	"http://www.cdc.gov/nccdphp/dnpa/physical/index.htm" ]
+	if $checkme;
+
+push @links, [ "Healthy weight",
+	"http://www.hsph.harvard.edu/nutritionsource/weight.html" ]
+	if $checkme;
+
+push @links, [ "Depression center",
+	"http://www.nimh.nih.gov/publicat/depression.cfm" ]
+	if $checkme;
+
+push @links, [ "Mental and emotional health",
+	"http://www.nami.org/Content/ContentGroups/Helpline1/Major_Depression.htm" ]
+	if $checkme;
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+'';
+}
+

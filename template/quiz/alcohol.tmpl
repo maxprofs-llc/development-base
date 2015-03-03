@@ -1,0 +1,185 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( $directory.$input_variables, PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( $directory.$header_file, PACKAGE => __PACKAGE__ );
+}
+<!--Form and form table START here. Table max width no more than 560 pixels.-->
+					<form id="quiz" name="theForm" action="{$cgi}adv_calculator.cgi" method="POST">
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$gender_question}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="sex" class="c_select" required>
+									<option selected></option>
+									<option value="females">{$gender_option_female}</option>
+									<option value="males">{$gender_option_male}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{alcohol}{$current_lang}{$current_lang."_1"}}							
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="drink1" class="c_select" required>
+									<option selected></option>
+									<option value="0">{$question{alcohol}{$current_lang}{$current_lang."_11"}}</option>
+									<option value="1">{$question{alcohol}{$current_lang}{$current_lang."_12"}}</option>
+									<option value="2">{$question{alcohol}{$current_lang}{$current_lang."_13"}}</option>
+									<option value="3">{$question{alcohol}{$current_lang}{$current_lang."_14"}}</option>
+									<option value="4">{$question{alcohol}{$current_lang}{$current_lang."_15"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{alcohol}{$current_lang}{$current_lang."_2"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="drink2" class="c_select" required>
+									<option selected></option>
+									<option value="0">{$question{alcohol}{$current_lang}{$current_lang."_16"}}</option>
+									<option value="1">{$question{alcohol}{$current_lang}{$current_lang."_17"}}</option>
+                                    <option value="2">{$question{alcohol}{$current_lang}{$current_lang."_18"}}</option>
+									<option value="3">{$question{alcohol}{$current_lang}{$current_lang."_19"}}</option>
+                                    <option value="4">{$question{alcohol}{$current_lang}{$current_lang."_20"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{alcohol}{$current_lang}{$current_lang."_3"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="drink3" class="c_select" required>
+									<option selected></option>
+									<option value="0">{$question{alcohol}{$current_lang}{$current_lang."_11"}}</option>
+									<option value="1">{$question{alcohol}{$current_lang}{$current_lang."_21"}}</option>
+                    				<option value="2">{$question{alcohol}{$current_lang}{$current_lang."_22"}}</option>
+									<option value="3">{$question{alcohol}{$current_lang}{$current_lang."_23"}}</option>
+									<option value="4">{$question{alcohol}{$current_lang}{$current_lang."_24"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{alcohol}{$current_lang}{$current_lang."_4"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="drink4" class="c_select" required>
+									<option selected></option>
+									<option value="0">{$question{alcohol}{$current_lang}{$current_lang."_11"}}</option>
+									<option value="1">{$question{alcohol}{$current_lang}{$current_lang."_21"}}</option>
+                    				<option value="2">{$question{alcohol}{$current_lang}{$current_lang."_22"}}</option>
+									<option value="3">{$question{alcohol}{$current_lang}{$current_lang."_23"}}</option>
+									<option value="4">{$question{alcohol}{$current_lang}{$current_lang."_24"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{alcohol}{$current_lang}{$current_lang."_5"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="drink5" class="c_select" required>
+									<option selected></option>
+									<option value="0">{$question{alcohol}{$current_lang}{$current_lang."_11"}}</option>
+									<option value="1">{$question{alcohol}{$current_lang}{$current_lang."_21"}}</option>
+                    				<option value="2">{$question{alcohol}{$current_lang}{$current_lang."_22"}}</option>
+									<option value="3">{$question{alcohol}{$current_lang}{$current_lang."_23"}}</option>
+									<option value="4">{$question{alcohol}{$current_lang}{$current_lang."_24"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{alcohol}{$current_lang}{$current_lang."_6"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="drink6" class="c_select" required>
+									<option selected></option>
+									<option value="0">{$question{alcohol}{$current_lang}{$current_lang."_11"}}</option>
+									<option value="1">{$question{alcohol}{$current_lang}{$current_lang."_21"}}</option>
+                    				<option value="2">{$question{alcohol}{$current_lang}{$current_lang."_22"}}</option>
+									<option value="3">{$question{alcohol}{$current_lang}{$current_lang."_23"}}</option>
+									<option value="4">{$question{alcohol}{$current_lang}{$current_lang."_24"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{alcohol}{$current_lang}{$current_lang."_7"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="drink7" class="c_select"  required>
+									<option selected></option>
+									<option value="0">{$question{alcohol}{$current_lang}{$current_lang."_11"}}</option>
+									<option value="1">{$question{alcohol}{$current_lang}{$current_lang."_21"}}</option>
+                    				<option value="2">{$question{alcohol}{$current_lang}{$current_lang."_22"}}</option>
+									<option value="3">{$question{alcohol}{$current_lang}{$current_lang."_23"}}</option>
+									<option value="4">{$question{alcohol}{$current_lang}{$current_lang."_24"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{alcohol}{$current_lang}{$current_lang."_8"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="drink8" class="c_select" required>
+									<option selected></option>
+									<option value="0">{$question{alcohol}{$current_lang}{$current_lang."_11"}}</option>
+									<option value="1">{$question{alcohol}{$current_lang}{$current_lang."_21"}}</option>
+                    				<option value="2">{$question{alcohol}{$current_lang}{$current_lang."_22"}}</option>
+									<option value="3">{$question{alcohol}{$current_lang}{$current_lang."_23"}}</option>
+									<option value="4">{$question{alcohol}{$current_lang}{$current_lang."_24"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{alcohol}{$current_lang}{$current_lang."_9"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="drink9" class="c_select" required>
+									<option selected></option>
+									<option value="0">{$question{alcohol}{$current_lang}{$current_lang."_25"}}</option>
+									<option value="2">{$question{alcohol}{$current_lang}{$current_lang."_26"}}</option>
+                    				<option value="4">{$question{alcohol}{$current_lang}{$current_lang."_27"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+							{$question{alcohol}{$current_lang}{$current_lang."_10"}}
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<label class="c_select_label">
+								<select name="drink10" class="c_select"  required>
+									<option selected></option>
+									<option value="0">{$question{alcohol}{$current_lang}{$current_lang."_25"}}</option>
+									<option value="2">{$question{alcohol}{$current_lang}{$current_lang."_26"}}</option>
+                    				<option value="4">{$question{alcohol}{$current_lang}{$current_lang."_27"}}</option>
+								</select>
+							</label>
+						</div>
+						<div class="col-md-12 col-lg-8 col-xs-12 c_form_left">
+						</div>
+						<div class="col-md-12 col-lg-4 col-xs-12 c_form_right">
+							<input type="submit" name="submit" class="c_button orange-bg-white-col f_right" value="Calculate" />
+							<input value="Imperial" name="measure" type="hidden" />
+							<input value="alcohol" name="calculator" type="hidden" />
+							<input type="hidden" name="snum" value="{$snum}" />
+							<input type="hidden" name="lang" value="{$lang}">
+						</div>
+						<div class="clear"></div>
+					</form>
+				</div>
+					<p>HealthStatus.com health quizzes and calculators and tools do not provide medical advice and do not replace the advice of a medical professional. Care has been taken to make sure the calculators and tools are generating correct results, but no guarantee is made that the results are accurate. The health tools use professionally accepted and peer reviewed algorithms to calculate their results or simple mathematical equations.</p>
+<!--Form and form table END here.-->
+{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $footer_file, PACKAGE => __PACKAGE__ );
+}

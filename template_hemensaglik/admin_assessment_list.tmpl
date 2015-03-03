@@ -1,0 +1,52 @@
+{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+
+
+<h1>Assessment List</h1>
+
+
+{
+if (defined(@assessment_list) && @assessment_list != 0) {
+	my %short_names = (
+				HRA => 'General Health',
+				GHA => 'Health Risk',
+				GWB => 'Well-being',
+				FIT => 'Fitness',
+				DRC => 'Diabetes',
+				CRC => 'Cardiac'
+				);
+	
+	$OUT = Text::Template::fill_in_file("$config{template_directory}navbar.tmpl", PACKAGE => __PACKAGE__ );
+
+	$OUT .= "<table id=\"assessment_table\"><tr class=\"headings\">
+		<td>User ID</td><td>Name</td><td>Assessment Type</td><td>Date Taken</td><td>View Report</td>";
+	$OUT .= "<td>Modify</td>" if $config{allow_admin_modify};
+	$OUT .= "<td>Summary</td>" if (1);
+	$OUT .= "</tr>";
+
+	foreach my $a(@assessment_list) {
+		$OUT .= "<tr>
+			<td>$$a{hs_uid}</td>
+			<td>$$a{last_name}, $$a{first_name}</td>
+			<td>$short_names{$$a{assessment_type}}</td>
+			<td>$$a{adate}</td>
+			<td>View <a href=\"$config{cgi_dir}\/review_any.cgi?assessment=$$a{assessment_type}&xnum=$$a{xnum}&user_hs_ident=$$a{hs_uid}\" target=\"_blank\">HTML</a> <a href=\"$config{cgi_dir}\/review_any.cgi?assessment=$$a{assessment_type}&xnum=$$a{xnum}&user_hs_ident=$$a{hs_uid}&output_format=PDF \" target=\"_blank\">PDF</a></td>";
+		if($config{allow_admin_modify}){
+			if($$a{assessment_type} ne 'HRA'){
+				$OUT .=	"<td><a href=\"$config{cgi_dir}\/modify_any.cgi?assessment=$$a{assessment_type}&xnum=$$a{xnum}&user_hs_ident=$$a{hs_uid} \" target=\"modify\">Modify</a></td>";}
+			else	{
+				$OUT .=	"<td>&nbsp;</td>";
+				}
+			}
+		if(1) {
+			$OUT .=	"<td>View <a href=\"$config{cgi_dir}\/review_any.cgi?assessment=$$a{assessment_type}&xnum=$$a{xnum}&user_hs_ident=$$a{hs_uid}&template=summary_1.tmpl\" target=\"_blank\">Summary</a></td>";
+			}
+		$OUT .=	"</tr>";
+	}
+
+	$OUT .= "</table><br>";
+	$OUT .= Text::Template::fill_in_file("$config{template_directory}navbar.tmpl", PACKAGE => __PACKAGE__ );
+}
+else {"No assessments found.";}
+}
+
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

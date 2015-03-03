@@ -1,0 +1,45 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file("$config{template_directory}$header_file", PACKAGE => __PACKAGE__ );
+}     <table width="560" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="12"><img src="images/global/trans.gif" width="12" height="1"></td>
+          <td class="HSbodytext"><img src="images/global/trans.gif" width="1" height="22">
+		  <div id="ass-top-img" class="steptxt">
+            <p class="pad26">Account Status</p>
+			</div>
+            <img src="images/global/trans.gif" width="1" height="10"></td>
+        </tr>
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td valign="top" class="HSbodytext">
+  		   <p class="content pad27">Account deleted:::<br />
+	  		You have deleted your account, thanks for using our service.</p>
+  		  <p class="content pad27">To register as a member,<a href="https://cornerstone1.hra.net/cgi-bin/hs/register.cgi?action=log">click here</a>.</p>
+          </td>
+        </tr>
+        <tr>
+          <td width="12" height="30">&nbsp;</td>
+          <td align="center" valign="top" height="30">&nbsp;</td>
+        </tr>
+        <tr>
+          <td width="12" height="30">&nbsp;</td>
+          <td align="center" valign="top" height="30">&nbsp;</td>
+        </tr>
+        <tr>
+          <td width="12" height="30">&nbsp;</td>
+          <td align="center" valign="top" height="30" >
+		  <p class="content pad27">
+		  Having trouble? Email us at {$support_email}
+		  </p>
+		  </td>
+        </tr>
+      </table>
+      <img src="/images/global/copyright.gif"><p>&nbsp;</p>
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file("$config{template_directory}$footer_file", PACKAGE => __PACKAGE__ );
+}

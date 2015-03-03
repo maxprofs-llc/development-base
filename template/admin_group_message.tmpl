@@ -1,0 +1,19 @@
+{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+
+<h1>{$client} Health Assessment Group Administration</h1>
+
+<b><span style="color: #660000;">{$display_message}</span></b>
+
+{ 
+$OUT .= qq|
+<hr />
+
+<p><a href=$config{admin_dir}admin_group_results.cgi>View group list</a></p>|;
+
+
+'';
+}
+
+
+<hr>
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

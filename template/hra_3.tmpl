@@ -1,0 +1,294 @@
+{
+# this part fills in a file that sets language variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}language.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}hra_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}hra_links.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE => __PACKAGE__ );
+}    <!-- Template: hra_3.tmpl -->
+	<!-- Templates called: hra_variables.tmpl, hra_links.tmpl, {$footer_file}, {$config{variables_template}},  {$header_file} -->
+	       <div class="HSstyle">
+		<table class="HSassessments">
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td align=left><img src="images/global/trans.gif" width="1" height="22"><br>
+            {$hra_title}<br>
+            <img src="images/global/trans.gif" width="1" height="8"><br>
+            <span class="HSintro">{$lang{$current_language}{hra_msg15}} <br>
+            </span><br>
+            <img src="images/global/trans.gif" width="1" height="18"><br>
+            {$hra_subtitle}<br>
+            {$continued}<br>
+            <img src="images/global/trans.gif" width="1" height="10"></td>
+        </tr>
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td valign="top"><form method="post" action="{$pager}">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td colspan="2" class="HSbodytext1">
+                 <p>{$date} {$lang{$current_language}{for}} {$name}</p>
+                </td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right" colspan="2" height="30">&nbsp;</td>
+              </tr>
+             <tr>
+                <td colspan="2" class="HSbodytext">
+            <table width="550" border="1" bordercolor="{$top_bar_color}" cellspacing=0 cellpadding=0>
+            	<tr>
+		<td>
+			<table width="548" border="1" cellspacing=0 cellpadding=4 bordercolor="#666666">
+				<tr>
+					<td align="center" valign="top" class="HSbodytext1">
+						<img src="images/global/trans.gif" width="1" height="25">{$lang{$current_language}{focus}}
+					</td>
+					<td align="center" valign="top" class="HSbodytext1">
+						<img src="images/global/trans.gif" width="1" height="25">{$lang{$current_language}{risk}}
+					</td>
+					<td align="center" valign="top" class="HSbodytext1">
+						<img src="images/global/trans.gif" width="1" height="25">{$lang{$current_language}{preventive_steps}}
+					</td>
+					<td align="center" valign="top" class="HSbodytext1">
+						<img src="images/global/trans.gif" width="1" height="25">{$lang{$current_language}{online_help}}
+					</td>
+					<td align="center" valign="top" class="HSbodytext1">
+						<img src="images/global/trans.gif" width="1" height="25">{$lang{$current_language}{other_assessments}}
+					</td>
+				</tr>
+				<tr>
+					<td align="left" class="HSbodytextbold">
+						{$lang{$current_language}{weight}}<br><img src="images/hra/hra_body_mass.jpg" width="75" height="75">
+					</td>
+					<td align="left" class="HSbodytext">
+						{$WeightLine}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						{$weight_short}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						{$bmi_links}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						{$lang{$current_language}{cardiac_assessment}}<br>
+						{$lang{$current_language}{diabetes_assessment}}<br>
+						{$lang{$current_language}{fitness_assessment}}
+					</td>
+				</tr>
+				<tr>
+					<td align="left" class="HSbodytextbold">
+						{$lang{$current_language}{tobacco}}<br><img src="images/hra/hra_smoking.jpg" width="75" height="75">
+					</td>
+					<td align="left" class="HSbodytext">
+						{$smk_short_risk}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						{$smoke_message}<br>{$other_smoke_message}
+					</td>
+					<td align="left" class="HSbodytext">
+						{$smoke_links}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						{$lang{$current_language}{cardiac_assessment}}
+					</td>
+				</tr>
+				<tr>
+					<td align="left" class="HSbodytextbold">
+						{$lang{$current_language}{blood_pressure}}<br><img src="images/hra/hra_bld_pressure.jpg" width="75" height="75">
+					</td>
+					<td align="left" class="HSbodytext">
+						{$bp_short}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						{$bp_message}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						{$bp_links}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						{$lang{$current_language}{cardiac_assessment}}
+					</td>
+				</tr>
+				<tr>
+					<td align="left" class="HSbodytextbold">
+						{$lang{$current_language}{cholesterol}}<br><img src="images/hra/hra_cholest.jpg" width="75" height="75">
+					</td>
+					<td align="left" class="HSbodytext">
+						{$cholesterol_short}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						{$cholesterol_message}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						{$cholesterol_links}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						{$lang{$current_language}{cardiac_assessment}}
+					</td>
+				</tr>
+				<tr>
+					<td align="left" class="HSbodytextbold">
+						{$lang{$current_language}{alcohol}}<br><img src="images/hra/hra_alcohol.jpg" width="75" height="75">
+					</td>
+					<td align="left" class="HSbodytext">
+						{$alcohol_short_risk}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						{$alcohol_message}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						{$alcohol_links}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						&nbsp;
+					</td>
+				</tr>
+				<tr>
+					<td align="left" class="HSbodytextbold">
+						{$lang{$current_language}{nutrition}}<br><img src="images/hra/hra_nutrition.jpg" width="75" height="75">
+					</td>
+					<td align="left" class="HSbodytext">
+						{$nutrition_short_risk}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						{$nutrition_message}<br>{$fat_message}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						{$nutrition_links}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						&nbsp;
+					</td>
+				</tr>
+				<tr>
+					<td align="left" class="HSbodytextbold">
+						{$lang{$current_language}{my_health}}<br><img src="images/hra/hra_{$lc_sex}.jpg" width="75" height="75">
+					</td>
+					<td align="left" class="HSbodytext">
+						{$my_short}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						{$sex_check}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						{$sex_links}<br>{$my_links}
+					</td>
+					<td align="left" class="HSbodytext">
+						&nbsp;
+					</td>
+				</tr>
+				<tr>
+					<td align="left" class="HSbodytextbold">
+						{$lang{$current_language}{family_health}}<br><img src="images/hra/hra_family.jpg" width="75" height="75">
+					</td>
+					<td align="left" class="HSbodytext">
+						{$family_short}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						{$family_check}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						{$family_links}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						&nbsp;
+					</td>
+				</tr>
+				<tr>
+					<td align="left" class="HSbodytextbold">
+						{$lang{$current_language}{injury}}<br><img src="images/hra/hra_injury.jpg" width="75" height="75">
+					</td>
+					<td align="left" class="HSbodytext">
+						{$injury_short_risk}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						{$seat_belt_message} {$speed_message} {$drink_and_drive_message} {$helmet_message}
+					</td>
+					<td align="left" class="HSbodytext">
+						{$injury_links}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						&nbsp;
+					</td>
+				</tr>
+				<tr>
+					<td align="left" class="HSbodytextbold">
+						{$lang{$current_language}{fitness}}<br><img src="images/hra/hra_fitness.jpg" width="75" height="75">
+					</td>
+					<td align="left" class="HSbodytext">
+						{$fitness_short_risk}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						{$exercise_message}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						{$fitness_links}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						{$lang{$current_language}{fitness_assessment}}&nbsp;
+					</td>
+				</tr>
+				<tr>
+					<td align="left" class="HSbodytextbold">
+						{$lang{$current_language}{well_being}}<br><img src="images/hra/hra_wellbeing.jpg" width="75" height="75">
+					</td>
+					<td align="left" class="HSbodytext">
+						{$wellbeing_short_risk}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						{$anxiety_message}<p class="HSbodytext">{$mood_message}</p>
+					</td>
+					<td align="left" class="HSbodytext">
+						{$wellbeing_links}&nbsp;
+					</td>
+					<td align="left" class="HSbodytext">
+						&nbsp;
+					</td>
+				</tr>
+			</table>
+		</td>
+            	</tr>
+            </table></div><br><img src="images/global/trans.gif" width="1" height="18"><br>
+		</td>
+              </tr>
+              <tr>
+                <td valign="middle" colspan="2" height="30" ><span class="HSbodytextbold">{$lang{$current_language}{hra_msg16}}</span></td>
+              </tr>
+              <tr>
+                <td valign="middle" colspan="2" height="30" ><span class="HSbodytext1">{$lang{$current_language}{hra_msg17}}</span></td>
+              </tr>
+              <tr>
+          	<td class="HSassessmentsGap"></td>
+              </tr>
+              <tr valign="bottom">
+                <td height="50" align="left"><input type="image" border=0 name="hra_1.tmpl" value="hra_1.tmpl" {$back}></td>
+                <td align="right" height="50"><input type="image" border=0 name="hra_4.tmpl" value="hra_4.tmpl" {$next}>
+			{ $hidden_cgi_fields }
+		</td>
+              </tr>
+            </table></form>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td class="HSassessmentsGap"></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td class="HScopyright">{$copyright}</td>
+        </tr>
+      </table>
+      </div>
+    <!-- Template: hra_3.tmpl End -->
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$footer_file", PACKAGE => __PACKAGE__ );
+}

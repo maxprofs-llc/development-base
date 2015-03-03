@@ -1,0 +1,102 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$home_header_in_file", PACKAGE => __PACKAGE__ );
+} 
+ <!-- Template: reg.tmpl -->	
+{my $html;
+    my $maint_time = $config{maintenance_time} || '8 hours';
+    if($config{maintenance_mode} && $db_ip_address ne $config{maintenance_mode_ip}){
+    	$html=qq|<div id="title" class="steptxt">
+		<p class="pad17">Temporarily Closed for Maintenanance</p>
+		</div>
+		<div class="content">
+		<p class="pad4">The system is currently undergoing maintenance.  We are sorry for any inconvenience this may have caused.  Please check back $maint_time</p></div>|;
+    	}
+    else{
+    	$html .= qq|<!-- your next step section start here-->
+<div id="logo-inn">		
+<div id="header-right-inn"><form method="post" action="/cgi-bin/hs/register.cgi" name="theForm1" onSubmit="return checkLoginForm(this)">
+<p class="pad19"><span class="alreadytxt">Already a member? Login Here</span></p>
+<p class="pad20"><span class="usernametxt">User Name</span> <input type="text" name="db_id" class="textBox1" size="20" /></p>
+<p class="pad21"><span class="usernametxt">Password</span> &nbsp;&nbsp;<input type="password" name="auth_password_entry" class="textBox1" size="20" /></p>
+<p class="pad22"><u><a href="https://hemensaglik.hra.net/cgi-bin/hs/register.cgi?action=lookup&amp;render=1&amp;siteid={$siteid}" class="forgot_link">Retrieve your password or user name?</a></u> &nbsp;&nbsp;<input type="image" name="login" src="https://hemensaglik.hra.net/images/submit-log_07.jpg"  align="absmiddle" alt="" /><input type="hidden" name="action" value="login" /></p></form>
+</div>
+</div>| if($subdomain eq 'hemensaglik');
+		
+$html .= qq|<div id="title" class="steptxt">
+<p class="pad17">Register Now</p>
+</div>
+
+<div class="content">|;
+
+    	$html.= qq|<p class="pad4">The system is currently in maintenance mode - Telling users to come back $maint_time</p>
+        | if($config{maintenance_mode});
+    	   $html.=qq|<p class="pad4"><font color="red">$error_msg</font></p>
+           <p class="pad4">|;
+        if($config{reg_temp_msg}){
+		    $html.= qq| $config{show_reg_msg}|;
+        }else{
+			$html.= qq| This site is for clients of $client and their employees.<br />
+			To register for our site, please fill in each of the following fields and click on SUBMIT. Your registration number was 
+			given to you by your $client representative. To access this site, you must have this number. |;    
+        }
+        $html.= qq|</p></div>
+
+<div id="step-inn-bg" class="content1">
+<table width="406" cellspacing="0" style="margin-left: 30px">
+<form action="$register" method="post" name="theForm" onSubmit="return checkRegForm(this);">|;
+    if(!$config{show_reg_no}){
+      $html.= qq|<tr>
+        <td class="lbl" width=300 style="padding-top: 10px">Registration number</td>
+        <td width=90 style="padding-top: 10px"><input name="db_employer" type="text" size="18" class="textBox" /></td>
+        </tr>|;
+	  }
+    $html.=qq| <tr>
+        <td class="lbl" width=300 style="padding-top: 10px">Full Name</td>
+        <td width=90 style="padding-top: 10px"><input name="db_fullname" type="text" size="18" class="textBox" /></td> 
+      </tr>
+      <tr>
+        <td class="lbl" width=300 style="padding-top: 10px">Email Address</td>
+        <td width=90 style="padding-top: 10px"><input name="db_email" type="text" size="18" class="textBox" /></td>
+      </tr>
+      <tr>
+        <td class="lbl" width=300 style="padding-top: 10px">User name <br />(6 to 12 characters)</td>
+        <td width=90 style="padding-top: 10px"><input name="db_id" type="text" size="18" class="textBox" /></td>
+      </tr>
+      <tr>
+        <td class="lbl" width=300 style="padding-top: 10px">Password <br />(6 to 12 characters)</td>
+        <td width=90 style="padding-top: 10px"><input name="auth_password" type="password" size="18" class="textBox" /></td>
+      </tr>
+      <tr>
+        <td class="lbl" width=300 style="padding-top: 10px">Re-enter password</td>
+        <td width=90 style="padding-top: 10px"><input name="auth_password_entry" type="password" size="18" class="textBox" /></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+
+        <td style="padding-top: 8px; padding-bottom: 10px">
+        	<input name="Submit" type="image" class="HSButton" src="https://hemensaglik.hra.net/images/submit_17.jpg" />
+		
+                                        <input type="hidden" name="siteid" value="$siteid">
+                                        <input type="hidden" name="action" value="add">
+			
+			</td>
+        <td>&nbsp;</td>
+      </tr>
+	  </form>
+    </table>
+</div>|;
+	}
+$html;
+}
+<!-- your next step section end here-->
+
+    <!-- Template: reg.tmpl End -->
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$home_footer_file", PACKAGE => __PACKAGE__ );
+}
+

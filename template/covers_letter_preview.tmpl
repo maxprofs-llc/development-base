@@ -1,0 +1,104 @@
+{
+# this part fills in a file that sets language variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}language.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$variable_file", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE => __PACKAGE__ );
+}<!-- Template: covers_letter_preview.tmpl -->
+	       <div class="HSstyle">
+		<table class="HSassessments">
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td align=left><img src="images/global/trans.gif" width="1" height="22"><br>
+{ 
+	if ($assessment eq 'CRC') {
+		$title 		= $crc_title;
+		$subtitle 	= $crc_subtitle;
+		$message	= $lang{$current_language}{crc_msg1};
+	} elsif ($assessment eq 'DRC') {
+		$title 		= $drc_title;
+		$subtitle 	= $drc_subtitle;
+		$message	= $lang{$current_language}{drc_msg2};
+	} elsif ($assessment eq 'FIT') {
+		$title 		= $fit_title;
+		$subtitle 	= $fit_subtitle;
+		$message 	= $lang{$current_language}{fit_intro};
+	}elsif ($assessment eq 'GWB') {
+		$title 		= $gwb_title;
+		$subtitle 	= $gwb_subtitle;
+		$message 	= $lang{$current_language}{gwb_intro};
+	} elsif ($assessment eq 'GHA') {
+		$title 		= $gha_title;
+		$subtitle 	= $gha_subtitle;
+		$message 	= $lang{$current_language}{gha_intro};
+	} elsif ($assessment eq 'HRA') {
+		$title 		= $hra_title;
+		$subtitle 	= $hra_subtitle;
+	}
+	my $html = qq|$title<br><img src="images/global/trans.gif" width="1" height="8"><br>
+            <span class="HSintro">$message<br></span><br>
+            <img src="images/global/trans.gif" width="1" height="18"><br>$subtitle|;
+	$html;
+} <br>
+            <img src="images/global/trans.gif" width="1" height="10"></td>
+        </tr>
+        <tr>
+          <td width="12"></td>
+          <td align=right></td><br>
+        </tr>
+       <tr>
+          <td width="12"></td>
+          <td valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td colspan="2" class="HSbodytext">
+<script type="text/javascript">
+var cover_letter = window.opener.document.cover_letter_form.{lc($assessment)}_text.value;
+var new_String 	= cover_letter.replace(/\{\$date\}/g, "{$date}");
+new_String 		= new_String.replace(/\{\$name\}/g, "{$name}");
+new_String 		= new_String.replace(/\{\$fact\}/g, "{$fact}");
+new_String 		= new_String.replace(/\{\$client_web_signature\}/g, "{$client_web_signature}");
+new_String 		= new_String.replace(/\{\$fname\}/g, "{$first_name}");
+new_String 		= new_String.replace(/\{\$lname\}/g, "{$last_name}");
+new_String 		= new_String.replace(/\{\$age\}/g, "{$age}");
+new_String 		= new_String.replace(/\{\$sex\}/g, "{$sex}");
+new_String 		= new_String.replace(/\{\$home\}/g, "{$home}");
+new_String 		= new_String.replace(/\{\$client\}/g, "{$client}");
+document.write(new_String);
+alert ("Make sure you SAVE your changes once the preview is correct.");
+</script>                </td>
+              </tr>
+              <tr>
+                <td colspan="2"></td>
+              </tr>
+               <tr>
+                <td valign="middle" align="right" colspan="2" height="30">&nbsp;</td>
+              </tr>
+              <tr valign="bottom">
+                <td height="50" align="left">&nbsp;</td>
+                <td align="right" height="50"></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td width="12" height="30">&nbsp;</td>
+          <td align="center" valign="top" height="30">&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td class="HScopyright">{$copyright}</td>
+        </tr>
+      </table>
+      </div>
+    <!-- Template: drc_1.tmpl End -->
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$footer_file", PACKAGE => __PACKAGE__ );
+}

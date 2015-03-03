@@ -1,0 +1,56 @@
+{
+use vars qw( 	$fact $wellness_bar @good_habits @bad_habits
+		$Wellness $risks_short $WeightLine $smoke_message
+		$other_smoke_message $chew_message
+		$weight_message $drink_and_drive_message $speed_message
+		$seat_belt_message $bp_message $cholesterol_message
+		$exercise_message $diabetes_message $loss_message
+		$breast_cancer_message $mammogram_message $pap_message
+		$fat_message $fiber_message $alcohol_message $helmet_message
+		@recommendations $risks_bars %attrib_points %attrib_points2 %attrib_percents
+		%attrib_name $weight_short $my_short $family_short
+		$smk_short_risk $nutrition_short_risk $fitness_short_risk
+		$alcohol_short_risk $injury_short_risk $wellbeing_short_risk
+		@health_risk_habits $bp_short $cholesterol_short $mood_message
+		$anxiety_message $hs_at_points_out $lc_sex $nutrition_message
+ 		$r2c_issues $r2c_autosafety_flag $r2c_bp_flag $r2c_checkups_flag 
+		$r2c_cholesterol_flag $r2c_drink_flag $r2c_exercise_flag 
+		$r2c_fat_flag $r2c_smoke_flag $r2c_stress_flag $r2c_weight 
+		@ready_2_change @ready_not_change @ready_ignorant
+		$hra_cover_letter @ready_2_change_doc $status_message $time_since
+		);
+
+require HealthStatus::CalcRisk;
+require HealthStatus;
+require HealthStatus::Constants;
+use Date::Calc qw(:all);
+use DateTime::Format::MySQL;
+use DateTime;
+use DateTime::Format::Duration;
+
+#my $d = DateTime::Format::Duration->new(pattern => '%j total days, %Y years, %m months, %e days');
+my $d = DateTime::Format::Duration->new(pattern => ' %j days ago');
+$status_message = 'Assessment taken on ';
+if($x_user{'db_sortdate'} gt $y_user{'db_sortdate'}){
+	my $dt1 = DateTime::Format::MySQL->parse_datetime($x_user{'db_sortdate'});
+	my $dt2 = DateTime::Format::MySQL->parse_datetime($y_user{'db_sortdate'});
+	my $dur = $dt1->subtract_datetime($dt2);
+	$status_message .= 'x ' . $x_user{'db_sortdate'} . ' is greater than y ' . $y_user{'db_sortdate'} . '<br>' . $d->format_duration($dur) . ' <br>';
+	$status_message .= $dt2->mdy('/') . ' was compared to one taken ' . $dt1->mdy('/');
+	$time_since = $d->format_duration($dur);
+	}
+elsif($x_user{'db_sortdate'} lt $y_user{'db_sortdate'}){
+	my $dt1 = DateTime::Format::MySQL->parse_datetime($x_user{'db_sortdate'});
+	my $dt2 = DateTime::Format::MySQL->parse_datetime($y_user{'db_sortdate'});
+	my $dur = $dt2->subtract_datetime($dt1);
+	$status_message .= 'y ' . $y_user{'db_sortdate'} . ' is greater than x ' . $x_user{'db_sortdate'} . '<br>' . $d->format_duration($dur) . ' <br>';
+	$status_message .= $dt1->mdy('/') . ' was compared to one taken ' . $dt2->mdy('/');
+	$time_since = $d->format_duration($dur);
+	}
+else {
+	$status_message .= 'x is equal to y<br>' . "$x_user{'db_sortdate'} - $y_user{'db_sortdate'}<br>";
+	#$time_since = $d->format_duration($dur);
+	}
+
+' ';
+}

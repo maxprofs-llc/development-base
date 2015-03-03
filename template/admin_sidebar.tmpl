@@ -1,0 +1,107 @@
+ {$view_admin_logo}  
+Currently logged in as: <b>{$db_fullname} / {$hs_administration}</b>
+{if($config{begin_date}){ '<br />&nbsp;<br />Using HealthStatus Assessments since: '. $config{begin_date}; }}
+<br />&nbsp;<br /><a href={$config{admin_path}}>Admin home page</a><br />&nbsp;<br />
+
+<span class="biglink">Documentation</span>
+<ul><li><a class="hintanchor" onMouseover="showhint('This document covers common user problems that may come up.', this, event, '150px')" href="javascript: myLightWindow.activateWindow(\{href: '{$config{admin_dir}}show_docs.cgi?file_name=Assessment_Troubleshooting&file_fmt=pdf&global=1&lw=1', type: 'external', title: 'Assessment Troubleshooting',width:780,height:700\});">Assessment Troubleshooting</a></li>
+<li><a class="hintanchor" onMouseover="showhint('Instructions and tips on how to perform data entry of the paper forms. This covers entry and printing the forms.', this, event, '150px')" href="javascript: myLightWindow.activateWindow(\{href: '{$config{admin_dir}}show_docs.cgi?file_name=BatchProcessingInstructions&file_fmt=pdf&global=1&lw=1', type: 'external', title: 'Data Entry Processing',width:780,height:700\});">Data Entry Processing</a></li>
+<li><a class="hintanchor" onMouseover="showhint('The HealthStatus software citations, documenting where the recommendations and algorithms come from.', this, event, '150px')" href="javascript: myLightWindow.activateWindow(\{href: '{$config{admin_dir}}show_docs.cgi?file_name=HealthStatusCitations&file_fmt=pdf&global=1&lw=1', type: 'external', title: 'Citations',width:780,height:700\});">Citations</a></li>
+<li><a class="hintanchor" onMouseover="showhint('Ins and outs of running group reports, shows sample reports.', this, event, '150px')" href="javascript: myLightWindow.activateWindow(\{href: '{$config{admin_dir}}show_docs.cgi?file_name=HealthStatusAdvancedGraphicGroupReportUser&file_fmt=pdf&global=1&lw=1', type: 'external', title: 'Group Reports',width:780,height:700\});">Group Reports</a></li>
+</ul>
+
+{if (($is_admin || $is_coach) && (!$config{ggr_hipaa})) {
+	$OUT .= qq|<span class="biglink">Assessment Functions</span>
+		<ul><li><a  class="hintanchor" onMouseover="showhint('Search assessments by user name, assessment type or date taken.', this, event, '150px')" href="$config{admin_dir}search_assessments.cgi">Search Assessments</a></li>
+		<li><a  class="hintanchor" onMouseover="showhint('View all the assessments', this, event, '150px')" href="$config{admin_dir}assessments_results.cgi">View All Assessments</a></li>
+		</ul>|;			
+} else {''}}
+
+{if (($is_admin || $is_coach || $is_clerk) && $config{does_batch}) {
+	$OUT .= qq|<span class="biglink">Data Entry Functions</span>
+		<ul><li><a href="$batch_print?list=1">Batch maintenance.</a></li>|;
+	$OUT .= qq|<li><a href="$batch_entry?assessment=CRC">Cardiac Assessment Entry</a></li>| if $hs_batch_assessments{CRC};
+	$OUT .= qq|<li><a href="$batch_entry?assessment=DRC">Diabetes Assessment Entry</a></li>| if $hs_batch_assessments{DRC};
+	$OUT .= qq|<li><a href="$batch_entry?assessment=FIT">Fitness Assessment Entry</a></li>| if $hs_batch_assessments{FIT};
+	$OUT .= qq|<li><a href="$batch_entry?assessment=GHA">Health Risk Assessment Entry</a></li>| if $hs_batch_assessments{GHA};
+	$OUT .= qq|<li><a href="$batch_entry?assessment=HRA">General Health Assessment Entry</a></li>| if $hs_batch_assessments{HRA};
+	$OUT .= qq|<li><a href="$batch_entry?assessment=GWB">General Well-being Assessment Entry</a></li>| if $hs_batch_assessments{GWB};
+	$OUT .= qq|</ul>
+		<span class="biglink">Printable Forms</span>
+		<ul>|;
+	my $crc = $config{pdf_input_crc} || '11x17_crc';
+	my $drc = $config{pdf_input_drc} || '11x17_drc';
+	my $fit = $config{pdf_input_fit} || '11x17_fit';
+	my $gha = $config{pdf_input_gha} || '11x17_health';
+	my $ghabio = $config{pdf_input_ghabio} || '11x17_health_bio';
+	$OUT .= qq|<li><a href="javascript: myLightWindow.activateWindow(\{href: '$config{admin_dir}show_docs.cgi?file_name=$crc&file_fmt=pdf&lw=1', type: 'external', title: 'Cardiac Risk Assessment',width:780,height:700\});">Cardiac Assessment Form</a></li>| if $hs_batch_assessments{CRC};
+	$OUT .= qq|<li><a href="javascript: myLightWindow.activateWindow(\{href: '$config{admin_dir}show_docs.cgi?file_name=$drc&file_fmt=pdf&lw=1', type: 'external', title: 'Diabetes Risk Assessment',width:780,height:700\});">Diabetes Assessment Form</a></li>| if $hs_batch_assessments{DRC};
+	$OUT .= qq|<li><a href="javascript: myLightWindow.activateWindow(\{href: '$config{admin_dir}show_docs.cgi?file_name=$fit&file_fmt=pdf&lw=1', type: 'external', title: 'Fitness Assessment',width:780,height:700\});">Fitness Assessment Form</a></li>| if $hs_batch_assessments{FIT};
+	$OUT .= qq|<li><a href="javascript: myLightWindow.activateWindow(\{href: '$config{admin_dir}show_docs.cgi?file_name=$gha&file_fmt=pdf&lw=1', type: 'external', title: 'Health Risk Assessment',width:780,height:700\});">Health Risk Assessment Form</a></li>| if $hs_batch_assessments{GHA};
+	$OUT .= qq|<li><a href="javascript: myLightWindow.activateWindow(\{href: '$config{admin_dir}show_docs.cgi?file_name=$gha1&file_fmt=pdf&lw=1', type: 'external', title: 'Health Risk Assessment (Health Fair Version)',width:780,height:700\});">Health Risk Assessment Form (Health Fair)</a></li>| if $hs_batch_assessments{GHA};
+	$OUT .= qq|<li><a href="javascript: myLightWindow.activateWindow(\{href: '$config{admin_dir}show_docs.cgi?file_name=11x17_hra&file_fmt=pdf&lw=1', type: 'external', title: 'General Health Assessment',width:780,height:700\});">General Health Assessment Form</a></li>| if $hs_batch_assessments{HRA};
+	$OUT .= qq|<li><a href="javascript: myLightWindow.activateWindow(\{href: '$config{admin_dir}show_docs.cgi?file_name=11x17_gwb&file_fmt=pdf&lw=1', type: 'external', title: 'General Well-being',width:780,height:700\});">General Well-being Form</a></li>| if $hs_batch_assessments{GWB};
+	$OUT .= qq|</ul>|;
+} else {''}}
+
+{if (($is_admin || $is_coach) && $config{authenticate_site} && !$config{SSO} ) {
+	$OUT .= qq|<span class="biglink">Group Management</span>
+		<ul><li><a class="hintanchor" onMouseover="showhint('Group Management, add a new group.', this, event, '150px')" href="$config{admin_dir}create_groups.cgi?action=create">Add a new group</a></li>
+		<li><a class="hintanchor" onMouseover="showhint('Group Management, modify a group.', this, event, '150px')" href="$config{admin_dir}admin_group_modify.cgi">Modify a group</a></li>
+		<li><a class="hintanchor" onMouseover="showhint('Group Management, view all groups.', this, event, '150px')" href="$config{admin_dir}admin_group_results.cgi">View Group Info</a></li>
+		</ul>|;
+} else {''}}
+
+{if ($is_admin) { $OUT .= qq|<span class="biglink">Group Reporting Functions</span>
+		<ul><li><a class="hintanchor" onMouseover="showhint('Create aggregate reports, participation reports and individual detail reports from by selecting this option.', this, event, '150px')" href="$ggr_adv">Run group reports.</a></li>
+		<!--	<li><a class="hintanchor" onMouseover="showhint('Update  participation reports fields and individual detail reports fields from by selecting this option.', this, event, '150px')" href="$config{admin_dir}ggr_set_configuration.cgi">Update reports fields.</a></li>-->|;
+		if ($config{ggr_adv_batch} ) {
+			$OUT .= qq|<li><a href="$config{category_create}?action=create">Create a batch group</a></li>
+				<li><a href="$config{category_create}?action=list">Edit a batch group</a></li>
+				<li><a href="$config{ggr_adv_batch_process}">Run batch group reports.</a></li>|;}
+		if ($is_admin) { $OUT .= qq|</ul>|;}
+} else {''}
+}
+{if ($is_admin && $config{allow_import}) { $OUT .= qq|<span class="biglink">Data Import Functions</span>
+		<ul><li><a class="hintanchor" onMouseover="showhint('Create a data import profile using xls, xlsx or csv file', this, event, '150px')" href="$config{admin_dir}create_import_profile.cgi">Create Data Import Profile</a></li>
+			<li><a class="hintanchor" onMouseover="showhint('Run a data import profile.', this, event, '150px')" href="$config{admin_dir}data_import.cgi">Run Data Import</a></li>
+                        <li><a class="hintanchor" onMouseover="showhint('View data import profile previously created.', this, event, '150px')" href="javascript: myLightWindow.activateWindow(\{href: '$config{admin_dir}create_import_profile.cgi?Submit=View Profile', type: 'external', title    : 'View Profile',width:780,height:700\});\">View Import Profile</a></li>
+                        <li><a class="hintanchor" onMouseover="showhint('Undo last import.', this, event, '150px')" href="$config{admin_dir}undo_import.cgi">Undo Last Import</a></li>
+                        <li><a class="hintanchor" onMouseover="showhint('View data import history.', this, event, '150px')" href="javascript: myLightWindow.activateWindow(\{href: '$config{admin_dir}data_import.cgi?submit=View History', type: 'external', title    : 'View History',width:780,height:700\});\">View Import History</a></li>|;
+		if ($is_admin) { $OUT .= qq|</ul>|;}
+} else {''}
+}
+{if (($is_admin && $config{allow_db} && !$config{ggr_hipaa}) || $ENV{REMOTE_ADDR} eq '173.165.73.118') { $OUT .= qq|<span class="biglink">Database Management</span>
+		<ul><li><a class="hintanchor" onMouseover="showhint('Create a database backup.', this, event, '150px')" href="$config{admin_dir}data_backup.cgi">Create a database backup</a></li>
+			<li><a class="hintanchor" onMouseover="showhint('Restore a database.', this, event, '150px')" href="$config{admin_dir}data_restore.cgi?backup=1">Restore a database</a></li>
+			<li><a class="hintanchor" onMouseover="showhint('Add a table.', this, event, '150px')" href="$config{admin_dir}create_table.cgi">Add table</a></li>
+			<li><a class="hintanchor" onMouseover="showhint('Add a column.', this, event, '150px')" href="$config{admin_dir}add_column.cgi">Add Column</a></li>|;
+		if ($is_admin) { $OUT .= qq|</ul>|;}
+} else {''}
+}
+{if ($is_admin) {
+      my $host = $ENV{HTTP_HOST};
+      my $index= index $host, ".";	 
+      my $new_host = substr ($host, $index);
+$OUT .= qq|<span class="biglink">System Functions</span>
+	<ul>
+		<li><a href="$config{admin_dir}show_template.cgi?template=admin_upload_file.tmpl">Upload a file to HealthStatus</a></li>|;
+	 if($new_host ne '.hra.net' && $new_host ne '.healthstatus.com'){	
+	     $OUT .= qq|<li><a href="$config{admin_dir}get_file.cgi">Update data files and standard templates</a></li>|;
+	   }
+$OUT .= qq|
+		<li><a href="$config{admin_dir}edit_files.cgi?edit=letter">Edit cover letter templates</a></li>
+		<li><a href="$config{admin_dir}edit_files.cgi?edit=email">Edit email templates</a></li>
+		</ul>| if ($config{allow_edits});
+$OUT .= qq|<span class="biglink">User Functions</span>
+	<ul>
+		<li><a class="hintanchor" onMouseover="showhint('You can delete users or change their system access rank on this screen.', this, event, '150px')" href="$config{admin_dir}user_admin.cgi">General User Administration</a></li>
+		<li><a class="hintanchor" onMouseover="showhint('Assign coaches to individuals to allow the coach to see the assessments taken by each individual.', this, event, '150px')" href="$config{admin_dir}assign_coaches.cgi">Assign Coaches</a></li>
+	</ul>|;
+} else {''}}
+
+<span class="biglink">Navigation</span>
+<ul><li><a href="{$member}">Back to assessments records</a></li>
+<li><a href="{$logout}">Logout</a></li>
+</ul>
+<a href={$config{admin_path}}>Admin home page</a>

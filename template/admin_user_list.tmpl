@@ -1,0 +1,78 @@
+{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+{
+	$OUT .=qq|
+	<script type="text/javascript">
+		function get_checkbox_value(){
+			var len=document.frm_search.checkbox_batch.length;
+			if(len){	    
+				for (var i=0; i < len; i++) {
+					if (document.frm_search.checkbox_batch[i].checked) {
+						var rad_val = document.frm_search.checkbox_batch[i].value;
+					}
+				}
+			}
+		}
+	</script>|;
+}
+
+<h1>{$client} Health Assessment User Administration New Result</h1>
+{
+	if ($display_message)
+	{
+		$OUT .= qq|<b><span style="color: #660000;">{$display_message}</span></b>|;
+	}
+	else
+	{
+		$OUT .=qq|<form method="post" name="frm_search"  >
+		<table cellspacing="0" cellpadding="4" border="1" align="center" width="90%" style="border-collapse: separate;">
+			<tr>
+				<td align="center" colspan="6" >
+					<b>Result Set</b>
+				</td>
+			</tr>
+			<tr valign="top">
+				<td align="center"><b>Select</b></td>
+				<td align="center"><b>Login ID</b></td>
+				<td align="center"><b>User Name</b></td>
+				<td align="center"><b>Email Address</b></td>
+				<td align="center"><b>User Type</b></td>
+				<td align="center"><b>Edit</b></td>
+			</tr>|;
+			
+		foreach $row(@search_result)
+		{
+			$OUT .=qq|	
+			<tr class="HSbodytext">
+				<td align="center"><input type="checkbox" name="checkbox_batch" value="$row->{unum}"></td>
+				<td align="center">$row->{hs_uid}</td>
+				<td align="center">$row->{full_name}</td>
+				<td align="center">$row->{email}</td>
+				<td align="center">$row->{rank}</td>
+				<td align="center"><a href=\"javascript: myLightWindow.activateWindow(\{href: '$cgi_dir/user_admin.cgi?action=Edit User&pf=$row->{unum}', type: 'external', title    :'Edit Profile',width:780,height:700\});\">Edit</a></td>
+			</tr>|;
+		}
+
+		$OUT .=qq|
+			<tr></tr>
+			<tr></tr>
+		</table>
+		<table cellspacing="0" cellpadding="4" align="center" style="border-collapse: separate;">
+			<tr></tr>
+			<tr>
+				<td align="right" colspan="6"><b>Action:</b></td>
+				<td><input type="radio" tabindex="1" value="delete" name="action">Delete</td>
+				<td><input type="radio" tabindex="1" value="usertype" name="action">Move to</td>
+				<td><select name="new_type">
+					<option value="user">User</option>
+					<option value="coach">Coach</option>
+					<option value="clerk">Clerk</option>
+					<option value="admin">Admin</option>
+					</select>
+				</td>
+			</tr>
+		</table><br/>
+		<div align="center"><input type="submit" value="Submit"  onClick="return get_checkbox_value(action)"  /></div>
+	</form>|;
+	}
+}
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

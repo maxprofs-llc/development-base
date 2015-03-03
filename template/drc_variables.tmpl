@@ -1,0 +1,275 @@
+{
+use vars qw( $weight_target $weight_desc @weight_habits $exer_target $exer_desc $disp_desc
+		$female_desc $body_graphic $weight_graphic $exer_graphic $baby_graphic 
+		$drc_cover_letter $fact );
+
+require HealthStatus::Constants;
+
+my %drc_cover_letters;
+$drc_cover_letters{'html'} = $config{drc_cover_letter_html} || '/drc_cover_letter_html.tmpl';
+$drc_cover_letters{'pdf'} = $config{drc_cover_letter_pdf} || '/drc_cover_letter_pdf.tmpl';
+$drc_cover_letters{'pdfe'} = $config{drc_cover_letter_pdf} || '/drc_cover_letter_pdf.tmpl';
+
+$output_format = 'HTML' if ($output_format ne 'HTML' && $output_format ne 'PDF' && $output_format ne 'PDFE' && $output_format ne 'XML' && $output_format ne 'TEXT' );
+$drc_cover_letter = $drc_cover_letters{lc $output_format} || '/drc_cover_letter_html.tmpl';
+
+$current_title = $drc_title;
+$current_subtitle = $drc_subtitle;
+$current_subtitle_in = $drc_subtitle_in;
+$current_desc = qq|This Diabetes Risk Appraisal is not a substitute for a check-up or physical exam that you get from a doctor or a nurse.&nbsp; It only gives you an idea if you have characteristics similar to those known to have diabetes. |;
+
+my $race_out	= $race;
+if ( $race eq HISPANIC ) { $race_out = $lang{$current_language}{latino}; }
+
+@weight_habits 	= ( $lang{$current_language}{weight_msg1}, $lang{$current_language}{weight_msg2}, $lang{$current_language}{weight_msg3}, $lang{$current_language}{weight_msg4}, $lang{$current_language}{weight_msg5} );
+
+#### Predisposition paragraph
+my $disp_num = 0;
+my @messages = ($lang{$current_language}{drc_pred_msg1});
+
+if ($age > DIABETES_LOWER_AGE_LIMIT)		{ push @messages, "$lang{$current_language}{drc_pred_msg2} $age";++$disp_num; }
+
+if ((($race eq NATIVE_AMERICAN ||
+	$race eq AFRICAN_AMERICAN ||
+	$race eq HISPANIC ) &&
+	$siblings_have_diabetes eq NO &&
+	$parents_have_diabetes eq NO &&
+	$big_kid ne NO ) &&
+	$disp_num ) 			{ push @messages, " $lang{$current_language}{or} " }
+elsif (($siblings_have_diabetes eq YES ||
+	$parents_have_diabetes eq YES ||
+	$big_kid eq YES ) &&
+	$disp_num )			{ push @messages, ", " }
+
+if ( $race eq NATIVE_AMERICAN ||
+	$race eq AFRICAN_AMERICAN ||
+	$race eq HISPANIC ) {
+					push @messages, "$lang{$current_language}{drc_pred_msg2} $race_out";++$disp_num;
+}
+
+if ((( $siblings_have_diabetes eq YES ||
+	$parents_have_diabetes eq YES )
+	&& $big_kid ne YES )
+	&& $disp_num ) 			{ push @messages, " $lang{$current_language}{or} " }
+elsif ( $big_kid eq YES
+	&& $disp_num )			{ push @messages, ", " }
+
+if ( $siblings_have_diabetes eq YES ||
+	$parents_have_diabetes eq YES ) {
+					push @messages, $lang{$current_language}{drc_pred_msg3};++$disp_num;
+}
+if ( $big_kid eq YES &&
+	$disp_num ) {
+					push @messages, " $lang{$current_language}{or} " if ($disp_num);
+					push @messages, $lang{$current_language}{drc_pred_msg4};++$disp_num;
+}
+push @messages, ". ";
+
+my $weight_flag = do
+	{
+	if(    $bmi < BMI_LOW ) 	{ 4 }
+	elsif( $bmi > BMI_OBESE ) 	{ 3 }
+	elsif( $bmi > BMI_OVERWEIGHT ) 	{ 2 }
+	elsif( $bmi > BMI_GOOD   ) 	{ 1 }
+	else                       	{ 0 }
+	};
+
+if ( $disp_num ) {
+	my $exercise_point = $lang{$current_language}{start};
+	$exercise_point = $lang{$current_language}{keep} if ( $exercise eq YES ); 
+	my $weight_point = $lang{$current_language}{lower};
+	$weight_point = $lang{$current_language}{watch} if ( $weight_flag == 0 || $weight_flag == 4); 
+	push @messages, $lang{$current_language}{drc_pred_msg5} if($disp_num == 1);
+	push @messages, $lang{$current_language}{drc_pred_msg6} if($disp_num > 1);
+	push @messages, $lang{$current_language}{drc_pred_msg7} if ($diabetes_points > 6 && $no_gina_question);
+	$disp_desc = join "", @messages;
+	$disp_desc =~ s/DISP_NUM/$disp_num/;
+	$disp_desc =~ s/EXERCISE_POINT/$exercise_point/;
+	$disp_desc =~ s/WEIGHT_POINT/$weight_point/;
+	$predisp_graphic = $yellow_risk if( $disp_num == 1 );
+	$predisp_graphic = $red_risk if( $disp_num > 1 );
+	}
+else
+	{
+	$disp_desc = $lang{$current_language}{drc_pred_msg8};
+	$predisp_graphic = $green_risk;
+	}
+
+$weight_desc = "$lang{$current_language}{drc_weight_desc}";
+$weight_desc =~ s/WEIGHT_HABITS/$weight_habits[$weight_flag]/;
+$weight_desc =~ s/HEIGHT/$height/;
+$weight_graphic = do
+		{
+			if (    $weight_flag >= 3 ) 	{ $red_risk }
+			elsif ( $weight_flag == 2 ) 	{ $yellow_risk }
+			elsif ( $weight_flag == 1 ) 	{ $yellow_risk }
+			else				{ $green_risk }
+		};
+
+
+$weight_target = do
+		{
+			if(    $weight_flag == 0 ) { $lang{$current_language}{drc_weight_msg1} }
+			elsif( $weight_flag == 1 ) { $lang{$current_language}{drc_weight_msg2} }
+			elsif( $weight_flag == 2 ) { $lang{$current_language}{drc_weight_msg3} }
+			elsif( $weight_flag == 3 ) { $lang{$current_language}{drc_weight_msg4} }
+			elsif( $weight_flag == 4 ) { $lang{$current_language}{drc_weight_msg5} }
+		};
+
+
+$exer_target = do
+		{
+			if ( $exercise eq YES )		{ $lang{$current_language}{drc_exercise_msg1} }
+			else  				{ $lang{$current_language}{drc_exercise_msg2} }
+		};
+
+$exer_desc = do
+		{
+			if (    $exercise eq YES &&
+				$weight_flag == 0 ) 	{ $lang{$current_language}{drc_exercise_msg3} }
+			elsif ( $exercise eq YES ) 	{ $lang{$current_language}{drc_exercise_msg4} }
+			else  				{ $lang{$current_language}{drc_exercise_msg5} }
+		};
+
+$exer_graphic = do
+		{
+			if ( $exercise eq YES )	{ $green_risk }
+			else  			{ $red_risk }
+		};
+
+$female_desc = do
+		{
+			if ( $diabetes_gdm eq YES &&
+				$big_kid ne YES &&
+				$sex eq FEMALE )
+					{ $lang{$current_language}{drc_female_desc_msg1} }
+			elsif ( $diabetes_gdm ne YES &&
+				$big_kid eq YES &&
+				$sex eq FEMALE )
+					{ $lang{$current_language}{drc_female_desc_msg2} }
+			elsif ( $diabetes_gdm eq YES &&
+				$big_kid eq YES &&
+				$sex eq FEMALE )
+					{ $lang{$current_language}{drc_female_desc_msg3} }
+			elsif ( $diabetes_points > 9 &&
+				$sex eq FEMALE &&
+				$age < 55 )
+					{ $lang{$current_language}{drc_female_desc_msg4} }
+			elsif ( $diabetes_points > 5 &&
+				$sex eq FEMALE &&
+				$age < 55 )
+					{ $lang{$current_language}{drc_female_desc_msg5} }
+			else
+					{ "" }
+		};
+
+$baby_graphic = do
+		{
+			if ( 	$diabetes_gdm eq YES &&
+				$big_kid ne YES)
+							{ $red_risk }
+			elsif (	$diabetes_gdm ne YES &&
+				$big_kid eq YES )
+							{ $yellow_risk }
+			elsif (	$diabetes_gdm eq YES &&
+				$big_kid ne YES )
+							{ $yellow_risk }
+			elsif (	$diabetes_gdm eq YES &&
+				$big_kid eq YES )
+							{ $red_risk }
+			else
+							{ "" }
+		};
+$body_graphic = do {
+	if(    $diabetes_points > 9 ) { $red_risk }
+	elsif( $diabetes_points > 6 ) { $yellow_risk }
+	else                          { $green_risk }
+	};
+	
+my $race_risk = 0;
+   $race_risk = 1 if
+	$race eq NATIVE_AMERICAN ||
+	$race eq AFRICAN_AMERICAN ||
+	$race eq HISPANIC;
+
+my $mid_life = $age > 44 && $age < 65 ? 1 : 0;
+
+my $drc_flag = do {
+	if(    $diabetes_points > 9 ) { 2 }
+	elsif( $diabetes_points > 6 ) { 1 }
+	else                          { 0 }
+	};
+
+my $risk = ( uc($lang{$current_language}{low}), uc($lang{$current_language}{moderate}), uc($lang{$current_language}{high}) )[ $drc_flag ] . " ".uc($lang{$current_language}{risk});
+
+$risk = do {
+	if( $format eq 'pdf' ) { "^b $risk ^B" }
+	else                   { $bold_on.$risk.$bold_off }
+	};
+
+my $symptoms         = $lang{$current_language}{drc_fact_msg1};
+my $regular_exercise = $lang{$current_language}{drc_fact_msg2};
+my $tested_regularly = $lang{$current_language}{drc_fact_msg3};
+my $tested_3years    = $lang{$current_language}{drc_fact_msg4};
+my $more_frequently  = $lang{$current_language}{drc_fact_msg5};
+my $over_45          = $lang{$current_language}{drc_fact_msg6};
+my $not_routine      = $lang{$current_language}{drc_fact_msg7};
+my $getting_older    = $lang{$current_language}{drc_fact_msg8};
+my $check_with_doc   = $lang{$current_language}{drc_fact_msg9};
+my $race_message     = $lang{$current_language}{drc_fact_msg10};
+
+my @messages_1 = ( "$name, $lang{$current_language}{drc_fact_msg11}" );
+
+if(    $drc_flag == 2 )
+	{
+	push @messages_1, $lang{$current_language}{drc_fact_msg12};
+	}
+elsif( $drc_flag == 1 )
+	{
+
+	if( $age < 45 )
+		{
+		push @messages_1, $over_45, $not_routine, $more_frequently,
+			$symptoms;
+		}
+	elsif( $mid_life )
+		{
+		push @messages_1, $tested_3years, $more_frequently,
+			$symptoms;
+		}
+	else
+		{
+		push @messages_1, $tested_regularly;
+		}
+
+	push @messages_1, $regular_exercise
+		if $exercise_drc eq NO;
+	push @messages_1, $race_message if $race_risk;
+	}
+else
+	{
+	if( $age < 45 )
+		{
+		push @messages_1, $not_routine, $over_45, $getting_older,
+			$symptoms;
+		}
+	elsif( $mid_life )
+		{
+		push @messages_1, $tested_3years, $symptoms;
+		}
+	else
+		{
+		push @messages_1, $tested_regularly, $check_with_doc,
+			$symptoms;
+		}
+
+	push @messages_1, $regular_exercise
+		if $exercise_drc eq NO;
+	push @messages_1, $race_message if $race_risk;
+	}
+
+
+$fact = join " ", @messages_1;
+$fact =~ s/RISK/$risk/;
+'';
+}

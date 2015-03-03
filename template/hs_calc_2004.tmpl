@@ -1,0 +1,656 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( $directory."calc_language.tmpl", PACKAGE => __PACKAGE__ );
+}
+{ # set the values we will use below
+
+use vars qw( $title $base $form_title $basics $details $back $styles $trans $hs_java
+             $submit $popup $menu_img $qmark $cal_input_body $menu_body $menu
+             $back_link $hiddens $calc $tip $image_root $faq $client $curr_lang);
+
+$calc = $calculator;
+if($lang){
+	$curr_lang = $lang;
+}else{
+	$curr_lang = 'en';
+}
+
+my $snum_link;
+if ($snum){
+	$snum_link = '&snum=' . $snum;}
+else	{
+	$snum_link = '';}
+
+#links to the other calculators
+$menu = $link_dir . $cgi . "calc.cgi?calc=men" . $snum_link;
+$menu = $menu_page if ($menu_page gt '');
+
+my $link = $link_dir . $cgi;
+
+my $link = $link_dir . $cgi;
+$back_link = $link_dir . $cgi . "reload.cgi";
+my $link_bfc = $cgi . "calc.cgi?calc=bfc&snum=" . $snum;
+my $link_whr = $cgi . "calc.cgi?calc=whr&snum=" . $snum;
+
+$styles = $html . "styles/" .$css;
+$hs_java = $html . "styles/" .$java;
+
+if (!$faq) { $faq = $html . 'calcquest.html'}
+
+$image_root = $html . "images/calc/";
+
+$trans = "src=" . $image_root . "trans.gif";
+$submit = "src=" . $image_root . "calculate.gif";
+$back = "src=" . $image_root . "back.gif";
+$menu_img = "src=" . $image_root . "menu.gif ";
+$qmark = "src=" . $image_root . "qmark.gif ";
+
+$popup = "";
+
+$hiddens = qq|<input type="hidden" name="measure" value="$measure" /><input type="hidden" name="calc" value="$calculator" /><input type="hidden" name="snum" value="$snum" />|;
+
+
+my ( $wt_units, $feet, $inches, $height_display, $ln_units );
+if ( $metric )
+	{
+	$wt_units = 'kilograms';
+	$height_display = qq|$mheight meters|;
+	$ln_units = 'centimeters';
+	}
+else
+	{
+	$wt_units = 'pounds';
+	$ln_units = 'inches';
+	$feet = int($height/12);
+	$inches = $height%12;
+	$height_display = qq|$feet' $inches"|;
+	}
+
+########Calculator Specific Sections
+
+$tip = qq|<a href="$menu">Click here</a> for a complete list of calculators.|;
+
+######### blood alcohol concentration estimator ####
+if ( $calculator eq 'bac' )
+	{
+
+$form_title = 'Blood Alcohol Concentration Estimate';
+
+$basics = <<"HERE";
+DO NOT DRINK AND DRIVE!  Based on your body weight of $weight,
+your consumption of $number $drink, and your sex, your blood
+alcohol concentration is estimated to be $bac.
+HERE
+
+$details = <<"HERE";
+At .03 to .12 people may experience mild euphoria, loss of
+efficiency in finer performance tests.  From .09 to .2 symptoms
+will be impairment of perception, impaired balance, slow reaction
+and drowsiness.  Disorientation, dizziness, slurred speech and
+muscular incoordination become apparent at blood concentrations
+of .18 to .30.  Serious health issues including death can occur
+at levels above .25.
+HERE
+
+$hiddens .= qq|<input type="hidden" name="type" value="$type" /><input type="hidden" name="weight" value="$weight" /><input type="hidden" name="sex" value="$sex" /><input type="hidden" name="number" value="$number" /><input type="hidden" name="time" value="$time" />|;
+
+	}
+######### END OF blood alcohol #####################
+
+######### body fat percentage #########################
+if ( $calculator eq 'bfc' || $calc eq 'bfn' || $calc eq 'bfb' )
+	{
+
+$form_title = 'Body Fat Estimation';
+
+if ( $calculator eq 'bfc' ){
+$basics = <<"HERE";
+According to your measurements of a $abd2 $ln_units waist and weight
+of $weight $wt_units your body fat percentage is estimated to be
+<strong>$preferred_body_fat %</strong>.  This method is not as
+accurate as a water displacement test, but is usually within 1-3%.
+Some people with an especially small waist may have a negative
+number.  If you carry all your extra weight around your middle you
+may have an elevated percentage.  Please note that this middle weight
+is a high risk factor for heart disease and stroke.  The
+<a href="$link_whr">waist to hip ratio calculator</a> can
+give you more information.
+HERE
+}
+elsif ( $calculator eq 'bfn' ){
+$basics = <<"HERE";
+According to your measurements of a $abd2 $ln_units waist, $abd1 $ln_units at naval,  $hip $ln_units at your hips, and neck circumference that is $neck $ln_units
+your body fat percentage is estimated to be
+<strong>$navy_body_fat %</strong>.  This method is not as
+accurate as a water displacement test, but is usually within 1-3%.
+Some people with an especially small waist may have a negative
+number.  If you carry all your extra weight around your middle you
+may have an elevated percentage.  Please note that this middle weight
+is a high risk factor for heart disease and stroke.  The
+<a href="$link_whr">waist to hip ratio calculator</a> can
+give you more information.
+HERE
+}
+elsif ( $calculator eq 'bfb' ){
+$basics = <<"HERE";
+Using your measurements of a $abd2 $ln_units waist and weight
+of $weight $wt_units your body fat percentage is estimated to be
+<strong>$navy_body_fat %</strong> using the U.S. Navy body fat algorithm, or
+<strong>$preferred_body_fat %</strong> using the algorithm developed by the YMCA.
+Neither method is not as
+accurate as a water displacement test, but is usually within 1-3% for most people.
+If you have a very small waist it will
+show a low value.  Conversely, if you carry all your extra weight around your middle you
+may have an elevated percentage.  Please note that this middle weight
+is a high risk factor for heart disease and stroke.  The
+<a href="$link_whr">waist to hip ratio calculator</a> can
+give you more information.
+HERE
+}
+
+if ( $sex eq 'Male' )
+		{
+		$details = <<"HERE";
+Men are typically lower in body fat percentage, averaging around 23%,
+with the ideal being 15%.  Highly fit athletes are between 5-10%.
+Remember these are guidelines; your physician should help you determine
+the ideal weight and body fat for you.
+HERE
+		}
+else
+		{
+		$details = <<"HERE";
+Average for U.S. females is around 32%, with the ideal range at 22%.
+You could have an eating disorder if you are below 10%.  Athletic
+females should be around 15-20%. Remember these are guidelines; your
+physician should help you determine the ideal weight and body fat for you.
+HERE
+		}
+$hiddens .= qq|<input type="hidden" name="weight" value="$weight" /><input type="hidden" name="sex" value="$sex" /><input type="hidden" name="height" value="$height" /><input type="hidden" name="abd1" value="$abd1" /><input type="hidden" name="abd2" value="$abd2" /><input type="hidden" name="hip" value="$hip" /><input type="hidden" name="neck" value="$neck" />|;
+
+
+	}
+######### END OF body fat section #########################
+
+######### body mass index (BMI) ###########################
+if ( $calculator eq 'bmi' )
+	{
+
+#$form_title = 'Body Mass Index (BMI) Calculation';
+$form_title = $answer{BMI}{output_tile}{$curr_lang};
+
+$basics  = $answer{BMI}{output}{$curr_lang}{$curr_lang."_1"};
+$basics .= $answer{BMI}{output}{$curr_lang}{$curr_lang."_2"};
+$basics .= $answer{BMI}{output}{$curr_lang}{$curr_lang."_3"};
+$basics .= $answer{BMI}{output}{$curr_lang}{$curr_lang."_4"};
+$basics .= $answer{BMI}{output}{$curr_lang}{$curr_lang."_5"};
+$basics .= $answer{BMI}{output}{$curr_lang}{$curr_lang."_6"};
+$basics .= $answer{BMI}{output}{$curr_lang}{$curr_lang."_7"};
+
+# $basics = <<"HERE";
+# According to your height of $height_display and weight of $weight $wt_units your
+# body mass index is <strong>$bmi</strong>. The Body Mass Index, or BMI
+# calculation has gotten a lot of press lately.&nbsp; This calculation is
+# solely based on your height and weight.&nbsp; Your recommended weight
+# range is between $low_weight and $high_weight $wt_units.  BMIs between 19.5 and
+# 24.9 are considered optimum by most professionals.  A BMI of 25 to 29.9 is
+# considered overweight and one 30 or above is considered obese. This
+# calculator is for adults ages 18 and up.&nbsp; Please consult your doctor
+# before attempting to make any significant change in your weight.
+# HERE
+
+$details = <<"HERE";
+If you are an athlete with a low bodyfat percentage (click
+<a href="$link_bfc">here</a> to calculate your bodyfat %)
+your BMI may be in the 27 to 29 range.  While this is above the
+recommended score, the strength of your cardiovascular system will offset
+the risks of the higher weight.  Your physician can give you the best
+guidance on a proper weight.
+HERE
+
+$hiddens .= qq|<input type="hidden" name="weight" value="$weight" /><input type="hidden" name="height" value="$height" />|;
+
+	}
+######### END OF body mass index ##########################
+
+######### calories burned estimation  ##########################
+if ( $calculator eq 'cbc' )
+	{
+
+$form_title = 'Calories Burned Estimation';
+
+$basics = <<"HERE";
+According to the information you provided this is an estimate of
+the calories you burn.  This should not be used to make diet or
+exercise decisions. To lose one U.S. pound (.454 kg) you must burn
+3,500 more calories than you take in. Most individuals in the U.S.
+eat about 2,200 calories per day.
+HERE
+
+my $table_start = <<"HERE";
+<table cellpadding="2" cellspacing="0" border="1">
+<tr><td height="40" width="70%"  class="calc_celltitle" bgcolor="$cells_title">Activity</td><td align="right" height="40" width="30%"  class="calc_celltitle" bgcolor="$cells_title">Calories burned</td></tr>
+HERE
+
+my $table_middle;
+my $even = 0;
+my @num_sort = sort {
+		$calories{$a} <=> $calories{$b}
+		} keys %calories;
+foreach my $key ( @num_sort)
+	{
+	if ( $even )
+		{
+		$even = 0;
+		$td = qq|bgcolor="$cells_even" |;
+		$td1 = qq|class="calc_celltext_even"|;
+		}
+	else
+		{
+		$even = 1;
+		$td = qq|bgcolor="$cells_odd"|;
+		$td1 = qq|class="calc_celltext_odd"|;
+		}
+	my $t1 = main::commify($calories{$key});
+	$table_middle .= qq|<tr $td><td $td1>$key</td><td align="right" $td1>$t1</td></tr>\n|;
+	}
+
+my $table_end = <<"HERE";
+<tr><td height="40" width="70%" class="calc_celltitle" bgcolor="$cells_title">Total Calories Burned</td><td align="right" height="40" width="30%" class="calc_celltitle" bgcolor="$cells_title">$total_calories </td></tr></table>
+HERE
+
+$table_out = "$table_start\n$table_middle\n$table_end";
+
+$hiddens .= qq|<input type="hidden" name="weight" value="$weight" />|;
+
+	}
+######### END OF calories burned estimation  ##########################
+
+######### daily energy expenditure  ##########################
+if ( $calculator eq 'dee' )
+	{
+
+$form_title = 'Daily Energy Expenditure';
+
+$basics = <<"HERE";
+According to your age of $age and measurements of $height_display tall and weight of $weight $wt_units you will burn about
+<strong>$daily_caloric_requirements</strong> calories a day just to keep going.  You have to burn 3500 calories to
+lose one pound, or take in 3500 calories more than you burn to gain one pound.  Your physician should help you determine the ideal weight for you.
+HERE
+
+$details = <<"HERE";
+HERE
+
+$hiddens .= qq|<input type="hidden" name="weight" value="$weight" /><input type="hidden" name="sex" value="$sex" /><input type="hidden" name="height" value="$height" /><input type="hidden" name="age" value="$age" />|;
+
+	}
+######### END OF daily energy expenditure  ##########################
+
+######### due date calculator  ##########################
+if ( $calculator eq 'due' )
+	{
+
+$form_title = 'Due Date Estimator';
+
+$basics = <<"HERE";
+Congratulations! Here are the important dates for your pregnancy:
+HERE
+
+$details = <<"HERE";
+<UL><LI>Conception - $conception<br>Conception - the day you became pregnant - is estimated to have occurred about 14 days after the first day of your last menstrual period.</li>
+<LI>Highest fetal risk - $fetal_risk thru $fetal_risk_end</li>
+<LI>Organs begin to form - $organ_start thru $organ_end</li>
+<LI>End of first trimester - $first_trimester<br>Pregnancy is divided into 3 trimesters - each trimester being about 12 weeks or 3 months. By the end of the first trimester, the baby is only 1 in. long; but during this trimester (weeks 4-12), every key organ has begun to form.  While the organs are forming, the baby is most susceptible to harm from inadequate diet and exposure to infections, medications, X-rays, etc.  Therefore, this is the time during which the baby is at the most risk of developing defects or being miscarried.</LI>
+<LI>Baby can survive outside the womb - $preemie_survival</li>
+<LI>End of second trimester - $second_trimester<br>The second trimester is weeks 13-27 of your pregnancy.  During this time, the bones, eyes, brain, and nervous and respiratory systems have formed enough that the baby, if delivered, could survive, but the possibility of complications is high. </li>
+<LI>DUE DATE - $due_date<br>The Due Date is estimated to be 40 weeks from the first day of your last menstrual period - it is only an estimate.  Only 5% of all women actually deliver on their due date.</li></ul>
+<p>Your next step - see a health care provider to confirm you are pregnant and begin prenatal care.  Ask your primary care physician for referrals, as well as friends and family who have recently been pregnant.  If you don’t have health care insurance, check with your local public health or social service agency about resources that may be available to you.  For example, in California, there is a BabyCal program that helps cover the costs of prenatal care.
+<p>During the prenatal visits, your health care provider will:
+<UL><li>Teach you about each stage of your pregnancy;</li>
+<li>Check any medical conditions you may already have (such as high blood pressure);</li>
+<li>Monitor the baby’s development;</li>
+<li>Test you and the baby for possible health problems (such as gestational diabetes); and</li>
+<li>Tell you about services that may be of interest or help, such as support groups, the WIC program (a special nutritional program for Women, Infants and Children), or childbirth education classes.</li>
+</ul><p>The typical schedule for prenatal visits is:
+<UL>
+<li>Weeks 4 to 28: 1 visit every 4 weeks.</li>
+<li>Weeks 28 to 36: 1 visit every 2-3 weeks.</li>
+<li>Weeks 36 to birth: 1 visit per week.</li></ul>
+<p>Congratulations and best wishes for a health pregnancy and baby!
+HERE
+
+$hiddens .= qq|<input type="hidden" name="month" value="$month" /><input type="hidden" name="day" value="$day" /><input type="hidden" name="year" value="$year" />|;
+	}
+######### END OF due date calculator  ##########################
+
+######### frame size calculator  ##########################
+if ( $calculator eq 'fsz' )
+	{
+
+$form_title = 'Frame Size';
+
+if ( $wrist )
+		{
+		$basics = <<"HERE";
+You are $sex with a height of $height_display and a wrist circumference of $wrist
+$ln_units.  You are considered to have a <strong>$size</strong> frame.
+HERE
+		}
+else
+		{
+		$basics = <<"HERE";
+You are $sex with a height of $height_display and an elbow breadth of $elbow
+$ln_units.  You are considered to have a <strong>$size</strong> frame.
+HERE
+		}
+
+$details = <<"HERE";
+HERE
+
+$hiddens .= qq|<input type="hidden" name="height" value="$height" /><input type="hidden" name="sex" value="$sex" /><input type="hidden" name="wrist" value="$wrist" /><input type="hidden" name="elbow" value="$elbow" />|;
+
+	}
+######### END OF frame size calculator  ##########################
+
+######### ideal weight calculation  ##########################
+if ( $calculator eq 'iwc' )
+	{
+
+$form_title = 'Ideal Weight Calculation';
+
+$basics = <<"HERE";
+According to your height of $height_display your ideal healthy weight is
+<strong>$mid_weight</strong> $wt_units. This is based on the middle point of the
+recommended body mass index score of 22.5 for your height.  Your recommended
+weight range is between $low_weight and $high_weight $wt_units.
+HERE
+
+$details = <<"HERE";
+This calculation is for adults ages 18 and up.&nbsp; Please consult your doctor
+before attempting to make any significant change in your weight.
+HERE
+
+$hiddens .= qq|<input type="hidden" name="sex" value="$sex" /><input type="hidden" name="height" value="$height" />|;
+
+	}
+######### END OF ideal weight calculation  ##########################
+
+######### lean body mass  ##########################
+if ( $calculator eq 'lbm' )
+	{
+
+$form_title = 'Lean Body Mass Estimation';
+
+if ( $sex eq 'Female')
+		{
+$basics = <<"HERE";
+According to your measurements; weight of $weight $wt_units and height
+of $height_display your lean body weight is estimated to be
+<strong>$lbm2</strong> $units. Since the ideal body fat percentage
+for women is 22%.  Your ideal lean body weight is $ideal $wt_units. Remember
+these are guidelines; your physician should help you determine the ideal
+weight and body fat for you.
+HERE
+		}
+else
+		{
+$basics = <<"HERE";
+According to your measurements; weight of $weight $wt_units and height
+of $height_display your lean body weight is estimated to be
+<strong>$lbm2</strong> $wt_units. Since the ideal body fat percentage for
+men is 15%.  Your ideal lean body weight is $ideal $wt_units.  Remember
+these are guidelines; your physician should help you determine the ideal
+weight and body fat for you.
+HERE
+		}
+$details = <<"HERE";
+Your lean body mass is made up of the nonfat parts of your body like
+muscle, organs, blood and water.  Muscle burns more calories for you
+during exercise and rest.  You definitely want to increase your metabolism
+by increasing muscle and losing primarily fat.
+HERE
+
+$hiddens .= qq|<input type="hidden" name="weight" value="$weight" /><input type="hidden" name="sex" value="$sex" /><input type="hidden" name="height" value="$height" />|;
+
+	}
+######### END OF lean body mass  ##########################
+
+######### lose one pound  ##########################
+if ( $calculator eq 'lop' )
+	{
+
+$form_title = 'Lose One Pound';
+
+$basics = <<"HERE";
+HERE
+
+my $table_start = <<"HERE";
+<table cellpadding="2" cellspacing="0" border="1">
+<tr><td height="40" width="70%"  class="calc_celltitle" bgcolor="$cells_title">Activity</td><td align="right" height="40" width="30%"  class="calc_celltitle" bgcolor="$cells_title">Minutes to lose one pound</td></tr>
+HERE
+
+my $table_middle;
+my $even = 0;
+my @sorted = sort { $how_long{$a} <=> $how_long{$b} } keys %how_long ;
+foreach my $key ( @sorted)
+	{
+	if ( $even )
+		{
+		$even = 0;
+		$td = qq|bgcolor="$cells_even" |;
+		$td1 = qq|class="calc_celltext_even"|;
+		}
+	else
+		{
+		$even = 1;
+		$td = qq|bgcolor="$cells_odd"|;
+		$td1 = qq|class="calc_celltext_odd"|;
+		}
+	my $t1 = main::commify($how_long{$key});
+
+	$table_middle .= qq|<tr $td><td $td1>$key</td><td align="right" $td1>$t1</td></tr>\n|;
+	}
+
+my $table_end = <<"HERE";
+</table>
+HERE
+
+$table_out = "$table_start\n$table_middle\n$table_end";
+
+$hiddens .= qq|<input type="hidden" name="weight" value="$weight" /><input type="hidden" name="age" value="$age" />|;
+
+	}
+######### END OF lose one pound  ##########################
+
+######### lose weight or calorie  ##########################
+if ( $calculator eq 'lwc' )
+	{
+
+$form_title = 'Lose weight or calorie';
+
+$basics = <<"HERE";
+HERE
+
+my $table_start = <<"HERE";
+<table cellpadding="2" cellspacing="0" border="1">
+<tr><td height="40" width="65%%"  class="calc_celltitle" bgcolor="$cells_title">Activity</td><td align="right" height="40" width="35%"  class="calc_celltitle" bgcolor="$cells_title">Minutes to lose weight or calorie</td></tr>
+HERE
+
+my $table_middle;
+my $even = 0;
+my @sorted = sort { $how_long{$a} <=> $how_long{$b} } keys %how_long ;
+foreach my $key ( @sorted)
+	{
+	if ( $even )
+		{
+		$even = 0;
+		$td = qq|bgcolor="$cells_even" |;
+		$td1 = qq|class="calc_celltext_even"|;
+		}
+	else
+		{
+		$even = 1;
+		$td = qq|bgcolor="$cells_odd"|;
+		$td1 = qq|class="calc_celltext_odd"|;
+		}
+	my $t1 = main::commify($how_long{$key});
+
+	$table_middle .= qq|<tr $td><td $td1>$key</td><td align="right" $td1>$t1</td></tr>\n|;
+	}
+
+my $table_end = <<"HERE";
+</table>
+HERE
+
+$table_out = "$table_start\n$table_middle\n$table_end";
+
+$hiddens .= qq|<input type="hidden" name="weight" value="$weight" /><input type="hidden" name="age" value="$age" />|;
+
+	}
+######### END OF lose weight or calorie  ##########################
+
+
+######### ovulation estimator  ##########################
+if ( $calculator eq 'ova' )
+	{
+
+$form_title = 'Ovulation Estimator';
+
+$basics = <<"HERE";
+DO NOT USE THIS INSTEAD OF BIRTH CONTROL - THIS IS ONLY FOR PREGNANCY PLANNING!
+HERE
+
+$details = <<"HERE";
+Your probable date of ovulation is $ovulation_day.</p>
+<p>If you want to get pregnant, then you should have sexual intercourse 2-3 days before this day through 1 day after.  But be patient if you don’t get pregnant right away.   Among normally, fertile couples, only 25 percent get pregnant during each cycle.  Most women (75-85 percent) will get pregnant within one year. </p>
+<p>If you are looking are other ways to determine when you are ovulating, one common method is to chart your body temperature.  Once you ovulate, your temperature will increase by .5 - 1.6 degrees.  After monitoring your temperature for a couple of months, you should be able to predict your ovulation date for the coming month and plan to have sex 2-3 days before the temperature rise is expected.</p>
+<p>You can also buy an ovulation predictor kit at a drugstore without a prescription.  This kit detects the rise in luteinizing hormone (LH) that occurs right before ovulation. It is pretty easy to use and can be more reliable than the temperature method.
+HERE
+
+$hiddens .= qq|<input type="hidden" name="month" value="$month" /><input type="hidden" name="day" value="$day" /><input type="hidden" name="year" value="$year" /><input type="hidden" name="days_in_cycle" value="$days_in_cycle" />|;
+	}
+######### END OF ovulation estimator ##########################
+
+######### smoking costs calculator  ##########################
+if ( $calculator eq 'smc' )
+	{
+
+$form_title = 'Cost of Smoking Cigarettes';
+
+$basics = <<"HERE";
+These are your measurable costs.  You will also save on future medical
+bills as smoking is the number one preventable cause of illness in the
+United States. Based on your input that you smoke $cigarettesperday cigarettes
+a day, and that you pay \$$priceperpack for each pack (with $cigarettesperpack
+cigs in each pack). If you quit smoking today you will save:
+HERE
+
+$details = <<"HERE";
+<ul><li>\$$year1 - in the next year.  Cigarettes not smoked = $cig1</li>
+<li>\$$year3 - over the next three years.  Cigarettes not smoked = $cig3</li>
+<li>\$$year5 - during the next five years.  Cigarettes not smoked = $cig5</li>
+</ul>
+HERE
+
+$hiddens .= qq|<input type="hidden" name="cigarettesperday" value="$cigarettesperday" /><input type="hidden" name="cigarettesperpack" value="$cigarettesperpack" /><input type="hidden" name="priceperpack" value="$priceperpack" />|;
+
+	}
+######### END OF smoking costs calculator  ##########################
+
+######### target heart rate  ##########################
+if ( $calculator eq 'thr' )
+	{
+
+$form_title = 'Target Heart Rate';
+
+$basics = <<"HERE";
+According to your age of $age and the recommendations of the American
+College of Sports Medicine your target heart rate (beats per minute) is
+listed below for your CURRENT fitness level.  If you are below average
+fitness	please consult your physician before engaging in any new
+exercise program.
+HERE
+
+$table_out = <<"HERE";
+<table cellpadding="2" cellspacing="0" border="1">
+<tr><td width="50%" bgcolor="$cells_title" class="calc_celltitle">Fitness Level</td><td align="right" bgcolor="$cells_title" width="25%" class="calc_celltitle">beats/ minute</td><td align="right" bgcolor="$cells_title" width="25%" class="calc_celltitle">beats/ 10 seconds</td></tr>
+<tr bgcolor="#99CC99"><td width="50%" class="calc_celltext_odd" bgcolor="$cells_odd">Average fitness</td><td align="right" bgcolor="$cells_odd" width="25%" class="calc_celltext_odd">$tmedlow - $tmedhigh</td><td align="right" bgcolor="$cells_odd" width="25%" class="calc_celltext_odd">$tseclow - $tsecmhigh</td></tr>
+<tr bgcolor="#FFFFCC"><td width="50%" class="calc_celltext_even" bgcolor="$cells_even">Superior fitness</td><td align="right" width="25%" bgcolor="$cells_even" class="calc_celltext_even">$tmed - $thigh</td><td align="right" bgcolor="$cells_even" class="calc_celltext_even">$tsecmhigh - $tsechigh</td></tr>
+</table>
+HERE
+
+$hiddens .= qq|<input type="hidden" name="age" value="$age" />|;
+
+	}
+######### END OF target heart rate  ##########################
+
+######### waist to hip ratio  ##########################
+if ( $calculator eq 'whr' )
+	{
+
+$form_title = 'Waist to Hip Ratio';
+
+$basics = <<"HERE";
+You have a waist to hip ratio of $ratio.  The information you
+entered: Sex = $sex, waist = $waist $ln_units and hip = $hip $ln_units.
+HERE
+
+if ( $shape eq 'pear' )
+		{
+$details = <<"HERE";
+Your shape puts you at reduced risk of coronary heart disease, diabetes
+and stroke.  Frequently referred to as pear shape, you tend to keep fat
+off your midsection and more on your hips. Our bodies do not convert
+this lower body fat as readily as midsection fat, which keeps
+cholesterol down.
+HERE
+		}
+else
+		{
+$details = <<"HERE";
+Your shape puts you at increased risk of coronary heart disease,
+diabetes and stroke. Frequently referred to as apple shape, you
+tend to keep fat at your midsection and less on your hips. Our
+bodies convert this upper body fat to energy whenever your body
+runs short.  This raises cholesterol and blood pressure.
+HERE
+		}
+
+$hiddens .= qq|<input type="hidden" name="waist" value="$waist" /><input type="hidden" name="sex" value="$sex" /><input type="hidden" name="hip" value="$hip" />|;
+
+	}
+######### END OF waist to hip ratio  ##########################
+
+######### END OF calculator specific sections #################
+
+$title = $form_title;
+
+######### Here we format the output, just take the pieces we built
+######### above and dump them into $calc_results,
+
+if ( $calculator eq 'cbc' ||
+	 $calculator eq 'lop' ||
+	 $calculator eq 'lwc' ||
+	 $calculator eq 'thr' )
+	{
+$calc_results = <<"HERE";
+<br />$basics<br /> <br />$table_out
+HERE
+	}
+else
+	{
+$calc_results = <<"HERE";
+<br />$basics<br /> <br />$details</p>
+HERE
+	}
+
+####### All done setting values, now we open the standard header and fill that in.
+###### DO NOT REMOVE THESE EMPTY QUOTES ###################################
+
+'';
+}{
+# this is the standard header for the calculator output. You can either
+# have an HTML page with $calc_results enclosed in braces and use the default format
+# for each calculator or you can drop in each result element yourself.
+Text::Template::fill_in_file($directory.$template_set."/hsheader.html", PACKAGE => __PACKAGE__ ) or die $Text::Template::ERROR;
+}

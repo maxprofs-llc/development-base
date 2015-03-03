@@ -1,0 +1,25 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}batch_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}drc_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}batch_header.tmpl", PACKAGE => __PACKAGE__ );
+}
+<div class="HSstyle">
+	<table width="500" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+		    <td width="12">&nbsp;</td>
+			<td class="HSbodytext">
+			{$batch_content}
+			 </td>
+  </tr>
+</table>
+</div>
+{$copyright}<p>&nbsp;</p>
+

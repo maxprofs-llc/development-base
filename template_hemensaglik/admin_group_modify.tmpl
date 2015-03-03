@@ -1,0 +1,22 @@
+{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+
+<h1>{$client} Health Assessment Group Administration</h1>
+<hr />
+<center><b><span style="color: #660000;">{$display_message}</span></b></center>
+
+{ 
+$OUT .= qq|
+<form method="POST" action="$config{admin_dir}admin_group_modify.cgi" name="group_form">
+	<input type="hidden" name="action" value="update">
+		<table width="500px" cellspacing="2" cellpadding="6" border="0">
+		<tr><td class="maintext-b">Please enter the group Id to modify:</td>
+			<td><input class="maintext-n" type="text" name="groupID" maxlength="75"/></td></tr>
+
+		<tr><td class="maintext-b" width="180px"></td>
+			<td id="div_add_option"><input class="maintext-b" type="submit" name="submit" value="Submit" /></td></tr>
+		</table>
+</form><p><a href=$config{admin_dir}admin_group_results.cgi>View group list</a></p>|;
+'';
+}
+<hr>
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

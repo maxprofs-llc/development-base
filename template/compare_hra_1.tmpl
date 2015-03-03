@@ -1,0 +1,66 @@
+{
+# this part fills in a file that sets language variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}language.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}compare_hra_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE => __PACKAGE__ );
+}    <!-- Template: hra_1.tmpl -->
+	<!-- Templates called: hra_variables.tmpl, hra_links.tmpl, {$footer_file}, {$config{variables_template}},  {$header_file} -->
+	       <div class="HSstyle">
+		<table class="HSassessments">
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td align=left><img src="images/global/trans.gif" width="1" height="22"><br>
+            {$hra_title}<br>
+            &nbsp;<br>
+            <img src="images/global/trans.gif" width="1" height="18"><br>
+            <span class="HStitle">{$lang{$current_language}{hra_msg6}}</span>
+            <img src="images/global/trans.gif" width="1" height="10"></td>
+        </tr>
+        <tr>
+          <td width="12">&nbsp;</td>
+          <td valign="top">{$status_message}
+            <table width="100%" border="1" cellspacing="0" cellpadding="4" bordercolor="#000099">
+ 			{
+
+				my $oline = ""  ;
+				foreach my $hash_key(sort keys %x_user){ 
+					next if $hash_key eq 'risk_data';
+					next if $hash_key eq 'config';
+					$oline .= "<tr><td class=\"bodytext\">$hash_key </td><td>$x_user{$hash_key}</td><td> $y_user{$hash_key}</td></tr>"; 
+				}
+
+				$oline;
+			}
+			</table></td>
+			</tr>
+              <tr valign="bottom">
+                <td height="50" align="left"></td>
+                <td align="right" height="50"><input type="image" border=0 name="compare_hra_3.tmpl" value="compare_hra_3.tmpl" {$next}>
+			{ $hidden_cgi_fields }
+		</td>
+              </tr>
+            </table></form>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td class="HSassessmentsGap"></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td class="HScopyright">{$copyright}</td>
+        </tr>
+      </table>
+      </div>
+    <!-- Template: hra_1.tmpl End -->
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$footer_file", PACKAGE => __PACKAGE__ );
+}

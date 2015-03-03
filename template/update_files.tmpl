@@ -1,0 +1,25 @@
+{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+
+<h1>Data files and standard templates administration</h1>
+<br>
+<b><span style="color: #660000;">{$display_message}</span></b>
+<br><br><br>
+<table id="assessment_table">
+<tr class="maintext-b"><td>File name</td><td>Local version</td><td>Remote(Helathstatus) server version</td><td>Status</td><td>Update</td></tr>
+{
+$html='';
+	foreach my $file (keys %version_hash) {
+		$html .= qq|<tr><td>$file</td><td>$version_hash{$file}{local_file_date}</td><td>$version_hash{$file}{server_file_date}</td><td>|;
+		if($version_hash{$file}{old}) {
+			$html .= qq|Not updated</td><td><a href="$config{admin_dir}get_file.cgi?update=1&filename=$file&local_config=$version_hash{$file}{local_config}">Update</a>|;
+		} else {
+			$html .= qq|Updated</td><td>|;
+		}
+		$html .= qq|</td></tr>|;
+	}
+	$html;
+}
+</table>
+
+<DIV ID="cal_div" STYLE="position:absolute;visibility:hidden;background-color:white;layer-background-color:white;"></DIV>
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

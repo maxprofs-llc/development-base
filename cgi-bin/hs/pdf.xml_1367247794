@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" standalone="yes" ?>
+
+ 
+
+
+
+<PDF PageMode="UseNone" PageLayout="SinglePage" PageSize="Letter" FindHyperlink="1" Author="HealthStatus.com, Inc.">
+<Image Width="137" Height="105" File="/usr/local/www/vhosts/managed2/base_mod/htdocs/images/global/hs_logo_77.jpg" Name="Im0" />
+<Image Width="15" Height="14" File="/usr/local/www/vhosts/managed2/base_mod/htdocs/images/global/risk_green.jpg" Name="Im1" />
+<Image Width="15" Height="14" File="/usr/local/www/vhosts/managed2/base_mod/htdocs/images/global/risk_yellow.jpg" Name="Im2" />
+<Image Width="15" Height="14" File="/usr/local/www/vhosts/managed2/base_mod/htdocs/images/global/risk_red.jpg" Name="Im3" />
+<Image Width="303" Height="16" File="/usr/local/www/vhosts/managed2/base_mod/htdocs/images/global/color_guide.jpg" Name="Im9" />
+<Page Name="Pg6" Width="612" Height="792">
+<Graph Rect="0, 0, 612, 792" Name="Gr12">
+	<ShowImage Name="Im0" Left="330" Bottom="680" Width="137"  Flip="0" />
+	<ShowText X="580" Y="60" Text="I Did It!" FontFace="Helvetica" Color="E0E0E0" Width="275" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+	<ShowText X="60" Y="20" Text="Copyright (c) 1998-2013 HealthStatus.com, Inc. all rights reserved." FontFace="Arial" FontSize="8" Leading="8" Color="AAAAAA" />
+</Graph>
+	<Text Name="Txt0" Rect="60, 60, 552, 670" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
+	<![CDATA[
+
+^p      ^P 
+
+^p      ^P 
+
+^p      ^P 
+
+^p ^f:size=24&color=333366&a=Center  ^b Certificate of Completion  ^B ^F ^P 
+
+^p ^f:size=24&color=333366&a=Center of ^F ^P 
+
+^p ^f:size=24&color=333366&a=Center ^b Diabetes Risk Assessment ^B ^F ^P
+
+^p      ^P 
+
+^p ^f:size=14&color=333366&a=Center Completed on: 04-02-2010  ^F ^P
+
+^p ^f:size=14&color=333366&a=Center by: ^b Jane Doo ^B a Female born 1/1 ^F ^P  
+
+^p      ^P 
+
+]]>
+</Text>
+</Page></PDF>

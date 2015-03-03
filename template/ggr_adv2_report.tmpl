@@ -1,0 +1,48 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+<table width="770" border="0" cellspacing="0" cellpadding="0">
+	<form method="POST" action="{$config{ggr_adv_batch_process}}" name=frm>{$hidden_values}
+	  <tr align="center">
+	    <td height="40" colspan="2" class="pageheading">Batch Reporting Setup</td>
+          </tr>
+	  <tr>
+	     <td width="202" valign="top" class="maintext-b">Select a Saved Report:</td>
+			<td width="568" class="maintext-n"><select name="use_saved" size="1" class="maintext-n">
+              <option value="0">List of saved or predefined reports</option>
+            { my $saved_report='';
+              foreach my $report(sort keys %saved_reports_list){
+              		$saved_report .= '<option value="' . $report . '">' . $saved_reports_list{"$report"} . '</option>';
+              		}
+              $saved_report;
+              }
+            </select>&nbsp;&nbsp;<span class="HSerror">{$error_report}</span><br>(create a saved report by running the <a href="{$config{ggr_adv}}">group report program</a> and entering a name in the save report area.)<br><hr></td>
+		</tr>
+	  <tr>
+		  <td valign="top" class="maintext-b">Select a Batch Group List to Process</td>
+		  <td class="maintext-n"><table width="85%"  border="0" cellspacing="0" cellpadding="1">
+
+{	my $html_output = qq|<tr><td colspan=2 class="maintext-b">&nbsp;</td></tr>|;
+        $html_output  .= qq|<tr><td class="maintext-n">Group List</td><td><select name="category">|;
+        $html_output .= '<option value="0"></option>';    
+	foreach my $group (@category_list)
+        {
+            if($group->{category_name} ne '' ||$group->{category_name} ne " ")
+            {
+                $html_output .= '<option value="'.$group->{category_name}.'">'.$group->{category_name}.'</option>';
+            }
+        }
+        $html .= '</select></td></tr>';
+	$html_output;
+}
+          </table><span class="HSerror">{$error_category}</span><br><hr></td>
+	  </tr>
+		<tr>
+		  <td class="maintext-n">&nbsp;</td>
+		  <td class="maintext-n"><input name="Submit" type="submit" class="maintext-b" value="Submit"></td>
+	  </tr>
+
+	</form>
+	  </tr>
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

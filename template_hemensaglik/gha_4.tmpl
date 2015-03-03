@@ -1,0 +1,138 @@
+{
+# this part fills in a file that sets language variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}assessment_language.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}hemensaglik_gha_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}hemensaglik_gha_links.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE => __PACKAGE__ );
+}     <!-- Template: gha_4.tmpl from dir template_hemensaglik -->
+	<!-- Templates called: gha_variables.tmpl, hemensaglik_gha_links.tmpl, {$footer_file}, {$config{variables_template}},  {$header_file} -->
+<!-- ass-top-img section start here-->
+<div id="ass-top-img" class="steptxt">
+<p class="pad26">{$gha_title}</p>
+</div>
+<!-- ass-top-img section end here-->
+
+<div id="ass-bg" class="content">
+<p class="pad27">
+{$lang{$current_language}{gha_intro}} 
+</p>
+</div> 
+
+<!-- risk-top-img section start here-->
+<div id="risk-top-img" class="steptxt">
+
+<p class="pad26">{$gha_subtitle} {$continued}</p>
+</div>
+<!-- risk-top-img section end here-->
+
+
+<p><img src="images/ass_06.jpg" alt="" /></p> 
+
+<br/>
+<div id="risk-bg">
+<table width="967" cellspacing="0" style="margin-left: 30px">
+
+  <tr>
+  { my $html;
+     if($subdomain eq 'hemensaglik'){
+                $html = qq| <td style="padding-top: 8px; padding-bottom: 10px; padding-right: 360px;" class="content">|;
+			}else{
+				$html = qq| <td style="padding-top: 8px; padding-bottom: 10px; padding-right: 70px;" class="content">|;
+    }
+}
+ <!-- <td style="padding-top: 8px; padding-bottom: 10px; padding-right: 70px;" class="content">-->
+<form method="post" action="{$pager}">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td colspan="2" >
+                 <p><b>{$date} {$lang{$current_language}{for}} {$name}</b></p><br>
+                </td>
+              </tr>
+              <tr>
+          	<td class="HSassessmentsGap"></td>
+              </tr>
+             <tr>
+                <td colspan="2" >
+                  <p ><span ><b>{$lang{$current_language}{gha_msg8}} {$lang{$current_language}{gha_msg9}}</b></span></P><br>
+      			   <UL>{
+					$mz='';					
+					$mz = "<li>$lang{$current_language}{weight}: $weight $weight_units</li><li>$lang{$current_language}{height}: $height</li>";
+					$mz .= "<li>$lang{$current_language}{bmi}: $bmi</li>";
+					$mz .= "<li>$lang{$current_language}{waist}: $waist cm</li>" if $waist;
+					if($hip){
+						$mz.= "<li>$lang{$current_language}{hip} : $hip  - $lang{$current_language}{waist_hip_ratio}: $waist_to_hip</li>";
+					}
+					if($bodyfat){
+						$mz.= "<li>$lang{$current_language}{body_fat1} : $bodyfat %</li>";
+					}
+					$mz .= "<li>$lang{$current_language}{blood_pressure}:";
+					if($bp_sys){
+						$mz.= " $bp_sys/$bp_dias</li>";
+					}else{
+						$mz.= " $bp_check</li>";
+					}
+					if($cholesterol){
+						$mz.= "<li>$lang{$current_language}{total_cholesterol}: $cholesterol</li>";
+					}else{
+						$mz.= "<li>$lang{$current_language}{total_cholesterol}: $cholesterol_check</li>";
+					}
+					if($ldl){
+						$mz.= "<li>$lang{$current_language}{ldl}: $ldl</li>";
+					}
+					if($hdl){
+						$mz.= "<li>$lang{$current_language}{hdl}: $hdl</li>";
+					}
+					if($cholesterol_ratio){
+						$mz.= "<li>$lang{$current_language}{cholesterol_ratio}: $cholesterol_ratio</li>";
+					}
+					if($triglycerides){
+						$mz.= "<li>$lang{$current_language}{triglycerides}: $triglycerides</li>";
+					}
+					if($glucose){
+						$mz.= "<li>$lang{$current_language}{glucose}: $glucose</li>";
+					}
+					if($HgA1C){
+						$mz.= "<li>HgA1C: $HgA1C</li>";
+					}
+					$mz .= "</UL>";
+					$mz;
+				}<br>
+      			   <p ><span ><b>{$lang{$current_language}{risk_assessment}}</b></span><br>{$smoke_message}</P>
+      			   <p >{$chew_message} {$other_smoke_message}</p><br>
+      			   <p >{$weight_message}</p><br>
+      			   <p >{$seat_belt_message} {$speed_message}</P><br>
+			   <p >{$drink_and_drive_message}</p><p>&nbsp;</p><br>
+		</td>
+              </tr>
+                <tr>
+				<td width=200>
+				<input type="image" border=0 name="gha_3.tmpl" value="gha_3.tmpl" src="https://hemensaglik.hra.net/images/hemensaglik_back.png"></td>
+				<td width=767 style="padding-top: 8px; padding-bottom: 10px; text-align:right">
+				<input type="image" border=0 name="gha_5.tmpl" value="gha_5.tmpl" src="https://hemensaglik.hra.net/images/hemensaglik_next.png">{ $hidden_cgi_fields }
+				</td>
+				<td>&nbsp;</td>
+            </tr>
+            </table></form>
+  
+
+  
+  
+</td>
+</tr>
+             
+</table>
+</div>
+    <!-- Template: gha_4.tmpl End -->
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$footer_file", PACKAGE => __PACKAGE__ );
+}

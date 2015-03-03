@@ -1,0 +1,8 @@
+{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+
+<h1>Error</h1>
+<span class="error">{$msg}</span>
+<br /><br /><a href="javascript:void;" onClick="history.go(-1);">Back</a>
+
+
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}

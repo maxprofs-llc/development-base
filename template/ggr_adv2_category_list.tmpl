@@ -1,0 +1,37 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{Text::Template::fill_in_file("$config{template_directory}admin_header.tmpl", PACKAGE => __PACKAGE__ );}
+<table width="770" border="0" cellspacing="0" cellpadding="0">
+<tr align="center">
+	    <td height="40" colspan="2" class="pageheading">Group List for Batch Processing</td>
+</tr>
+<tr>
+        <td class="maintext-b">
+                Batch Group List
+        </td>
+        <td class="maintext-b">
+                 Groups in List
+        </td>
+        <td class="maintext-b">
+                 Edit
+        </td>
+        <td class="maintext-b">
+                 Delete
+        </td>
+</tr>
+{
+        my $listings = '';
+        foreach my $group (@group_list)
+        {
+            $listings .= '<tr><td class="maintext-n">'.$group->{category_name}.'</td><td><select name="group">';
+            my @each = split(',',$group->{groups});
+            foreach (@each){
+            	$listings .= qq|<option value="$_">$_</option>|;
+            	}
+            $listings .= '</select></td><td> <a href="'.$config{category_create}.'?action=edit&gid='.$group->{category_name}.'">Edit</a></td><td><a href="'.$config{category_create}.'?action=delete&gid='.$group->{category_name}.'">Delete</a></td></tr>';
+        }
+        $listings;        
+}
+</table>
+{Text::Template::fill_in_file("$config{template_directory}admin_footer.tmpl", PACKAGE => __PACKAGE__ );}
