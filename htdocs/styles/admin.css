@@ -1,0 +1,280 @@
+p {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	font-weight: normal;
+	color: #333333;
+	text-decoration: none;
+}
+
+h1 { 
+	color: black;
+	font-size: 14px;
+}
+
+h3 { 
+	color: black;
+	font-size: 18px;
+}
+
+body { 
+	padding: 5px; 
+	background-color: white; 
+	height: 500px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	font-weight: normal;
+	color: #333333;
+	text-decoration: none;
+}
+
+.indent {
+	margin-left: 30px;
+	}
+
+#main_pane { 
+	background-color: white; 
+	border: 1px solid #666666;
+	padding: 15px;
+	vertical-align: top;
+	height: 500px;
+}
+
+#headpane { 
+	background-color: #cccccc;
+	border: 1px solid #eeeeee;
+	padding: 8px;
+	vertical-align: top;
+	margin-top: 20px;
+	width: 500px;
+	font-size: 13px;
+	font-weight: normal;
+	color: #333333;
+	text-decoration: none;
+}
+
+#sidebar { 
+	background-color: #cccccc;
+	border: 1px solid #eeeeee;
+	padding: 8px;
+	vertical-align: top;
+	margin-top: 20px;
+	width: 200px;
+	font-size: 11px;
+	font-weight: normal;
+	color: #333333;
+	text-decoration: none;
+}
+
+#sidebar h1 { 
+	font-size: 12px;
+	font-weight: bold;
+	color: #000066;
+	margin-bottom:  5px;
+}
+
+#sidebar ul { margin-top: 5px; }
+
+#sidebar a, #sidebar a:hover { 
+	text-decoration: none; 
+	color: #6666FF;
+	font-size: 11px;
+	font-weight: normal;
+}
+
+
+#assessment_table {
+	border: 1px solid #999999;
+	border-collapse: collapse;
+}
+
+#assessment_table td { 
+	padding: 5px 10px 5px 10px;
+	border: 1px solid #333333;
+}
+
+#headbar { 
+	background-color: #cccccc;
+	border: 1px solid #eeeeee;
+	padding: 8px;
+	vertical-align: top;
+	margin-top: 10px;
+	font-size: 11px;
+	font-weight: normal;
+	color: #333333;
+	text-decoration: none;
+}
+
+.maintext-n {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: normal;
+	color: #333333;
+	text-decoration: none;
+}
+.pageheading {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	color: #0066CC;
+}
+.maintext-b {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #333333;
+}
+.maintext-err {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #C00000;
+}
+
+.biglink  { 
+	text-decoration: none; 
+	font-size: 12px;
+	font-weight: bold;
+	color: #000066;
+	margin-bottom:  5px;
+}
+
+#sidebar a.biglink  { 
+	text-decoration: none; 
+	font-size: 12px;
+	font-weight: bold;
+	color: #000066;
+	margin-bottom:  5px;
+}
+
+#sidebar A.biglink:hover { 
+	text-decoration: none; 
+	font-size: 12px;
+	font-weight: bold;
+	color: #000066;
+	margin-bottom:  5px;
+}
+
+#selections {
+	position: relative;
+	visibility: visible;
+}
+#accounting {
+	position: relative;
+	visibility: visible;
+}
+
+.ggr_status0 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: normal;
+	color: #333333;
+	text-decoration: none;
+}
+
+.ggr_status1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: normal;
+	color: #333333;
+	text-decoration: none;
+}
+.ggr_status2 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #333333;
+	text-decoration: none;
+}
+
+div.box_div {      
+   border: thin solid #000000;
+   padding:5px;            
+   margin:9px;
+   color:#0088FF;
+   width:75%;   
+   float:left;
+}
+div.div_ok {           
+   border: thin solid #0088FF;
+   padding:2px;            
+   margin:2px;
+   color:#0088FF;
+   float:left;  
+}               
+div.div_notok {        
+   border: thin solid #FF0000;
+   padding:2px;            
+   margin:2px;             
+   color:#FF0000;
+   float:left;  
+} 
+
+#hintbox{ /*CSS for pop up hint box */
+	position:absolute;
+	top: 0;
+	background-color: lightyellow;
+	width: 150px; /*Default width of hint.*/ 
+	padding: 3px;
+	border:1px solid black;
+	font:normal 11px Verdana;
+	line-height:18px;
+	z-index:100;
+	border-right: 3px solid black;
+	border-bottom: 3px solid black;
+	visibility: hidden;
+}
+
+.hintanchor{ /*CSS for link that shows hint onmouseover*/
+	font-weight: bold;
+	color: navy;
+	margin: 3px 8px;
+}
+
+div#droppable_left, div#droppable_right{   /*CSS for drag and drop */
+	float: left;
+	margin: 20px;
+	width: 300px;
+	min-height: 100px;
+	background: #fff;
+	border: 2px solid #666666;
+	padding: 5px;
+	text-align: left;
+	position: relative;
+	z-index:1; 
+}
+
+div#droppable_left.hover, div#droppable_right.hover { /*CSS for drag and drop */
+	border: 2px dashed #666666;
+	background:#efefef; 
+}
+
+.DragBox {  /*CSS for drag and drop */
+	border: #000 1px solid;
+	padding: 2px;
+	font-size: 10px;
+	margin-bottom: 5px;
+	width: 180px;
+	cursor: pointer;
+	font-family: verdana, tahoma, arial;
+	background-color: #eee;
+}
+.MapBox {
+	border:1px solid #000000;
+	font-family:verdana,tahoma,arial;
+	font-size:10px;
+	margin-bottom:5px;
+	padding:2px;
+	width:180px;
+}
+.MapBox.hover{
+	background:none repeat scroll 0 0 #EFEFEF;
+	border:1px dashed #666666;		
+}
+div#left_container, div#right_container{
+	border:2px solid #666666;
+	float:left;
+	margin:20px;
+	min-height:100px;
+	padding:5px;
+	width:250px;
+}

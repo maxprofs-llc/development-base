@@ -1,0 +1,168 @@
+/* ::::: https://s7.addthis.com/static/r07/widget087.css ::::: */
+
+div.atclear { clear: both; }
+.at300b, .at300bo, .at300m, .at300bs { cursor: pointer; }
+.at300b:hover { opacity: 0.8; }
+:first-child + html #at_email textarea { height: 42px ! important; }
+* html #at16psf input, :first-child + html #at16psf input { padding: 0pt; }
+:first-child + html #at_email #at16eatdr { top: 115px ! important; width: 272px ! important; }
+#_atssh { width: 1px ! important; height: 1px ! important; border: 0pt none ! important; }
+/* ::::: https://efr.betterlivingportal.com/Themes/BETTERLIVING/EFR/style.css?v=3 ::::: */
+
+body, div, span, h1, h2, h3, img, a, p, br, ul { margin: 0px; padding: 0px; }
+img { border: 0px none; }
+body { background: url('/images/efr/bodybg.jpg') repeat scroll 0% 0% transparent; font-family: Arial,Helvetica,sans-serif; font-size: 12px; }
+a { color: rgb(47, 77, 141); }
+.font2, #Menu, .caption { font-family: "Lucida Sans Unicode","Lucida Grande"; }
+#OuterContainer { position: relative; width: 100%; min-width: 994px; background: url('/images/efr/headerbg.jpg') repeat-x scroll 0% 0% transparent; }
+#Wrapper { position: relative; width: 994px; margin: auto; }
+#Header { position: relative; width: 994px; height: 69px; }
+#HeaderLeft { position: relative; width: 510px; height: 49px; padding: 20px 0px 0px 24px; }
+#HeaderCenter { position: relative; width: 205px; height: 32px; margin-top: 14px; padding: 8px 0px 0px 23px; border-style: solid; border-color: rgb(163, 187, 194); -moz-border-top-colors: none; -moz-border-right-colors: none; -moz-border-bottom-colors: none; -moz-border-left-colors: none; -moz-border-image: none; border-width: 0px 1px; }
+#HeaderCenter a { text-decoration: none; width: 24px; height: 24px; display: block; float: left; margin-left: 10px; }
+.Icon01 { background: url('/images/efr/imagesprite.png') no-repeat scroll 0px -171px transparent; width: 24px; height: 24px; display: block; }
+.Icon02 { background: url('/images/efr/imagesprite.png') no-repeat scroll -26px -171px transparent; width: 24px; height: 24px; display: block; }
+.Icon03 { background: url('/images/efr/imagesprite.png') no-repeat scroll -52px -171px transparent; width: 24px; height: 24px; display: block; }
+.Icon04 { background: url('/images/efr/imagesprite.png') no-repeat scroll -78px -171px transparent; width: 24px; height: 24px; display: block; }
+.Icon05 { background: url('/images/efr/imagesprite.png') no-repeat scroll -104px -171px transparent; width: 24px; height: 24px; display: block; }
+#HeaderRight { position: relative; width: 190px; height: 64px; padding: 5px 0px 0px 40px; }
+#LogoContainer { position: relative; width: 994px; height: 77px; padding-top: 28px; }
+#LogoContainerLeft { position: relative; width: 570px; padding: 0px 0px 0px 24px; }
+#LogoContainerRight { position: relative; width: 400px; text-align: right; }
+#LogoContainer .logo { width: 371px; height: 71px; background-image: url('/images/efr/logo.jpg'); margin-top: -11px; }
+#Menu { position: relative; width: 994px; }
+#MenuTopLeft { position: relative; width: 5px; height: 5px; background: url('/images/efr/imagesprite.png') no-repeat scroll -161px -44px transparent; overflow: hidden; }
+#MenuTopRight { position: relative; width: 5px; height: 5px; background: url('/images/efr/imagesprite.png') no-repeat scroll -168px -44px transparent; overflow: hidden; }
+#MenuTop { position: relative; width: 994px; height: 60px; background: none repeat scroll 0% 0% rgb(255, 255, 255); }
+#MenuTop a { text-decoration: none; color: rgb(22, 93, 123); font-size: 20px; }
+#MenuTop a.first { margin-left: 5px; }
+#MenuTop a:hover, #MenuTop a:active { color: rgb(149, 172, 19); }
+#MenuTop ul { padding: 0px; margin: 0px; list-style: none outside none; }
+#MenuTop ul li { padding: 12px 22px; float: left; }
+#MenuBottom { position: relative; width: 994px; height: 35px; background: url('/images/efr/menubg.jpg') repeat-x scroll 0% 0% transparent; }
+#MenuBottomLeft { position: relative; width: 5px; height: 35px; background: url('/images/efr/imagesprite.png') no-repeat scroll -91px -44px transparent; }
+#MenuBottomCenter { position: relative; width: 984px; height: 35px; }
+#MenuBottomCenter a { text-decoration: none; color: rgb(255, 255, 255); font-size: 14px; }
+#MenuBottomCenter ul { padding: 0px; margin: 0px; list-style: none outside none; }
+#MenuBottomCenter ul li { padding: 8px 85px; float: left; }
+#MenuBottomRight { position: relative; width: 5px; height: 35px; background: url('/images/efr/imagesprite.png') no-repeat scroll -105px -44px transparent; }
+#ContentContainerInner { position: relative; width: 954px; background: none repeat scroll 0% 0% rgb(255, 255, 255); padding: 20px; min-height: 500px; }
+#ContentContainerInner .PageTitle { color: rgb(22, 93, 123); font-size: 20px; line-height: 40px; }
+#ContentContainerInner .PageTitle span { border-bottom: 1px dashed rgb(22, 93, 123); }
+#Footer { position: relative; width: 994px; height: 290px; background: url('/images/efr/footer.png') no-repeat scroll left top rgb(0, 82, 136); font-size: 14px; color: rgb(255, 255, 255); font-family: "Lucida Sans Unicode","Lucida Grande"; }
+#Footer ul { padding: 0px; margin: 0px; list-style: none outside none; }
+#Footer ul li { padding: 2px 0px; clear: both; }
+#Footer ul li a { text-decoration: none; color: rgb(255, 255, 255); }
+#Footer ul li a:hover { text-decoration: underline; }
+.FooterCol01 { position: relative; width: 170px; padding: 50px 0px 0px 40px; }
+.FooterCol02 { position: relative; width: 250px; padding: 50px 0px 0px 40px; }
+.FooterCol02 a { text-decoration: none; width: 24px; height: 24px; display: block; float: left; margin-right: 10px; }
+.FooterCol02 .copy a { width: auto; display: inline; float: none; color: rgb(255, 255, 255); }
+#Footer .copy a:hover { text-decoration: underline; }
+#LogIn { position: relative; width: 440px; height: 46px; background: url('/images/efr/LogoutMid.jpg') repeat-x scroll 0% 0% transparent; }
+#LogInLeft { position: relative; width: 5px; height: 46px; background: url('/images/efr/imagesprite.png') no-repeat scroll -210px -44px transparent; }
+#LogInCenter { position: relative; width: 420px; height: 46px; padding-left: 10px; text-align: left; }
+#LogInCenter a { color: rgb(255, 255, 255); }
+#LogInCenterLeft { position: relative; width: 400px; }
+#LogInRight { position: relative; width: 5px; height: 46px; background: url('/images/efr/imagesprite.png') no-repeat scroll -217px -44px transparent; }
+#LogOut {
+ position:relative;
+ width:350px;
+ height:46px;
+ background:url('/images/efr/LogoutMid.jpg') repeat-x; } #LogOutLeft {  position:relative;  width:5px;  height:46px;
+ background:url('/images/efr/imagesprite.png') -210px -44px no-repeat; } #LogOutCenter {  position:relative;  width:330px;  height:46px;  padding-left:10px;  text-align:left;
+ color: #fff;
+}
+#LogOutCenter a{color: #fff;}
+
+#LogOutCenterLeft {
+ position:relative;
+ width:230px;
+ padding-top:10px;
+}
+#LogOutCenterRight {
+ position:relative;
+ width:75px;
+ margin-top:10px;
+ border-left:solid 1px #666;
+ padding:5px 0px 0px 15px;
+ font-size: 14px;
+ float:left;
+}
+#LogOutCenterRight a {
+ color:#FFF;
+ text-decoration:none;
+}
+#LogOutRight {
+ position:relative;
+ width:5px;
+ height:46px;
+ background:url('/images/efr/imagesprite.png') -217px -44px no-repeat; } 
+
+div.logo { z-index: 100; position: relative; }
+#loginBox { width: 400px; }
+#loginBox .innerform { font-family: Tahoma; margin: 0px; padding: 0px; }
+.loginBox .innerform .form { float: left; width: 100%; padding: 0px; }
+.loginBox .innerform .form .row { float: left; width: 100%; padding: 1px 0pt; }
+.loginBox .innerform .form .row span { float: left; width: 50px; padding-top: 2px; padding-right: 5px; text-align: right; font-size: 11px; color: rgb(255, 255, 255); }
+.loginBox .innerform .form .row input { float: left; width: 108px; height: 15px; border: 1px solid rgb(33, 94, 157); margin-right: 10px; }
+.loginBox .innerform .form .row .goBtn { float: left; border: 0pt none; height: 17px; width: 30px; background-image: url('/images/efr/but_go_001.png'); background-repeat: no-repeat; }
+.loginBox .innerform .form div.links { float: left; width: 215px; }
+.loginBox .innerform .form div.rememberMe { float: left; padding-left: 22px; width: 125px; }
+.loginBox .innerform .form .row span.invalidpwd { width: auto; font-size: 8px; }
+.loginBox .innerform .form div.rememberMe .info { margin-left: 10px; width: 85px; }
+.loginBox .innerform .form .bottomLnk { float: left; font-size: 11px; margin: 0px; padding-top: 0px; color: rgb(255, 255, 255); }
+.loginBox .innerform .form .toppadd { padding-top: 8px; }
+.loginBox .innerform .form .bottomLnk span { color: rgb(255, 255, 255); }
+.loginBox .innerform .form .bottomLnk a { color: rgb(255, 255, 255); margin-left: 2px; }
+.colr1 { color: rgb(47, 77, 141); }
+.txtsml { font-size: 11px; }
+.txtMd { font-size: 14px; }
+.txtXL { font-size: 24px; }
+.fl { float: left; }
+.FR { float: right; }
+.Pdt05 { padding-top: 5px; }
+.Pdt20 { padding-top: 20px; }
+.Pdl10 { padding-left: 10px; }
+.NewLine { clear: both; }
+.clear { clear: both; }
+/* ::::: https://efr.betterlivingportal.com/Themes/BETTERLIVING/EFR/anylinkcssmenu.css ::::: */
+
+.anylinkcss { position: absolute; left: 0pt; top: 0pt; visibility: hidden; border-width: 1px 1px 0pt; border-style: solid; border-color: rgb(100, 100, 101); -moz-border-top-colors: none; -moz-border-right-colors: none; -moz-border-bottom-colors: none; -moz-border-left-colors: none; -moz-border-image: none; line-height: 30px; z-index: 100; background: none repeat scroll 0% 0% rgb(203, 220, 230); width: 150px; }
+.anylinkcss ul { margin: 0pt; padding: 0pt; list-style-type: none; }
+.anylinkcss ul li a { width: 100%; display: block; border-bottom: 1px solid rgb(100, 100, 101); padding: 1px 0pt; text-decoration: none; font-family: "Lucida Sans Unicode","Lucida Grande"; font-size: 14px; text-indent: 5px; color: rgb(0, 0, 0); }
+.anylinkcss a:hover { background: none repeat scroll 0% 0% rgb(33, 94, 157); color: white; }
+.anylinkshadow { position: absolute; left: 0pt; top: 0pt; z-index: 99; background: none repeat scroll 0% 0% black; visibility: hidden; }
+/* ::::: https://efr.betterlivingportal.com/style/colorbox.css ::::: */
+
+#colorbox, #cboxOverlay, #cboxWrapper { position: absolute; top: 0pt; left: 0pt; z-index: 99000; overflow: hidden; }
+#cboxOverlay { position: fixed; width: 100%; height: 100%; }
+#cboxMiddleLeft, #cboxBottomLeft { clear: left; }
+#cboxContent { position: relative; overflow: hidden; }
+#cboxLoadedContent { overflow: auto; }
+#cboxTitle { margin: 0pt; }
+#cboxLoadingOverlay, #cboxLoadingGraphic { position: absolute; top: 0pt; left: 0pt; width: 100%; }
+#cboxPrevious, #cboxNext, #cboxClose, #cboxSlideshow { cursor: pointer; }
+#cboxOverlay { background: none repeat scroll 0% 0% rgb(255, 255, 255); }
+#colorbox {  }
+#cboxContent {  }
+#cboxTopLeft { width: 25px; height: 25px; background: url('/images/efr/border1.png') no-repeat scroll 0pt 0pt transparent; }
+#cboxTopCenter { height: 25px; background: url('/images/efr/border1.png') repeat-x scroll 0pt -50px transparent; }
+#cboxTopRight { width: 25px; height: 25px; background: url('/images/efr/border1.png') no-repeat scroll -25px 0pt transparent; }
+#cboxBottomLeft { width: 25px; height: 25px; background: url('/images/efr/border1.png') no-repeat scroll 0pt -25px transparent; }
+#cboxBottomCenter { height: 25px; background: url('/images/efr/border1.png') repeat-x scroll 0pt -75px transparent; }
+#cboxBottomRight { width: 25px; height: 25px; background: url('/images/efr/border1.png') no-repeat scroll -25px -25px transparent; }
+#cboxMiddleLeft { width: 25px; background: url('/images/efr/border2.png') repeat-y scroll 0pt 0pt transparent; }
+#cboxMiddleRight { width: 25px; background: url('/images/efr/border2.png') repeat-y scroll -25px 0pt transparent; }
+#cboxContent { background: none repeat scroll 0% 0% rgb(255, 255, 255); }
+#cboxLoadedContent { margin-top: 20px; }
+#cboxLoadingGraphic { background: url('/images/efr/loading.gif') no-repeat scroll center center transparent; }
+#cboxLoadingOverlay {  }
+#cboxTitle { position: absolute; top: 0px; left: 0pt; text-align: center; width: 100%; color: rgb(0, 0, 0); font-size: 14px; }
+#cboxCurrent { position: absolute; bottom: 0px; left: 100px; color: rgb(153, 153, 153); }
+#cboxSlideshow { position: absolute; bottom: 0px; right: 42px; color: rgb(68, 68, 68); }
+#cboxPrevious { position: absolute; bottom: 0px; left: 0pt; color: rgb(68, 68, 68); }
+#cboxNext { position: absolute; bottom: 0px; left: 63px; color: rgb(68, 68, 68); }
+#cboxClose { position: absolute; top: 0pt; right: 0pt; display: block; color: rgb(0, 0, 0); font-size: 14px; }
+/* ::::: https://efr.betterlivingportal.com/Themes/BETTERLIVING/EFR/li-scroller.css ::::: */
+

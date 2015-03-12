@@ -119,7 +119,7 @@ foreach (@ggr_style_parts){
 	}
 $useFolder = 0;
 
-if($language eq 'espanol'){
+if($language eq 'espanol' || $language eq 'spanish'){
 	$current_language = "spanish";
 }else{
 	$current_language = "english";
@@ -205,12 +205,12 @@ if(!defined $language || lc $language eq 'usenglish' || $current_language eq 'en
 	$next = $config{button_next} || 'src="/images/global/next.jpg" class="HSbuttonNext"';
 	$back = $config{button_back} || 'src="/images/global/back.jpg" class="HSbuttonBack"';
 	$submit = $config{button_submit} || 'src="/images/global/submit.jpg" class="HSbutton"';
-	$continued = "<span class=\"HSsubtitle\">($lang{$current_language}{continued})</span>";
+	$continued = "<span class=\"HSsubtitle\">($lang{continued}{$current_language})</span>";
 	$close = 'src="/images/global/close.gif" class="HSbutton"';
 	my $member_back_image = "<img border=0 $back>";
 	$member_back = qq|<a href="$member">$member_back_image</a>|;
 
-	$date = sprintf("$lang{$current_language}{As_of} %02d/%02d/%04d", $month, $day, $year);
+	$date = sprintf("$lang{As_of}{$current_language} %02d/%02d/%04d", $month, $day, $year);
 	$todays_date = sprintf("%02d-%02d-%04d", $month, $day, $year);
 
 	$lc_race 	= lc $race;
@@ -272,9 +272,9 @@ if(!defined $language || lc $language eq 'usenglish' || $current_language eq 'en
 	$drc_subtitle_in = "<span class=\"HSsubtitle\">$lang{$current_language}{drc_subtitle_in}</span>";
 	$drc_color_guide = '<img src="images/global/color_guide.jpg">';
 
-	$crc_title = $title_string . "<span class=\"HStitle\">$lang{$current_language}{crc_title}</span>";
-	$crc_subtitle = "<span class=\"HSsubtitle\">$lang{$current_language}{crc_subtitle}</span>";
-	$crc_subtitle_in = "<span class=\"HSsubtitle\">$lang{$current_language}{crc_subtitle_in}</span>";
+	$crc_title = $title_string . "<span class=\"HStitle\">$lang{crc_title}{$current_language}</span>";
+	$crc_subtitle = "<span class=\"HSsubtitle\">$lang{crc_subtitle}{$current_language}</span>";
+	$crc_subtitle_in = "<span class=\"HSsubtitle\">$lang{crc_subtitle_in}{$current_language}</span>";
 	$crc_color_guide = '<img src="images/crc/color_guide.jpg">';
 
 	$make_changes_title = $title_string . '<span class="HStitle">User Account</span>';
@@ -300,12 +300,12 @@ elsif( $language eq 'espanol' || $current_language eq 'spanish')	{
 	$back = 'src="images/global/volver.gif" class="HSbuttonBack"';
 	$submit = 'src="images/global/presentar.gif" class="HSbutton"';
 	#continuación
-	$continued = '<span class="HSsubtitle">(continuación)</span>';
+	$continued = "<span class='HSsubtitle'> $lang{continued}{$current_language}</span>";
 	$close = 'src="images/global/close.gif" class="HSbutton"';
 	my $member_back_image = "<img border=0 $back>";
 	$member_back = qq|<a href="$member">$member_back_image</a>|;
 
-	$date = sprintf("$lang{$current_language}{As_of} %02d/%02d/%04d", $month, $day, $year);
+	$date = sprintf("$lang{As_of}{$current_language} %02d/%02d/%04d", $month, $day, $year);
 
 	$lc_race 	= lc $race;
 	$lc_sex 	= lc $sex;
@@ -368,9 +368,9 @@ elsif( $language eq 'espanol' || $current_language eq 'spanish')	{
 	$drc_subtitle_in = "<span class=\"HSsubtitle\">$lang{$current_language}{drc_subtitle_in}</span>";
 	$drc_color_guide = '<img src="images/global/color_guide.jpg">';
 	
-	$crc_title = $title_string . "<span class=\"HStitle\">$lang{$current_language}{crc_title}</span>";
-	$crc_subtitle = "<span class=\"HSsubtitle\">$lang{$current_language}{crc_subtitle}</span>";
-	$crc_subtitle_in = "<span class=\"HSsubtitle\">$lang{$current_language}{crc_subtitle_in}</span>";
+	$crc_title = $title_string . "<span class=\"HStitle\">$lang{crc_title}{$current_language}</span>";
+	$crc_subtitle = "<span class=\"HSsubtitle\">$lang{crc_subtitle}{$current_language}</span>";
+	$crc_subtitle_in = "<span class=\"HSsubtitle\">$lang{crc_subtitle_in}{$current_language}</span>";
 	$crc_color_guide = '<img src="images/crc/color_guide.jpg">';
 
 	$pt_title = $title_string . '<span class="HStitle">Personal Tracker</span>';

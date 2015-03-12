@@ -1,0 +1,88 @@
+/* ::::: http://sandbox.healthjibe.net/content/css/layout.css ::::: */
+
+@media screen, projection {
+	html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td { margin: 0pt; padding: 0pt; border: 0pt none; outline: 0pt none; font-size: 100%; vertical-align: baseline; background: none repeat scroll 0% 0% transparent; }
+	body { font: 12px/1.7em "Lucida Grande","Lucida Sans Unicode",Arial,Helvetica,sans-serif; color: rgb(102, 102, 102); min-width: 1005px; padding: 0pt; margin: 0pt; letter-spacing: -0.01em; background: url('/images/healthjibe/bg_body.png') no-repeat scroll center top rgb(254, 254, 254); }
+	.container { width: 100%; background: url('/images/healthjibe/bg_container.gif') repeat-x scroll left top transparent; }
+	.header { position: relative; width: 1005px; height: 207px; padding: 0pt; margin: 0pt auto; }
+	.canvas { position: relative; width: 1005px; padding: 0pt; margin: 0pt auto; }
+	.content-top { width: 1005px; height: 16px; margin: 0pt auto; background: url('/images/healthjibe/content_top.png') no-repeat scroll left top transparent; }
+	.col-content { width: 946px; padding: 15px 30px; background: url('/images/healthjibe/content_bg.png') repeat-y scroll left bottom transparent; }
+	.footer-content { width: 1005px; margin: 20px auto 0px; }
+	.content-btm { width: 1005px; height: 16px; margin: 0pt auto; background: url('/images/healthjibe/content_btm.png') no-repeat scroll left top transparent; }
+	.header .top-nav { width: 1005px; height: 68px; }
+	.header h1 { position: relative; margin: 0pt 5px; padding: 0pt; width: 85px; height: 68px; text-indent: -9999px; background: url('/images/healthjibe/ahj_logo.png') no-repeat scroll left top transparent; }
+	#logo-click { position: absolute; top: 1px; width: 85px; height: 68px; background-color: transparent; }
+	.header ul.nav { position: absolute; top: 0pt; right: 0pt; margin: 0pt; padding: 0pt; }
+	.header .nav li { list-style-type: none; position: relative; float: left; width: auto; white-space: nowrap; padding: 0pt 5px; background: none repeat scroll 0% 0% transparent; }
+	.header .nav li a { display: block; color: rgb(180, 180, 180); text-transform: uppercase; font-weight: bold; line-height: 68px; padding: 0pt 10px; background: none repeat scroll 0% 0% transparent; }
+	.header .top-nav a:hover { background: none repeat scroll 0% 0% transparent; border-bottom: medium none; }
+	.header .nav li a:hover { color: rgb(255, 255, 255); background: none repeat scroll 0% 0% transparent; border-bottom: medium none; }
+	.page-title { position: relative; width: 1005px; height: 150px; line-height: 130px; margin: 0pt; background: url('/images/healthjibe/bg_showcase.png') no-repeat scroll center top transparent; }
+	.page-title h3 { margin: 0pt 5px; }
+}
+/* ::::: http://sandbox.healthjibe.net/content/css/text.css ::::: */
+
+body { font: 13px/1.5 'Helvetica Neue',Arial,'Liberation Sans',FreeSans,sans-serif; }
+hr { border-right: 0pt solid rgb(204, 204, 204); border-width: 1px 0pt 0pt; border-style: solid; border-color: rgb(204, 204, 204); -moz-border-top-colors: none; -moz-border-right-colors: none; -moz-border-bottom-colors: none; -moz-border-left-colors: none; -moz-border-image: none; clear: both; height: 0pt; }
+h1 { font-size: 25px; }
+h3 { font-size: 21px; }
+h5 { font-size: 17px; }
+p, dl, hr, h1, h2, h3, h4, h5, h6, ol, ul, pre, table, address, fieldset, figure { margin-bottom: 5px; }
+/* ::::: http://sandbox.healthjibe.net/content/css/styles.css ::::: */
+
+a { color: rgb(115, 148, 181); margin: 0pt; padding: 0pt; outline: 0pt none; }
+a, a:visited, a:active { text-decoration: none; }
+a:hover { color: rgb(0, 0, 0); border-bottom: 1px solid rgb(204, 204, 204); }
+ul { list-style: disc outside none; }
+ul li { margin-left: 20px; text-align: left; }
+.validation-summary-errors { color: Red; list-style: none outside none; }
+.validation-summary-success { color: Green; }
+.validation-summary-warning { color: Blue; }
+/* ::::: http://sandbox.healthjibe.net/content/css/engagement.css ::::: */
+
+/* ::::: http://sandbox.healthjibe.net/content/css/960_12_col.css ::::: */
+
+body { min-width: 960px; }
+.container_12 { margin-left: auto; margin-right: auto; width: 960px; }
+.grid_1, .grid_2, .grid_3, .grid_4, .grid_5, .grid_6, .grid_7, .grid_8, .grid_9, .grid_10, .grid_11, .grid_12 { display: inline; float: left; margin-left: 10px; margin-right: 10px; }
+.container_12 .grid_1 { width: 60px; }
+.container_12 .grid_2 { width: 140px; }
+.container_12 .grid_3 { width: 220px; }
+.container_12 .grid_12 { width: 940px; }
+.clearfix:before, .clearfix:after, .container_12:before, .container_12:after { content: "."; display: block; overflow: hidden; visibility: hidden; font-size: 0pt; line-height: 0; width: 0pt; height: 0pt; }
+.clearfix:after, .container_12:after { clear: both; }
+.clearfix, .container_12 {  }
+/* ::::: http://sandbox.healthjibe.net/content/css/formalize.css ::::: */
+
+button::-moz-focus-inner, input[type="reset"]::-moz-focus-inner, input[type="submit"]::-moz-focus-inner, input[type="button"]::-moz-focus-inner { border: 0pt none; padding: 0pt; }
+@media not all {
+}
+optgroup::-moz-focus-inner { border: 0pt none; padding: 0pt; }
+/* ::::: http://sandbox.healthjibe.net/content/css/prettyPopin.css ::::: */
+
+/* ::::: http://sandbox.healthjibe.net/Content/kendouimvc/kendo.common.min.css ::::: */
+
+.k-button:-moz-any(input[type="submit"], input[type="button"], input[type="reset"]) { padding-bottom: 0.37em; padding-top: 0.37em; }
+button.k-button::-moz-focus-inner, input.k-button::-moz-focus-inner { padding: 0pt; border: 0pt none; }
+@media not all {
+}
+/* ::::: http://sandbox.healthjibe.net/Content/kendouimvc/kendo.default.min.css ::::: */
+
+/* ::::: http://sandbox.healthjibe.net/Content/kendouimvc/kendo.dataviz.min.css ::::: */
+
+/* ::::: http://sandbox.healthjibe.net/Content/2010.3.1318/telerik.common.min.css ::::: */
+
+/* ::::: http://sandbox.healthjibe.net/Content/2010.3.1318/telerik.vista.min.css ::::: */
+
+/* ::::: https://allegeant2.fullslate.com/embed.css ::::: */
+
+.fs-embed { position: relative; }
+#fs-main {  }
+body .fs-embed p { display: block; }
+body .fs-embed .fs-booking-choices ul { list-style-type: none ! important; margin: 0pt; padding: 0pt; }
+.fs-embed .fs-footer { text-align: center; padding-top: 4px; color: rgb(102, 102, 102); }
+.fs-embed .fs-button .fs-corpname { color: rgb(51, 51, 51); }
+.fs-embed .fs-button:hover .fs-corpname { text-decoration: underline; }
+.fs-embed .fs-button { color: rgb(102, 102, 102); text-decoration: none; }
+.fs-embed .fs-instructions { font-weight: normal; }

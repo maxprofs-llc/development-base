@@ -10,10 +10,10 @@
 	$title = $vars{title_text};
 	$width = $vars{width_of_table};
 	if(!$rate){
-		$rate = "Average US";
+		$rate = $lang{US_average}{$current_language};
 	}
 	if(!$targ){
-		$targ = "Your target";
+		$targ = $lang{Your_target}{$current_language};
 	}
 	$mlev = int($smlev * $scale);
 	$uslev = int($suslev * $scale);

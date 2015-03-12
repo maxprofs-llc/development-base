@@ -1,0 +1,123 @@
+h1, p, a, body {
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 12px;
+color: #000000;
+}
+
+.bodytext {
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 12px;
+color: #000000;
+}
+
+.headline {
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 12px;
+color: #000066;
+font-weight: bold;
+}
+
+.calc_title {
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 14px; color: #000066; font-weight: bold
+}
+
+.calc_body {
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 11px;
+color: #333333;
+}
+
+.celltext_even {
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 11px;
+color: #000000;
+}
+
+.celltext_odd {
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 11px;
+color: #000000;
+}
+
+.celltitle {
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 11px;
+color: #FFFFFF;
+font-weight: bold;
+}
+
+.calc_celltext_even {
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 11px;
+color: #000000;
+}
+
+.calc_celltext_odd {
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 11px;
+color: #FFFFFF;
+}
+
+.calc_celltitle {
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 11px;
+color: #FFFFFF;
+font-weight: bold;
+}
+
+table.hs_bar_table {
+	font-size: 10px;
+	text-align: left; 
+	}
+table.hs_bar_table td..hs_bar_label1 td.hs_bar_label2 td.hs_bar_label3{
+	width; 35px;
+	margin-left: 4px;
+	}
+table.hs_bar_table td..hs_bar1 td.hs_bar2 td.hs_bar3{
+	text-align: left;
+	}
+
+.hs_bar_label1 {
+	color: #000000;
+	}
+.hs_bar_label2 {
+	color: #000066;
+	}
+.hs_bar_label3 {
+	color: #333333;
+	}
+
+
+.HSbuttonNext { text-align: right; display:block; }
+.HSbuttonBack { text-align: left; display:block; }
+.HSbodytextQ td {  text-align: left;}
+.HStitle { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; color: #000066; font-weight: bold}
+.HSsubtitle { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 13px; color: #000066; font-weight: bold}
+.HSbodytext {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #000000}
+.HSbodytext1 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #000066}
+.HSbodytext2 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #333333}
+.HSbodytextbold { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #000000 ; font-weight: bold}
+.HSintro { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #333333 ; font-weight: mediumbold}
+.HSerror { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #880000 ; font-weight: mediumbold}
+.HSquestion{  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #000000}
+.HScopyright {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 6px; color: #666666}
+ul.HSresults {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #000000; list-style-type: square}
+ol.HSresults {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #000000; list-style-type: square}
+div.HSstyle a:link { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #333399; text-decoration: underline}
+div.HSstyle a:visited { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #333399; text-decoration: underline }
+div.HSstyle a:active { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #6666CC; text-decoration: underline }
+div.HSstyle a:hover { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #6666CC; text-decoration: none}
+div.HSstyle ul { font-size: 12px; color: #000000 }
+div.HSstyle li { font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #000000 }
+
+
+td.hsContent
+    {
+    padding: 5px;
+    }
+.HSbodytextBatch {  	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	line-height: 12px;
+}
+.HSquestionBatchRed { font-family: Arial, Helvetica, sans-serif; font-size: 11px; color: #880000 ; font-weight: mediumbold}

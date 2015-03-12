@@ -33,7 +33,8 @@ Text::Template::fill_in_file( "$config{template_directory}$header_in_file", PACK
  <form METHOD="POST" action="{$collector}" name="theForm" onSubmit="return checkWholeForm(this)" id="frmBecomeMember" >
 <!-- pagination section start here-->
 <div id="pagination" class="content">
-<p class="pad28">{$lang{$current_language}{curr_page_msg}} 7 &nbsp;{my $html; $html =qq|<input type="image" border=0 name="prev" value="prev" src="images/pagi_07.jpg" onmousedown="doValidate=false;" />| if ($curr_page > 1);$html;} <input type="image" border=0 name="next" value="next" src="images/pagi_09.jpg" onmousedown="doValidate=true;" /></p>
+<!--<p class="pad28">{$lang{$current_language}{curr_page_msg}} 7 &nbsp;{my $html; $html =qq|<input type="image" border=0 name="prev" value="prev" src="images/pagi_07.jpg" onmousedown="doValidate=false;" />| if ($curr_page > 1);$html;} <input type="image" border=0 name="next" value="next" src="images/pagi_09.jpg" onmousedown="doValidate=true;" /></p>-->
+<p class="pad28">{$lang{curr_page_msg}{$current_language}} 7 &nbsp;{my $html; $html =qq|<input type="image" border="0" name="prev" value="prev" src="images/pagi_07.jpg" onmousedown="doValidate=false;" />| if ($curr_page > 1);$html;} <input type="image" border="0" name="next" value="next" src="images/pagi_09.jpg" onmousedown="doValidate=true;" /></p>
 </div>
 <!-- pagination section end here-->
 

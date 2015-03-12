@@ -1,0 +1,179 @@
+
+/* html elements */
+a
+{
+	color: #7394b5;
+	margin: 0;
+	padding: 0;
+	outline: 0;
+}
+
+a, a:visited, a:active
+{
+	text-decoration: none;
+}
+
+a:hover
+{
+	color: #000;
+	border-bottom: 1px solid #ccc;
+}
+
+ui li a
+{
+	display: block;
+	color: #b4b4b4;
+	text-transform: uppercase;
+	font-weight: bold;
+	line-height: 78px;
+	padding: 0 10px;
+	background: transparent;
+}
+
+ol {
+  list-style: decimal;
+}
+
+ol li 
+{
+  margin-left: 20px;
+  text-align: left;
+}
+
+ul {
+  list-style: disc;
+}
+
+ul li 
+{
+  margin-left: 20px;
+  text-align: left;
+}
+
+/* classes */
+
+.borderleft
+{
+	border-left: 1px solid #4C3C1B;
+}
+
+.borderright
+{
+	padding-right: 10px;
+	border-right: 1px solid #4C3C1B;
+}
+
+.bordertop
+{
+	border-top: 1px solid #4C3C1B;
+}
+
+.borderbottom
+{
+	border-bottom: 1px solid #4C3C1B;
+}
+
+.chartbox
+{
+	border: 5px solid #E7E6E5;
+    -webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;	
+}
+
+.riskbox
+{
+	border: 5px solid #E7E6E5;
+	padding: 0 68px 0 0px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.linkButton
+{
+	border: 2px solid #4C3C1B;
+	border-style: outset;
+	height: 30px;
+	background-color: #E7E6E5;
+    color: White;
+    line-height: 1em;
+}
+
+.image
+{
+	float: left;
+	margin: 1em 0 0 60px;
+}
+
+.partner
+{
+	color: #fff;
+	font-weight: bold;
+	border-style: solid;
+	border-width: 2px;
+	border-color: #79bde9;
+	background-color: #79bde9;
+	font-size: 1.2em;
+}
+
+
+/* error processing */
+.validation-summary-errors, p.validation-summary-errors
+{
+	color: Red;
+	list-style: none;
+}
+
+.validation-summary-errors li
+{
+	color: Red;
+	list-style: none;
+	margin-left: 0px;
+}
+
+.validation-summary-success, p.validation-summary-success
+{
+	color: Green;
+}
+
+.validation-summary-warning, p.validation-summary-warning
+{
+	color: Blue;
+}
+
+.field-validation-error
+{
+	color: Red;
+}
+
+.gaugecontainer
+{
+	width: 310px;
+	border: 5px solid #E7E6E5;
+    -webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	margin: 5px auto;
+}
+
+.gaugecontainer p
+{
+	width: 140px;
+	margin: 5px auto;
+}
+
+
+/** ids  */
+#lineargauge 
+{
+	width: 100%;
+    border: 0;
+	
+}
+
+#radialgauge 
+{
+	width: 100%;
+    border: 0;
+}

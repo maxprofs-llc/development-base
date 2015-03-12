@@ -185,18 +185,18 @@ my $status = $approved->check( $config, $user );
 my $user1; # just in case this is a comparitive;
 
 my $db = HealthStatus::Database->new( $config );
+my $language = $input->param('language');
 
 $db->debug_on( \*STDERR ) if $Debug;
 my $domain = $ENV{SERVER_NAME};
 my @domain_parts = split /\./,$domain;
 my $subdomain = $domain_parts[0];
-if($subdomain eq 'base1' && ($input->param('language') eq 'select' || ($input->param('language') eq 'select' && $input->param('output_format') eq 'PDF'))){
+if($subdomain eq 'base1' && ($language eq 'select' || ($language eq 'select' && $input->param('output_format') eq 'PDF'))){
 	 $hash{status}='retake';
 	 $hash{assessment}= $input->param('assessment');
 	 $hash{xnum}= $input->param('xnum');
 	 $hash{output_format}= $input->param('output_format');
-	 $hash{pretty_date}= $input->param('pretty_date');
-	 print STDERR "output_format===".$hash{output_format};
+	 $hash{pretty_date}= $input->param('pretty_date');	
 	 my $form = $config->template_directory . 'select_language_lightwindow.tmpl';
 	 fill_and_send( $form, $user, \%hash, $config->html_use_ssi );
 	 exit;
@@ -237,7 +237,7 @@ if($table eq 'hs_fitdata'){
 }
 my $data_xnum = $input->param('xnum');
 my $return_val = $db->check_temp_data($table,$field,$data_xnum);
-print STDERR "return_val===$return_val";
+
 # my $dbh  =  DBI->connect('dbi:mysql:hs_mchcptest_data:local-db.healthstatus.com', 'As!an9books', 'hrX1hs0' );
 
 # my $column_data = "SHOW COLUMNS FROM $table";
@@ -331,7 +331,7 @@ if(($user->auth_emailCheck != 9 && $config->authenticate_confirm) || !$config->a
 		$data = $health->compare( $user1, lc $m_format, $tempfile );
 		print "back from compare\n" if $Debug;
 		}
-	else	{ 
+	else	{		
 		$data = $health->output( lc $m_format, $hash{template}, $session );
 		}
 	}

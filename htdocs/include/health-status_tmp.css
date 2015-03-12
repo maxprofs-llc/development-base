@@ -1,0 +1,657 @@
+/* All Formatin */
+body{
+background-color:#fff;
+font-family: Myriad Pro;
+padding:0;
+color: #4C4C4C;
+margin:0;
+}
+
+*{margin:0; padding:0;}
+img{border:0;}
+
+@font-face {
+	  font-family: Myriad Pro;
+	  font-weight: normal;
+	  src: url(../font/MyriadPro-Bold.otf) format("truetype");
+	}
+
+.content {
+	font-family: Arial;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: normal;
+	color: #747474;
+	line-height: 18px;
+	text-align: justify;
+	text-decoration: none;
+}
+
+.bolcontent {
+	font-family: Arial;
+	font-size: 11px;
+	font-style: normal;
+	font-weight: bold;
+	color: #757575;
+	text-decoration: none;
+}
+
+.asscontent {
+	font-family: Arial;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: normal;
+	color: #0C70A8;
+	line-height: 18px;
+	text-align: left;
+	text-decoration: none;
+}
+
+.keystxt {
+	font-family: Arial;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: bold;
+	color: #2E62A0;
+	text-align: left;
+	text-decoration: none;
+}
+
+.nametxt {
+	font-family: Arial;
+	font-size: 11px;
+	font-style: normal;
+	font-weight: bold;
+	color: #666666;
+	text-align: left;
+	text-decoration: none;
+}
+
+.titletxt {
+	font-family: Arial;
+	font-size: 21px;
+	font-style: normal;
+	font-weight: bold;
+	color: #2E62A0;
+	text-align: left;
+	text-decoration: none;
+}
+
+.titletxt h1 {
+	font-family: Arial;
+	font-size: 21px;
+	font-style: normal;
+	font-weight: bold;
+	color: #2E62A0;
+	text-align: left;
+	text-decoration: none;
+}
+
+
+.title1txt {
+	font-family: Arial;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: normal;
+	color: #2E62A0;
+	text-align: left;
+	text-decoration: none;
+}
+
+.calltxt {
+	font-family: Myriad Pro;
+	font-size: 22px;
+	font-style: normal;
+	font-weight: normal;
+	color: #31598A;
+	text-decoration: none;
+}
+
+.assemtxt {
+	font-family: Myriad Pro;
+	font-size: 30px;
+	font-style: normal;
+	font-weight: bold;
+	color: #8AA13B;
+	text-decoration: none;
+}
+
+.freetxt {
+	font-family: Myriad Pro;
+	font-size: 30px;
+	font-style: normal;
+	font-weight: bold;
+	color: #fff;
+	text-decoration: none;
+}
+
+.textBox {
+	font-family: Arial;
+	font-size: 11px;
+	font-style: normal;
+	font-weight: normal;
+	color: #000;
+	padding-left: 3px;
+	padding-top: 2px;
+	height: 20px;
+	width: 250px;
+	border-width: 1px;
+	border-color:#E2E2E2;
+	border-style:solid;
+	background-color: #fff;
+}
+
+.copyTxt
+{
+	font-family: Arial;
+	font-size: 11px;
+	font-style: normal;
+	font-weight: normal;
+	color: #505050;
+	text-decoration: none;
+}
+
+.starTxt {
+font-family: Arial;
+font-size: 9pt;
+font-style: normal;
+font-weight: normal;
+color: #F72F2F;
+}
+
+.topmenu_linktxt {
+font-family: Arial;
+font-size: 12px;
+font-style: normal;
+font-weight: bold;
+color: #E47618;
+padding-left: 10px;
+padding-right: 10px;
+text-decoration: none;
+}
+
+.topmenu_link {
+font-family: Arial;
+font-size: 12px;
+font-style: normal;
+font-weight: bold;
+color: #0C70A8;
+padding-left: 10px;
+padding-right: 10px;
+}
+
+a.topmenu_link:link {
+	color: #0C70A8;
+	text-decoration: none;
+}
+
+a.topmenu_link:visited {
+	color: #0C70A8;
+	text-decoration: none;
+}
+
+a.topmenu_link:active {
+	color: #E47618;
+	text-decoration: none;
+}
+
+a.topmenu_link:hover {
+	color: #E47618;
+	text-decoration: none;
+}
+
+.read_link {
+font-family: Arial;
+font-size: 12px;
+font-style: normal;
+font-weight: bold;
+color: #E47618;
+}
+
+a.read_link:link {
+	color: #E47618;
+	text-decoration: none;
+}
+
+a.read_link:visited {
+	color: #E47618;
+	text-decoration: none;
+}
+
+a.read_link:active {
+	color: #E47618;
+	text-decoration: underline;
+}
+
+a.read_link:hover {
+	color: #E47618;
+	text-decoration: underline;
+}
+
+.exe_link {
+font-family: Arial;
+font-size: 12px;
+font-style: normal;
+font-weight: normal;
+color: #608000;
+}
+
+a.exe_link:link {
+	color: #608000;
+	text-decoration: none;
+}
+
+a.exe_link:visited {
+	color: #608000;
+	text-decoration: none;
+}
+
+a.exe_link:active {
+	color: #E47618;
+	text-decoration: underline;
+}
+
+a.exe_link:hover {
+	color: #E47618;
+	text-decoration: underline;
+}
+
+.exe1_link {
+font-family: Arial;
+font-size: 12px;
+font-style: normal;
+font-weight: normal;
+color: #608000;
+padding-left: 50px;
+}
+
+a.exe1_link:link {
+	color: #608000;
+	text-decoration: none;
+}
+
+a.exe1_link:visited {
+	color: #608000;
+	text-decoration: none;
+}
+
+a.exe1_link:active {
+	color: #E47618;
+	text-decoration: underline;
+}
+
+a.exe1_link:hover {
+	color: #E47618;
+	text-decoration: underline;
+}
+
+.ideai_link {
+font-family: Arial;
+font-size: 12px;
+font-style: normal;
+font-weight: normal;
+color: #0C70A8;
+}
+
+a.ideai_link:link {
+	color: #0C70A8;
+	text-decoration: none;
+}
+
+a.ideai_link:visited {
+	color: #0C70A8;
+	text-decoration: none;
+}
+
+a.ideai_link:active {
+	color: #E47618;
+	text-decoration: underline;
+}
+
+a.ideai_link:hover {
+	color: #E47618;
+	text-decoration: underline;
+}
+
+.topmenutxt {
+font-family: Arial;
+font-size: 12px;
+font-style: normal;
+font-weight: bold;
+color: #0C70A8;
+padding-left: 10px;
+padding-right: 10px;
+text-decoration: none;
+}
+
+.gallery_img {padding:0px; border:3px solid #2A2A2A; margin:0 0px 0px 0px}
+.gallery_img1 {padding:3px; border:1px solid #636363; margin:0 0px 0px 0px}
+
+.pad1{ padding-top: 70px; padding-bottom: 20px;; padding-right: 20px; text-align: right;}
+.pad2{ padding-left: 23px; padding-top: 29px;}
+.pad3{ padding-left: 50px; padding-top: 7px;}
+.pad4{ padding-left: 25px; padding-top: 10px;}
+.pad5{ padding-left: 25px; padding-top: 10px;}
+.pad6{ padding-left: 25px; padding-top: 5px;}
+.pad7{ padding-left: 25px; padding-top: 10px;}
+.pad8{ padding-left: 15px; padding-top: 15px; padding-right: 20px;}
+.pad9{ padding-right: 30px; padding-top: 13px; text-align: right;}
+.pad10{ padding-left: 50px; padding-top: 7px;}
+.pad11{ padding-left: 15px; padding-top: 10px; padding-right: 10px;}
+.pad12{ padding-right: 30px; padding-top: 15px; padding-bottom: 10px; text-align: right;}
+.pad13{ padding-right: 15px; padding-top: 10px; text-align: right;}
+.pad14{ padding-left: 15px; padding-top: 0px; padding-right: 10px;}
+.pad15{ padding-left: 15px; padding-top: 10px; padding-right: 10px;}
+.pad16{ padding-right: 15px; padding-top: 10px; padding-bottom: 10px; text-align: right;}
+.pad17{ padding-right: 15px; padding-top: 30px; text-align: right;}
+.pad18{ padding-top: 10px;}
+.pad19{ padding-left: 15px; padding-top: 0px; padding-right: 40px;}
+.pad20{ padding-left: 15px; padding-top: 15px; padding-right: 40px;}
+.pad21{ padding-right: 40px; padding-top: 10px; text-align: right;}
+.pad22{ padding-left: 50px; padding-top: 9px;}
+.pad23{ padding-left: 20px;}
+.pad24{ padding-left: 20px; padding-right: 20px; padding-top: 5px; text-align: justify;}
+.pad25{ padding-left: 20px; padding-top: 15px;}
+.pad26{ padding-left: 35px; padding-right: 10px; padding-top: 5px;}
+.pad27{ padding-left: 20px; padding-right: 20px; padding-top: 15px; text-align: justify;}
+.pad28{ padding-left: 20px; padding-top: 0px;}
+.pad29{ padding-left: 20px; padding-right: 10px; padding-top: 5px;}
+.pad30{ padding-left: 20px; padding-right: 10px; padding-top: 5px;}
+
+/* ################################################################################# */
+
+/* Home Page div section difine here*/
+
+#main{
+	width: 964px;
+	height: 100%;
+	padding: 0px;
+	overflow: hidden;
+	margin-top:auto;
+	margin-bottom:auto;
+	margin-left:auto;
+	margin-right:auto;
+	position: relative;
+}
+
+#main1{
+	width: 100%;
+	height: 159px;
+	padding: 0px;
+	overflow: hidden;
+	margin-top:auto;
+	margin-bottom:auto;
+	margin-left:auto;
+	margin-right:auto;
+	position: relative;
+	background-image: url("../images/back.png");
+	background-position: left-top;
+	background-repeat: repeat-x;
+}
+
+#main2{
+	width: 100%;
+	height: 100%;
+	padding: 0px;
+	overflow: hidden;
+	margin-top:auto;
+	margin-bottom:auto;
+	margin-left:auto;
+	margin-right:auto;
+	position: relative;
+}
+
+#main3{
+	width: 100%;
+	height: 100%;
+	padding: 0px;
+	overflow: hidden;
+	margin-top:auto;
+	margin-bottom:auto;
+	margin-left:auto;
+	margin-right:auto;
+	position: relative;
+	background: url("../images/bg.png") center bottom no-repeat;
+}
+
+#header{
+	width: 964px;
+	height: 159px;
+	padding: 0px;
+	overflow: hidden;
+	margin-top:auto;
+	margin-bottom:auto;
+	margin-left:auto;
+	margin-right:auto;
+	position: relative;
+}
+
+#logo{
+	width: 273px;
+	height: 159px;
+	text-align: left;
+}
+
+#header-right{
+	width: 691px;
+	height: 159px;
+	margin-left: 273px;
+	text-align: left;
+	position: absolute;
+}
+
+#top-menu{
+	width: 964px;
+	height: 53px;
+	text-align: left;
+	background-image: url("../images/Test-Book_19.jpg");
+	background-position: left-top;
+	background-repeat: repeat-x;
+}
+
+#banner{
+	width: 964px;
+	height: 347px;
+	text-align: left;
+}
+
+#banner-left{
+	width: 680px;
+	height: 347px;
+	text-align: left;
+}
+
+#banner-right{
+	width: 691px;
+	height: 284px;
+	margin-left: 680px;
+	text-align: left;
+	position: absolute;
+}
+
+#banner-topspc{
+	width: 964px;
+	height: 23px;
+	text-align: left;
+}
+
+#title{
+	width: 630px;
+	height: 30px;
+	text-align: left;
+}
+
+#contentarea{
+	width: 630px;
+	height: auto;
+	text-align: left;
+}
+
+#title-inn{
+	width: 961px;
+	height: 49px;
+	text-align: left;
+	background-image: url("../images/innn-head_18.png");
+	background-position: left-top;
+	background-repeat: no-repeat;
+}
+
+#home-center{
+	width: 964px;
+	height: auto;
+	text-align: left;
+}
+
+#assessments{
+	width: 309px;
+	height: auto;
+	text-align: left;
+}
+
+#testimonials{
+	width: 309px;
+	height: 276px;
+	text-align: left;
+	position: absolute;
+}
+
+#freereport{
+	width: 309px;
+	height: 276px;
+	text-align: left;
+	position: absolute;
+}
+
+#home-centerbot-spc{
+	width: 964px;
+	height: 19px;
+	text-align: left;
+}
+
+#assessments-top{
+	width: 309px;
+	height: 49px;
+	text-align: left;
+	background-image: url("../images/health-status_15.png");
+	background-position: left-top;
+	background-repeat: no-repeat;
+}
+
+#assessments-bg{
+	width: 309px;
+	height: auto;
+	text-align: left;
+	background-image: url("../images/health-status_19.png");
+	background-position: bottom;
+	background-repeat: no-repeat;
+}
+
+#test-top{
+	width: 309px;
+	height: 49px;
+	text-align: left;
+	background-image: url("../images/health-status_15.png");
+	background-position: left-top;
+	background-repeat: no-repeat;
+}
+
+#test-bg{
+	width: 309px;
+	height: 382px;
+	text-align: left;
+	background-image: url("../images/health-status_191.png");
+	background-position: bottom ;
+	background-repeat: no-repeat;
+}
+
+#free-top{
+	width: 309px;
+	height: 49px;
+	text-align: left;
+	background-image: url("../images/health-status_17.png");
+	background-position: left-top;
+	background-repeat: no-repeat;
+}
+
+#free-bg{
+	width: 309px;
+	height: 382px;
+	text-align: left;
+	background-image: url("../images/health-status_20.png");
+	background-position: bottom;
+	background-repeat: no-repeat;
+}
+
+#footer{
+	width: 100%;
+	height: 42px;
+	text-align: center;
+	background-image: url("../images/health-status_231.jpg");
+	background-position: left-top;
+	background-repeat: repeat-x;
+}
+
+#banner-inn{
+	width: 964px;
+	height: 233px;
+	text-align: left;
+}
+
+#center{
+	width: 964px;
+	height: auto;
+	text-align: left;
+	background-image: url("../images/Inner-page_11.jpg");
+	background-position: left-top;
+	background-repeat: repeat;
+}
+
+#center-bot-img{
+	width: 964px;
+	height: 20px;
+	text-align: left;
+	background-image: url("../images/Inner-page_12.png");
+	background-position: left-top;
+	background-repeat: repeat-x;
+}
+
+#center-left{
+	width: 630px;
+	height: auto;
+	text-align: left;
+}
+
+#center-right{
+	width: 334px;
+	height: auto;
+	text-align: left;
+}
+
+#intest-top{
+	width: 334px;
+	height: 76px;
+	text-align: left;
+	background-image: url("../images/Inner-page_07.jpg");
+	background-position: left-top;
+	background-repeat: no-repeat;
+}
+
+#intest-bg{
+	width: 334px;
+	height: auto;
+	text-align: left;
+	background-image: url("../images/Inner-page_08.jpg");
+	background-position: left-top;
+	background-repeat: repeat-y;
+}
+
+#intest-bot{
+	width: 334px;
+	height: 8px;
+	text-align: left;
+	background-image: url("../images/Inner-page_10.jpg");
+	background-position: left-top;
+	background-repeat: no-repeat;
+}
+
+/* ################################################################################# */

@@ -1,0 +1,102 @@
+.frm fieldset {
+	margin: 0px; padding: 0px; border: currentColor;
+}
+.frm fieldset.inline {
+	width: 100%;
+}
+.frm .frm-label {
+	float: left; position: relative;
+}
+.frm .full-label.frm-label {
+	width: 100%;
+}
+.frm .frm-space {
+	margin: 0px 5px;
+}
+.frm fieldset.stacked .frm-label {
+	width: auto; float: none; display: block;
+}
+.frm .frm-label {
+	line-height: 1.5em;
+}
+.frm input {
+	line-height: 1.5em;
+}
+.frm .frm-row {
+	padding: 0px 0px 15px;
+}
+.frm input.frm-txt {
+	border-width: 1px; border-style: solid; border-color: rgb(122, 122, 122) rgb(204, 204, 204) rgb(238, 238, 238);
+}
+.frm .frm-textarea {
+	border-width: 1px; border-style: solid; border-color: rgb(122, 122, 122) rgb(204, 204, 204) rgb(238, 238, 238);
+}
+.frm input.frm-txt {
+	padding: 4px 0px; width: 100%; color: rgb(102, 102, 102);
+}
+.frm .frm-textarea {
+	padding: 4px 0px; width: 100%; color: rgb(102, 102, 102);
+}
+.frm select {
+	padding: 4px 0px; width: 100%; color: rgb(102, 102, 102);
+}
+.frm input.frm-txt-seventy {
+	border-width: 1px; border-style: solid; border-color: rgb(122, 122, 122) rgb(204, 204, 204) rgb(238, 238, 238); padding: 4px 0px; width: 70%; color: rgb(102, 102, 102);
+}
+.frm .frm-error {
+	border-top-color: rgb(213, 148, 138); border-top-width: thin; border-top-style: solid; background-color: rgb(244, 237, 217);
+}
+.frm fieldset.signup input.frm-error {
+	border-top-color: rgb(213, 148, 138); border-top-width: thin; border-top-style: solid; background-color: rgb(244, 237, 217);
+}
+.frm .frm-focused {
+	border-top-color: rgb(213, 148, 138); border-top-width: thin; border-top-style: solid; background-color: rgb(208, 255, 208);
+}
+.frm fieldset.signup input.frm-focused {
+	border-top-color: rgb(213, 148, 138); border-top-width: thin; border-top-style: solid; background-color: rgb(208, 255, 208);
+}
+.frm .frm-required em {
+	color: rgb(153, 0, 0); font-size: 13px;
+}
+.frm fieldset.stacked .frm-required.frm-label em {
+	padding: 0px 0px 0px 5px;
+}
+.frm fieldset.signup span.frm-required em {
+	padding: 0px; left: -2px; position: relative;
+}
+.frm-bttn {
+	background: rgb(229, 229, 229); border-width: 1px; border-style: solid; border-color: rgb(204, 204, 204) rgb(122, 122, 122) rgb(122, 122, 122) rgb(204, 204, 204); padding: 2px 4px; font-size: 12px; margin-right: 8px;
+}
+.frm .actions {
+	padding-top: 30px;
+}
+.frm fieldset.inline .actions .frm-required {
+	padding-left: 200px;
+}
+.frm fieldset.signup input.frm-txt {
+	width: 150px;
+}
+.frm-success-messages {
+	padding: 5px; border: 1px solid rgb(147, 142, 148); color: rgb(255, 255, 255); background-color: rgb(150, 190, 225);
+}
+.frm-error-messages {
+	padding: 5px; border: 1px solid rgb(213, 148, 138); background-color: rgb(247, 237, 237);
+}
+.frm-error-messages strong {
+	color: rgb(213, 148, 138);
+}
+.label-fixed .frm-label {
+	width: 200px;
+}
+.label-fixed input.frm-txt {
+	width: 300px;
+}
+.label-fixed .frm-textarea {
+	width: 300px;
+}
+.label-fixed select {
+	width: 300px;
+}
+.label-fixed .frm-space {
+	margin: 0px;
+}

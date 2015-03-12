@@ -1,6 +1,6 @@
 {
 # this part fills in a file that sets language variables we use later on.
-Text::Template::fill_in_file( "$config{template_directory}language.tmpl", PACKAGE => __PACKAGE__ );
+Text::Template::fill_in_file( "$config{template_directory}assessment_language.tmpl", PACKAGE => __PACKAGE__ );
 }{
 # this part fills in a file that sets variables we use later on.
 Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
@@ -23,7 +23,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
 
 <div id="ass-bg" class="content">
 <p class="pad27">
-{$lang{$current_language}{crc_msg1}}
+{$lang{crc_msg1}{$current_language}}
 </p>
 </div> 
 
@@ -48,7 +48,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td colspan="2" >
-                 <p >&nbsp;<br>{$date} {$lang{$current_language}{for}}<b> {$name}</b></p><br>
+                 <p >&nbsp;<br>{$date} {$lang{for}{$current_language}}<b> {$name}</b></p><br>
                 </td>
               </tr>
               <tr>
@@ -58,7 +58,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
                 <td valign="middle" align="right" colspan="2" height="30">&nbsp;</td>
               </tr>
               <tr>
-                <td  width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{$current_language}{blood_pressure}}</b></font></td>
+                <td  width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{blood_pressure}{$current_language}}</b></font></td>
                 <td height="30">&nbsp;</td>
               </tr>
               <tr>
@@ -101,15 +101,15 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
                     $bar;
                     }
                   <p><b>{$bp_challenge}</b></p>
-                  <p><span><b>{$lang{$current_language}{details}}</b></span><br>
-                    <span >{$bp_message} {$lang{$current_language}{crc_bp_msg}}</span></p>
+                  <p><span><b>{$lang{details}{$current_language}}</b></span><br>
+                    <span >{$bp_message} {$lang{crc_bp_msg}{$current_language}}</span></p>
                 </td>
               </tr>
               <tr>
                 <td valign="middle" align="right" colspan="2" height="30">&nbsp;</td>
               </tr>
               <tr>
-                <td  width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{$current_language}{cholesterol}}</b></font></td>
+                <td  width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{cholesterol}{$current_language}}</b></font></td>
                 <td height="30">&nbsp;</td>
               </tr>
               <tr>
@@ -133,7 +133,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
                      	$bar = Text::Template::fill_in_file( "$config{template_directory}html_bar_3bars.tmpl", PACKAGE => __PACKAGE__ ) or die $Text::Template::ERROR;}
                      else{ $bar = Text::Template::fill_in_file( "$config{template_directory}html_bar.tmpl", PACKAGE => __PACKAGE__ );} $bar;}
 		  <p><b>{$cholesterol_challenge}</b></p>
-                  <p><span><b>{$lang{$current_language}{details}}</b></span><br>
+                  <p><span><b>{$lang{details}{$current_language}}</b></span><br>
                     <span >{$cholesterol_message}</span></p>
                 </td>
               </tr>
@@ -141,7 +141,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
                 <td valign="middle" align="right" colspan="2" height="30">&nbsp;</td>
               </tr>
               <tr>
-                <td  width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{$current_language}{hdl}}</b></font></td>
+                <td  width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{hdl}{$current_language}}</b></font></td>
                 <td height="30">&nbsp;</td>
               </tr>
               <tr>
@@ -164,7 +164,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
                      my $bar;
                      if ($config{'risks3bar'}){ $vars{bar_scale} = .4; $bar = Text::Template::fill_in_file( "$config{template_directory}html_bar_3bars.tmpl", PACKAGE => __PACKAGE__ ) or die $Text::Template::ERROR;}
                      else{ $bar = Text::Template::fill_in_file( "$config{template_directory}html_bar.tmpl", PACKAGE => __PACKAGE__ );} $bar;}
-                  <p><span><b>{$lang{$current_language}{details}}</b></span><br>
+                  <p><span><b>{$lang{details}{$current_language}}</b></span><br>
                     <span >{$hdl_message}</span></p>
                 </td>
               </tr>
@@ -172,7 +172,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
                 <td valign="middle" align="right" colspan="2" height="30">&nbsp;</td>
               </tr>
               <tr>
-                <td  width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{$current_language}{exercise}}</b></font></td>
+                <td  width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{exercise}{$current_language}}</b></font></td>
                 <td height="30">&nbsp;</td>
               </tr>
               <tr>
@@ -195,7 +195,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
                      else{ 
                      	if( $exercise < 7) {$vars{bar_scale} = 15}else{$vars{bar_scale} = 11}
                      	$bar = Text::Template::fill_in_file( "$config{template_directory}html_bar.tmpl", PACKAGE => __PACKAGE__ );} $bar;}
-                  <p><span><b>{$lang{$current_language}{details}}</b></span><br>
+                  <p><span><b>{$lang{details}{$current_language}}</b></span><br>
                     <span >{$exercise_message}</span></p>
                 </td>
               </tr>
@@ -208,7 +208,8 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
 				<input type="image" border=0 name="crc_1.tmpl" value="crc_1.tmpl" {$back}></td>
 				<td width=767 style="padding-top: 8px; padding-bottom: 10px; text-align:right">
 				<input type="image" border=0 name="crc_3.tmpl" value="crc_3.tmpl" {$next}>
-			{$hidden_cgi_fields}
+				<input type="hidden" name="language" value="">
+				{$hidden_cgi_fields}
 				</td>
 				<td>&nbsp;</td>
             </tr>

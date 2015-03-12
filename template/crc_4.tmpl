@@ -1,6 +1,6 @@
 {
 # this part fills in a file that sets language variables we use later on.
-Text::Template::fill_in_file( "$config{template_directory}language.tmpl", PACKAGE => __PACKAGE__ );
+Text::Template::fill_in_file( "$config{template_directory}assessment_language.tmpl", PACKAGE => __PACKAGE__ );
 }{
 # this part fills in a file that sets variables we use later on.
 Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
@@ -23,7 +23,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
 
 <div id="ass-bg" class="content">
 <p class="pad27">
-{$lang{$current_language}{crc_msg1}}
+{$lang{crc_msg1}{$current_language}}
 </p>
 </div> 
 
@@ -48,14 +48,14 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
   <table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td colspan="2">
-                 <p>&nbsp;<br><span>{$date} {$lang{$current_language}{for}} <b>{$name}</b></span></p><br>
-                  <p><span><b>{$lang{$current_language}{summary}}</b></span><br>
-			{$crc_status}</p>
-			<p>{$crc_message}</p>
-			<p>{$stress_message}</p>
-			<p>{$loss_message}</p>
-			<p>{$factors_message}</p><br>
-			<p><span><b>{$lang{$current_language}{additional_reading}}</b></span><br>
+                 <p>&nbsp;<br><span>{$date} {$lang{for}{$current_language}} <b>{$name}</b></span></p><br>
+                  <p><span><b>{$lang{summary}{$current_language}}</b></span><br>
+					{$crc_status}</p>
+				  <p>{$crc_message}</p>
+				  <p>{$stress_message}</p>
+				  <p>{$loss_message}</p>
+				  <p>{$factors_message}</p><br>
+				  <p><span><b>{$lang{additional_reading}{$current_language}}</b></span><br>
 			{
 			join "\r",
 				map { qq|<li><a target="_blank" href="$$_[1]">$$_[0]</a>| }
@@ -72,8 +72,9 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
 				<td width=200>
 				<input type="image" border=0 name="crc_3.tmpl" value="crc_3.tmpl" {$back}></td>
 				<td width=767 style="padding-top: 8px; padding-bottom: 10px; text-align:right">
-				{my $html = qq|<a href="$member">$lang{$current_language}{assessment_records}</a>| unless $status eq 'retake';$html;}
-			{ $hidden_cgi_fields }
+				{my $html = qq|<a href="$member">$lang{assessment_records}{$current_language}</a>| unless $status eq 'retake';$html;}
+				{ $hidden_cgi_fields }
+				<input type="hidden" name="language" value="">
 				</td>
 				<td>&nbsp;</td>
             </tr>

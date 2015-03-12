@@ -43,15 +43,15 @@ Text::Template::fill_in_file( "$config{template_directory}gha_variables.tmpl", P
 <span>Select Language</span><br>
 {	my $html;
 	if ($output_format eq 'PDF'){
-		$html .= qq|<a href="$review?status=retake&assessment=$assessment&xnum=$xnum&output_format=PDF&language=espanol">[Espanol]</a>
+		$html .= qq|<a href="$review?status=retake&assessment=$assessment&xnum=$xnum&output_format=PDF&language=spanish">[Espanol]</a>
 				&nbsp;&nbsp; <a href="$review?status=retake&assessment=$assessment&xnum=$xnum&output_format=PDF">[English]</a> |;
 	}else{
-		$html .= qq|<a href="$review?status=retake&assessment=$assessment&xnum=$xnum&language=espanol">[Espanol]</a>
+		$html .= qq|<a href="$review?status=retake&assessment=$assessment&xnum=$xnum&language=spanish">[Espanol]</a>
 				&nbsp;&nbsp; <a href="$review?status=retake&assessment=$assessment&xnum=$xnum">[English]</a>|;
 	}
 	$html;
 }
-
+<input type="hidden" name="language" value="">
 </div>
 </body>
 </html>

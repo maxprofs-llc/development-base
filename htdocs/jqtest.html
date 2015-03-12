@@ -1,0 +1,377 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Admin Area</title>
+<base href="https://cornerstone1.hra.net/" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+<link type="text/css" rel="stylesheet" href="/styles/ggr2_style.css" />
+<link type="text/css" rel="stylesheet" href="/styles/admin.css" />
+<link type="text/css" rel="stylesheet" href="/styles/lightwindow.css" />
+<link type="text/css" rel="stylesheet" href="/styles/jquery.mcdropdown.css" />
+
+<script type="text/javascript" src="/styles/new_ggr2_script.js"></script>
+<script type="text/javascript" src="/styles/prototype.js"></script>
+<script type="text/javascript" src="/styles/scriptaculous.js?load=effects,dragdrop"></script>
+<script type="text/javascript" src="/styles/lightwindow.js"></script>
+<script type="text/javascript" src="/styles/admin.js"></script>
+<script type="text/javascript" src="/styles/CalendarPopup.js"></script>
+<script type="text/javascript" src="/styles/jquery.mcdropdown.js"></script>
+<script type="text/javascript" src="/styles/jquery.bgiframe.js"></script>
+
+
+<script type="text/javascript">
+jQuery(document).ready(function (){
+	jQuery("#assessment_list").mcDropdown("#assessment_list_menu");
+});
+</script>
+<SCRIPT LANGUAGE="JavaScript">document.write(getCalendarStyles());</SCRIPT>
+</head>
+
+<body onLoad="page_1_load()">
+<table width="95%" id="main_table"><tr><td id="sidebar">
+ <img src="images/global/logo.png" border="0" align="center" height="95"><br />
+Currently logged in as: <b>HealthStatus Admin / admin</b>
+
+<br />&nbsp;<br /><a href=/cgi-bin/hs/index.cgi>Admin home page</a><br />&nbsp;</br>
+
+<span class="biglink">Documentation</span>
+<ul><li><a class="hintanchor" onMouseover="showhint('This document covers common user problems that may come up.', this, event, '150px')" href="javascript: myLightWindow.activateWindow({href: '/cgi-bin/hs/show_docs.cgi?file_name=Assessment_Troubleshooting&file_fmt=pdf&global=1&lw=1', type: 'external', title: 'Assessment Troubleshooting',width:780,height:700});">Assessment Troubleshooting</a></li>
+<li><a class="hintanchor" onMouseover="showhint('Instructions and tips on how to perform data entry of the paper forms. This covers entry and printing the forms.', this, event, '150px')" href="javascript: myLightWindow.activateWindow({href: '/cgi-bin/hs/show_docs.cgi?file_name=BatchProcessingInstructions&file_fmt=pdf&global=1&lw=1', type: 'external', title: 'Data Entry Processing',width:780,height:700});">Data Entry Processing</a></li>
+<li><a class="hintanchor" onMouseover="showhint('The HealthStatus software citations, documenting where the recommendations and algorithms come from.', this, event, '150px')" href="javascript: myLightWindow.activateWindow({href: '/cgi-bin/hs/show_docs.cgi?file_name=HealthStatusCitations&file_fmt=pdf&global=1&lw=1', type: 'external', title: 'Citations',width:780,height:700});">Citations</a></li>
+<li><a class="hintanchor" onMouseover="showhint('Ins and outs of running group reports, shows sample reports.', this, event, '150px')" href="javascript: myLightWindow.activateWindow({href: '/cgi-bin/hs/show_docs.cgi?file_name=HealthStatusAdvancedGraphicGroupReportUser&file_fmt=pdf&global=1&lw=1', type: 'external', title: 'Group Reports',width:780,height:700});">Group Reports</a></li>
+</ul>
+
+<span class="biglink">Assessment Functions</span>
+		<ul><li><a  class="hintanchor" onMouseover="showhint('Search assessments by user name, assessment type or date taken.', this, event, '150px')"href="/cgi-bin/hs/search_assessments.cgi">Search Assessments</a></li>
+		<li><a  class="hintanchor" onMouseover="showhint('View all the assessments', this, event, '150px')"href="/cgi-bin/hs/assessments_results.cgi">View All Assessments</a></li>
+		</ul>
+
+<span class="biglink">Data Entry Functions</span>
+		<ul><li><a href="/cgi-bin/hs/batch_print.cgi?list=1">Batch maintenance.</a></li><li><a href="/cgi-bin/hs/batch_entry.cgi?assessment=CRC">Cardiac Assessment Entry</a></li><li><a href="/cgi-bin/hs/batch_entry.cgi?assessment=DRC">Diabetes Assessment Entry</a></li><li><a href="/cgi-bin/hs/batch_entry.cgi?assessment=FIT">Fitness Assessment Entry</a></li><li><a href="/cgi-bin/hs/batch_entry.cgi?assessment=GHA">Health Risk Assessment Entry</a></li></ul>
+		<span class="biglink">Printable Forms</span>
+		<ul><li><a href="javascript: myLightWindow.activateWindow({href: '/cgi-bin/hs/show_docs.cgi?file_name=11x17_crc&file_fmt=pdf&lw=1', type: 'external', title: 'Cardiac Risk Assessment',width:780,height:700});">Cardiac Assessment Form</a></li><li><a href="javascript: myLightWindow.activateWindow({href: '/cgi-bin/hs/show_docs.cgi?file_name=11x17_drc&file_fmt=pdf&lw=1', type: 'external', title: 'Diabetes Risk Assessment',width:780,height:700});">Diabetes Assessment Form</a></li><li><a href="javascript: myLightWindow.activateWindow({href: '/cgi-bin/hs/show_docs.cgi?file_name=11x17_fit&file_fmt=pdf&lw=1', type: 'external', title: 'Fitness Assessment',width:780,height:700});">Fitness Assessment Form</a></li><li><a href="javascript: myLightWindow.activateWindow({href: '/cgi-bin/hs/show_docs.cgi?file_name=11x17_health&file_fmt=pdf&lw=1', type: 'external', title: 'Health Risk Assessment',width:780,height:700});">Health Risk Assessment Form</a></li><li><a href="javascript: myLightWindow.activateWindow({href: '/cgi-bin/hs/show_docs.cgi?file_name=11x17_health_bio&file_fmt=pdf&lw=1', type: 'external', title: 'Health Risk Assessment (Health Fair Version)',width:780,height:700});">Health Risk Assessment Form (Health Fair)</a></li></ul>
+
+<span class="biglink">Group Management</span>
+		<ul><li><a class="hintanchor" onMouseover="showhint('Group Management, add a new group.', this, event, '150px')" href="/cgi-bin/hs/create_groups.cgi?action=create">Add a new group</a></li>
+		<li><a class="hintanchor" onMouseover="showhint('Group Management, modify a group.', this, event, '150px')" href="/cgi-bin/hs/admin_group_modify.cgi">Modify a group</a></li>
+		<li><a class="hintanchor" onMouseover="showhint('Group Management, view all groups.', this, event, '150px')" href="/cgi-bin/hs/admin_group_results.cgi">View Group Info</a></li>
+		<li><a class="hintanchor" onMouseover="showhint('Group Management, modify site id.', this, event, '150px')" href="/cgi-bin/hs/admin_siteid_modify.cgi">Modify Site Id</a></li>
+		</ul>
+
+<span class="biglink">Group Reporting Functions</span>
+		<ul><li><a class="hintanchor" onMouseover="showhint('Create aggregate reports, participation reports and individual detail reports from by selecting this option.', this, event, '150px')" href="/cgi-bin/hs/ggr_adv2.cgi">Run group reports.</a></li>
+			<!--<li><a class="hintanchor" onMouseover="showhint('Update  participation reports fields and individual detail reports fields from by selecting this option.', this, event, '150px')" href="/cgi-bin/hs/ggr_set_configuration.cgi">Update reports fields.</a></li>--></ul>
+<span class="biglink">Data Import Functions</span>
+		<ul><li><a class="hintanchor" onMouseover="showhint('Create a data import profile using xls, xlsx or csv file', this, event, '150px')" href="/cgi-bin/hs/create_import_profile.cgi">Create Data Import Profile</a></li>
+			<li><a class="hintanchor" onMouseover="showhint('Run a data import profile.', this, event, '150px')" href="/cgi-bin/hs/data_import.cgi">Run Data Import</a></li>
+                        <li><a class="hintanchor" onMouseover="showhint('View data import profile previously created.', this, event, '150px')" href="javascript: myLightWindow.activateWindow({href: '/cgi-bin/hs/create_import_profile.cgi?Submit=View Profile', type: 'external', title    : 'View Profile',width:780,height:700});">View Import Profile</a></li>
+                        <li><a class="hintanchor" onMouseover="showhint('Undo last import.', this, event, '150px')" href="/cgi-bin/hs/undo_import.cgi">Undo Last Import</a></li>
+                        <li><a class="hintanchor" onMouseover="showhint('View data import history.', this, event, '150px')" href="javascript: myLightWindow.activateWindow({href: '/cgi-bin/hs/data_import.cgi?submit=View History', type: 'external', title    : 'View History',width:780,height:700});">View Import History</a></li></ul>
+<span class="biglink">Database Management</span>
+		<ul><li><a class="hintanchor" onMouseover="showhint('Create a database backup.', this, event, '150px')" href="/cgi-bin/hs/data_backup.cgi">Create a database backup</a></li>
+			<li><a class="hintanchor" onMouseover="showhint('Restore a database.', this, event, '150px')" href="/cgi-bin/hs/data_restore.cgi?backup=1">Restore a database</a></li>
+			<li><a class="hintanchor" onMouseover="showhint('Add a table.', this, event, '150px')" href="/cgi-bin/hs/create_table.cgi">Add table</a></li>
+			<li><a class="hintanchor" onMouseover="showhint('Add a column.', this, event, '150px')" href="/cgi-bin/hs/add_column.cgi">Add Column</a></li></ul>
+<span class="biglink">System Functions</span>
+	<ul>
+		<li><a href="/cgi-bin/hs/show_template.cgi?template=admin_upload_file.tmpl">Upload a file to HealthStatus</a></li>
+		<li><a href="/cgi-bin/hs/edit_files.cgi?edit=letter">Edit cover letter templates</a></li>
+		<li><a href="/cgi-bin/hs/edit_files.cgi?edit=email">Edit email templates</a></li>
+		</ul><span class="biglink">User Functions</span>
+	<ul>
+		<li><a class="hintanchor" onMouseover="showhint('You can delete users or change their system access rank on this screen.', this, event, '150px')" href="/cgi-bin/hs/user_admin.cgi">General User Administration</a></li>
+		<li><a class="hintanchor" onMouseover="showhint('Assign coaches to individuals to allow the coach to see the assessments taken by each individual.', this, event, '150px')" href="/cgi-bin/hs/assign_coaches.cgi">Assign Coaches</a></li>
+	</ul>
+
+<span class="biglink">Navigation</span>
+<ul><li><a href="/cgi-bin/hs/assessment_recs.cgi">Back to assessments records</a></li>
+<li><a href="/cgi-bin/hs/logout.cgi">Logout</a></li>
+</ul>
+<a href=/cgi-bin/hs/index.cgi>Admin home page</a>
+
+
+</td><td id="main_pane">
+
+<script type="text/javascript">
+var cal1 = new CalendarPopup("cal_div");
+cal1.setReturnFunction("setMultipleValues1");
+function setMultipleValues1(y,m,d) {
+	 document.forms[0].s_year.value=y;
+	 document.forms[0].s_month.value=LZ(m);
+	 document.forms[0].s_day.value=LZ(d);
+}
+var cal2 = new CalendarPopup("cal_div");
+cal2.setReturnFunction("setMultipleValues2");
+function setMultipleValues2(y,m,d) {
+	 document.forms[0].e_year.value=y;
+	 document.forms[0].e_month.value=LZ(m);
+	 document.forms[0].e_day.value=LZ(d);
+}
+var cal3 = new CalendarPopup("cal_div");
+cal3.setReturnFunction("setMultipleValues3");
+function setMultipleValues3(y,m,d) {
+	 document.forms[0].s_year1.value=y;
+	 document.forms[0].s_month1.value=LZ(m);
+	 document.forms[0].s_day1.value=LZ(d);
+}
+var cal4 = new CalendarPopup("cal_div");
+cal4.setReturnFunction("setMultipleValues4");
+function setMultipleValues4(y,m,d) {
+	 document.forms[0].e_year1.value=y;
+	 document.forms[0].e_month1.value=LZ(m);
+	 document.forms[0].e_day1.value=LZ(d);
+}
+</script>
+
+	<form method="POST" action="/cgi-bin/hs/ggr_adv2.cgi" name=frm>
+<table width="770" border="0" cellspacing="0" cellpadding="0">
+
+	  <tr align="center">
+	    <td height="40" colspan="2" class="pageheading">Report Setup</td>
+      </tr>
+
+		</table>
+<table width="770" border="0" cellspacing="0" cellpadding="0" ID="selections">
+		<tr>
+			<td valign="top" class="maintext-b">Create a new report<br>What type of report?</td>
+			<td class="maintext-n"><table width="320" border="0" cellpadding="1" cellspacing="0">
+  <tr>
+    <td width="23"></td><td></td>
+    <td width="23"><input value="agrgt_data" name="rpt_type" onclick="disable_radio1()" class="maintext-n" type="radio"></td>
+    <td width="86" class="maintext-n">Aggregate report</td>
+    <td width="20"><input value="indv_data" name="rpt_type" onclick="disable_radio2()" class="maintext-n" type="radio"></td>
+    <td width="83" class="maintext-n">Individual data </td>
+    <td width="20"><input value="participation" name="rpt_type" onclick="disable_radio4()" class="maintext-n" type="radio"></td>
+    <td width="83" class="maintext-n">Participation report </td>
+  </tr>
+</table></td>
+		</tr>
+		    <tr>
+		      <td class="maintext-n" colspan=2><hr></td>
+		    </tr>
+		<tr>
+		  <td valign="top" class="maintext-b">How do you want the report output?</td>
+		  <td class="maintext-n">
+		  <table width="526" border="0" cellspacing="0" cellpadding="0">
+		    <tr>
+		      <td width="22"><input checked="checked" value="PDF" name="rpt_format" type="radio"></td>
+		      <td width="504" class="maintext-n">PDF (only for aggregate report and individual data)</td>
+		    </tr>
+		    <tr>
+		      <td><input disabled="true" value="XLS" name="rpt_format" type="radio"></td>
+		      <td class="maintext-n">Spreadsheet (xls file)</td>
+		    </tr>
+		    <tr>
+		      <td><input value="XML" name="rpt_format" type="radio"></td>
+		      <td class="maintext-n">XML data</td>
+		    </tr>
+		    <tr>
+		      <td><input disabled="true" value="CSV" name="rpt_format" type="radio"></td>
+		      <td class="maintext-n">CSV data</td>
+		    </tr>
+		  </table></td>
+	   	</tr>
+		    <tr>
+		      <td class="maintext-n" colspan=2><hr></td>
+		    </tr>
+		<tr>
+		  <td valign="top" class="maintext-b">Choose a date range</td>
+		  <td class="maintext-n">
+		  <table width="526" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td colspan="2" valign="top">
+              <table width="70%"  border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td width="6%" class="maintext-n"><input value="date_range" name="date" type="radio"></td>
+                    <td width="37%" class="maintext-n">Pre-selected Period</td>
+                    <td width="57%"><select name="date_range" size="1" class="maintext-n" onChange="select_dates()">
+                      <option value="" selected="selected">All dates</option>
+                      <option value="yesterday">Yesterday</option>
+                      <option value="this_week">This week</option>
+                      <option value="last_week">Last week</option>
+                      <option value="this_month">This month</option>
+                      <option value="last_month">Last month</option>
+                      <option value="this_quarter">This quarter</option>
+                      <option value="last_quarter">Last quarter</option>
+                      <option value="this_year">This year</option>
+                      <option value="last_year">Last year</option>
+                    </select></td>
+                  </tr>
+                </table><br>&nbsp;</td>
+            </tr>
+            <tr>
+              <td colspan="2" valign="top"><table width="85%" border="0" cellpadding="1" cellspacing="0">
+                <tr>
+                  <td width="6%" class="maintext-n"><input value="specific" name="date" type="radio"></td>
+                  <td width="37%" class="maintext-n">Exact Period</td>
+                  <td width="6%" class="maintext-n"><input onchange="setDateBox()" name="s_month" class="maintext-n" type="text" size="4"></td>
+                  <td width="6%" class="maintext-n"><input onchange="setDateBox()" name="s_day" class="maintext-n" type="text" size="4"></td>
+                  <td width="10%" class="maintext-n"><input onchange="setDateBox()" name="s_year" class="maintext-n" type="text" size="7"></td>
+                  <td width="2%" class="maintext-n"><a id="anchor1" name="anchor1" onclick="cal1.showCalendar('anchor1'); return false;" href="#"><img border="0" align="baseline" title="Calendar" src="images/global/calendar.jpg"/></a></td>
+				  <td width="6%" class="maintext-n">through</td>
+                  <td width="6%" class="maintext-n"><input onchange="setDateBox()" name="e_month" class="maintext-n" type="text" size="4"></td>
+                  <td width="6%" class="maintext-n"><input onchange="setDateBox()" name="e_day" class="maintext-n" type="text" size="4"></td>
+                  <td width="10%" class="maintext-n"><input onchange="setDateBox()" name="e_year" class="maintext-n" type="text" size="7"></td>
+				  <td width="2%" class="maintext-n"><a id="anchor2" name="anchor2" onclick="cal2.showCalendar('anchor2'); return false;" href="#"><img border="0" align="baseline" title="Calendar" src="images/global/calendar.jpg"/></a></td>
+                </tr>
+                <tr>
+                  <td class="maintext-n">&nbsp;</td>
+                  <td class="maintext-n">&nbsp;</td>
+                  <td class="maintext-n">MM</td>
+                  <td class="maintext-n">DD</td>
+                  <td class="maintext-n">YYYY</td>
+                  <td class="maintext-n">&nbsp;</td>
+				  <td class="maintext-n">&nbsp;</td>
+                  <td class="maintext-n">MM</td>
+                  <td class="maintext-n">DD</td>
+                  <td class="maintext-n">YYYY</td>
+				  <td class="maintext-n">&nbsp;</td>
+                </tr>
+                            </table><br>&nbsp;</td>
+            </tr>
+            <tr>
+              <td colspan="2" valign="top"><table width="85%" border="0" cellpadding="1" cellspacing="0">
+                <tr>
+                  <td width="6%" class="maintext-n"><input value="specific1" name="date" type="radio"></td>
+                  <td width="39%" class="maintext-n">Specific Begining date through Today</td>
+                  <td width="6%" class="maintext-n"><input onchange="setDateBox1()" name="s_month1" class="maintext-n" type="text" size="4"></td>
+                  <td width="6%" class="maintext-n"><input onchange="setDateBox1()" name="s_day1" class="maintext-n" type="text" size="4"></td>
+                  <td width="10%" class="maintext-n"><input onchange="setDateBox1()" name="s_year1" class="maintext-n" type="text" size="7"></td>
+				  <td width="2%" class="maintext-n"><a id="anchor3" name="anchor3" onclick="cal3.showCalendar('anchor3'); return false;" href="#"><img border="0" align="baseline" title="Calendar" src="images/global/calendar.jpg"/></a></td>
+                </tr>
+                <tr>
+                  <td class="maintext-n">&nbsp;</td>
+                  <td class="maintext-n">&nbsp;</td>
+                  <td class="maintext-n">MM</td>
+                  <td class="maintext-n">DD</td>
+                  <td class="maintext-n">YYYY</td>
+				  <td class="maintext-n">&nbsp;</td>
+                </tr>
+                            </table><br>&nbsp;</td>
+            </tr>
+            <tr>
+              <td colspan="2" valign="top"><table width="85%" border="0" cellpadding="1" cellspacing="0">
+                <tr>
+                  <td width="6%" class="maintext-n"><input value="specific2" name="date" type="radio"></td>
+                  <td width="39%" class="maintext-n">All Records up to a Specific End Date</td>
+                  <td width="6%" class="maintext-n"><input onchange="setDateBox2()" name="e_month1" class="maintext-n" type="text" size="4"></td>
+                  <td width="6%" class="maintext-n"><input onchange="setDateBox2()" name="e_day1" class="maintext-n" type="text" size="4"></td>
+                  <td width="10%" class="maintext-n"><input onchange="setDateBox2()" name="e_year1" class="maintext-n" type="text" size="7"></td>
+				  <td width="2%" class="maintext-n"><a id="anchor4" name="anchor4" onclick="cal4.showCalendar('anchor4'); return false;" href="#"><img border="0" align="baseline" title="Calendar" src="images/global/calendar.jpg"/></a></td>
+                 </tr>
+                <tr>
+                  <td class="maintext-n">&nbsp;</td>
+                  <td class="maintext-n">&nbsp;</td>
+                  <td class="maintext-n">MM</td>
+                  <td class="maintext-n">DD</td>
+                  <td class="maintext-n">YYYY</td>
+                  <td class="maintext-n">&nbsp;</td>
+                </tr>
+          </table></td>
+	  </tr>
+	  	    <tr>
+		      <td class="maintext-n" colspan=2><hr></td>
+		    </tr>
+		</table></td>
+	   	</tr>
+
+		<tr>
+		  <td class="maintext-n">&nbsp;</td>
+		  <td class="maintext-n">&nbsp;</td>
+	  </tr>
+	</table>
+	<table width="770" border="0" cellspacing="0" cellpadding="0" id=accounting>
+
+		<tr>
+		  <td class="maintext-b" colspan=2>The remaining selection fields apply to Aggregate, Individual and Participation reports only.</td>
+	  </tr>
+		<tr>
+		  <td class="maintext-n">&nbsp;</td>
+		  <td class="maintext-n">&nbsp;</td>
+	  </tr>
+		<tr>
+		  <td valign="top" class="maintext-b">For which assessments</td>
+		  <td valign="middle" class="maintext-n"><table width="50%"  border="0" cellspacing="0" cellpadding="1">
+            <tr><td>
+<input value="" name="assessment_list" id="assessment_list" type="text" /></td></tr>
+          </table></td>
+	  </tr>
+		    <tr>
+		      <td class="maintext-n" colspan=2><hr></td>
+		    </tr>
+		<tr>
+		  <td class="maintext-n">&nbsp;</td>
+		  <td class="maintext-n">&nbsp;</td>
+	  </tr>
+		<tr>
+		  <td valign="top" class="maintext-b">User properties</td>
+		  <td class="maintext-n"><table width="85%"  border="0" cellspacing="0" cellpadding="1">
+
+<tr><td colspan=2 class="maintext-b">Process users from:;</td></tr>
+            <tr>
+              <td width="18%" class="maintext-n">Group : </td>
+
+              <td width="30%" class="maintext-n"><select name="site_selection" size="1" class="maintext-n"><option value="" selected="selected">All</option><option value="/0009869">Demonstration and Testing</option><option value="/1941">Flash Market, Inc.</option><option value="/3812106"></option><option value="123456">manoj</option></select></td></tr>
+
+
+          </table></td>
+	  </tr>
+		    <tr>
+		      <td class="maintext-n" colspan=2><hr></td>
+		    </tr>
+		<tr>
+		  <td class="maintext-n">&nbsp;</td>
+		  <td class="maintext-n">&nbsp;</td>
+	  </tr>
+		<tr>
+		  <td valign="top" class="maintext-b">User records</td>
+		  <td class="maintext-n">Use <select size="1" name="records">
+            <option value="all">All</option>
+            <option value="recent" selected="selected">Most Recent</option>
+            <option value="oldest">Oldest</option>
+          </select>
+record(s) for each user and assessment.</td>
+	  </tr>
+		    <tr>
+		      <td class="maintext-n" colspan=2><hr></td>
+		    </tr>
+		<tr>
+		  <td class="maintext-n">&nbsp;</td>
+		  <td class="maintext-n">&nbsp;</td>
+	  </tr>
+	  </table>
+<table width="770" border="0" cellspacing="0" cellpadding="0">
+
+		<tr>
+		  <td class="maintext-n">&nbsp;</td>
+		  <td class="maintext-n"><input value="Next step" name="Submit" class="maintext-b" type="submit"></td>
+	  </tr>
+	<input value="all" name="max_records" type="hidden">
+
+          </table></form>
+	<DIV ID="cal_div" STYLE="position:absolute;visibility:hidden;background-color:white;layer-background-color:white;"></DIV>
+
+		<ul id="assessment_list_menu" class="mcdropdown_menu">
+			<li rel="ALL">
+				All assessments
+				<ul>
+					<li rel="CRC">
+						Cardiac
+					</li>
+					<li rel="DRC">
+						Diabetes
+					</li>
+					<li rel="FIT">
+						Fitness
+					</li>
+					<li rel="GHA">
+						Health Risk
+					</li>
+					<li rel="HRA">
+						General Health
+					</li>
+				</ul>
+			</li>
+		</ul>
+
+  </td></tr></table></body></html>

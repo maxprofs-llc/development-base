@@ -10,19 +10,19 @@
 	$title = $vars{title_text};
 	$width = $vars{width_of_table};
 	if(!$rate){
-		$rate = "U.S. Average";
+		$rate = $lang{US_average}{$current_language};
 	}
 	if(!$targ){
-		$targ = $lang{$current_language}{Target_score};
+		$targ = $lang{Target_score}{$current_language};
 	}
 	if(!$risk){
-		$risk = $lang{$current_language}{Your_risk_is};
+		$risk = $lang{Your_risk_is}{$current_language};
 	}
 	if(!$above){
-		$above = "above";
+		$above =  $lang{above}{$current_language};
 	}
 	if(!$below){
-		$below = "below";
+		$below = $lang{below}{$current_language};
 	}
 	$mlev = int($smlev * $scale)*10;
 	$uslev = int($suslev * $scale)*10;
@@ -34,9 +34,9 @@
 		$title = eval $title;
 	}
 	my $htm = qq|<table width="100%" border=0 cellspacing=0 cellpadding=0 class="hs_bar_table">|;
-	$htm .= qq|<tr><td class=hs_bar_label1><nobr>&nbsp;&nbsp;$lang{$current_language}{Your_Score}&nbsp;</nobr></td><td class=hs_bar1 width="86%"><img src ="$bar3_score" border=0 height=$bar_height width=$mlev></td></tr>|;
-	$htm .= qq|<tr><td class=hs_bar_label3><nobr>&nbsp;&nbsp;$lang{$current_language}{Target_score}&nbsp;</nobr></td><td class=hs_bar3 width="86%"><img src ="$bar3_target" border=0 height=$bar_height width=$mtar></td></tr>|;
-	$htm .= qq|<tr><td class=hs_bar_label2><nobr>&nbsp;&nbsp;$lang{$current_language}{Average_Score}&nbsp;</nobr></td><td class=hs_bar2 width="86%"><img src ="$bar3_avg" border=0 height=$bar_height width=$uslev></td></tr>|;
+	$htm .= qq|<tr><td class=hs_bar_label1><nobr>&nbsp;&nbsp;$lang{Your_Score}{$current_language}&nbsp;</nobr></td><td class=hs_bar1 width="86%"><img src ="$bar3_score" border=0 height=$bar_height width=$mlev></td></tr>|;
+	$htm .= qq|<tr><td class=hs_bar_label3><nobr>&nbsp;&nbsp;$lang{Target_score}{$current_language}&nbsp;</nobr></td><td class=hs_bar3 width="86%"><img src ="$bar3_target" border=0 height=$bar_height width=$mtar></td></tr>|;
+	$htm .= qq|<tr><td class=hs_bar_label2><nobr>&nbsp;&nbsp;$lang{Average_Score}{$current_language}&nbsp;</nobr></td><td class=hs_bar2 width="86%"><img src ="$bar3_avg" border=0 height=$bar_height width=$uslev></td></tr>|;
 	$htm .= qq|</table>|;
 
 $htm;

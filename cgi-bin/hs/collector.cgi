@@ -95,9 +95,6 @@ an error page.
 
 =cut
 
-# Removing warnings in log while module is being used with CGI version 4 or above
-$CGI::LIST_CONTEXT_WARN = 0;
-
 use File::Basename        qw( dirname );
 use File::Spec::Functions qw( rel2abs );
 
@@ -122,6 +119,9 @@ use JSON;
 use LWP::UserAgent;
 use LWP::Authen::OAuth;
 use Data::Dumper;
+
+# Removing warnings in log while module is being used with CGI version 4 or above
+$CGI::LIST_CONTEXT_WARN = 0;
 
 #my $input = new CGI();
 my $input = CGI -> new;
@@ -148,8 +148,7 @@ if($input->param('page') == 0 && !$config->prepopulate) {
 $session->flush();# unless ($ENV{REMOTE_ADDR} eq '173.165.73.118');
 carp "Session id in collector #2 is: ".$session->id(). " dump\n".$session->dump() if($ENV{REMOTE_ADDR} eq '173.165.73.118');
 
-my %hash = map { $_, $input->param($_) } $input->param();
-	
+my %hash = map { $_, $input->param($_) } $input->param();	
 
 my %config = map { $_, $config->$_ } $config->directives;
 
@@ -283,7 +282,7 @@ my @image_submits = map { lc } grep { m/\.[xy]$/i } $input->param;
 my( $image_submit ) = $image_submits[0] =~ m/(.*)\.[xy]/;
 $user->{pageno} = $page;
 my $inserted_flag = '0' || $session->param('insert_flag');
-print STDERR "inserted_flag==$inserted_flag\n\n";
+
 if( ($image_submit eq 'next' || $input->param('next') || lc($input->param('hidButtonName')) eq 'next' ) &&
 	$page < $max_pages)
 	{
@@ -516,7 +515,7 @@ unless (-e $template) {
 	}
 
 print "template is $template<br>\n" if $Debug;
-
+print STDERR "template is $template\n"; 
 # if( $config->prepopulate && $page == 1 && $first_pass ){ 
 	# my @name_parts = split / /,$user->db_fullname;
 	# $user->first_name(@name_parts[0]);

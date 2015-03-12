@@ -1,0 +1,15 @@
+.HStitle { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; color: #FA8714; font-weight: bold}
+.HSsubtitle { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #FA8714; font-weight: bold}
+.HSbodytext {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #000000}
+.HSbodytext1 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #000066}
+.HSbodytext2 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #666666}
+.HSbodytextbold { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; color: #000000 ; font-weight: bold}
+.HSintro { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #666666 ; font-weight: mediumbold}
+.HSquestion{  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; color: #000000}
+ul.HSresults {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #000000; list-style-type: square}
+ol.HSresults {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #000000; list-style-type: square}
+div.HSstyle a:link { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #0054C9; text-decoration: underline}
+div.HSstyle a:visited { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #0054C9; text-decoration: underline }
+div.HSstyle a:active { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #0054C9; text-decoration: underline }
+div.HSstyle a:hover { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #0054C9; text-decoration: none}
+TD.HSright {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #000000; text-align: left; float: left}
