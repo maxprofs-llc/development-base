@@ -20,7 +20,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_in_file", PACK
 
 <div id="ass-bg" class="content">
 <p class="pad27">
-{$lang{$current_language}{gha_intro}}
+{$lang{gha_intro}{$current_language}}
 </p>
 </div>
 
@@ -42,7 +42,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_in_file", PACK
 
 <div id="ass-bg" class="content">
 <p class="pad27">
-{$lang{$current_language}{use_button_msg}}
+{$lang{use_button_msg}{$current_language}}
 {if($config{import_lock}){' <br />Input sections with green backgrounds have been filled with your biometric data and cannot be changed.' }}
 </p>
 </div>
@@ -63,30 +63,30 @@ if ($curr_page == 1) {
 			| if ($extra_id_input);
 	$html_page .= qq|
 			<tr>
-				<td class="lb2" width="30%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{first_name}:</td>
+				<td class="lb2" width="30%" style="padding-top: 10px; padding-right: 20px">$lang{first_name}{$current_language}:</td>
 				<td width="70%" style="padding-top: 10px"><input type="TEXT" class="textBox" NAME="first_name" SIZE="28" value="" onKeyup="if(this.value.match(/[^A-Za-z \.]/))this.value=this.value.replace(/[^A-Za-z \.]/g,'')"></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="30%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{last_name}:</td>
+				<td class="lb2" width="30%" style="padding-top: 10px; padding-right: 20px">$lang{last_name}{$current_language}:</td>
 				<td width="70%" style="padding-top: 10px"><input type="TEXT" class="textBox" NAME="last_name" SIZE="28" value="" onKeyup="if(this.value.match(/[^A-Za-z \.\-]/))this.value=this.value.replace(/[^A-Za-z \.\-]/g,'')"> </td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="30%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{date_of_birth}:</td>
+				<td class="lb2" width="30%" style="padding-top: 10px; padding-right: 20px">$lang{date_of_birth}{$current_language}:</td>
 				<td width="70%" style="padding-top: 10px"><select name="birth_month" size="1">
-							<option value="01">$lang{$current_language}{jan}</option>
-							<option value="02">$lang{$current_language}{feb}</option>
-							<option value="03">$lang{$current_language}{mar}</option>
-							<option value="04">$lang{$current_language}{apr}</option>
-							<option value="05">$lang{$current_language}{may}</option>
-							<option value="06">$lang{$current_language}{jun}</option>
-							<option value="07">$lang{$current_language}{jul}</option>
-							<option value="08">$lang{$current_language}{aug}</option>
-							<option value="09">$lang{$current_language}{sep}</option>
-							<option value="10">$lang{$current_language}{oct}</option>
-							<option value="11">$lang{$current_language}{nov}</option>
-							<option value="12">$lang{$current_language}{dec}</option>
+							<option value="01">$lang{jan}{$current_language}</option>
+							<option value="02">$lang{feb}{$current_language}</option>
+							<option value="03">$lang{mar}{$current_language}</option>
+							<option value="04">$lang{apr}{$current_language}</option>
+							<option value="05">$lang{may}{$current_language}</option>
+							<option value="06">$lang{jun}{$current_language}</option>
+							<option value="07">$lang{jul}{$current_language}</option>
+							<option value="08">$lang{aug}{$current_language}</option>
+							<option value="09">$lang{sep}{$current_language}</option>
+							<option value="10">$lang{oct}{$current_language}</option>
+							<option value="11">$lang{nov}{$current_language}</option>
+							<option value="12">$lang{dec}{$current_language}</option>
 					</select>
 					<select name="birth_date" size="1">
 							<option value="1">1</option>
@@ -125,21 +125,21 @@ if ($curr_page == 1) {
 			</tr>
 
 			<tr>
-				<td class="lb2" width="30%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{sex}:</td>
+				<td class="lb2" width="30%" style="padding-top: 10px; padding-right: 20px">$lang{sex}{$current_language}:</td>
 				<td width="70%" style="padding-top: 10px"><select NAME="sex">
 						<option value="">&nbsp;</option>
-						<option value="Female">$lang{$current_language}{female}</option>
-						<option value="Male">$lang{$current_language}{male}</option>
+						<option value="Female">$lang{female}{$current_language}</option>
+						<option value="Male">$lang{male}{$current_language}</option>
 					</select></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="30%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{question_weight}<br>($lang{$current_language}{weight_imp_unit})</td>
+				<td class="lb2" width="30%" style="padding-top: 10px; padding-right: 20px">$lang{question_weight}{$current_language}<br>($lang{weight_imp_unit}{$current_language})</td>
 				<td width="70%" style="padding-top: 10px"><input type="number" class="textBox"  style="width: 75px" NAME="weight" SIZE="5" maxlength="3" onKeyup="if(this.value.match(/[^0-9\.]/))this.value=this.value.replace(/[^0-9\.]/g,'')"></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="30%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{question_height}</td>
+				<td class="lb2" width="30%" style="padding-top: 10px; padding-right: 20px">$lang{question_height}{$current_language}</td>
 				<td width="70%" style="padding-top: 10px"><select size="1" name="height">
 						<option value="48">4' 1&quot;</option>
 						<option value="49">4' 2&quot;</option>
@@ -187,62 +187,62 @@ if ($curr_page == 1) {
 			|;
 	$html_page .= qq|
 			<tr>
-				<td class="lb2" width="30%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{question_waist}</td>
-				<td width="70%" style="padding-top: 10px"><input type="number"  style="width: 75px" class="textBox" name="waist" SIZE="3" MAXLENGTH="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9\.]/g,'')"> <span class="lb2">inches</span></td>
+				<td class="lb2" width="30%" style="padding-top: 10px; padding-right: 20px">$lang{question_waist}{$current_language}</td>
+				<td width="70%" style="padding-top: 10px"><input type="number"  style="width: 75px" class="textBox" name="waist" SIZE="3" MAXLENGTH="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9\.]/g,'')"> <span class="lb2">$lang{length_imp_unit}{$current_language}</span></td>
 			</tr>
 			| if ($no_bio_question == 0);
 	$html_page .= qq|
 			<tr>
-				<td class="lb2" width="30%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{question_hip}</td>
-				<td width="70%" style="padding-top: 10px"><input type="number"  style="width: 75px" class="textBox" name="hip" SIZE="3" MAXLENGTH="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9\.]/g,'')"> <span class="lb2">inches</span></td>
+				<td class="lb2" width="30%" style="padding-top: 10px; padding-right: 20px">$lang{question_hip}{$current_language}</td>
+				<td width="70%" style="padding-top: 10px"><input type="number"  style="width: 75px" class="textBox" name="hip" SIZE="3" MAXLENGTH="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9\.]/g,'')"> <span class="lb2">$lang{length_imp_unit}{$current_language}</span></td>
 			</tr>
 			| if ($hip_question == 1);
 	$html_page .= qq|
 			<tr>
-				<td class="lb2" width="30%" style="padding-top: 10px; padding-right: 20px">">$lang{$current_language}{question_fat}</</td>
+				<td class="lb2" width="30%" style="padding-top: 10px; padding-right: 20px">">$lang{question_fat}{$current_language}</</td>
 				<td width="70%" style="padding-top: 10px"><input type="TEXT"  style="width: 75px" class="textBox" name="bodyfat" SIZE="3" MAXLENGTH="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9\.]/g,'')"> <span class="lb2">%</span></td>
 			</tr>
 			| if ($bfat_question == 1);
 	$html_page .= qq|
 			<tr>
-				<td class="lb2" width="30%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{question_body_frame_size}</td>
+				<td class="lb2" width="30%" style="padding-top: 10px; padding-right: 20px">$lang{question_body_frame_size}{$current_language}</td>
 				<td width="70%" style="padding-top: 10px">
 				<select NAME="frame_size">
 						<option value="">&nbsp;</option>
-						<option value="Small">$lang{$current_language}{small}</option>
-						<option value="Medium">$lang{$current_language}{medium}</option>
-						<option value="Large">$lang{$current_language}{large}</option>
+						<option value="Small">$lang{small}{$current_language}</option>
+						<option value="Medium">$lang{medium}{$current_language}</option>
+						<option value="Large">$lang{large}{$current_language}</option>
 					</select> </td>
 			</tr>
 			| if ($frame_question == 1);
 	$html_page .= qq|
 
 			<tr>
-				<td class="lb2" width="30%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{question_race}:</td>
+				<td class="lb2" width="30%" style="padding-top: 10px; padding-right: 20px">$lang{question_race}{$current_language}:</td>
 				<td width="70%" style="padding-top: 10px">
 				<select size="1" NAME="race">
 						<option value="">&nbsp;</option>
-						<option VALUE="African American">$lang{$current_language}{african_american}</option>
-						<option VALUE="Aleutian, Eskimo or American Indian">$lang{$current_language}{aleutian}</option>
-						<option VALUE="Aleutian, Eskimo or American Indian">$lang{$current_language}{american_indian}</option>
-						<option VALUE="Asian"> $lang{$current_language}{asian}</option>
-						<option VALUE="Caucasian">$lang{$current_language}{caucasian}</option>
-						<option VALUE="Aleutian, Eskimo or American Indian">$lang{$current_language}{eskimo}</option>
-						<option VALUE="Hispanic">$lang{$current_language}{hispanic_latino}</option>
-						<option VALUE="Other">$lang{$current_language}{other} </option>
-						<option VALUE="Don't know">$lang{$current_language}{do_not_know}</option>
+						<option VALUE="African American">$lang{african_american}{$current_language}</option>
+						<option VALUE="Aleutian, Eskimo or American Indian">$lang{aleutian}{$current_language}</option>
+						<option VALUE="Aleutian, Eskimo or American Indian">$lang{american_indian}{$current_language}</option>
+						<option VALUE="Asian"> $lang{asian}{$current_language}</option>
+						<option VALUE="Caucasian">$lang{caucasian}{$current_language}</option>
+						<option VALUE="Aleutian, Eskimo or American Indian">$lang{eskimo}{$current_language}</option>
+						<option VALUE="Hispanic">$lang{hispanic_latino}{$current_language}</option>
+						<option VALUE="Other">$lang{other}{$current_language}</option>
+						<option VALUE="Don't know">$lang{do_not_know}{$current_language}</option>
 					</select></td>
 			</tr>|;
 
 	$html_page .= qq|		
 			<tr>
-				<td class="lb2" width="30%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question1}:</td>
+				<td class="lb2" width="30%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question1}{$current_language}:</td>
 				<td width="70%" style="padding-top: 10px">
 				<select NAME="smoke_status">
 						<option value="">&nbsp;</option>
-						<option value="Never smoked">$lang{$current_language}{never_smoked}</option>
-						<option value="Used to smoke">$lang{$current_language}{used_to_smoke}</option>
-						<option value="Still smoke">$lang{$current_language}{still_smoke}</option>
+						<option value="Never smoked">$lang{never_smoked}{$current_language}</option>
+						<option value="Used to smoke">$lang{used_to_smoke}{$current_language}</option>
+						<option value="Still smoke">$lang{still_smoke}{$current_language}</option>
 					</select>  </td>
 			</tr>| if ($gha_smoke_status == 0);
 
@@ -260,49 +260,49 @@ elsif ($curr_page == 2) {
 if ($extra_conditions){
 	$html_page .= qq|                <tr>
                   <td class="lb2" width=400 style="padding-top: 10px; padding-right: 20px">
-                  $lang{$current_language}{hra_msg1}</td>
+					$lang{hra_msg1}{$current_language}</td>
                   <td width="567" style="padding-top: 10px">|;
-                    $html_page .=qq|<img src="images/global/trans.gif" width="20" height="10"><span class="HSbodytext1">$lang{$current_language}{you}<img src="images/global/trans.gif" width="75" height="10">| unless $no_gina_question;
-                    $html_page .= $lang{$current_language}{hra_msg2} unless $no_gina_question;
+                    $html_page .=qq|<img src="images/global/trans.gif" width="20" height="10"><span class="HSbodytext1">$lang{you}{$current_language}<img src="images/global/trans.gif" width="75" height="10">| unless $no_gina_question;
+                    $html_page .= $lang{hra_msg2}{$current_language} unless $no_gina_question;
                     $html_page .= qq|<br>
-					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="arthritis_chk" value=1> Arthritis|;
+					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="arthritis_chk" value=1> $lang{Arthritis}{$current_language}|;
                     $html_page .= qq|<img src="images/global/trans.gif" width="75" height="10"><input type=checkbox name="fh_arthritis_chk" value=1>| unless $no_gina_question;
                     $html_page .= qq|<br>
-					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="asthma_chk" value=1> Asthma|;
+					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="asthma_chk" value=1> $lang{Asthma}{$current_language}|;
                     $html_page .= qq|<img src="images/global/trans.gif" width="77" height="10"><input type=checkbox name="fh_asthma_chk" value=1>| unless $no_gina_question;
                     $html_page .= qq|<br>
-					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="cancer_chk" value=1> Cancer|;
+					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="cancer_chk" value=1> $lang{cancer}{$current_language}|;
                     $html_page .= qq|<img src="images/global/trans.gif" width="80" height="10"><input type=checkbox name="fh_cancer_chk" value=1>| unless $no_gina_question;
                     $html_page .= qq|<br>
-					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="copd_chk" value=1> COPD|;
+					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="copd_chk" value=1> $lang{COPD}{$current_language}|;
                     $html_page .= qq|<img src="images/global/trans.gif" width="88" height="10"><input type=checkbox name="fh_copd_chk" value=1>| unless $no_gina_question;
                     $html_page .= qq|<br>
-					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="depression_chk" value=1> Depression|;
+					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="depression_chk" value=1> $lang{Depression}{$current_language}|;
                     $html_page .= qq|<img src="images/global/trans.gif" width="54" height="10"><input type=checkbox name="fh_depression_chk" value=1>| unless $no_gina_question;
                     $html_page .= qq|<br>
-					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="epilepsy_chk" value=1> Epilepsy|;
+					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="epilepsy_chk" value=1> $lang{Epilepsy}{$current_language}|;
                     $html_page .= qq|<img src="images/global/trans.gif" width="73" height="10"><input type=checkbox name="fh_epilepsy_chk" value=1>| unless $no_gina_question;
                     $html_page .= qq|<br>
-					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="high_cholesterol_chk" value=1> High Cholesterol|;
+					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="high_cholesterol_chk" value=1> $lang{high_cholesterol}{$current_language}|;
                     $html_page .= qq|<img src="images/global/trans.gif" width="21" height="10"><input type=checkbox name="fh_high_cholesterol_chk" value=1>| unless $no_gina_question;
                     $html_page .= qq|<br>
-					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="kidney_chk" value=1> Kidney Disease|;
+					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="kidney_chk" value=1> $lang{Kidney_Disease}{$current_language}|;
                     $html_page .= qq|<img src="images/global/trans.gif" width="29" height="10"><input type=checkbox name="fh_kidney_chk" value=1>| unless $no_gina_question;
                     $html_page .= qq|<br>
-					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="liver_chk" value=1> Liver Disease|;
+					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="liver_chk" value=1> $lang{Liver_Disease}{$current_language}|;
                     $html_page .= qq|<img src="images/global/trans.gif" width="42" height="10"><input type=checkbox name="fh_liver_chk" value=1>| unless $no_gina_question;
                     $html_page .= qq|<br>
-					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="lung_chk" value=1> Lung Disease|;
+					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="lung_chk" value=1> $lang{Lung_Disease}{$current_language}|;
                     $html_page .= qq|<img src="images/global/trans.gif" width="42" height="10"><input type=checkbox name="fh_lung_chk" value=1>| unless $no_gina_question;
                     $html_page .= qq|<br>
-					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="osteoporosis_chk" value=1> Osteoporosis|;
+					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="osteoporosis_chk" value=1> $lang{Osteoporosis}{$current_language}|;
                     $html_page .= qq|<img src="images/global/trans.gif" width="43" height="10"><input type=checkbox name="fh_osteoporosis_chk" value=1>| unless $no_gina_question;
                     $html_page .= qq|<br>
-					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="sicklecell_chk" value=1> Sickle Cell Anemia|;
+					<img src="images/global/trans.gif" width="20" height="10"><input type=checkbox name="sicklecell_chk" value=1> $lang{Sickle_Cell_Anemia}{$current_language}|;
                     $html_page .= qq|<img src="images/global/trans.gif" width="16" height="10"><input type=checkbox name="fh_sicklecell_chk" value=1>| unless $no_gina_question;
                     $html_page .= qq|<br>
 					&nbsp;<br>|;
-                    $html_page .= $lang{$current_language}{hra_msg3} unless $no_gina_question;
+                    $html_page .= $lang{hra_msg3}{$current_language} unless $no_gina_question;
                     $html_page .= qq|
                   </td>
                 </tr>| ;
@@ -312,146 +312,146 @@ if ($extra_conditions){
 	$html_page .= qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question2}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question2}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="diabetes">
 						<option value="">&nbsp;</option>
-						<option value="No">$lang{$current_language}{no}</option>
-						<option value="Yes">$lang{$current_language}{yes}</option>
+						<option value="No">$lang{no}{$current_language}</option>
+						<option value="Yes">$lang{yes}{$current_language}</option>
 					</select></td>
 			</tr>|;
 	$html_page .= qq|
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question3}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question3}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="family_diabetes">
 						<option value="">&nbsp;</option>
-						<option value="No">$lang{$current_language}{no}</option>
-						<option value="Yes">$lang{$current_language}{yes}</option>
+						<option value="No">$lang{no}{$current_language}</option>
+						<option value="Yes">$lang{yes}{$current_language}</option>
 					</select></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question4}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question4}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="family_heart_attack">
 						<option value="">&nbsp;</option>
-						<option value="No">$lang{$current_language}{no}</option>
-						<option value="Yes">$lang{$current_language}{yes}</option>
+						<option value="No">$lang{no}{$current_language}</option>
+						<option value="Yes">$lang{yes}{$current_language}</option>
 					</select></td>
 			</tr>| if ($no_gina_question == 0);
 	$html_page .= qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question5}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question5}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="heart_attack">
 						<option value="">&nbsp;</option>
-						<option value="No">$lang{$current_language}{no}</option>
-						<option value="Yes">$lang{$current_language}{yes}</option>
+						<option value="No">$lang{no}{$current_language}</option>
+						<option value="Yes">$lang{yes}{$current_language}</option>
 					</select></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question6}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question6}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="bp_meds">
 						<option value="">&nbsp;</option>
-						<option value="No">$lang{$current_language}{no}</option>
-						<option value="Yes">$lang{$current_language}{yes}</option>
+						<option value="No">$lang{no}{$current_language}</option>
+						<option value="Yes">$lang{yes}{$current_language}</option>
 					</select></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question12}:</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question12}{$current_language}:</td>
 				<td width="60%" style="padding-top: 10px"><input type="TEXT"  name="bp_sys" SIZE="3" MAXLENGTH="3"  onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> <br>
 					<input type="TEXT"  name="bp_dias" SIZE="3" MAXLENGTH="3"  onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question13}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question13}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="bp_check">
 						<option value="">&nbsp;</option>
-						<option value="High">$lang{$current_language}{high}</option>
-						<option value="Normal or low">$lang{$current_language}{normal_or_low}</option>
-						<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+						<option value="High">$lang{high}{$current_language}</option>
+						<option value="Normal or low">$lang{normal_or_low}{$current_language}</option>
+						<option value="Don't know">$lang{do_not_know}{$current_language}</option>
 					</select></td>
 			</tr>|;
 	
 	$html_page .= qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question11}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question11}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><input type="TEXT"  class="textBox"  style="width: 75px" name="glucose" SIZE="3" MAXLENGTH="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> <span class="lb2">mg/dl</span></td>
 			</tr>| if ($no_bio_question == 1);
 			
 	$html_page .= qq|			
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question10}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question10}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><input type="TEXT"  class="textBox"  style="width: 75px" name="triglycerides" SIZE="3" MAXLENGTH="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> <span class="lb2">mg/dl</span></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question15}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question15}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><input type="TEXT"  class="textBox"  style="width: 75px" name="ldl" SIZE="3" MAXLENGTH="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> <span class="lb2">mg/dl</span></td>
 			</tr>| if ($no_bio_question == 0);
 	$html_page .= qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question16}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question16}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><input type="TEXT"  class="textBox"  style="width: 75px" name="hdl" SIZE="3" MAXLENGTH="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> <span class="lb2">mg/dl</span></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question14}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question14}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><input type="TEXT"  class="textBox"  style="width: 75px" name="cholesterol" SIZE="3" MAXLENGTH="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> <span class="lb2">mg/dl</span></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question14}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question14}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="cholesterol_check">
 						<option value="">&nbsp;</option>
-						<option value="High">$lang{$current_language}{high}</option>
-						<option value="Normal or low">$lang{$current_language}{normal_or_low}</option>
-						<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+						<option value="High">$lang{high}{$current_language}</option>
+						<option value="Normal or low">$lang{normal_or_low}{$current_language}</option>
+						<option value="Don't know">$lang{do_not_know}{$current_language}</option>
 					</select></td>
 			</tr>
 			|;
 	$html_page .= qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question15}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question15}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><input type="TEXT"  class="textBox" name="HgA1C" SIZE="5" MAXLENGTH="5" value="" onKeyup="if(this.value.match(/[^0-9\.]/))this.value=this.value.replace(/[^0-9\.]/g,'')"> </td>
 			</tr>
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question19}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question19}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><input type="TEXT"  class="textBox" name="pulse_rate_60_seconds" SIZE="5" MAXLENGTH="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"></td>
 			</tr>			| if ($extended_bio_question == 1);
 	$html_page .= qq|
 
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question16}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question16}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="liver_sgot">
 						<option value="">&nbsp;</option>
-						<option value="Pass">$lang{$current_language}{pass}</option>
-						<option value="Fail">$lang{$current_language}{fail}</option>
+						<option value="Pass">$lang{pass}{$current_language}</option>
+						<option value="Fail">$lang{fail}{$current_language}</option>
 					</select></td>
 			</tr>
 
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question17}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question17}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="liver_sgpt">
 						<option value="">&nbsp;</option>
-						<option value="Pass">$lang{$current_language}{pass}</option>
-						<option value="Fail">$lang{$current_language}{fail}</option>
+						<option value="Pass">$lang{pass}{$current_language}</option>
+						<option value="Fail">$lang{fail}{$current_language}</option>
 					</select> </td>
 			</tr>
 
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question18}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question18}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="liver_ggt">
 						<option value="">&nbsp;</option>
-						<option value="Pass">$lang{$current_language}{pass}</option>
-						<option value="Fail">$lang{$current_language}{fail}</option>
+						<option value="Pass">$lang{pass}{$current_language}</option>
+						<option value="Fail">$lang{fail}{$current_language}</option>
 					</select></td>
 			</tr>
 
@@ -473,155 +473,155 @@ elsif ($curr_page == 3) {
 	$html_page = qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question19}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question19}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="cigars_day">
 						<option value="">&nbsp;</option>
-						<option value="None">$lang{$current_language}{none}</option>
-						<option value="One">$lang{$current_language}{one}</option>
-						<option value="Two or More">$lang{$current_language}{two_or_more}</option>
+						<option value="None">$lang{none}{$current_language}</option>
+						<option value="One">$lang{one}{$current_language}</option>
+						<option value="Two or More">$lang{two_or_more}{$current_language}</option>
 					</select></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question20}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question20}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="pipes_day">
 						<option value="">&nbsp;</option>
-						<option value="None">$lang{$current_language}{none}</option>
-						<option value="One">$lang{$current_language}{one}</option>
-						<option value="Two or More">$lang{$current_language}{two_or_more}</option>
+						<option value="None">$lang{none}{$current_language}</option>
+						<option value="One">$lang{one}{$current_language}</option>
+						<option value="Two or More">$lang{two_or_more}{$current_language}</option>
 					</select></td>
 			</tr>
 
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question21}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question21}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="chews_day">
 						<option value="">&nbsp;</option>
-						<option value="None">$lang{$current_language}{none}</option>
-						<option value="One">$lang{$current_language}{one}</option>
-						<option value="Two or More">$lang{$current_language}{two_or_more}</option>
+						<option value="None">$lang{none}{$current_language}</option>
+						<option value="One">$lang{one}{$current_language}</option>
+						<option value="Two or More">$lang{two_or_more}{$current_language}</option>
 					</select></td>
 			</tr>|;
 	$html_page .= qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question17}</td>
-				<td width="60%" style="padding-top: 10px"><input type="TEXT"  class="textBox" name="cigarette_years_quit" SIZE="3" value="" onKeyup="if(this.value.match(/[^0-9\.]/))this.value=this.value.replace(/[^0-9\.]/g,'')"> $lang{$current_language}{years}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question17}{$current_language}</td>
+				<td width="60%" style="padding-top: 10px"><input type="TEXT"  class="textBox" name="cigarette_years_quit" SIZE="3" value="" onKeyup="if(this.value.match(/[^0-9\.]/))this.value=this.value.replace(/[^0-9\.]/g,'')"> $lang{years}{$current_language}</td>
 			</tr>| if ($smoke_status eq USE_TO_SMOKE);
 	$html_page .= qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question18}</td>
-				<td width="60%" style="padding-top: 10px"><input type="TEXT"  class="textBox" name="cigs_a_day" SIZE="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> $lang{$current_language}{cigarettes}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question18}{$current_language}</td>
+				<td width="60%" style="padding-top: 10px"><input type="TEXT"  class="textBox" name="cigs_a_day" SIZE="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> $lang{cigarettes}{$current_language}</td>
 			</tr>| if ($smoke_status eq USE_TO_SMOKE || $smoke_status eq "Still smoke");
 	$html_page .= qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question25}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question25}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="fiber">
 						<option value="">&nbsp;</option>
-						<option value="No">$lang{$current_language}{no}</option>
-						<option value="Yes">$lang{$current_language}{yes}</option>
+						<option value="No">$lang{no}{$current_language}</option>
+						<option value="Yes">$lang{yes}{$current_language}</option>
 					</select></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question26}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question26}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="fat">
 						<option value="">&nbsp;</option>
-						<option value="No">$lang{$current_language}{no}</option>
-						<option value="Yes">$lang{$current_language}{yes}</option>
+						<option value="No">$lang{no}{$current_language}</option>
+						<option value="Yes">$lang{yes}{$current_language}</option>
 					</select></td>
 			</tr>| unless $extended_nutrition;
 	$html_page .= qq|
 			                <tr>
 			                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">
-			                  $lang{$current_language}{hra_question13}</td>
+			                  $lang{hra_question13}{$current_language}</td>
 			                  <td width="60%" style="padding-top: 10px">
 								<select class="HSquestion" name="breads_check">
 									<option value="">&nbsp;</option>
-									<option value="3">$lang{$current_language}{daily}</option>
-									<option value="2">$lang{$current_language}{several_times_a_week}</option>
-									<option value="1">$lang{$current_language}{few_times_a_month}</option>
-									<option value="1">$lang{$current_language}{rarely}</option>
+									<option value="3">$lang{daily}{$current_language}</option>
+									<option value="2">$lang{several_times_a_week}{$current_language}</option>
+									<option value="1">$lang{few_times_a_month}{$current_language}</option>
+									<option value="1">$lang{rarely}{$current_language}</option>
 								</select>
 			                  </td>
 			                </tr>
 			                <tr>
 			                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">
-			                  $lang{$current_language}{hra_question14}</td>
+			                  $lang{hra_question14}{$current_language}</td>
 			                  <td width="60%" style="padding-top: 10px">
 								<select class="HSquestion" name="fruits_check">
 									<option value="">&nbsp;</option>
-									<option value="3">$lang{$current_language}{daily}</option>
-									<option value="2">$lang{$current_language}{several_times_a_week}</option>
-									<option value="1">$lang{$current_language}{few_times_a_month}</option>
-									<option value="1">$lang{$current_language}{rarely}</option>
+									<option value="3">$lang{daily}{$current_language}</option>
+									<option value="2">$lang{several_times_a_week}{$current_language}</option>
+									<option value="1">$lang{few_times_a_month}{$current_language}</option>
+									<option value="1">$lang{rarely}{$current_language}</option>
 								</select>
 			                  </td>
 			                </tr>
 			                <tr>
 			                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">
-			                  $lang{$current_language}{hra_question15}</td>
+			                  $lang{hra_question15}{$current_language}</td>
 			                  <td width="60%" style="padding-top: 10px">
 								<select class="HSquestion" name="vegetables_check">
 									<option value="">&nbsp;</option>
-									<option value="3">$lang{$current_language}{daily}</option>
-									<option value="2">$lang{$current_language}{several_times_a_week}</option>
-									<option value="1">$lang{$current_language}{few_times_a_month}</option>
-									<option value="1">$lang{$current_language}{rarely}</option>
+									<option value="3">$lang{daily}{$current_language}</option>
+									<option value="2">$lang{several_times_a_week}{$current_language}</option>
+									<option value="1">$lang{few_times_a_month}{$current_language}</option>
+									<option value="1">$lang{rarely}{$current_language}</option>
 								</select>
 			                  </td>
 			                </tr>
 			                <tr>
 			                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">
-			                  $lang{$current_language}{hra_question16}</td>
+			                  $lang{hra_question16}{$current_language}</td>
 			                  <td width="60%" style="padding-top: 10px">
 								<select class="HSquestion" name="meats_check">
 									<option value="">&nbsp;</option>
-									<option value="3">$lang{$current_language}{daily}</option>
-									<option value="2">$lang{$current_language}{several_times_a_week}</option>
-									<option value="1">$lang{$current_language}{few_times_a_month}</option>
-									<option value="1">$lang{$current_language}{rarely}</option>
+									<option value="3">$lang{daily}{$current_language}</option>
+									<option value="2">$lang{several_times_a_week}{$current_language}</option>
+									<option value="1">$lang{few_times_a_month}{$current_language}</option>
+									<option value="1">$lang{rarely}{$current_language}</option>
 								</select>
 			                  </td>
 			                </tr>
 			                <tr>
 			                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">
-			                  $lang{$current_language}{hra_question17}</td>
+			                  $lang{hra_question17}{$current_language}</td>
 			                  <td width="60%" style="padding-top: 10px">
 								<select class="HSquestion" name="fatty_meats_check">
 									<option value="">&nbsp;</option>
-									<option value="1">$lang{$current_language}{daily}</option>
-									<option value="2">$lang{$current_language}{several_times_a_week}</option>
-									<option value="3">$lang{$current_language}{few_times_a_month}</option>
-									<option value="3">$lang{$current_language}{rarely}</option>
+									<option value="1">$lang{daily}{$current_language}</option>
+									<option value="2">$lang{several_times_a_week}{$current_language}</option>
+									<option value="3">$lang{few_times_a_month}{$current_language}</option>
+									<option value="3">$lang{rarely}{$current_language}</option>
 								</select>
 			                  </td>
 			                </tr>
 			                <tr>
 			                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">
-			                  $lang{$current_language}{hra_question18}</td>
+			                  $lang{hra_question18}{$current_language}</td>
 			                  <td width="60%" style="padding-top: 10px">
 								<select class="HSquestion" name="rich_breads_check">
 									<option value="">&nbsp;</option>
-									<option value="1">$lang{$current_language}{daily}</option>
-									<option value="2">$lang{$current_language}{several_times_a_week}</option>
-									<option value="3">$lang{$current_language}{few_times_a_month}</option>
-									<option value="3">$lang{$current_language}{rarely}</option>
+									<option value="1">$lang{daily}{$current_language}</option>
+									<option value="2">$lang{several_times_a_week}{$current_language}</option>
+									<option value="3">$lang{few_times_a_month}{$current_language}</option>
+									<option value="3">$lang{rarely}{$current_language}</option>
 								</select>
 			                  </td>
 			                </tr>
 			                <tr>
 			                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">
-			                  $lang{$current_language}{hra_question19}</td>
+			                  $lang{hra_question19}{$current_language}</td>
 			                  <td width="60%" style="padding-top: 10px">
 								<select class="HSquestion" name="desserts_check">
 									<option value="">&nbsp;</option>
-									<option value="1">$lang{$current_language}{daily}</option>
-									<option value="2">$lang{$current_language}{several_times_a_week}</option>
-									<option value="3">$lang{$current_language}{few_times_a_month}</option>
-									<option value="3">$lang{$current_language}{rarely}</option>
+									<option value="1">$lang{daily}{$current_language}</option>
+									<option value="2">$lang{several_times_a_week}{$current_language}</option>
+									<option value="3">$lang{few_times_a_month}{$current_language}</option>
+									<option value="3">$lang{rarely}{$current_language}</option>
 								</select>
 			                  </td>
 			                </tr>| if $extended_nutrition;
@@ -643,7 +643,7 @@ elsif ($curr_page == 4) {
 	$html_page = qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question23}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question23}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px">
 					<br><input type="TEXT" class="textBox" style="width: 75px" name="miles_car" SIZE="6" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')">
 					<br><input type="TEXT" class="textBox"  style="width: 75px" name="miles_motorcycle" SIZE="6" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')">
@@ -651,71 +651,71 @@ elsif ($curr_page == 4) {
 			</tr>			
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question24}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question24}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="travel_mode">
 						<option value="">&nbsp;</option>
-						<option value="Mostly stay at home">$lang{$current_language}{stay_at_home}</option>
-						<option value="Bus, subway or train">$lang{$current_language}{bus_subway_train}</option>
-						<option value="Walk">$lang{$current_language}{walk}</option>
-						<option value="Bicycle">$lang{$current_language}{bicycle}</option>
-						<option value="Motorcycle">$lang{$current_language}{motorcycle}</option>
-						<option value="Sub-compact or compact car">$lang{$current_language}{sub_compact_or_compact_car}</option>
-						<option value="Mid or full-size car">$lang{$current_language}{Mid_or_full_size_car}</option>
-						<option value="Truck or van">$lang{$current_language}{truck_or_van}</option>
+						<option value="Mostly stay at home">$lang{stay_at_home}{$current_language}</option>
+						<option value="Bus, subway or train">$lang{bus_subway_train}{$current_language}</option>
+						<option value="Walk">$lang{walk}{$current_language}</option>
+						<option value="Bicycle">$lang{bicycle}{$current_language}</option>
+						<option value="Motorcycle">$lang{motorcycle}{$current_language}</option>
+						<option value="Sub-compact or compact car">$lang{sub_compact_or_compact_car}{$current_language}</option>
+						<option value="Mid or full-size car">$lang{Mid_or_full_size_car}{$current_language}</option>
+						<option value="Truck or van">$lang{truck_or_van}{$current_language}</option>
 					</select></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question25}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question25}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="seat_belt">
 						<option value="">&nbsp;</option>
-						<option value="Never, 0%">$lang{$current_language}{never}, 0%</option>
-						<option value="Seldom, 1%-40%">$lang{$current_language}{seldom}, 1%-40%</option>
-						<option value="Sometimes, 41%-80%">$lang{$current_language}{sometimes}, 41%-80%</option>
-						<option value="Nearly always, 81%-99%">$lang{$current_language}{nearly_always}, 81%-99%</option>
-						<option value="Always, 100%">$lang{$current_language}{always}, 100%</option>
+						<option value="Never, 0%">$lang{never}{$current_language}, 0%</option>
+						<option value="Seldom, 1%-40%">$lang{seldom}{$current_language}, 1%-40%</option>
+						<option value="Sometimes, 41%-80%">$lang{sometimes}{$current_language}, 41%-80%</option>
+						<option value="Nearly always, 81%-99%">$lang{nearly_always}{$current_language}, 81%-99%</option>
+						<option value="Always, 100%">$lang{always}{$current_language}, 100%</option>
 					</select></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question26}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question26}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="helmet">
 						<option value="">&nbsp;</option>
-						<option value="Do not ride">$lang{$current_language}{do_not_ride}</option>
-						<option value="Never, 0%">$lang{$current_language}{never}, 0%</option>
-						<option value="Seldom, 1%-25%">$lang{$current_language}{seldom}, 1%-25%</option>
-						<option value="Sometimes, 26%-75%">$lang{$current_language}{sometimes}, 26%-75%</option>
-						<option value="Nearly always, 76%-99%">$lang{$current_language}{nearly_always}, 76%-99%</option>
-						<option value="Always, 100%">$lang{$current_language}{always}, 100%</option>
+						<option value="Do not ride">$lang{do_not_ride}{$current_language}</option>
+						<option value="Never, 0%">$lang{never}{$current_language}, 0%</option>
+						<option value="Seldom, 1%-25%">$lang{seldom}{$current_language}, 1%-25%</option>
+						<option value="Sometimes, 26%-75%">$lang{sometimes}{$current_language}, 26%-75%</option>
+						<option value="Nearly always, 76%-99%">$lang{nearly_always}{$current_language}, 76%-99%</option>
+						<option value="Always, 100%">$lang{always}{$current_language}, 100%</option>
 					</select></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question27}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question27}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="speed">
 						<option value="">&nbsp;</option>
-						<option value="Within 5 mph of limit">$lang{$current_language}{within_limit}</option>
-						<option value="6-10 mph over limit">6-10 $lang{$current_language}{over_limit}</option>
-						<option value="11-15 mph over limit">11-15 $lang{$current_language}{over_limit}</option>
-						<option value="More than 15 mph over limit">$lang{$current_language}{more_than} 15 $lang{$current_language}{over_limit}</option>
+						<option value="Within 5 mph of limit">$lang{within_limit}{$current_language}</option>
+						<option value="6-10 mph over limit">6-10 $lang{over_limit}{$current_language}</option>
+						<option value="11-15 mph over limit">11-15 $lang{over_limit}{$current_language}</option>
+						<option value="More than 15 mph over limit">$lang{more_than}{$current_language} 15 $lang{over_limit}{$current_language}</option>
 					</select></td>
 			</tr>|;
 	$html_page .= qq|
 				                <tr>
-				                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">My commute is more than 30 minutes to work in each direction:</td>
+				                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{commute_more_than_30_minutes}{$current_language}</td>
 				                  <td width="60%" style="padding-top: 10px">
 
 									<select style="width: 153px" name="commute">
 										<option value="">&nbsp;</option>
-										<option value="Yes">$lang{$current_language}{yes}</option>
-										<option value="No">$lang{$current_language}{no_or_do_not_apply}</option>
+										<option value="Yes">$lang{yes}{$current_language}</option>
+										<option value="No">$lang{no_or_do_not_apply}{$current_language}</option>
 									</select>
 									</td>
 				                </tr>| if $commute_question;
 	$html_page .= qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question28}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question28}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><input type="TEXT"  style="width: 75px" class="textBox" name="drink_and_drive" SIZE="3" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"></td>
 			</tr>
 
@@ -734,209 +734,209 @@ elsif ($curr_page == 5) {
 	$html_page = qq|
 
 			<tr><input type="hidden" name="sex" value="$sex">
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question22}</td>
-				<td width="60%" style="padding-top: 10px"><input type="TEXT"  class="textBox"  style="width: 75px" name="drinks_week" SIZE="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> <span class="lb2">$lang{$current_language}{drinks}</span></td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question22}{$current_language}</td>
+				<td width="60%" style="padding-top: 10px"><input type="TEXT"  class="textBox"  style="width: 75px" name="drinks_week" SIZE="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> <span class="lb2">$lang{drinks}{$current_language}</span></td>
 			</tr>|;
 	$html_page .= qq|<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">I get 6 to 8 hours of sound sleep most nights of the week </td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{hours_of_sound_sleep}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="sleep">
 						<option value="">&nbsp;</option>
-						<option value="strongly agree">Strongly agree</option>
-						<option value="agree">Agree</option>
-						<option value="disagree">Disagree</option>
-						<option value="strongly disagree">Strongly disagree</option>
+						<option value="strongly agree">$lang{Strongly_agree}{$current_language}</option>
+						<option value="agree">$lang{Agree}{$current_language}</option>
+						<option value="disagree">$lang{Disagree}{$current_language}</option>
+						<option value="strongly disagree">$lang{Strongly_disagree}{$current_language}</option>
 					</select></td>
 			</tr>| if $sleep_question;
 	$html_page .= qq|<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{hra_question20}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{hra_question20}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px">
 					<select name="exercise_unable">
 						<option value="">&nbsp;</option>
-						<option value="Yes">$lang{$current_language}{yes}</option>
-						<option value="No">$lang{$current_language}{no}</option>
+						<option value="Yes">$lang{yes}{$current_language}</option>
+						<option value="No">$lang{no}{$current_language}</option>
 					</select> <span id="exerunableStatus" > </span>
 				</td>
 			</tr>| if $exercise_unable;		
 	$html_page .= qq|
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question29}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question29}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="exercise">
 						<option value="">&nbsp;</option>
-						<option value="Less than one time per week">$lang{$current_language}{less_than_one_time_per_week}</option>
-						<option value="One or two times per week">$lang{$current_language}{one_or_two_times_per_week}</option>
-						<option value="Three or four times per week">$lang{$current_language}{three_or_four_times_per_week}</option>
-						<option value="At least five times per week">$lang{$current_language}{at_least_five_times_per_week}</option>
+						<option value="Less than one time per week">$lang{less_than_one_time_per_week}{$current_language}</option>
+						<option value="One or two times per week">$lang{one_or_two_times_per_week}{$current_language}</option>
+						<option value="Three or four times per week">$lang{three_or_four_times_per_week}{$current_language}</option>
+						<option value="At least five times per week">$lang{at_least_five_times_per_week}{$current_language}</option>
 					</select></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question35}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question35}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="general_exam">
 						<option value="">&nbsp;</option>
-						<option value="Less than two years ago">$lang{$current_language}{less_than_two_years_ago}</option>
-						<option value="Two to five years ago">$lang{$current_language}{two_to_five_years_ago}</option>
-						<option value="Five or more years ago">$lang{$current_language}{five_or_more_years_ago}</option>
-						<option value="Never">$lang{$current_language}{never}</option>
+						<option value="Less than two years ago">$lang{less_than_two_years_ago}{$current_language}</option>
+						<option value="Two to five years ago">$lang{two_to_five_years_ago}{$current_language}</option>
+						<option value="Five or more years ago">$lang{five_or_more_years_ago}{$current_language}</option>
+						<option value="Never">$lang{never}{$current_language}</option>
 					</select></td>
 			</tr>|;
 	$html_page .= qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question36}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question36}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="rectal_male">
 								<option value="">&nbsp;</option>
-								<option value="Less than one year ago">$lang{$current_language}{less_than_one_year_ago}</option>
-								<option value="One year ago">$lang{$current_language}{one_year_ago}</option>
-								<option value="Two years ago">$lang{$current_language}{two_years_ago}</option>
-								<option value="Three or more years ago">$lang{$current_language}{three_or_more_years_ago}</option>
-								<option value="Never">$lang{$current_language}{never}</option>
+								<option value="Less than one year ago">$lang{less_than_one_year_ago}{$current_language}</option>
+								<option value="One year ago">$lang{one_year_ago}{$current_language}</option>
+								<option value="Two years ago">$lang{two_years_ago}{$current_language}</option>
+								<option value="Three or more years ago">$lang{three_or_more_years_ago}{$current_language}</option>
+								<option value="Never">$lang{never}{$current_language}</option>
 							</select></td>
 			</tr>| if ($sex eq MALE);
 	$html_page .= qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question37}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question37}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="menarche_female">
 								<option value="">&nbsp;</option>
-								<option value="11 or under">11 $lang{$current_language}{or_under}</option>
+								<option value="11 or under">11 $lang{or_under}{$current_language}</option>
 								<option value="12-13">12-13</option>
-								<option value="14 or older">14 $lang{$current_language}{or_older}</option>
+								<option value="14 or older">14 $lang{or_older}{$current_language}</option>
 							</select></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question38}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question38}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="birth_age_female">
 								<option value="">&nbsp;</option>
-								<option value="No children">$lang{$current_language}{no_children}</option>
-								<option value="Under 20">$lang{$current_language}{under} 20</option>
+								<option value="No children">$lang{no_children}{$current_language}</option>
+								<option value="Under 20">$lang{under}{$current_language} 20</option>
 								<option value="20-24">20-24</option>
 								<option value="25-29">25-29</option>
-								<option value="Over 30">$lang{$current_language}{over} 30</option>
+								<option value="Over 30">$lang{over}{$current_language} 30</option>
 							</select></td>
 			</tr>| if ($sex eq FEMALE);
 	$html_page .= qq|
 
 				                <tr id="diabetes_gdm">
-				                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{drc_question6}:</td>
+				                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{drc_question6}{$current_language}:</td>
 				                  <td width="60%" style="padding-top: 10px">
 
 									<select style="width: 153px" name="diabetes_gdm">
 										<option value="">&nbsp;</option>
-										<option value="Yes">$lang{$current_language}{yes}</option>
-										<option value="No">$lang{$current_language}{no_or_do_not_apply}</option>
+										<option value="Yes">$lang{yes}{$current_language}</option>
+										<option value="No">$lang{no_or_do_not_apply}{$current_language}</option>
 									</select>
 									</td>
 				                </tr>
 				                <tr id="big_kid">
-				                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{drc_question8}:</td>
+				                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{drc_question8}{$current_language}:</td>
 				                  <td width="60%" style="padding-top: 10px">
 
 									<select style="width: 153px" name="big_kid" >
 										<option value="">&nbsp;</option>
-										<option value="Yes">$lang{$current_language}{yes}</option>
-										<option value="No">$lang{$current_language}{no_or_do_not_apply}</option>
+										<option value="Yes">$lang{yes}{$current_language}</option>
+										<option value="No">$lang{no_or_do_not_apply}{$current_language}</option>
 									</select>
 									</td>
 				                </tr>| if ($sex eq FEMALE && $gha_diabetes_female);
 	$html_page .= qq|
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question39}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question39}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="pregnant_female">
 								<option value="">&nbsp;</option>
-								<option value="No">$lang{$current_language}{no}</option>
-								<option value="Yes">$lang{$current_language}{yes}</option>
+								<option value="No">$lang{no}{$current_language}</option>
+								<option value="Yes">$lang{yes}{$current_language}</option>
 							</select></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question40}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question40}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="mammogram_female">
 								<option value="">&nbsp;</option>
-								<option value="Less than one year ago">$lang{$current_language}{less_than_one_year_ago}</option>
-								<option value="One year ago">$lang{$current_language}{one_year_ago}</option>
-								<option value="Two years ago">$lang{$current_language}{two_years_ago}</option>
-								<option value="Three or more years ago">$lang{$current_language}{three_or_more_years_ago}</option>
-								<option value="Never">$lang{$current_language}{never}</option>
+								<option value="Less than one year ago">$lang{less_than_one_year_ago}{$current_language}</option>
+								<option value="One year ago">$lang{one_year_ago}{$current_language}</option>
+								<option value="Two years ago">$lang{two_years_ago}{$current_language}</option>
+								<option value="Three or more years ago">$lang{three_or_more_years_ago}{$current_language}</option>
+								<option value="Never">$lang{never}{$current_language}</option>
 							</select></td>
 			</tr>| if ($sex eq FEMALE);
 	$html_page .= qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question41}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question41}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="fam_breast_cancer">
 								<option value="">&nbsp;</option>
-								<option value="None">$lang{$current_language}{none}</option>
-								<option value="One">$lang{$current_language}{one}</option>
-								<option value="Two or more">$lang{$current_language}{two_or_more}</option>
-								<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+								<option value="None">$lang{none}{$current_language}</option>
+								<option value="One">$lang{one}{$current_language}</option>
+								<option value="Two or more">$lang{two_or_more}{$current_language}</option>
+								<option value="Don't know">$lang{do_not_know}{$current_language}</option>
 							</select></td>
 			</tr>| if ($sex eq FEMALE && $no_gina_question == 0);
 	$html_page .= qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question42}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question42}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="self_breast_exam">
 								<option value="">&nbsp;</option>
-								<option value="Monthly">$lang{$current_language}{monthly}</option>
-								<option value="Once every few months">$lang{$current_language}{once_every_few_months}</option>
-								<option value="Rarely or never">$lang{$current_language}{rarely_or_never}</option>
+								<option value="Monthly">$lang{monthly}{$current_language}</option>
+								<option value="Once every few months">$lang{once_every_few_months}{$current_language}</option>
+								<option value="Rarely or never">$lang{rarely_or_never}{$current_language}</option>
 							</select></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question43}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question43}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="clinic_breast_exam">
 								<option value="">&nbsp;</option>
-								<option value="Less than one year ago">$lang{$current_language}{less_than_one_year_ago}</option>
-								<option value="One year ago">$lang{$current_language}{one_year_ago}</option>
-								<option value="Two years ago">$lang{$current_language}{two_years_ago}</option>
-								<option value="Three or more years ago">$lang{$current_language}{three_or_more_years_ago}</option>
-								<option value="Never">$lang{$current_language}{never}</option>
+								<option value="Less than one year ago">$lang{less_than_one_year_ago}{$current_language}</option>
+								<option value="One year ago">$lang{one_year_ago}{$current_language}</option>
+								<option value="Two years ago">$lang{two_years_ago}{$current_language}</option>
+								<option value="Three or more years ago">$lang{three_or_more_years_ago}{$current_language}</option>
+								<option value="Never">$lang{never}{$current_language}</option>
 							</select></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question44}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question44}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="hyst_female">
 								<option value="">&nbsp;</option>
-								<option value="No">$lang{$current_language}{no}</option>
-								<option value="Yes">$lang{$current_language}{yes}</option>
+								<option value="No">$lang{no}{$current_language}</option>
+								<option value="Yes">$lang{yes}{$current_language}</option>
 							</select></td>
 			</tr>| if ($sex eq FEMALE);
 	$html_page .= qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">Have you ever had polycystic ovary syndrome?</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{polycystic_ovary_syndrome}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="poly_female">
 								<option value="">&nbsp;</option>
-								<option value="No">$lang{$current_language}{no}</option>
-								<option value="Yes">$lang{$current_language}{yes}</option>
+								<option value="No">$lang{no}{$current_language}</option>
+								<option value="Yes">$lang{yes}{$current_language}</option>
 							</select></td>
 			</tr>| if ($sex eq FEMALE && $poly_question);
 
 	$html_page .= qq|
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question45}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question45}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="pap_female">
 								<option value="">&nbsp;</option>
-								<option value="Less than one year ago">$lang{$current_language}{less_than_one_year_ago}</option>
-								<option value="One year ago">$lang{$current_language}{one_year_ago}</option>
-								<option value="Two years ago">$lang{$current_language}{two_years_ago}</option>
-								<option value="Three or more years ago">$lang{$current_language}{three_or_more_years_ago}</option>
-								<option value="Never">$lang{$current_language}{never}</option>
+								<option value="Less than one year ago">$lang{less_than_one_year_ago}{$current_language}</option>
+								<option value="One year ago">$lang{one_year_ago}{$current_language}</option>
+								<option value="Two years ago">$lang{two_years_ago}{$current_language}</option>
+								<option value="Three or more years ago">$lang{three_or_more_years_ago}{$current_language}</option>
+								<option value="Never">$lang{never}{$current_language}</option>
 							</select></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question46}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question46}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="rectal_female">
 								<option value="">&nbsp;</option>
-								<option value="Less than one year ago">$lang{$current_language}{less_than_one_year_ago}</option>
-								<option value="One year ago">$lang{$current_language}{one_year_ago}</option>
-								<option value="Two years ago">$lang{$current_language}{two_years_ago}</option>
-								<option value="Three or more years ago">$lang{$current_language}{three_or_more_years_ago}</option>
-								<option value="Never">$lang{$current_language}{never}</option>
+								<option value="Less than one year ago">$lang{less_than_one_year_ago}{$current_language}</option>
+								<option value="One year ago">$lang{one_year_ago}{$current_language}</option>
+								<option value="Two years ago">$lang{two_years_ago}{$current_language}</option>
+								<option value="Three or more years ago">$lang{three_or_more_years_ago}{$current_language}</option>
+								<option value="Never">$lang{never}{$current_language}</option>
 							</select></td>
 			</tr>| if ($sex eq FEMALE);
 	$html_page .= qq|
@@ -957,263 +957,263 @@ elsif ($curr_page == 6) {
 
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question30}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question30}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="overall_health">
 						<option value="">&nbsp;</option>
-						<option value="Excellent">$lang{$current_language}{excellent}</option>
-						<option value="Good">$lang{$current_language}{good}</option>
-						<option value="Fair">$lang{$current_language}{fair}</option>
-						<option value="Poor">$lang{$current_language}{poor}</option>
+						<option value="Excellent">$lang{excellent}{$current_language}</option>
+						<option value="Good">$lang{good}{$current_language}</option>
+						<option value="Fair">$lang{fair}{$current_language}</option>
+						<option value="Poor">$lang{poor}{$current_language}</option>
 					</select></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question48}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question48}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="days_missed">
 						<option value="">&nbsp;</option>
-						<option value="None">$lang{$current_language}{none}</option>
-						<option value="One to five">1-5 $lang{$current_language}{days}</option>
-						<option value="Six to ten">6-10 $lang{$current_language}{days}</option>
-						<option value="More than 10">$lang{$current_language}{more_than} 10 $lang{$current_language}{days}</option>
-						<option value="Does not apply">$lang{$current_language}{does_not_apply}</option>
+						<option value="None">$lang{none}{$current_language}</option>
+						<option value="One to five">1-5 $lang{days}{$current_language}</option>
+						<option value="Six to ten">6-10 $lang{days}{$current_language}</option>
+						<option value="More than 10">$lang{more_than}{$current_language} 10 $lang{days}{$current_language}</option>
+						<option value="Does not apply">$lang{does_not_apply}{$current_language}</option>
 					</select></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question31}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question31}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="life_satisfaction">
 						<option value="">&nbsp;</option>
-						<option value="Mostly satisfied">$lang{$current_language}{mostly_satisfied}</option>
-						<option value="Partly satisfied">$lang{$current_language}{partly_satisfied}</option>
-						<option value="Not satisfied">$lang{$current_language}{not_satisfied}</option>
+						<option value="Mostly satisfied">$lang{mostly_satisfied}{$current_language}</option>
+						<option value="Partly satisfied">$lang{partly_satisfied}{$current_language}</option>
+						<option value="Not satisfied">$lang{not_satisfied}{$current_language}</option>
 					</select></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question32}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question32}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="loss">
 						<option value="">&nbsp;</option>
-						<option value="Yes, one serious loss or misfortune">$lang{$current_language}{yes_serious_loss}</option>
-						<option value="Yes, two or more">$lang{$current_language}{yes_two_more}</option>
-						<option value="No">$lang{$current_language}{no}</option>
+						<option value="Yes, one serious loss or misfortune">$lang{yes_serious_loss}{$current_language}</option>
+						<option value="Yes, two or more">$lang{yes_two_more}{$current_language}</option>
+						<option value="No">$lang{no}{$current_language}</option>
 					</select></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question51}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question51}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="violence">
 						<option value="">&nbsp;</option>
-						<option value="Not sure">$lang{$current_language}{not_sure}</option>
-						<option value="One time or Never">$lang{$current_language}{never}</option>
-						<option value="One time or Never">$lang{$current_language}{one_time}</option>
-						<option value="Two or three times">$lang{$current_language}{two_or_three_times}</option>
-						<option value="Four or more times">$lang{$current_language}{four_or_more_times}</option>
+						<option value="Not sure">$lang{not_sure}{$current_language}</option>
+						<option value="One time or Never">$lang{never}{$current_language}</option>
+						<option value="One time or Never">$lang{one_time}{$current_language}</option>
+						<option value="Two or three times">$lang{two_or_three_times}{$current_language}</option>
+						<option value="Four or more times">$lang{four_or_more_times}{$current_language}</option>
 					</select></td>
 			</tr>|;
 	$html_page .= qq|
 
 			<tr>
-                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{hra_question21}</td>
+                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{hra_question21}{$current_language}</td>
                   <td width="60%" style="padding-top: 10px">
 					<select class="HSquestion" name="q3">
 						<option value="">&nbsp;</option>
-						<option value="0">$lang{$current_language}{ans_feel_depressed0}</option>
-						<option value="1">$lang{$current_language}{ans_feel_depressed1}</option>
-						<option value="2">$lang{$current_language}{ans_feel_depressed2}</option>
-						<option value="3">$lang{$current_language}{ans_feel_depressed3}</option>
-						<option value="4">$lang{$current_language}{ans_feel_depressed4}</option>
-						<option value="5">$lang{$current_language}{ans_feel_depressed5}</option>
+						<option value="0">$lang{ans_feel_depressed0}{$current_language}</option>
+						<option value="1">$lang{ans_feel_depressed1}{$current_language}</option>
+						<option value="2">$lang{ans_feel_depressed2}{$current_language}</option>
+						<option value="3">$lang{ans_feel_depressed3}{$current_language}</option>
+						<option value="4">$lang{ans_feel_depressed4}{$current_language}</option>
+						<option value="5">$lang{ans_feel_depressed5}{$current_language}</option>
 					</select> <span id="q3Status" ></span>
                   </td>
                 </tr>
                 <tr>
-                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{hra_question22}</td>
+                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{hra_question22}{$current_language}</td>
                   <td width="60%" style="padding-top: 10px">
 					<select class="HSquestion" name="q5">
 						<option value="">&nbsp;</option>
-						<option value="0">$lang{$current_language}{every_day} </option>
-						<option value="1">$lang{$current_language}{almost_every_day}</option>
-						<option value="2">$lang{$current_language}{half_of_the_time}</option>
-						<option value="3">$lang{$current_language}{less_than_half}</option>
-						<option value="4">$lang{$current_language}{rarely}</option>
-						<option value="5">$lang{$current_language}{none_of_the_time}</option>
+						<option value="0">$lang{every_day}{$current_language}</option>
+						<option value="1">$lang{almost_every_day}{$current_language}</option>
+						<option value="2">$lang{half_of_the_time}{$current_language}</option>
+						<option value="3">$lang{less_than_half}{$current_language}</option>
+						<option value="4">$lang{rarely}{$current_language}</option>
+						<option value="5">$lang{none_of_the_time}{$current_language}</option>
 					</select> <span id="q5Status" ></span>
                   </td>
                 </tr>
                 <tr>
-                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{hra_question23}:</td>
+                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{hra_question23}{$current_language}:</td>
                   <td width="60%" style="padding-top: 10px">
 					<select class="HSquestion" name="q7">
 						<option value="">&nbsp;</option>
-						<option value="5">$lang{$current_language}{none_of_the_time}</option>
-						<option value="4">$lang{$current_language}{little_of_the_time}</option>
-						<option value="3">$lang{$current_language}{some_of_the_time}</option>
-						<option value="2">$lang{$current_language}{good_bit_of_the_time}</option>
-						<option value="1">$lang{$current_language}{most_of_the_time}</option>
-						<option value="0">$lang{$current_language}{all_of_the_time}</option>
+						<option value="5">$lang{none_of_the_time}{$current_language}</option>
+						<option value="4">$lang{little_of_the_time}{$current_language}</option>
+						<option value="3">$lang{some_of_the_time}{$current_language}</option>
+						<option value="2">$lang{good_bit_of_the_time}{$current_language}</option>
+						<option value="1">$lang{most_of_the_time}{$current_language}</option>
+						<option value="0">$lang{all_of_the_time}{$current_language}</option>
 					</select> <span id="q7Status" ></span>
                   </td>
                 </tr>
                 <tr>
-                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{hra_question24}</td>
+                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{hra_question24}{$current_language}</td>
                   <td width="60%" style="padding-top: 10px">
 					<select class="HSquestion" name="q8">
 						<option value="">&nbsp;</option>
-						<option value="0">$lang{$current_language}{extremely_tense}</option>
-						<option value="1">$lang{$current_language}{very_tense}</option>
-						<option value="2">$lang{$current_language}{fairly_tense}</option>
-						<option value="3">$lang{$current_language}{little_tense}</option>
-						<option value="4">$lang{$current_language}{low_tension}	</option>
-						<option value="5">$lang{$current_language}{never_felt_tense}</option>
+						<option value="0">$lang{extremely_tense}{$current_language}</option>
+						<option value="1">$lang{very_tense}{$current_language}</option>
+						<option value="2">$lang{fairly_tense}{$current_language}</option>
+						<option value="3">$lang{little_tense}{$current_language}</option>
+						<option value="4">$lang{low_tension}{$current_language}</option>
+						<option value="5">$lang{never_felt_tense}{$current_language}</option>
 					</select> <span id="q8Status" ></span>
                   </td>
                 </tr>
                 <tr>
-                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{hra_question25}</td>
+                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{hra_question25}{$current_language}</td>
                   <td width="60%" style="padding-top: 10px">
 					<select class="HSquestion" name="q11">
 						<option value="">&nbsp;</option>
-						<option value="0">$lang{$current_language}{extremely_so}</option>
-						<option value="1">$lang{$current_language}{very_much_so}</option>
-						<option value="2">$lang{$current_language}{quite_a_bit}</option>
-						<option value="3">$lang{$current_language}{some_enough}</option>
-						<option value="4">$lang{$current_language}{little_bit}</option>
-						<option value="5">$lang{$current_language}{not_at_all}</option>
+						<option value="0">$lang{extremely_so}{$current_language}</option>
+						<option value="1">$lang{very_much_so}{$current_language}</option>
+						<option value="2">$lang{quite_a_bit}{$current_language}</option>
+						<option value="3">$lang{some_enough}{$current_language}</option>
+						<option value="4">$lang{little_bit}{$current_language}</option>
+						<option value="5">$lang{not_at_all}{$current_language}</option>
 					</select> <span id="q11Status" ></span>
                   </td>
                 </tr>
                 <tr>
-                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{hra_question26}</td>
+                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{hra_question26}{$current_language}</td>
                   <td width="60%" style="padding-top: 10px">
 					<select class="HSquestion" name="q17">
 						<option value="">&nbsp;</option>
-						<option value="0">$lang{$current_language}{being_sick}</option>
-						<option value="1">$lang{$current_language}{very_much_so}</option>
-						<option value="2">$lang{$current_language}{quite_a_bit}</option>
-						<option value="3">$lang{$current_language}{some_enough}</option>
-						<option value="4">$lang{$current_language}{little_bit}</option>
-						<option value="5">$lang{$current_language}{not_at_all}</option>
+						<option value="0">$lang{being_sick}{$current_language}</option>
+						<option value="1">$lang{very_much_so}{$current_language}</option>
+						<option value="2">$lang{quite_a_bit}{$current_language}</option>
+						<option value="3">$lang{some_enough}{$current_language}</option>
+						<option value="4">$lang{little_bit}{$current_language}</option>
+						<option value="5">$lang{not_at_all}{$current_language}</option>
 					</select> <span id="q17Status" ></span>
 				  </td>
                 </tr>
                 <tr>
-                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{hra_question27}</td>
+                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{hra_question27}{$current_language}</td>
                   <td width="60%" style="padding-top: 10px">
 					<select class="HSquestion" name="q19">
 						<option value="">&nbsp;</option>
-						<option value="5">$lang{$current_language}{ease_all_month}</option>
-						<option value="4">$lang{$current_language}{ease_most_of_time}</option>
-						<option value="3">$lang{$current_language}{felt_relaxed}</option>
-						<option value="2">$lang{$current_language}{felt_high_strung}</option>
-						<option value="1">$lang{$current_language}{keyed_up_most_of_time}</option>
-						<option value="0">$lang{$current_language}{keyed_up_whole_month}</option>
+						<option value="5">$lang{ease_all_month}{$current_language}</option>
+						<option value="4">$lang{ease_most_of_time}{$current_language}</option>
+						<option value="3">$lang{felt_relaxed}{$current_language}</option>
+						<option value="2">$lang{felt_high_strung}{$current_language}</option>
+						<option value="1">$lang{keyed_up_most_of_time}{$current_language}</option>
+						<option value="0">$lang{keyed_up_whole_month}{$current_language}</option>
 					</select> <span id="q19Status" ></span>
                   </td>
                 </tr>
                 <tr>
-                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{hra_question28}</td>
+                  <td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{hra_question28}{$current_language}</td>
                   <td width="60%" style="padding-top: 10px">
 					<select class="HSquestion" name="q22">
 						<option value="">&nbsp;</option>
-						<option value="0">$lang{$current_language}{ans_pressure1}</option>
-						<option value="1">$lang{$current_language}{ans_pressure2}</option>
-						<option value="2">$lang{$current_language}{ans_pressure3}</option>
-						<option value="3">$lang{$current_language}{ans_pressure4}</option>
-						<option value="4">$lang{$current_language}{ans_pressure5}</option>
-						<option value="5">$lang{$current_language}{not_at_all}</option>
+						<option value="0">$lang{ans_pressure1}{$current_language}</option>
+						<option value="1">$lang{ans_pressure2}{$current_language}</option>
+						<option value="2">$lang{ans_pressure3}{$current_language}</option>
+						<option value="3">$lang{ans_pressure4}{$current_language}</option>
+						<option value="4">$lang{ans_pressure5}{$current_language}</option>
+						<option value="5">$lang{not_at_all}{$current_language}</option>
 					</select> <span id="q22Status" ></span>
                   </td>
 			</tr>| if ($extra_stress_question);
 	$html_page .= qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">I am resilient and cope with stressful situations well: </td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{resilient_and_cope}{$current_language}:</td>
 				<td width="60%" style="padding-top: 10px"><select name="stress_cope">
 						<option value="">&nbsp;</option>
-						<option value="strongly agree">Strongly agree</option>
-						<option value="agree">Agree</option>
-						<option value="disagree">Disagree</option>
-						<option value="strongly disagree">Strongly disagree</option>
+						<option value="strongly agree">$lang{Strongly_agree}{$current_language}</option>
+						<option value="agree">$lang{Agree}{$current_language}</option>
+						<option value="disagree">$lang{Disagree}{$current_language}</option>
+						<option value="strongly disagree">$lang{Strongly_disagree}{$current_language}</option>
 					</select></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">I participate in at least two social activities outside work each week (movies, coffee, sports spectator or player, billiards, card games, dancing, etc.):</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{social_activities_outside}{$current_language}:</td>
 				<td width="60%" style="padding-top: 10px"><select name="socialize">
 						<option value="">&nbsp;</option>
-						<option value="strongly agree">Strongly agree</option>
-						<option value="agree">Agree</option>
-						<option value="disagree">Disagree</option>
-						<option value="strongly disagree">Strongly disagree</option>
+						<option value="strongly agree">$lang{Strongly_agree}{$current_language}</option>
+						<option value="agree">$lang{Agree}{$current_language}</option>
+						<option value="disagree">$lang{Disagree}{$current_language}</option>
+						<option value="strongly disagree">$lang{Strongly_disagree}{$current_language}</option>
 					</select></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">I take at least 15 minutes once or twice a day to practice some kind of guided relaxation, meditation, or breathing:</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{relaxation_meditation_breathing}{$current_language}:</td>
 				<td width="60%" style="padding-top: 10px"><select name="meditate">
 						<option value="">&nbsp;</option>
-						<option value="strongly agree">Strongly agree</option>
-						<option value="agree">Agree</option>
-						<option value="disagree">Disagree</option>
-						<option value="strongly disagree">Strongly disagree</option>
+						<option value="strongly agree">$lang{Strongly_agree}{$current_language}</option>
+						<option value="agree">$lang{Agree}{$current_language}</option>
+						<option value="disagree">$lang{Disagree}{$current_language}</option>
+						<option value="strongly disagree">$lang{Strongly_disagree}{$current_language}</option>
 					</select></td>
 			</tr>
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">The concept of "spirituality" or a greater force of energy has personal meaning to me:</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{concept_of_spirituality}{$current_language}:</td>
 				<td width="60%" style="padding-top: 10px"><select name="spiritual">
 						<option value="">&nbsp;</option>
-						<option value="strongly agree">Strongly agree</option>
-						<option value="agree">Agree</option>
-						<option value="disagree">Disagree</option>
-						<option value="strongly disagree">Strongly disagree</option>
+						<option value="strongly agree">$lang{Strongly_agree}{$current_language}</option>
+						<option value="agree">$lang{Agree}{$current_language}</option>
+						<option value="disagree">$lang{Disagree}{$current_language}</option>
+						<option value="strongly disagree">$lang{Strongly_disagree}{$current_language}</option>
 					</select></td>
 			</tr>| if ($extra_spiritual_question);
 	$html_page .= qq|
 
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question52}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question52}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="grade">
 						<option value="">&nbsp;</option>
-						<option value="Grade school or less">$lang{$current_language}{grade_school_or_less}</option>
-						<option value="Some high school">$lang{$current_language}{some_high_school}</option>
-						<option value="High school graduate">$lang{$current_language}{high_school_graduate}</option>
-						<option value="Some college">$lang{$current_language}{some_college}</option>
-						<option value="College graduate">$lang{$current_language}{college_graduate}</option>
-						<option value="Post graduate or professional degree">$lang{$current_language}{post_graduate_or_prof_degree}</option>
+						<option value="Grade school or less">$lang{grade_school_or_less}{$current_language}</option>
+						<option value="Some high school">$lang{some_high_school}{$current_language}</option>
+						<option value="High school graduate">$lang{high_school_graduate}{$current_language}</option>
+						<option value="Some college">$lang{some_college}{$current_language}</option>
+						<option value="College graduate">$lang{college_graduate}{$current_language}</option>
+						<option value="Post graduate or professional degree">$lang{post_graduate_or_prof_degree}{$current_language}</option>
 					</select></td>
 			</tr>|;
 
 	$html_page .= qq|
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question53}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question53}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="job">
 						<option value="">&nbsp;</option>
-						<option value="Dependent of Employee">Dependent of Employee</option>
-						<option value="Administrative">Administrative</option>
-						<option value="Facilities">Facilities</option>
-						<option value="Management/Executive">Management/Executive</option>
-						<option value="Technician/Technologist">Technician/Technologist</option>
-						<option value="Professional">Professional</option>
-						<option value="Scientist">Scientist</option>
+						<option value="Dependent of Employee">$lang{Dependent_of_Employee}{$current_language}</option>
+						<option value="Administrative">$lang{Administrative}{$current_language}</option>
+						<option value="Facilities">$lang{Facilities}{$current_language}</option>
+						<option value="Management/Executive">$lang{Management_Executive}{$current_language}</option>
+						<option value="Technician/Technologist">$lang{Technician_Technologist}{$current_language}</option>
+						<option value="Professional">$lang{Professional}{$current_language}</option>
+						<option value="Scientist">$lang{Scientist}{$current_language}</option>
 					</select></td>
 			</tr>| if $config{lrri_jobs};
 	$html_page .= qq|
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{gha_question53}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{gha_question53}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="job">
 						<option value="">&nbsp;</option>
-						<option value="Retired">$lang{$current_language}{retired}</option>
-						<option value="Student">$lang{$current_language}{student}</option>
-						<option value="Unemployed">$lang{$current_language}{unemployed}</option>
-						<option value="Homemaker">$lang{$current_language}{homemaker}</option>
-						<option value="Operator, fabricator, laborer">$lang{$current_language}{operator_fabricator_laborer}</option>
-						<option value="Skilled crafts">$lang{$current_language}{skilled_crafts}</option>
-						<option value="Service">$lang{$current_language}{service}</option>
-						<option value="Technical, sales or administrative support">$lang{$current_language}{technical_sales_admin_support}</option>
-						<option value="Manager, educator, professional">$lang{$current_language}{manager_educator_professional}</option>
-						<option value="Health professional">$lang{$current_language}{health_professional}</option>
+						<option value="Retired">$lang{retired}{$current_language}</option>
+						<option value="Student">$lang{student}{$current_language}</option>
+						<option value="Unemployed">$lang{unemployed}{$current_language}</option>
+						<option value="Homemaker">$lang{homemaker}{$current_language}</option>
+						<option value="Operator, fabricator, laborer">$lang{operator_fabricator_laborer}{$current_language}</option>
+						<option value="Skilled crafts">$lang{skilled_crafts}{$current_language}</option>
+						<option value="Service">$lang{service}{$current_language}</option>
+						<option value="Technical, sales or administrative support">$lang{technical_sales_admin_support}{$current_language}</option>
+						<option value="Manager, educator, professional">$lang{manager_educator_professional}{$current_language}</option>
+						<option value="Health professional">$lang{health_professional}{$current_language}</option>
 					</select></td>
 			</tr>| unless ($config{lrri_jobs} || $no_job_question);
 	$html_page .= qq|
@@ -1233,7 +1233,7 @@ elsif ($curr_page == 7) {
 	$html_page = qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_submit_msg}<br></td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_submit_msg}{$current_language}<br></td>
 				<td width="60%" style="padding-top: 10px"></td>
 			</tr>|;
                 }
@@ -1242,125 +1242,125 @@ elsif ($curr_page == 7) {
 			$html_page = qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question1}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question1}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"></td>
 			</tr>|;
 		$html_page .= qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">Allegeant provides individualized risk counseling with a registered nurse for those employees identified with certain risk factors associated with Metabolic Syndrome and/or stress management. If your employer offers this option, and if you qualify, are you interested in participating in risk counseling at this time?</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{Allegeant_individualized_risk}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="client3">
 								<option value="">&nbsp;</option>
-								<option value="Yes">$lang{$current_language}{yes}</option>
-								<option value="No">$lang{$current_language}{no}</option>
+								<option value="Yes">$lang{yes}{$current_language}</option>
+								<option value="No">$lang{no}{$current_language}</option>
 							</select></td>
 			</tr>| if ($config{healthjibe_extra});
 		$html_page .= qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question2}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question2}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="r2c_weight">
 								<option value="">&nbsp;</option>
-								<option value="Yes">$lang{$current_language}{yes}</option>
-								<option value="No">$lang{$current_language}{no}</option>
-								<option value="Active">$lang{$current_language}{already_taking_action}</option>
-								<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+								<option value="Yes">$lang{yes}{$current_language}</option>
+								<option value="No">$lang{no}{$current_language}</option>
+								<option value="Active">$lang{already_taking_action}{$current_language}</option>
+								<option value="Don't know">$lang{do_not_know}{$current_language}</option>
 							</select></td>
 			</tr>| if ($r2c_weight_flag);
 		$html_page .= qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question3}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question3}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="r2c_smoke">
 								<option value="">&nbsp;</option>
-								<option value="Yes">$lang{$current_language}{yes}</option>
-								<option value="No">$lang{$current_language}{no}</option>
-								<option value="Active">$lang{$current_language}{already_taking_action}</option>
-								<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+								<option value="Yes">$lang{yes}{$current_language}</option>
+								<option value="No">$lang{no}{$current_language}</option>
+								<option value="Active">$lang{already_taking_action}{$current_language}</option>
+								<option value="Don't know">$lang{do_not_know}{$current_language}</option>
 							</select></td>
 			</tr>| if ($r2c_smoke_flag);
 		$html_page .= qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question8}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question8}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="r2c_drink">
 								<option value="">&nbsp;</option>
-								<option value="Yes">$lang{$current_language}{yes}</option>
-								<option value="No">$lang{$current_language}{no}</option>
-								<option value="Active">$lang{$current_language}{already_taking_action}</option>
-								<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+								<option value="Yes">$lang{yes}{$current_language}</option>
+								<option value="No">$lang{no}{$current_language}</option>
+								<option value="Active">$lang{already_taking_action}{$current_language}</option>
+								<option value="Don't know">$lang{do_not_know}{$current_language}</option>
 							</select></td>
 			</tr>| if ($r2c_drink_flag);
 		$html_page .= qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question9}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question9}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="r2c_autosafety">
 								<option value="">&nbsp;</option>
-								<option value="Yes">$lang{$current_language}{yes}</option>
-								<option value="No">$lang{$current_language}{no}</option>
-								<option value="Active">$lang{$current_language}{already_taking_action}</option>
-								<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+								<option value="Yes">$lang{yes}{$current_language}</option>
+								<option value="No">$lang{no}{$current_language}</option>
+								<option value="Active">$lang{already_taking_action}{$current_language}</option>
+								<option value="Don't know">$lang{do_not_know}{$current_language}</option>
 							</select></td>
 			</tr>| if ($r2c_autosafety_flag);
 		$html_page .= qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question4}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question4}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="r2c_exercise">
 								<option value="">&nbsp;</option>
-								<option value="Yes">$lang{$current_language}{yes}</option>
-								<option value="No">$lang{$current_language}{no}</option>
-								<option value="Active">$lang{$current_language}{already_taking_action}</option>
-								<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+								<option value="Yes">$lang{yes}{$current_language}</option>
+								<option value="No">$lang{no}{$current_language}</option>
+								<option value="Active">$lang{already_taking_action}{$current_language}</option>
+								<option value="Don't know">$lang{do_not_know}{$current_language}</option>
 							</select></td>
 			</tr>| if ($r2c_exercise_flag);
 		$html_page .= qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question5}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question5}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="r2c_fat">
 								<option value="">&nbsp;</option>
-								<option value="Yes">$lang{$current_language}{yes}</option>
-								<option value="No">$lang{$current_language}{no}</option>
-								<option value="Active">$lang{$current_language}{already_taking_action}</option>
-								<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+								<option value="Yes">$lang{yes}{$current_language}</option>
+								<option value="No">$lang{no}{$current_language}</option>
+								<option value="Active">$lang{already_taking_action}{$current_language}</option>
+								<option value="Don't know">$lang{do_not_know}{$current_language}</option>
 							</select></td>
 			</tr>| if ($r2c_fat_flag);
 		$html_page .= qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question6}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question6}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="r2c_bp">
 								<option value="">&nbsp;</option>
-								<option value="Yes">$lang{$current_language}{yes}</option>
-								<option value="No">$lang{$current_language}{no}</option>
-								<option value="Active">$lang{$current_language}{already_taking_action}</option>
-								<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+								<option value="Yes">$lang{yes}{$current_language}</option>
+								<option value="No">$lang{no}{$current_language}</option>
+								<option value="Active">$lang{already_taking_action}{$current_language}</option>
+								<option value="Don't know">$lang{do_not_know}{$current_language}</option>
 							</select></td>
 			</tr>| if ($r2c_bp_flag);
 		$html_page .= qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question7}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question7}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="r2c_cholesterol">
 								<option value="">&nbsp;</option>
-								<option value="Yes">$lang{$current_language}{yes}</option>
-								<option value="No">$lang{$current_language}{no}</option>
-								<option value="Active">$lang{$current_language}{already_taking_action}</option>
-								<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+								<option value="Yes">$lang{yes}{$current_language}</option>
+								<option value="No">$lang{no}{$current_language}</option>
+								<option value="Active">$lang{already_taking_action}{$current_language}</option>
+								<option value="Don't know">$lang{do_not_know}{$current_language}</option>
 							</select></td>
 			</tr>| if ($r2c_cholesterol_flag);
 		$html_page .= qq|
 
 			<tr>
-				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question10}</td>
+				<td class="lb2" width="40%" style="padding-top: 10px; padding-right: 20px">$lang{common_question10}{$current_language}</td>
 				<td width="60%" style="padding-top: 10px"><select name="r2c_checkups">
 								<option value="">&nbsp;</option>
-								<option value="Yes">$lang{$current_language}{yes}</option>
-								<option value="No">$lang{$current_language}{no}</option>
-								<option value="Active">$lang{$current_language}{already_taking_action}</option>
-								<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+								<option value="Yes">$lang{yes}{$current_language}</option>
+								<option value="No">$lang{no}{$current_language}</option>
+								<option value="Active">$lang{already_taking_action}{$current_language}</option>
+								<option value="Don't know">$lang{do_not_know}{$current_language}</option>
 							</select></td>
 			</tr>| if ($r2c_checkups_flag);
                 }
