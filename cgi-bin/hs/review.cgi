@@ -76,10 +76,6 @@ use File::Spec::Functions qw( rel2abs );
 use lib dirname(rel2abs($0)),'.','/usr/local/www/vhosts/managed2/modules/pdf', '/usr/local/www/vhosts/managed2/modules';
 
 use vars qw( $Debug $production %Tables $cook $config_file $nph);
-
-# Removing warnings in log while module is being used with CGI version 4 or above
-$CGI::LIST_CONTEXT_WARN = 0;
-
 if (!do('common.inc')) {
    my $error = $@ ? $@
              : $! ? $!

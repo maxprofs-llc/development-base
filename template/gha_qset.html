@@ -1378,11 +1378,18 @@ $html_page .= qq|
 				<input type="image" border=0 name="prev" value="prev" $back onmousedown="doValidate=false;">
 				</td>
 				<td width="60%" style="padding-top: 8px; padding-bottom: 10px; padding-right: 70px; text-align:right">
-				<input type="image" border=0 name="assess" value="assess" $submit onmousedown="doValidate=true;">
+				<input type="image" border=0 name="assess" value="assess" onclick="check();" $submit onmousedown="doValidate=true;">
 					<input type=hidden name="page" value="7">
 				</td>
 				<td>&nbsp;</td>
-            </tr>|;
+            </tr>
+			<SCRIPT LANGUAGE="javascript">
+			var noRace=$no_race_question;
+			function check()\{
+				alert(noRace);
+				\}
+			</SCRIPT>			
+			|;
 	}
 
 

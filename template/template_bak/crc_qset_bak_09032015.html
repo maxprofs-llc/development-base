@@ -1,0 +1,540 @@
+{
+# this part fills in a file that sets language variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}language.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}crc_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$header_in_file", PACKAGE => __PACKAGE__ );
+}   <!-- Template: crc_qset.tmpl -->
+	<!-- Templates called: crc_variables.tmpl, {$footer_file}, {$config{variables_template}},  {$header_in_file} -->
+            <!--Form and form table START here. Table max width no more than 560 pixels.-->
+
+<!-- ass-top-img section start here-->
+<div id="ass-top-img" class="steptxt">
+<p class="pad26">{$crc_title}</p>
+</div>
+<!-- ass-top-img section end here-->
+
+<div id="ass-bg" class="content">
+<p class="pad27">
+{$lang{$current_language}{crc_intro}}
+</p>
+</div>
+
+<!-- risk-top-img section start here-->
+<div id="risk-top-img" class="steptxt">
+<p class="pad26">{$crc_subtitle_in}</p>
+</div>
+<!-- risk-top-img section end here-->
+
+<form METHOD="POST" action="{$collector}" name="theForm" onSubmit="return checkWholeForm(this)">
+
+<!-- pagination section start here-->
+<div id="pagination" class="content">
+<p class="pad28">{$lang{$current_language}{curr_page_msg}} 5 &nbsp;{my $html; $html =qq|<input type="image" border=0 name="prev" value="prev" src="images/pagi_07.jpg" onmousedown="doValidate=false;" />| if ($curr_page > 1);$html;} <input type="image" border=0 name="next" value="next" src="images/pagi_09.jpg" onmousedown="doValidate=true;" /></p>
+</div>
+<!-- pagination section end here-->
+
+<p><img src="images/ass_06.jpg" alt="" /></p>
+
+<div id="ass-bg" class="content">
+<p class="pad27">
+{$lang{$current_language}{use_button_msg}}
+</p>
+</div>
+
+<!-- risk-bg section start here-->
+<div id="risk-bg">
+<table width="967" cellspacing="0" style="margin-left: 30px">
+
+
+{
+my $html_page;
+
+if($curr_page == 1){
+	$html_page = qq|      <tr>
+        <td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{first_name}:</td>
+        <td width=767 style="padding-top: 10px"><input name="first_name" class="textBox" size="28"></td>
+      </tr>
+      <tr>
+        <td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{last_name}:</td>
+        <td width=767 style="padding-top: 10px"><input name="last_name" class="textBox" size="28"></td>
+      </tr>
+		<tr>
+        <td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{date_of_birth}:</td>
+		  <td width=767 style="padding-top: 10px">
+			<select  name="birth_month" style="width: 75px" size="1">
+					<option value="01">$lang{$current_language}{jan}</option>
+					<option value="02">$lang{$current_language}{feb}</option>
+					<option value="03">$lang{$current_language}{mar}</option>
+					<option value="04">$lang{$current_language}{apr}</option>
+					<option value="05">$lang{$current_language}{may}</option>
+					<option value="06">$lang{$current_language}{jun}</option>
+					<option value="07">$lang{$current_language}{jul}</option>
+					<option value="08">$lang{$current_language}{aug}</option>
+					<option value="09">$lang{$current_language}{sep}</option>
+					<option value="10">$lang{$current_language}{oct}</option>
+					<option value="11">$lang{$current_language}{nov}</option>
+					<option value="12">$lang{$current_language}{dec}</option>
+			</select>
+			<select  name="birth_date" style="width: 75px" size="1">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+					<option value="11">11</option>
+					<option value="12">12</option>
+					<option value="13">13</option>
+					<option value="14">14</option>
+					<option value="15">15</option>
+					<option value="16">16</option>
+					<option value="17">17</option>
+					<option value="18">18</option>
+					<option value="19">19</option>
+					<option value="20">20</option>
+					<option value="21">21</option>
+					<option value="22">22</option>
+					<option value="23">23</option>
+					<option value="24">24</option>
+					<option value="25">25</option>
+					<option value="26">26</option>
+					<option value="27">27</option>
+					<option value="28">28</option>
+					<option value="29">29</option>
+					<option value="30">30</option>
+					<option value="31">31</option>
+			</select>
+			<input maxlength="4" value="19xx" name="birth_year" style="width: 70px" size="4" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')">
+		  </td>
+		</tr>
+                <tr>
+                  <td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{sex}:</td>
+                  <td width=767 style="padding-top: 10px">
+					<select style="width: 153px" name="sex">
+						<option selected="selected" value="">&nbsp;</option>
+						<option value="Female">$lang{$current_language}{female}</option>
+						<option value="Male">$lang{$current_language}{male}</option>
+					</select></td>
+                </tr>
+                <tr>
+                  <td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{question_weight}<br>($lang{$current_language}{weight_imp_unit})</td>
+                  <td width=767 style="padding-top: 10px"><input name="weight" class="textBox" style="width: 75px" size="5" onKeyup="if(this.value.match(/[^0-9\.]/))this.value=this.value.replace(/[^0-9\.]/g,'')"></td>
+                </tr>
+                <tr>
+                  <td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{question_height}</td>
+                  <td width=90 style="padding-top: 10px"><select size="1" style="width: 79px" name="height">
+						<option value="48">4' 1&quot;</option>
+						<option value="49">4' 2&quot;</option>
+						<option value="51">4' 3&quot;</option>
+						<option value="52">4' 4&quot;</option>
+						<option value="53">4' 5&quot;</option>
+						<option value="54">4' 6&quot;</option>
+						<option value="55">4' 7&quot;</option>
+						<option value="56">4' 8&quot;</option>
+						<option value="57">4' 9&quot;</option>
+						<option value="58">4' 10&quot;</option>
+						<option value="59">4' 11&quot;</option>
+						<option value="60">5'</option>
+						<option value="61">5' 1&quot;</option>
+						<option value="62">5' 2&quot;</option>
+						<option value="63">5' 3&quot;</option>
+						<option value="64">5' 4&quot;</option>
+						<option value="65">5' 5&quot;</option>
+						<option value="66" selected>5' 6&quot;</option>
+						<option value="67">5' 7&quot;</option>
+						<option value="68">5' 8&quot;</option>
+						<option value="69">5' 9&quot;</option>
+						<option value="70">5' 10&quot;</option>
+						<option value="71">5' 11&quot;</option>
+						<option value="72">6'</option>
+						<option value="73">6' 1&quot;</option>
+						<option value="74">6' 2&quot;</option>
+						<option value="75">6' 3&quot;</option>
+						<option value="76">6' 4&quot;</option>
+						<option value="77">6' 5&quot;</option>
+						<option value="78">6' 6&quot;</option>
+						<option value="79">6' 7&quot;</option>
+						<option value="80">6' 8&quot;</option>
+						<option value="81">6' 9&quot;</option>
+						<option value="82">6' 10&quot;</option>
+						<option value="83">6' 11&quot;</option>
+						<option value="84">7'</option>
+						<option value="85">7' 1&quot;</option>
+						<option value="86">7' 2&quot;</option>
+						<option value="87">7' 3&quot;</option>
+						<option value="88">7' 4&quot;</option>
+						<option value="89">7' 5&quot;</option>
+					</select> <span id="heightStatus" ></span>
+                  </td>
+                </tr>|;
+	$html_page .= qq|                <tr>
+                  <td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{question_race}:</td>
+                  <td width=90 style="padding-top: 10px">
+					<select  size="1" NAME="race">
+						<option value="">&nbsp;</option>
+						<option VALUE="African American">$lang{$current_language}{african_american} </option>
+						<option VALUE="Aleutian, Eskimo or American Indian">$lang{$current_language}{aleutian}</option>
+						<option VALUE="Aleutian, Eskimo or American Indian">$lang{$current_language}{american_indian}</option>
+						<option VALUE="Asian"> $lang{$current_language}{asian}</option>
+						<option VALUE="Caucasian">$lang{$current_language}{caucasian}</option>
+						<option VALUE="Aleutian, Eskimo or American Indian">$lang{$current_language}{eskimo}</option>
+						<option VALUE="Hispanic">$lang{$current_language}{hispanic_latino}</option>
+						<option VALUE="Other">$lang{$current_language}{other} </option>
+						<option VALUE="Don't know">$lang{$current_language}{do_not_know} </option>
+					</select>
+                  </td>
+                </tr>| if ($no_race_question == 0);
+	$html_page .= qq|      		<tr>
+				<td width=200>&nbsp;</td>
+				<td width=767 style="padding-top: 8px; padding-bottom: 10px; padding-right: 70px; text-align:right">
+					<input type="image" border=0 name="next" value="next" $next onmousedown="doValidate=true;">
+							<input type=hidden name="page" value="1">
+				</td>
+				<td>&nbsp;</td>
+			  </tr>|;
+	}
+elsif($curr_page == 2){
+	$html_page = qq|
+					<tr>
+						<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{crc_question1}</td>
+						<td width=767 style="padding-top: 10px"><select  name="diabetes">
+						<option value="">&nbsp;</option>
+						<option value="No">$lang{$current_language}{no}</option>
+						<option value="Yes">$lang{$current_language}{yes}</option>
+					</select></td>
+					</tr>
+
+					<tr>
+						<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{crc_question2}</td>
+						<td width=767 style="padding-top: 10px"><select  name="heart_attack">
+						<option value="">&nbsp;</option>
+						<option value="No">$lang{$current_language}{no}</option>
+						<option value="Yes">$lang{$current_language}{yes}</option>
+					</select></td>
+					</tr>|;
+	$html_page .= qq|
+
+					<tr>
+						<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{crc_question3}</td>
+						<td width=767 style="padding-top: 10px"><select  name="family_heart_attack">
+						<option value="">&nbsp;</option>
+						<option value="unknown">$lang{$current_language}{do_not_know}</option>
+						<option value="No">$lang{$current_language}{no}</option>
+						<option value="Yes">$lang{$current_language}{yes}</option>
+					</select></td>
+					</tr>| unless $no_gina_question;
+	$html_page .= qq|
+
+					<tr>
+						<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question32}</td>
+						<td width=767 style="padding-top: 10px"><select  name="loss">
+						<option value="">&nbsp;</option>
+						<option value="No">$lang{$current_language}{no}</option>
+						<option value="1">$lang{$current_language}{yes_serious_loss}</option>
+						<option value="2">$lang{$current_language}{yes_two_more}</option>
+					</select></td>
+					</tr>
+
+					<tr>
+						<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{crc_question5}</td>
+						<td width=767 style="padding-top: 10px"><select  name="stress">
+						<option value="">&nbsp;</option>
+						<option value="7">$lang{$current_language}{every_day} </option>
+						<option value="3">3-5 $lang{$current_language}{times_a_week}</option>
+						<option value="1">1-2 $lang{$current_language}{times_a_week}</option>
+						<option value="X">$lang{$current_language}{less_than_once_week}</option>
+					</select></td>
+					</tr>
+
+					<tr>
+						<td width=400>
+						<input type="image" border=0 name="prev" value="prev" $back onmousedown="doValidate=false;">
+						</td>
+						<td width=767 style="padding-top: 8px; padding-bottom: 10px; padding-right: 70px; text-align:right">
+						<input type="image" border=0 name="next" value="next" $next onmousedown="doValidate=true;">
+						<input type=hidden name="page" value="2">
+						</td>
+						<td>&nbsp;</td>
+					</tr>|;
+	}
+elsif($curr_page == 3){
+	$html_page = qq|
+
+					<tr>
+						<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question12}:</td>
+						<td width=767 style="padding-top: 10px">&nbsp;<br><input type="TEXT" name="bp_sys" SIZE="4" value=""  onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"><br>
+					<input type="TEXT"  name="bp_dias" SIZE="4" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"></td>
+					</tr>
+
+					<tr>
+						<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question13}:</td>
+						<td width=767 style="padding-top: 10px"><select  name="bp_check">
+						<option value="">&nbsp;</option>
+						<option value="High">$lang{$current_language}{high}</option>
+						<option value="Normal or low">$lang{$current_language}{normal_or_low}</option>
+						<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+					</select></td>
+					</tr>
+
+					<tr>
+						<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question11}</td>
+						<td width=767 class="lb2" style="padding-top: 10px;text-align:left;"><input type="TEXT" name="glucose" SIZE="3" MAXLENGTH="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> mg/dl</td>
+					</tr>
+
+					<tr>
+						<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{crc_question9}</td>
+						<td width=767 class="lb2" style="padding-top: 10px;text-align:left;"><input type="TEXT" name="triglycerides" SIZE="3" MAXLENGTH="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> mg/dl</td>
+					</tr>
+
+					<tr>
+						<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question14}</td>
+						<td width=767 class="lb2" style="padding-top: 10px;text-align:left;"><input type="TEXT" name="cholesterol" SIZE="3" MAXLENGTH="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> mg/dl</td>
+					</tr>
+
+					<tr>
+						<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question15}</td>
+						<td width=767 class="lb2" style="padding-top: 10px;text-align:left;"><input type="TEXT" name="ldl" SIZE="3" MAXLENGTH="3" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> mg/dl</td>
+					</tr>
+
+					<tr>
+						<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question16}</td>
+						<td width=767 class="lb2" style="padding-top: 10px;text-align:left;"><input type="TEXT" name="hdl" SIZE="3" value=""  onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> mg/dl</td>
+					</tr>
+
+					<tr>
+						<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{crc_question13}:</td>
+						<td width=767 style="padding-top: 10px"><select  name="cholesterol_check">
+						<option value="">&nbsp;</option>
+						<option value="High">$lang{$current_language}{high}</option>
+						<option value="Normal or low">$lang{$current_language}{normal_or_low}</option>
+						<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+					</select></td>
+					</tr>
+
+					<tr>
+						<td width=400>
+						<input type="image" border=0 name="prev" value="prev" $back onmousedown="doValidate=false;">
+						</td>
+						<td width=767 style="padding-top: 8px; padding-bottom: 10px; padding-right: 70px; text-align:right">
+						<input type="image" border=0 name="next" value="next" $next onmousedown="doValidate=true;">
+						<input type=hidden name="page" value="3">
+						</td>
+						<td>&nbsp;</td>
+					</tr>|;
+	}
+elsif($curr_page == 4){
+	$html_page = qq|
+
+					<tr>
+						<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{crc_question14}</td>
+						<td width=767 style="padding-top: 10px"><select name="smoke_status" onChange="disable_smoke()">
+						<option value="">&nbsp;</option>
+						<option value="Never smoked">$lang{$current_language}{never_smoked}</option>
+						<option value="Used to smoke">$lang{$current_language}{used_to_smoke}</option>
+						<option value="Still smoke">$lang{$current_language}{still_smoke}</option>
+					</select></td>
+					</tr>
+
+					<tr>
+						<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question18}</td>
+						<td width=767 class="lb2" style="padding-top: 10px;text-align:left;"><input type="TEXT" name="cigs_a_day" SIZE="2" value=""  onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"> $lang{$current_language}{cigarettes}</td>
+					</tr>
+
+					<tr>
+						<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question29}</td>
+						<td width=767 style="padding-top: 10px"><input type="TEXT"  name="exercise" SIZE="2" value="" onKeyup="if(this.value.match(/[^0-9]/))this.value=this.value.replace(/[^0-9]/g,'')"></td>
+					</tr>
+
+					<tr>
+						<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{crc_question17}</td>
+						<td width=767 style="padding-top: 10px"><select name="fiber">
+						<option value="">&nbsp;</option>
+						<option value="1">$lang{$current_language}{every_meal}</option>
+						<option value="2">$lang{$current_language}{daily}</option>
+						<option value="3">$lang{$current_language}{several_times_a_week}</option>
+						<option value="4">$lang{$current_language}{seldom}</option>
+					</select></td>
+					</tr>
+
+					<tr>
+						<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{crc_question18}</td>
+						<td width=767 style="padding-top: 10px"><select  name="fat">
+						<option value="">&nbsp;</option>
+						<option value="1">$lang{$current_language}{every_meal}</option>
+						<option value="2">$lang{$current_language}{daily}</option>
+						<option value="3">$lang{$current_language}{several_times_a_week}</option>
+						<option value="4">$lang{$current_language}{seldom}</option>
+					</select></td>
+					</tr>
+
+					<tr>
+						<td width=400>
+						<input type="image" border=0 name="prev" value="prev" $back onmousedown="doValidate=false;">
+						</td>
+						<td width=767 style="padding-top: 8px; padding-bottom: 10px; padding-right: 70px; text-align:right">
+						<input type="image" border=0 name="next" value="next" $next onmousedown="doValidate=true;">
+						<input type=hidden name="page" value="4">
+						</td>
+						<td>&nbsp;</td>
+					</tr>|;
+	}
+elsif ($curr_page == 5) {
+	if ($r2c_issues == 0){
+		$html_page = qq|
+
+					<tr>
+						<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_submit_msg}</td>
+						<td width=767 style="padding-top: 10px"></td>
+					</tr>|;
+                }
+    else		{
+
+		$html_page = qq|
+
+					<tr>
+						<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question1}</td>
+						<td width=767 style="padding-top: 10px"></td>
+					</tr>|;
+		$html_page .= qq|
+
+					<tr>
+						<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question2}</td>
+						<td width=767 style="padding-top: 10px"><select name="r2c_weight">
+								<option value="">&nbsp;</option>
+								<option value="Yes">$lang{$current_language}{yes}</option>
+								<option value="No">$lang{$current_language}{no}</option>
+								<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+							</select></td>
+					</tr>| if ($r2c_weight_flag);
+		$html_page .= qq|
+
+					<tr>
+						<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question3}</td>
+						<td width=767 style="padding-top: 10px"><select name="r2c_smoke">
+								<option value="">&nbsp;</option>
+								<option value="Yes">$lang{$current_language}{yes}</option>
+								<option value="No">$lang{$current_language}{no}</option>
+								<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+							</select></td>
+					</tr>| if ($r2c_smoke_flag);
+		$html_page .= qq|
+
+					<tr>
+						<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question4}</td>
+						<td width=767 style="padding-top: 10px"><select name="r2c_exercise">
+								<option value="">&nbsp;</option>
+								<option value="Yes">$lang{$current_language}{yes}</option>
+								<option value="No">$lang{$current_language}{no}</option>
+								<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+							</select></td>
+					</tr>| if ($r2c_exercise_flag);
+		$html_page .= qq|
+
+					<tr>
+						<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question5}</td>
+						<td width=767 style="padding-top: 10px"><select name="r2c_fat">
+								<option value="">&nbsp;</option>
+								<option value="Yes">$lang{$current_language}{yes}</option>
+								<option value="No">$lang{$current_language}{no}</option>
+								<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+							</select></td>
+					</tr>| if ($r2c_fat_flag);
+		$html_page .= qq|
+
+					<tr>
+						<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question6}</td>
+						<td width=767 style="padding-top: 10px"><select name="r2c_bp">
+								<option value="">&nbsp;</option>
+								<option value="Yes">$lang{$current_language}{yes}</option>
+								<option value="No">$lang{$current_language}{no}</option>
+								<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+							</select></td>
+					</tr>| if ($r2c_bp_flag);
+		$html_page .= qq|
+
+					<tr>
+						<td class="lb2" width=200 style="padding-top: 10px; padding-right: 20px">$lang{$current_language}{common_question7}</td>
+						<td width=767 style="padding-top: 10px"><select name="r2c_cholesterol">
+								<option value="">&nbsp;</option>
+								<option value="Yes">$lang{$current_language}{yes}</option>
+								<option value="No">$lang{$current_language}{no}</option>
+								<option value="Don't know">$lang{$current_language}{do_not_know}</option>
+							</select></td>
+					</tr>| if ($r2c_cholesterol_flag);
+                }
+	$html_page .= qq|
+
+					<tr>
+						<td width=400>
+						<input type="image" border=0 name="prev" value="prev" $back onmousedown="doValidate=false;">
+						</td>
+						<td width=767 style="padding-top: 8px; padding-bottom: 10px; padding-right: 70px; text-align:right">
+						<input type="image" border=0 name="assess" value="assess" $submit onmousedown="doValidate=true;">
+						<input type=hidden name="page" value="5">
+						</td>
+						<td>&nbsp;</td>
+					</tr>|;
+	}
+
+$html_page;
+}
+{ my $html_hiddens;
+	$html_hiddens = qq|<input type="hidden" name="assessment" value="CRC">
+					<input type="hidden" name="output_format" value="HTML">
+					|;
+$html_hiddens;
+}
+
+{ my $html_hiddens;
+	$html_hiddens .= qq|<SCRIPT LANGUAGE="javascript">
+						|;
+	$html_hiddens .= qq|var noRace=$no_race_question;|;
+	$html_hiddens .= qq|var noDrive=$no_drive_question;|;
+	$html_hiddens .= qq|var noGina=$no_gina_question;|;
+	$html_hiddens .= qq|var noBio=$no_bio_question;|;
+	$html_hiddens .= qq|var noJob=$no_job_question;|;
+	if($config{import_lock}){
+	  if ($curr_page == 1) {
+		$html_hiddens .= qq|document.forms['theForm'].weight.setAttribute('disabled','true');document.forms['theForm'].weight.style.background='#C1FFC1';| if ($weight_self eq 'no' && $weight > 0);
+		$html_hiddens .= qq|document.forms['theForm'].height.setAttribute('disabled','true');document.forms['theForm'].height.style.background='#C1FFC1';| if ($height_self eq 'no' && $height > 0);
+			}
+	  elsif($curr_page == 3) {
+		$html_hiddens .= qq|document.forms['theForm'].bp_sys.setAttribute('disabled','true');document.forms['theForm'].bp_sys.style.background='#C1FFC1';| if ($bp_self eq 'no' && $bp_sys > 0);
+		$html_hiddens .= qq|document.forms['theForm'].bp_dias.setAttribute('disabled','true');document.forms['theForm'].bp_dias.style.background='#C1FFC1';| if ($bp_self eq 'no' && $bp_dias > 0);
+		$html_hiddens .= qq|document.forms['theForm'].triglycerides.setAttribute('disabled','true');document.forms['theForm'].triglycerides.style.background='#C1FFC1';| if ($lipid_self eq 'no' && $triglycerides > 0);
+		$html_hiddens .= qq|document.forms['theForm'].hdl.setAttribute('disabled','true');document.forms['theForm'].hdl.style.background='#C1FFC1';| if ($lipid_self eq 'no' && $hdl > 0);
+		$html_hiddens .= qq|document.forms['theForm'].ldl.setAttribute('disabled','true');document.forms['theForm'].ldl.style.background='#C1FFC1';| if ($lipid_self eq 'no' && $ldl >0);
+		$html_hiddens .= qq|document.forms['theForm'].cholesterol.setAttribute('disabled','true');document.forms['theForm'].cholesterol.style.background='#C1FFC1';| if ($lipid_self eq 'no' && $cholesterol > 0);
+			}
+		}
+	$html_hiddens .= qq|
+						</script>|;
+$html_hiddens;
+}
+		            </form>
+            <!--Form and form table END here.-->
+
+    </table>
+</div>
+<!-- risk-bg section end here-->
+
+
+
+
+    <!-- Template: crc_qset.tmpl End -->
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$footer_file", PACKAGE => __PACKAGE__ );
+}
+

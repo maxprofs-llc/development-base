@@ -1,6 +1,6 @@
 {
 # this part fills in a file that sets language variables we use later on.
-Text::Template::fill_in_file( "$config{template_directory}language.tmpl", PACKAGE => __PACKAGE__ );
+Text::Template::fill_in_file( "$config{template_directory}assessment_language.tmpl", PACKAGE => __PACKAGE__ );
 }{
 # this part fills in a file that sets variables we use later on.
 Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
@@ -22,7 +22,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
 
 <div id="ass-bg" class="content">
 <p class="pad27">
-{$lang{$current_language}{fit_intro}}
+{$lang{fit_intro}{$current_language}}
 </p>
 </div> 
 
@@ -62,6 +62,7 @@ $midtext;
 {if(!$edit_preview) {qq|<form method="post" action="$pager">
 		<input type="image" src="images/ass_11.jpg" border=0 name="fit_2.tmpl" value="fit_2.tmpl" $next>
 			$hidden_cgi_fields
+			 <input type="hidden" name="language" value="">
 		</form>|;}}</td>
 </tr>
 

@@ -1,0 +1,161 @@
+<?xml version="1.0" standalone="yes" ?>
+{
+# this part fills in a file that sets language variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}language.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( $config{template_directory} . $config{variables_template}, PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}drc_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}drc_links.tmpl", PACKAGE => __PACKAGE__ );
+}<PDF PageMode="UseNone" PageLayout="SinglePage" PageSize="Letter" FindHyperlink="1" Author="HealthStatus.com, Inc.">
+<Image Width="{$brand_logo_pdf_width}" Height="{$brand_logo_pdf_height}" File="{$config{pdf_base}}/{$brand_logo_pdf}" Name="Im0" />
+<Page Name="Pg0" Width="612" Height="792" Bookmark="Cover Letter">
+<Graph Rect="0, 0, 612, 792" Name="Gr0">
+<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
+<ShowText X="60" Y="685" Text="Your Personalized Diabetes Risk Results" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
+<ShowText X="580" Y="60" Text="Diabetes Assessment" FontFace="Helvetica" Color="E0E0E0" Width="350" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="AAAAAA" />
+</Graph>
+<Text Name="Txt0" Rect="60, 60, 552, 660" FontFace="Arial" FontSize="10" Leading="12" FontColor="Slategray" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+{
+my $midtext;
+	# this is the standard header for the assessment output.
+$midtext = Text::Template::fill_in_file( $config{template_directory} . 'drc_cover_letter_html.tmpl', PACKAGE => __PACKAGE__ );
+$midtext =~ s/<br>/^P ^p  ^P /ig;
+$midtext =~ s/<p>|<\/p>/ ^P ^p  ^P \n /ig;
+$midtext =~ s/<!--.*-->//g;
+$midtext =~ s/&nbsp;//g;
+$midtext;
+}
+  ]]>
+</Text>
+</Page>
+<Page Name="Pg2" Width="612" Height="792" Bookmark="Details">
+<Graph Rect="0, 0, 612, 792" Name="Gr0">
+<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
+<ShowText X="60" Y="685" Text="Your Personalized Diabetes Risk Results" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
+<ShowText X="580" Y="60" Text="Diabetes Assessment" FontFace="Helvetica" Color="E0E0E0" Width="350" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="AAAAAA" />
+</Graph>
+<Text Name="Txt0" Rect="60, 60, 552, 660" FontFace="Arial" FontSize="10" Leading="12" FontColor="Slategray" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^f:size=12&color={$config{brand_subtitle_color}} ^b Body Composition ^B ^F ^P
+
+^P
+
+Height = {$height_imperial} ^P
+
+Weight = {$weight} - Ideal = {$low_weight} to {$high_weight} ^P
+
+Body Mass Index = {$bmi} ^P
+
+Race = {$race} ^P
+
+Sex = {$sex} ^P
+
+{ 
+my $text;
+if($parents_have_diabetes  || $siblings_have_diabetes){
+
+$tp = $parents_have_diabetes  || 'Not available';
+$ts = $siblings_have_diabetes || 'Not available';
+
+$text = qq|Family occurrence = ^P 
+
+^t Parents: $tp -- Siblings: $ts ^P
+
+^P|;}
+
+$text;
+}
+
+^P
+
+^P
+
+^P ^f:size=12&color={$config{brand_subtitle_color}} ^b Weight ^B ^F ^P
+
+^P
+
+{$weight_target} ^P
+
+^P
+
+{$weight_desc} ^P
+
+^P
+
+^P
+
+^P
+
+^P ^f:size=12&color={$config{brand_subtitle_color}} ^b Exercise ^B ^F ^P
+
+^P
+
+{$exer_target} ^P
+
+^P
+
+{$exer_desc} ^P
+
+{    if($sex eq FEMALE && $female_desc ne ''){
+qq|^P
+
+^P
+
+^P
+
+^P ^f:size=12&color=$config{brand_subtitle_color} ^b Birth related ^B ^F ^P
+
+^P
+
+$female_desc ^P |;}
+}
+
+^P
+
+^P
+
+^P
+
+^P ^f:size=12&color={$config{brand_subtitle_color}} ^b Predispositions ^B ^F ^P
+
+^P
+
+{$disp_desc} ^P
+
+^P
+
+^P
+  ]]>
+</Text>
+</Page>
+
+<Page Name="Pg3" Width="612" Height="792" Bookmark="Internet Resources">
+<Graph Rect="0, 0, 612, 792" Name="Gr0">
+<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
+<ShowText X="60" Y="685" Text="Your Personalized Diabetes Risk Results" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
+<ShowText X="580" Y="60" Text="Diabetes Assessment" FontFace="Helvetica" Color="E0E0E0" Width="350" Height="25" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="AAAAAA" />
+</Graph>
+<Text Name="Txt0" Rect="60, 60, 552, 660" FontFace="Arial" FontSize="10" Leading="12" FontColor="Slategray" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
+<![CDATA[
+^P
+
+^f:size=14&color={$config{brand_subtitle_color}} ^b Internet resources for more information: ^B ^F ^P
+
+{
+join "",
+	map { qq|^p ^f:size=8&face=ZapfDingbats u ^F ^f:size=9&face=Arial $$_[1] -- $$_[0] ^F ^P  | }
+	@links;
+}
+  ]]>
+</Text>
+</Page>
+</PDF>

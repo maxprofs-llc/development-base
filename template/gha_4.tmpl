@@ -23,7 +23,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
 
 <div id="ass-bg" class="content">
 <p class="pad27">
-{$lang{$current_language}{gha_intro}} 
+{$lang{gha_intro}{$current_language}} 
 </p>
 </div> 
 
@@ -47,7 +47,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td colspan="2" >
-                 <p><b>{$date} {$lang{$current_language}{for}} {$name}</b></p><br>
+                 <p><b>{$date} {$lang{for}{$current_language}} {$name}</b></p><br>
                 </td>
               </tr>
               <tr>
@@ -55,51 +55,51 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
               </tr>
              <tr>
                 <td colspan="2" >
-                  <p ><span ><b>{$lang{$current_language}{gha_msg8}} {$lang{$current_language}{gha_msg9}}</b></span></P><br>
+                  <p ><span ><b>{$lang{gha_msg8}{$current_language}} {$lang{gha_msg9}{$current_language}}</b></span></P><br>
       			   <UL>{
 					$mz='';					
-					$mz = "<li>$lang{$current_language}{weight}: $weight $weight_units</li><li>$lang{$current_language}{height}: $height</li>";
-					$mz .= "<li>$lang{$current_language}{bmi}: $bmi</li>";
-					$mz .= "<li>$lang{$current_language}{waist}: $waist inches</li>" if $waist;
+					$mz = "<li>$lang{weight}{$current_language}: $weight $weight_units</li><li>$lang{height}{$current_language}: $height</li>";
+					$mz .= "<li>$lang{bmi}{$current_language}: $bmi</li>";
+					$mz .= "<li>$lang{waist}{$current_language}: $waist inches</li>" if $waist;
 					if($hip){
-						$mz.= "<li>$lang{$current_language}{hip} : $hip  - $lang{$current_language}{waist_hip_ratio}: $waist_to_hip</li>";
+						$mz.= "<li>$lang{hip}{$current_language} : $hip  - $lang{waist_hip_ratio}{$current_language}: $waist_to_hip</li>";
 					}
 					if($bodyfat){
-						$mz.= "<li>$lang{$current_language}{body_fat1} : $bodyfat %</li>";
+						$mz.= "<li>$lang{body_fat1}{$current_language} : $bodyfat %</li>";
 					}
-					$mz .= "<li>$lang{$current_language}{blood_pressure}:";
+					$mz .= "<li>$lang{blood_pressure}{$current_language}:";
 					if($bp_sys){
 						$mz.= " $bp_sys/$bp_dias</li>";
 					}else{
 						$mz.= " $bp_check</li>";
 					}
 					if($cholesterol){
-						$mz.= "<li>$lang{$current_language}{total_cholesterol}: $cholesterol</li>";
+						$mz.= "<li>$lang{total_cholesterol}{$current_language}: $cholesterol</li>";
 					}else{
-						$mz.= "<li>$lang{$current_language}{total_cholesterol}: $cholesterol_check</li>";
+						$mz.= "<li>$lang{total_cholesterol}{$current_language}: $cholesterol_check</li>";
 					}
 					if($ldl){
-						$mz.= "<li>$lang{$current_language}{ldl}: $ldl</li>";
+						$mz.= "<li>$lang{ldl}{$current_language}: $ldl</li>";
 					}
 					if($hdl){
-						$mz.= "<li>$lang{$current_language}{hdl}: $hdl</li>";
+						$mz.= "<li>$lang{hdl}{$current_language}: $hdl</li>";
 					}
 					if($cholesterol_ratio){
-						$mz.= "<li>$lang{$current_language}{cholesterol_ratio}: $cholesterol_ratio</li>";
+						$mz.= "<li>$lang{cholesterol_ratio}{$current_language}: $cholesterol_ratio</li>";
 					}
 					if($triglycerides){
-						$mz.= "<li>$lang{$current_language}{triglycerides}: $triglycerides</li>";
+						$mz.= "<li>$lang{triglycerides}{$current_language}: $triglycerides</li>";
 					}
 					if($glucose){
-						$mz.= "<li>$lang{$current_language}{glucose}: $glucose</li>";
+						$mz.= "<li>$lang{glucose}{$current_language}: $glucose</li>";
 					}
 					if($HgA1C){
-						$mz.= "<li>HgA1C: $HgA1C</li>";
+						$mz.= "<li>$lang{HgA1C}{$current_language}: $HgA1C</li>";
 					}
 					$mz .= "</UL>";
 					$mz;
 				}<br>
-      			   <p ><span ><b>{$lang{$current_language}{risk_assessment}}</b></span><br>{$smoke_message}</P>
+      			   <p ><span ><b>{$lang{risk_assessment}{$current_language}}</b></span><br>{$smoke_message}</P>
       			   <p >{$chew_message} {$other_smoke_message}</p><br>
       			   <p >{$weight_message}</p><br>
       			   <p >{$seat_belt_message} {$speed_message}</P><br>

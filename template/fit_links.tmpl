@@ -3,31 +3,31 @@ use vars qw(@links);
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 @links = ();
 
-push @links, [ "Physical Activity",
+push @links, [ $lang{physical_activity}{$current_language},
 	$config{html_base}."resource/Physical_activity_adults.pdf" ]
 	if $age < 50;
-push @links, [ "Physical Activity",
+push @links, [ $lang{physical_activity}{$current_language},
 	$config{html_base}."resource/Physical_activity_olderad.pdf" ]
 	if $age >= 50;
-push @links, [ "National Women's Health Information Center",
+push @links, [ $lang{National_Women_Health}{$current_language},
 	"http://www.4woman.org/" ] 
 	if $sex eq FEMALE || $checkme;
-push @links, [ "Tips for men",
+push @links, [ $lang{fit_cover_letter7}{$current_language},
 	$config{html_base}."resource/tips_men.pdf" ] 
 	if $sex eq MALE || $checkme;
-push @links, [ "Aim for a health weight",
+push @links, [ $lang{Aim_for_health_weight}{$current_language},
 	$config{html_base}."resource/aim_for_healthy_weight.pdf" ]
 	if $bmi > 29.5 || $checkme;
-push @links, [ "Overeaters Anonymous",
+push @links, [ $lang{Overeaters_Anonymous}{$current_language},
 	"http://www.overeatersanonymous.org/" ] 
 	if $bmi > 29.5 || $checkme;
-push @links, [ "Getting Older, Eating Better",
+push @links, [ $lang{Getting_Older_Eating_Better}{$current_language},
 	$config{html_base}."resource/oldereating" ] 
 	if ($age > 65 && ( $bmi > 25 || $bmi < 20 )) || $checkme;
-push @links, [ "Keys to Choosing Healthful Foods",
+push @links, [ $lang{Keys_Choosing_Healthful_Foods}{$current_language},
 	$config{html_base}."resource/keytohealthfulfood.pdf" ] 
 	if $bmi > 25 || $bmi < 20 || $checkme;
-push @links, [ "Eating Disorder Facts",
+push @links, [ $lang{Eating_Disorder_Facts}{$current_language},
 	$config{html_base}."resource/eating_disorder.pdf" ] 
 	if $bmi < 20 || $bmi > 28;
 

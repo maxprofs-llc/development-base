@@ -3,100 +3,100 @@ use vars qw(@links);
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 @links = ();
 
-push @links, [ $lang{$current_language}{National_Women_Health},
+push @links, [ $lang{National_Women_Health}{$current_language},
 	"http://www.womenshealth.gov/" ]
 	if $sex eq FEMALE || $checkme;
 
-push @links, [ $lang{$current_language}{Staying_Healthy},
+push @links, [ $lang{Staying_Healthy}{$current_language},
 	$config{html_base}."resource/Staying_healthy_adult.pdf" ]
 	if $sex eq MALE && $age < 50;
 
-push @links, [ $lang{$current_language}{Staying_Healthy},
+push @links, [ $lang{Staying_Healthy}{$current_language},
 	$config{html_base}."resource/Staying_healthy_adult.pdf" ]
 	if $sex eq FEMALE && $age < 50;   
 
-push @links, [$lang{$current_language}{Staying_Healthy} ,
+push @links, [$lang{Staying_Healthy}{$current_language},
 	$config{html_base}."resource/men50.pdf"]
 	 if  $sex eq MALE && $age >= 50 ;
 
-push @links, [ $lang{$current_language}{Staying_Healthy},
+push @links, [ $lang{Staying_Healthy}{$current_language},
 	$config{html_base}."resource/women50.pdf"]
 	if  $sex eq FEMALE && $age >= 50 ;
 
-push @links, [ $lang{$current_language}{Breast_Self_Exam},
+push @links, [ $lang{Breast_Self_Exam}{$current_language},
 	$config{html_base}."resource/breast_self_exam.pdf" ]
 	if $breast_exam eq RARELY_OR_NEVER;
 
-push @links, [ $lang{$current_language}{American_Diabetes_Association},
+push @links, [ $lang{American_Diabetes_Association}{$current_language},
 	"http://www.diabetes.org" ]
 	if $diabetes_flag || $checkme;
 
-push @links, [ $lang{$current_language}{Aim_for_health_weight},
+push @links, [ $lang{Aim_for_health_weight}{$current_language},
 	$config{html_base}."resource/aim_for_healthy_weight.pdf" ]
 	if $bmi > 29.5 ;
 
-push @links, [ $lang{$current_language}{Overeaters_Anonymous},
+push @links, [ $lang{Overeaters_Anonymous}{$current_language},
 	"http://www.overeatersanonymous.org/" ]
 	if $bmi > 29.5 || $checkme;
 
-push @links, [ $lang{$current_language}{Eating_Disorder_Facts},
+push @links, [ $lang{Eating_Disorder_Facts}{$current_language},
 	$config{html_base}."resource/eating_disorder.pdf" ] 
 	if $bmi < 20 || $bmi > 28;
 
-push @links, [ $lang{$current_language}{Cancer_gov},
+push @links, [ $lang{Cancer_gov}{$current_language},
 	"http://www.cancer.gov/" ]
 	if($FBC_flag && $sex eq FEMALE) ||
 		$smoke_flag || $drinks_week > 12 || $checkme;
 
-push @links, [ $lang{$current_language}{Y_ME_National_Breast},
+push @links, [ $lang{Y_ME_National_Breast}{$current_language},
 	"http://www.y-me.org" ]
 	if $FBC_flag && $sex eq FEMALE || $checkme;
 
-push @links, [ $lang{$current_language}{Cigarettes_and_Cancer},
+push @links, [ $lang{Cigarettes_and_Cancer}{$current_language},
 	$config{html_base}."resource/cigs_and_cancer.pdf" ]
 	if $smoke_flag || $checkme;
 
-push @links, [ $lang{$current_language}{Clearing_the_Air},
+push @links, [ $lang{Clearing_the_Air}{$current_language},
 	$config{html_base}."resource/clearing_the_air.pdf " ]
 	if $smoke_flag || $checkme;
 
-push @links, [ $lang{$current_language}{National_Heart_Lung},
+push @links, [ $lang{National_Heart_Lung}{$current_language},
 	"http://www.nhlbi.nih.gov/health/public/lung/index.htm" ]
 	if $smoke_flag || $checkme;
 
-push @links, [ $lang{$current_language}{High_Cholesterol_need},
+push @links, [ $lang{High_Cholesterol_need}{$current_language},
 	$config{html_base}."resource/high_cholesterol_what_you_need_to_know.pdf " ]
 	if $cholesterol_flag;
 
-push @links, [ $lang{$current_language}{Guide_lowering_Blood_Pressure},
+push @links, [ $lang{Guide_lowering_Blood_Pressure}{$current_language},
 	$config{html_base}."resource/bp_lower_guide.pdf" ]
 	if $bp_flag ;
 
-push @links, [ $lang{$current_language}{Heart_Truth_for_Women},
+push @links, [ $lang{Heart_Truth_for_Women}{$current_language},
 	$config{html_base}."resource/heart_truth_for_women.pdf" ]
 	if $sex eq FEMALE && ($bp_flag || $cholesterol_flag);
 
-push @links, [ $lang{$current_language}{Heart_Truth_for_Women},
+push @links, [ $lang{Heart_Truth_for_Women}{$current_language},
 	$config{html_base}."resource/heart_truth_for_women.pdf" ]
 	if $stress_flag;
 
-push @links, [ $lang{$current_language}{Alcoholics_Anonymous},
+push @links, [ $lang{Alcoholics_Anonymous}{$current_language},
 	"http://www.aa.org" ]
 	if $drinks_week > 12 || $checkme;
 
-push @links, [ $lang{$current_language}{Alcohol_What_you_kill},
+push @links, [ $lang{Alcohol_What_you_kill}{$current_language},
 	$config{html_base}."resource/alcohol_DontKnow.pdf" ]
 	if $drinks_week > 12;
 
-push @links, [ $lang{$current_language}{Alcohol_Fact_Sheet},
+push @links, [ $lang{Alcohol_Fact_Sheet}{$current_language},
 	$config{html_base}."resource/Alcohol_Facts.pdf" ]
 	if $drinks_week > 7;
 
-push @links, [ $lang{$current_language}{Women_for_Sobriety},
+push @links, [ $lang{Women_for_Sobriety}{$current_language},
 	"http://www.womenforsobriety.org/" ]
 	if $drinks_week > 7 && $sex eq FEMALE || $checkme;
 
-push @links, [ $lang{$current_language}{American_Heart_Association},
+push @links, [ $lang{American_Heart_Association}{$current_language},
 	"http://www.amhrt.org" ]
 	if $cholesterol_flag || $bmi > 25  || $checkme;
 
@@ -104,53 +104,53 @@ push @links, [ "M.A.D.D.",
 	"http://www.madd.org/drunk-driving/" ]
 	if $drink_and_drive > 0  || $checkme;
 
-push @links, [ $lang{$current_language}{Men_and_Depression},
+push @links, [ $lang{Men_and_Depression}{$current_language},
 	$config{html_base}."resource/men-and-depression.pdf" ]
 	if ($sex eq MALE && ($violence_flag > 1 || $life_satisfaction eq NOT_SATISFIED
 		|| $loss_flag || $overall eq POOR)) ;
 
-push @links, [ $lang{$current_language}{Women_and_Depression},
+push @links, [ $lang{Women_and_Depression}{$current_language},
 	$config{html_base}."resource/women_depression.pdf" ]
 	if ($sex ne MALE && ($violence_flag > 1 || $life_satisfaction eq NOT_SATISFIED
 		|| $loss_flag || $overall eq POOR));
 
-push @links, [ $lang{$current_language}{Dietary_Guidelines},
+push @links, [ $lang{Dietary_Guidelines}{$current_language},
 	$config{html_base}."resource/dietaryguidelines.pdf" ]
 	if $cholesterol_flag || $bmi > 25 || $bmi < 20 ||
 		$fiber eq NO || $fats eq YES || $checkme;
 
-push @links, [ $lang{$current_language}{Food_Safety_for_Seniors},
+push @links, [ $lang{Food_Safety_for_Seniors}{$current_language},
 	"http://www.foodsafety.gov/~fsg/sr2.html" ]
 	if $age > 65 && ($cholesterol_flag || $bmi > 25 ||
 		$bmi < 20 || $fiber eq NO || $fat eq YES) || $checkme;
 
-push @links, [ $lang{$current_language}{Nutrition_Healthier},
+push @links, [ $lang{Nutrition_Healthier}{$current_language},
 	$config{html_base}."resource/nutrition_for_healthier_you.pdf" ]
 	if $cholesterol_flag || $bmi > 25 || $bmi < 20 ||
 		$fiber eq NO || $fat eq YES;
 
-push @links, [ $lang{$current_language}{Indian_Health_Services},
+push @links, [ $lang{Indian_Health_Services}{$current_language},
 	"http://www.ihs.gov" ]
 	if $race eq NATIVE_AMERICAN || $checkme;
 
-push @links, [ $lang{$current_language}{COPD_Are_You_at_Risk},
+push @links, [ $lang{COPD_Are_You_at_Risk}{$current_language},
 	$config{html_base}."resource/copd-atrisk.pdf" ]
 	if $copd_flag || $checkme;
 
-push @links, [ $lang{$current_language}{Pregnancy_Planner},
+push @links, [ $lang{Pregnancy_Planner}{$current_language},
 	$config{html_base}."resource/PregnancyPlanner.pdf" ]
 	if $pregnant_flag || $checkme;
 
-push @links, [ $lang{$current_language}{Over_the_Counter},
+push @links, [ $lang{Over_the_Counter}{$current_language},
 	$config{html_base}."resource/OTC_Medicines_Family_Healthy.pdf" ]
 	if 1==1 ;
 
-push @links, [ $lang{$current_language}{Over_the_Counter},
+push @links, [ $lang{Over_the_Counter}{$current_language},
 	$config{html_base}."resource/Physical_activity_adults.pdf" ]
 	if $exercise_unable eq YES ;
 
 
-push @links, [ $lang{$current_language}{Family_Self_Care},
+push @links, [ $lang{Family_Self_Care}{$current_language},
 	$config{html_base}."resource/Family_Self_Care_Handbook.pdf" ]
 	if 1==1 ;
 

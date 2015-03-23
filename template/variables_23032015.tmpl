@@ -1,0 +1,507 @@
+{
+use vars qw($name $date $client $base $styles $height_imperial $copyright
+	    $next $back $submit $home $member $pager $hs_java $collector $ptrack
+	    $header_file $header_in_file $footer_file $continued $review $pdf $top_bar_color
+	    $cgi_dir $retake_record $brand_logo $brand_logo_pdf  
+	    $brand_logo_pdf_width $brand_logo_pdf_height $brand_logo_pdf_base $brand_logo_pdf_left $copyright_pdf
+	    $lc_sex @Graphic_Indicators $red_risk $yellow_risk $green_risk
+	    $line_end $para $bold_on $bold_off $gender $genders $lc_race $wellness_bar
+	    $crc_title $crc_subtitle $crc_subtitle_in $crc_color_guide
+	    $CRC_end_width $CRC_bar_height $CRC_left $CRC_right $CRC_middle $CRC_you $CRC_target $CRC_avg
+	    $drc_title $drc_subtitle $drc_subtitle_in $drc_color_guide
+	    $bar3_avg $bar3_score $bar3_target $bar3_height $extra_id_title
+	    $pt_title $pt_subtitle $pt_subtitle_in $pt_color_guide
+	    $ar_title $ar_subtitle $ar_color_guide $ggr_javas $ggr_styles
+	    $fit_title $fit_subtitle $fit_subtitle_in $fit_color_guide $fit_flex_graphic
+	    $gwb_title $gwb_subtitle $gwb_subtitle_in $gwb_color_guide
+	    $gha_title $gha_subtitle $gha_subtitle_in $gha_color_guide
+	    $hra_title $hra_subtitle $hra_subtitle_in $hra_color_guide
+	    $reg_title $reg_subtitle $reg_subtitle_in $reg_message $styles_plain $extra_id_dbslot
+	    $login_title $login_subtitle $login_subtitle_in $logout $logout_html
+	    $lost_title $lost_subtitle $lost_subtitle_in $useFolder $extra_breakdowns
+	    $make_changes_title $make_changes_subtitle $make_changes_subtitle_in
+	    $admin_codes $batch_entry $batch_print $ass_title $is_admin $is_coach $is_clerk
+	    $member_back $edit_covers $edit_emails $calc_dir $extra_conditions
+	    $change_pass $change_pass_html $change_account $change_account_html
+	    %hs_assessments %hs_batch_assessments $trouble_contacts $print_me $extra_id_input
+	    $no_race_question $no_drive_question $no_gina_question $no_job_question $no_drive_question 
+	    $no_bio_question $todays_date $extended_bio_question $extended_liver_question $no_education
+	    $bfat_question $hip_question $current_language $user_management_html $home_header_in_file $view_admin_logo
+	    $subdomain $confirm_delete $assessment_recs_variables_tmpl $waist_question $extended_nutrition
+	    $sleep_question $commute_question $poly_question $gha_diabetes_female $extra_spiritual_question
+		$gha_glucose $exercise_unable $hidden_language
+	   );
+use HealthStatus::Constants;
+
+my @batch_assessments = split /\s+/, $config{batch_assessments};
+my @common_assessments = split /\s+/, $config{ggr_adv_tables};
+foreach (@common_assessments){
+	$hs_assessments{$_} = 1; 
+	}
+foreach (@batch_assessments){
+	$hs_batch_assessments{$_} = 1;
+	}
+
+$trouble_contacts = '(888) 726-4684 - fax 317.823.2697 - websupport@healthstatus.com';
+$extra_breakdowns = $config{'extra_breakdowns'} || 0;
+
+my %escapes;
+for (0..255) {
+    $escapes{chr($_)} = sprintf("%%%02X", $_);
+}
+
+if( $config{GINA} || $client1 eq 'GinaQset'){
+	$no_race_question = 0;
+	$no_gina_question = 1;
+	}
+else	{
+	$no_race_question = 0;
+	$no_gina_question = 0;
+	}
+	
+$no_drive_question = 0;
+$no_demo_question = 0;
+$bfat_question = 0;
+$extended_liver_question = 0;
+$extended_bio_question =($config{EXTENDED_BIOMETRICS})? 1 : 0;
+$no_bio_question = ($config{BIOMETRICS})? 0 : 1;
+$waist_question =($config{WAIST})? 1 : 0;
+$hip_question =($config{HIP})? 1 : 0;
+$sleep_question = ($config{SLEEP})? 1 : 0;
+$commute_question = ($config{COMMUTE})? 1 : 0;
+$poly_question = ($config{POLY})? 1 : 0;
+$gha_diabetes_female = ($config{GHADRC})? 1 : 0;
+$extra_spiritual_question = ($config{SPIRIT})? 1 : 0;
+$extended_nutrition = ($config{LONG_NUTRITION})? 1 : 0;
+$extra_conditions = ($config{EXTRA_CONDITIONS})? 1 : 0;
+$no_job_question = ($config{NO_JOBS})? 1 : 0;
+$no_education = ($config{NO_EDUCATION})? 1 : 0;
+$extra_id_input = ($config{extra_id_input})? 1 : 0;
+$extra_id_title =  $config{extra_id_title} || "BridgeSpan member ID:";
+$extra_id_dbslot = $config{extra_id_dbslot}|| "client3";
+$extra_stress_question = ($config{STRESS_QUESTIONS})? 1 : 0;
+$gha_smoke_status = ($config{SMOKE_STATUS})? 1 : 0;
+$frame_question = ($config{FRAME_QUESTION})? 1 : 0;
+$gha_glucose = ($config{GHA_GLUCOSE})? 1 : 0;
+$exercise_unable = ($config{EXERCISE_UNABLE})? 1 : 0;
+
+$client = $config{client};
+($client_signature = $config{client_signature}) =~ s/\|/\n/g;  		 # Replace pipes with newlines for multi-line sigs
+($client_signature = $config{groupSignature}) =~ s/\|/\n/g if ($config{group_variables}); 
+
+($client_web_signature = $client_signature) =~ s/\n/<br \/>/g;		 # Replace newlines with line breaks for html
+($client_pdf_signature = $client_signature) =~ s/\n/ ^P\n\n/g;		 # Replace newlines with PDF line breaks for PDF
+
+my $domain = $ENV{SERVER_NAME};
+my @domain_parts = split /\./,$domain;
+$subdomain = $domain_parts[0];
+if($subdomain eq 'cornerstone' || $subdomain eq 'myliveanew' || $subdomain eq 'smarter' || $subdomain eq 'reliance' ){
+    $view_admin_logo = qq|<img src="$config{admin_logo}" border="0" align="center"><br />|;
+}else{
+    $view_admin_logo = qq|<img src="$config{brand_logo}" border="0" align="center" height="95"><br />|;
+}
+if($subdomain eq 'reliance'){	
+   $assessment_recs_variables_tmpl = $config{template_directory}."reliance_assessment_recs_variables.tmpl";
+}else{
+   $assessment_recs_variables_tmpl = $config{template_directory}."assessment_recs_variables.tmpl";
+}
+
+$ggr_javas='';
+$ggr_styles='';
+
+my @ggr_java_parts = split /\s+/, $config{ggr_adv_java};
+foreach (@ggr_java_parts){
+    	$ggr_javas .= qq|<script type="text/javascript" src="|.$config{ggr_adv_java_dir}.$_.'"></script>'."\n";
+	}
+my @ggr_style_parts = split /\s+/, $config{ggr_adv_styles};
+foreach (@ggr_style_parts){
+    	$ggr_styles .= qq|<link type="text/css" rel="stylesheet" href="|.$config{ggr_adv_styles_dir}.$_.'" />'."\n";
+	}
+$useFolder = 0;
+
+if(lc $language eq 'espanol' || lc $language eq 'spanish'){
+	$current_language = "spanish";
+}elsif(lc $language eq 'chinese'){
+	$current_language = "chinese";
+}else{
+	$current_language = "english";
+}
+$base = $config{html_base};
+$styles = $config{html_styles};
+$styles_plain = $config{html_styles_plain} || 'styles/healthstatus-plain.css';
+$home = $config{html_home};
+$cgi_dir = $config{cgi_dir} || "/cgi-bin/hs/";
+$calc_dir = $config{calc_dir} || "/cgi-bin/hs";
+$member = $config{member_page} || "$config{cgi_dir}/assessment_recs.cgi";
+$review = $config{html_review} || "$config{cgi_dir}/review.cgi";
+$register = $config{html_register} || "$config{cgi_dir}/register.cgi";
+$pdf = $config{pdf_review} || "$config{cgi_dir}/review.cgi";
+$pager = $config{html_pager} || "$config{cgi_dir}/pager.cgi";
+$edit_covers = $config{edit_covers} || "$config{cgi_dir}/edit_files.cgi";
+$edit_emails = $config{edit_covers} || "$config{cgi_dir}/edit_files.cgi";
+$logout = $config{html_logout} || "$config{cgi_dir}/logout.cgi";
+$logout_html = ' - <a href="' . $logout . '">[logout]</a>';
+$change_pass = $config{html_change_pass} || $register. '?action=update_pass&siteid=' . $siteid;
+$change_pass_html = '<a href="' . $change_pass . '">[change password]</a>';
+$change_account = $config{html_change_account} || $register. '?action=update&siteid=' . $siteid;
+$change_account_html = '<a href="' . $change_account . '">[account settings]</a>';
+$user_management_html = qq|<a href="$member"><img src="images/but_07.jpg" alt="" /></a>\n|;
+$user_management_html .= qq|<a href="$change_account"><img src="images/but_09.jpg" alt="" /></a>\n| if $config{show_change_acct};
+$user_management_html .= qq|<a href="$change_pass"><img src="images/but_11.jpg" alt="" /></a>\n| if $config{show_change_pass};
+$user_management_html .= qq|<a href="$logout"><img src="images/but_13.jpg" alt="" /></a>\n|;
+$hs_java = "$config{html_base}$config{html_java}";
+$hs_java = "$config{html_base}$config{html_reg_java}" if $i_am_reg_page;
+$hs_java = "$config{html_base}$config{html_java_espanol}" || 'styles/hs_validate_lang.js' if $qset eq 'espanol';
+$collector = $config{html_collector} || "$config{cgi_dir}/collector.cgi";
+$ptrack = $config{ptracker_url} || "$config{cgi_dir}/ptracker.cgi";
+$pass_forget_file = $config{forget_pass_footer};
+$header_file = $config{html_header};
+$header_in_file = $config{html_in_header} || $config{html_header};
+$home_header_in_file = $config{home_html_in_header} || $config{home_html_header} || $config{html_header};
+$footer_file = $config{html_footer};
+$home_footer_file = $config{home_html_footer} || $footer_file;
+$top_bar_color = $config{html_top_bar_color} || "#000066";
+$brand_logo_pdf = $config{brand_logo_pdf}|| 'global/powered_by.png';
+$brand_logo_pdf_width = $config{brand_logo_pdf_width}|| 168;
+$brand_logo_pdf_height = $config{brand_logo_pdf_height} || 128 ;
+$brand_logo_pdf_left = $config{brand_logo_pdf_left} || 330 ;
+$brand_logo_pdf_base = $config{brand_logo_pdf_base}|| 680;
+$brand_logo = $config{brand_logo}|| "images/logo.png" || "images/Logo_d.jpg";
+$styles_ggr = $config{ggr_adv_styles};
+$ggr_adv = "$config{ggr_adv}" || "$config{cgi_dir}/ggr_adv2.cgi";
+# $java_ggr = "$config{html_base}$config{ggr_adv_java}";
+# $prototype_js = "$config{html_base}$config{prototype_js}";
+# $scriptaculous_js = "$config{html_base}$config{scriptaculous_js}";
+# $lightwindow_js = "$config{html_base}$config{lightwindow_js}";
+# $admin_js = "$config{html_base}$config{admin_js}";
+# $CalendarPopup_js = "$config{html_base}$config{CalendarPopup_js}";
+# $lightwindow_css = "$config{html_base}$config{lightwindow_css}";
+# $admin_css = "$config{html_base}$config{admin_css}";
+$batch_entry = "$config{batch_entry}" || "$config{cgi_dir}/batch_entry.cgi";
+if($modify){$batch_entry = "$config{modify_entry}" || "$config{cgi_dir}/modify_any.cgi";}
+$batch_print = "$config{batch_printing}" || "$config{cgi_dir}/batch_print.cgi";
+$support_email = "$config{email_from}"|| 'webmaster@healthstatus.com';
+$admin_codes = "$config{hs_admin}" || "$config{cgi_dir}/hs_admin.cgi";
+$is_admin = ($hs_administration eq 'admin');
+$is_coach = ($hs_administration eq 'coach');
+$is_clerk = ($hs_administration eq 'clerk');
+
+
+$name = "$first_name $last_name" || $db_fullname ;
+$name =~ s/\s+$//;
+
+my $feet = int($height/12);
+my $inches = $height%12;
+$height_imperial = qq|$feet' $inches"|;
+$height =  $height_imperial;
+
+my( $year, $month, $day ) = (localtime)[5,4,3];
+
+$year  += 1900;
+$month += 1;
+   
+if(!defined $language || lc $language eq 'usenglish' || lc $current_language eq 'english'){
+	$print_me = qq|<a href="$review?status=retake&assessment=$assessment&xnum=$db_record&output_format=PDF" class="HSbodytext2" target="_blank">[Click here for a Printable PDF Version of this report]</a>|;
+	$copyright = '<img src="/images/global/copyright.gif">';
+	$copyright_pdf = "Copyright (c) 1998-$year HealthStatus.com, Inc. all rights reserved.";
+	$next = $config{button_next} || 'src="/images/global/next.jpg" class="HSbuttonNext"';
+	$back = $config{button_back} || 'src="/images/global/back.jpg" class="HSbuttonBack"';
+	$submit = $config{button_submit} || 'src="/images/global/submit.jpg" class="HSbutton"';
+	$continued = "<span class=\"HSsubtitle\">($lang{continued}{$current_language})</span>";
+	$close = 'src="/images/global/close.gif" class="HSbutton"';
+	my $member_back_image = "<img border=0 $back>";
+	$member_back = qq|<a href="$member">$member_back_image</a>|;
+
+	$date = sprintf("$lang{As_of}{$current_language} %02d/%02d/%04d", $month, $day, $year);
+	$todays_date = sprintf("%02d-%02d-%04d", $month, $day, $year);
+
+	$lc_race 	= lc $race;
+	$lc_sex 	= lc $sex;
+	if ($sex eq MALE){
+		$gender = 'man';
+		$genders = 'men';
+		}
+	else	{
+		$gender =  'woman';
+		$genders = 'women';
+		}
+	
+	my $title_string = '';
+
+	$reg_title = $title_string . '<span class="HStitle">User Registration</span>';
+	$reg_subtitle = '<span class="HStitle">Edit a user</span>';
+	$reg_subtitle_in = '<span class="HStitle">Add new user</span>';
+	$reg_message = '';
+
+    $update_title = $title_string . '<br>&nbsp;<br><span class="HStitle">Update Your Account</span>';
+
+	$login_title = $title_string . '<br>&nbsp;<br><span class="HStitle">User Login</span>';
+	$login_subtitle = 'Edit a user';
+	$login_subtitle_in = 'Add new user';
+
+	$lost_title = $title_string . '<br>&nbsp;<br><span class="HStitle">Password retrieval</span>';
+	$lost_subtitle = 'Your password';
+	$lost_subtitle_in = 'Get your password';
+
+	$ar_title = $title_string . '<p><span class=HStitle>Assessment Records</span>';
+	$ar_color_guide = '<img src="images/global/color_guide.gif" width="309" height="13">';
+
+	$pt_title = $title_string . '<span class="HStitle">Personal Tracker</span>';
+	$pt_subtitle = '<span class="HSsubtitle">Personal Tracker Results</span>';
+	$pt_subtitle_in = '<span class="HSsubtitle">Personal Tracker Input</span>';
+
+	$gha_title = $title_string . "<span class=\"HStitle\">$lang{gha_title}{$current_language}</span>";
+	$gha_subtitle = "<span class=\"HSsubtitle\">$lang{gha_subtitle}{$current_language}</span>";
+	$gha_subtitle_in = "<span class=\"HSsubtitle\">$lang{gha_subtitle_in}{$current_language}</span>";
+	$gha_color_guide = '<img src="images/hra/color_guide.jpg">';
+
+	$hra_title = $title_string . "<span class=\"HStitle\">$lang{$current_language}{hra_title}</span>";
+	$hra_subtitle = "<span class=\"HSsubtitle\">$lang{$current_language}{hra_subtitle}</span>";
+	$hra_subtitle_in = "<span class=\"HSsubtitle\">$lang{$current_language}{hra_subtitle_in}</span>";
+	$hra_color_guide = '<img src="images/gha/color_guide.jpg">';
+
+	$gwb_title = $title_string . '<span class="HStitle">General Well-being Assessment</span>';
+	$gwb_subtitle = '<span class="HSsubtitle">General Well-being Results</span>';
+	$gwb_subtitle_in = '<span class="HSsubtitle">General Well-being Input</span>';
+
+	$fit_title = $title_string . "<span class=\"HStitle\">$lang{fit_title}{$current_language}</span>";
+	$fit_subtitle = "<span class=\"HSsubtitle\">$lang{fit_subtitle}{$current_language}</span>";
+	$fit_subtitle_in = "<span class=\"HSsubtitle\">$lang{fit_subtitle_in}{$current_language}</span>";
+	$fit_flex_graphic = '<img border="0" src="images/fit/man.gif" align="right" width="78" height="107">';
+
+	$drc_title = $title_string . "<span class=\"HStitle\">$lang{drc_title}{$current_language}</span>";
+	$drc_subtitle = "<span class=\"HSsubtitle\">$lang{drc_subtitle}{$current_language}</span>";
+	$drc_subtitle_in = "<span class=\"HSsubtitle\">$lang{drc_subtitle_in}{$current_language}</span>";
+	$drc_color_guide = '<img src="images/global/color_guide.jpg">';
+
+	$crc_title = $title_string . "<span class=\"HStitle\">$lang{crc_title}{$current_language}</span>";
+	$crc_subtitle = "<span class=\"HSsubtitle\">$lang{crc_subtitle}{$current_language}</span>";
+	$crc_subtitle_in = "<span class=\"HSsubtitle\">$lang{crc_subtitle_in}{$current_language}</span>";
+	$crc_color_guide = '<img src="images/crc/color_guide.jpg">';
+
+	$make_changes_title = $title_string . '<span class="HStitle">User Account</span>';
+	$make_changes_subtitle = '<span class="HStitle">Edit a user</span>';
+	$make_changes_subtitle_in = '<span class="HStitle">Change password</span>';
+	$make_changes_message = '';
+
+	# Sometimes wellness can actually be over a hundred, but this is confusing to the user, so we make it 100
+	if($wellness > 100) {$wellness = 100};
+	my $barswitch = sprintf("%.0f",$wellness);
+	# Pick which wellness graphic to grab based on the score
+	$wellness_bar = 'images/wellness/well_';
+	$wellness = sprintf("%.0f", $wellness);
+	$wellness_bar .= "$barswitch.png";
+
+	}
+elsif( lc $language eq 'espanol' || lc $current_language eq 'spanish' || lc $current_language eq 'espanol')	{ 
+	$copyright = '<span class="HScopyright">Copyright (c) 1998-'.$year.' HealthStatus.com, Inc. Todos los derechos reservados.</span>';
+	$copyright_pdf = "Copyright (c) 1998-$year HealthStatus.com, Inc. Todos los derechos reservados.";
+	$hidden_language = $language;
+	#Próximo
+	$next = 'src="images/global/proximo.gif" class="HSbuttonNext"';
+	$back = 'src="images/global/volver.gif" class="HSbuttonBack"';
+	$submit = 'src="images/global/presentar.gif" class="HSbutton"';
+	#continuación
+	$continued = "<span class='HSsubtitle'> $lang{continued}{$current_language}</span>";
+	$close = 'src="images/global/close.gif" class="HSbutton"';
+	my $member_back_image = "<img border=0 $back>";
+	$member_back = qq|<a href="$member">$member_back_image</a>|;
+
+	$date = sprintf("$lang{As_of}{$current_language} %02d/%02d/%04d", $month, $day, $year);
+
+	$lc_race 	= lc $race;
+	$lc_sex 	= lc $sex;
+	if ($sex eq MALE){
+		$gender = 'hombre';
+		$genders = 'hombres';
+		}
+	else	{
+		$gender =  'mujer';
+		$genders = 'mujeres';
+		}
+
+	#my $title_string = '<img src="images/global/hs_logo_77.jpg"><br>&nbsp;<br>';
+	my $title_string = '';
+
+	#sometimes wellness can actually be over a hundred, but this is confusing to the user, so we make it 100
+	if($wellness > 100) {$wellness = 100};
+	my $barswitch = sprintf("%.0f",$wellness);
+	#pick which wellness graphic to grab based on the score
+	$wellness_bar = 'images/wellness/well_';
+	$wellness = sprintf("%.0f", $wellness);
+	$wellness_bar .= "$barswitch.png";
+
+	$reg_title = $title_string . '<span class="HStitle">User Registration</span>';
+	$reg_subtitle = '<span class="HStitle">Edit a user</span>';
+	$reg_subtitle_in = '<span class="HStitle">Add new user</span>';
+	$reg_message = $config{ggr_adv_styles};
+
+	$login_title = $title_string . '<br>&nbsp;<br><span class="HStitle">User Login</span>';
+	$login_subtitle = 'Edit a user';
+	$login_subtitle_in = 'Add new user';
+
+	$ar_title = $title_string . '<p><span class=HStitle>Assessment Records</span>';
+
+	$mr_subtitle ='';
+	$ar_color_guide = '<img src="images/global/color_guide.gif" width="309" height="13">';
+	
+	$gha_title = $title_string . "<span class=\"HStitle\">$lang{gha_title}{$current_language}</span>";
+	$gha_subtitle = "<span class=\"HSsubtitle\">$lang{gha_subtitle}{$current_language}</span>";
+	$gha_subtitle_in = "<span class=\"HSsubtitle\">$lang{gha_subtitle_in}{$current_language}</span>";
+	$gha_color_guide = '<img src="images/hra/color_guide.jpg">';
+	
+	$hra_title = $title_string . "<span class=\"HStitle\">$lang{$current_language}{hra_title}</span>";
+	$hra_subtitle = "<span class=\"HSsubtitle\">$lang{$current_language}{hra_subtitle}</span>";
+	$hra_subtitle_in = "<span class=\"HSsubtitle\">$lang{$current_language}{hra_subtitle_in}</span>";
+	$hra_color_guide = '<img src="images/gha/color_guide.jpg">';
+
+
+	$gwb_title = $title_string . '<span class="HStitle">General Well-being Assessment</span>';
+	$gwb_subtitle = '<span class="HSsubtitle">General Well-being Results</span>';
+	$gwb_subtitle_in = '<span class="HSsubtitle">General Well-being Input</span>';
+	
+	$fit_title = $title_string . "<span class=\"HStitle\">$lang{fit_title}{$current_language}</span>";
+	$fit_subtitle = "<span class=\"HSsubtitle\">$lang{fit_subtitle}{$current_language}</span>";
+	$fit_subtitle_in = "<span class=\"HSsubtitle\">$lang{fit_subtitle_in}{$current_language}</span>";
+	$fit_flex_graphic = '<img border="0" src="images/fit/man.gif" align="right" width="78" height="107">';
+	
+	$drc_title = $title_string . "<span class=\"HStitle\">$lang{drc_title}{$current_language}</span>";
+	$drc_subtitle = "<span class=\"HSsubtitle\">$lang{drc_subtitle}{$current_language}</span>";
+	$drc_subtitle_in = "<span class=\"HSsubtitle\">$lang{drc_subtitle_in}{$current_language}</span>";
+	$drc_color_guide = '<img src="images/global/color_guide.jpg">';
+	
+	$crc_title = $title_string . "<span class=\"HStitle\">$lang{crc_title}{$current_language}</span>";
+	$crc_subtitle = "<span class=\"HSsubtitle\">$lang{crc_subtitle}{$current_language}</span>";
+	$crc_subtitle_in = "<span class=\"HSsubtitle\">$lang{crc_subtitle_in}{$current_language}</span>";
+	$crc_color_guide = '<img src="images/crc/color_guide.jpg">';
+
+	$pt_title = $title_string . '<span class="HStitle">Personal Tracker</span>';
+	$pt_subtitle = '<span class="HSsubtitle">Personal Tracker Results</span>';
+	$pt_subtitle_in = '<span class="HSsubtitle">Personal Tracker Input</span>';
+
+	$make_changes_title = $title_string . '<span class="HStitle">User Account</span>';
+	$make_changes_subtitle = '<span class="HStitle">Edit a user</span>';
+	$make_changes_subtitle_in = '<span class="HStitle">Change password</span>';
+	$make_changes_message = $config{ggr_adv_styles};
+	}
+
+
+$bar3_avg = 'images/global/3bar_avg.jpg';
+$bar3_score  = 'images/global/3bar_score.jpg';
+$bar3_target = 'images/global/3bar_target.jpg';
+$bar3_height = 5;
+
+$CRC_bar_height = 22;
+$CRC_end_width = 9;
+$CRC_left = 'images/global/bar_start.gif';
+$CRC_right = 'images/global/bar_end.gif';
+$CRC_middle = 'images/global/bar_mid.gif';
+$CRC_you = 'images/global/bar_current.gif';
+$CRC_target = 'images/global/bar_desired.gif';
+$CRC_avg = 'images/global/bar_avg.gif';
+
+my $lc_sex 	= lc $sex;
+
+my %a_titles = (DRC => 'Diabetes Risk Assessment',
+		CRC => 'Cardiac Risk Assessment',
+		GHA => 'Health Assessment',
+		HRA => 'Health Assessment',
+		FIT => 'Fitness Assessment',
+		GWB => 'General Well-being Assessment',
+		PT => 'Personal Tracker'
+		);
+
+$ass_title = $a_titles{uc($assessment)};
+
+if(uc($output_format) eq 'PDF' || uc($output_format) eq 'PDFE')
+	{
+	($client_web_signature = $client_signature) =~ s/\n/ ^P\n\n/g;		 # Replace newlines with PDF line breaks for PDF
+	my $barswitch = sprintf("%.0f",$wellness);
+	$wellness_bar = 'images/wellness/well_';
+	$wellness = sprintf("%.0f", $wellness);
+	$wellness_bar .= "$barswitch.jpg";
+	if( uc($assessment) eq 'GWB' )
+		{
+		@Graphic_Indicators = (
+			qq|Im1|,
+			qq|Im2|,
+			qq|Im3|
+			);
+		}
+	else	{
+		@Graphic_Indicators = (
+			qq|Im1|,
+			qq|Im1|,
+			qq|Im2|,
+			qq|Im3|,
+			qq|Im3|
+			);
+		}
+	}
+else	{
+	if( uc($assessment) eq 'GWB' )
+		{
+		@Graphic_Indicators = (
+			qq|<img src="$config{html_base}/$config{green_risk_image_html}" border=0>|,
+			qq|<img src="$config{html_base}/$config{yellow_risk_image_html}" border=0>|,
+			qq|<img src="$config{html_base}/$config{red_risk_image_html}" border=0>|
+			);
+		}
+	else	{
+		@Graphic_Indicators = (
+			qq|<img src="$config{html_base}/$config{green_risk_image_html}" border=0>|,
+			qq|<img src="$config{html_base}/$config{green_risk_image_html}" border=0>|,
+			qq|<img src="$config{html_base}/$config{yellow_risk_image_html}" border=0>|,
+			qq|<img src="$config{html_base}/$config{red_risk_image_html}" border=0>|,
+			qq|<img src="$config{html_base}/$config{red_risk_image_html}" border=0>|
+			);
+		}
+	}
+
+$red_risk = do
+		{
+		if(uc($output_format) eq 'PDF' || uc($output_format) eq 'PDFE') { "Im3" }
+		else				{ qq|<img src="$config{html_base}/$config{red_risk_image_html}" border=0>| }
+		};
+
+$yellow_risk = do
+		{
+		if(uc($output_format) eq 'PDF' || uc($output_format) eq 'PDFE') { "Im2" }
+		else				{ qq|<img src="$config{html_base}/$config{yellow_risk_image_html}" border=0>| }
+		};
+
+$green_risk = do
+		{
+		if(uc($output_format) eq 'PDF' || uc($output_format) eq 'PDFE') { "Im1" }
+		else				{ qq|<img src="$config{html_base}/$config{green_risk_image_html}" border=0>| }
+		};
+
+$line_end = do
+		{
+		if (uc($output_format) eq 'PDF' || uc($output_format) eq 'PDFE') 	{ " ^P ^p  ^P " }
+		else					{ " <br> " }
+		};
+
+$para = do
+		{
+		if (uc($output_format) eq 'PDF' || uc($output_format) eq 'PDFE') 	{ " ^P ^p  ^P \n " }
+		else					{ "</p> " }
+		};
+
+$bold_on = do
+		{
+		if (uc($output_format) eq 'PDF' || uc($output_format) eq 'PDFE') 	{ " ^b " }
+		else					{ "<b>" }
+		};
+
+$bold_off = do
+		{
+		if (uc($output_format) eq 'PDF' || uc($output_format) eq 'PDFE') 	{ " ^B " }
+		else					{ "</b>" }
+		};
+
+$retake_record = $db_record;
+$retake_record =~ s/([^A-Za-z0-9\-_.!~*'()])/$escapes{$1}/g;
+
+'';
+}

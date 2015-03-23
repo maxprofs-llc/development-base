@@ -1,0 +1,734 @@
+{
+use vars qw( @smoke_habits @weight_habits @fat_habits @fiber_habits
+		@exercise_habits @hdl_habits @cholerstorol_habits
+		$fact $diabetes_message $smoking_status $smoke_message
+		$smoke_challenge $weight_challenge $weight_status $weight_message
+		$fat_challange $fat_status $fat_message $bp_challenge $bp_status
+		$bp_message $bp_tag $cholesterol_challange $cholesterol_status
+		$cholesterol_message $hdl_message $hdl_status $hdl_challenge
+		$exercise_message $exercise_challenge $exercise_status
+		$fiber_status $fiber_message $fiber_challenge $stress_message
+		$loss_msg $factors_message $crc_status $crc_message
+		$bp_avg $bp_davg $bp_target $bp_dtarget $cholesterol_avg $cholesterol_target
+		$cholesterol_target_low $hdl_avg $hdl_avg $hdl_target_low
+		$hdl_target_high $exercise_avg $exercise_target $cig_avg $cig_target
+		$bp_score @personal_risks $diab_msg $fat_score $weight_score
+		$cholesterol_score $hdl_score $exercise_score $fiber_score $smoke_score
+		$r2c_issues $r2c_autosafety_flag $r2c_bp_flag $r2c_checkups_flag 
+		$r2c_cholesterol_flag $r2c_drink_flag $r2c_exercise_flag 
+		$r2c_fat_flag $r2c_smoke_flag $r2c_stress_flag $r2c_weight
+		$crc_cover_letter $glucose_message $glucose_challange $glucose_status
+		$glucose_score $glucose_target $glucose_avg $glucose_target_low $glucose_low
+		$marketing_message $ldl_target $cholesterol_ratio_target
+		$triglycerides_message $triglycerides_challange $triglycerides_status
+		$triglycerides_score $triglycerides_target $triglycerides_avg 
+		$triglycerides_target_high $triglycerides_low
+		$comp_bp_new, $comp_bp_old, $comp_bp_icon, $comp_bp_message
+		$comp_chol_new, $comp_chol_old, $comp_chol_icon, $comp_chol_message
+		$comp_hdl_new, $comp_hdl_old, $comp_hdl_icon, $comp_hdl_message
+		$comp_exer_new, $comp_exer_old, $comp_exer_icon, $comp_exer_message
+		$comp_bmi_new, $comp_bmi_old, $comp_bmi_icon, $comp_bmi_message
+		$comp_fat_new, $comp_fat_old, $comp_fat_icon, $comp_fat_message
+		$comp_fiber_new, $comp_fiber_old, $comp_fiber_icon, $comp_fiber_message
+		$comp_smoke_new, $comp_smoke_old, $comp_smoke_icon, $comp_smoke_message
+		$comp_glucose_new, $comp_glucose_old, $comp_glucose_icon, $comp_glucose_message
+		$comp_tri_new, $comp_tri_old, $comp_tri_icon, $comp_tri_message
+		$comp_risk_new, $comp_risk_old, $comp_risk_icon, $comp_risk_message
+	);
+
+require HealthStatus::Constants;
+
+my %crc_cover_letters;
+$crc_cover_letters{'html'} = $config{crc_cover_letter_html} || "crc_cover_letter_html.tmpl";
+$crc_cover_letters{'pdf'} = $config{crc_cover_letter_pdf} || "crc_cover_letter_pdf.tmpl";
+$crc_cover_letters{'pdfe'} = $config{crc_cover_letter_pdf} || "crc_cover_letter_pdf.tmpl";
+
+$output_format = 'HTML' if ($output_format ne 'HTML' && $output_format ne 'PDF' && $output_format ne 'PDFE' && $output_format ne 'XML' && $output_format ne 'TEXT' );
+$crc_cover_letter = $crc_cover_letters{lc $output_format};
+
+$current_title = $crc_title;
+$current_subtitle = $crc_subtitle;
+$current_subtitle_in = $crc_subtitle_in;
+$current_desc = qq|This Cardiac Risk Appraisal is not a substitute for a check-up or physical exam that you get from a doctor or a nurse.&nbsp; It only gives you
+        	an idea if you have characteristics similar to those known to have cardiac disease. It is NOT designed for people who already have HEART DISEASE, CANCER, KIDNEY DISEASE, OR OTHER SERIOUS CONDITIONS.|;
+
+$bp_avg = 120; # U.S. average blood pressure level(120/80) - National Institutes of Health
+$bp_davg = 80;
+$cholesterol_target_low = 90;# target cholesterol - American Heart Association
+$cholesterol_avg = 210; # U.S. average for cholesterol level - National Institutes of Health
+$cholesterol_target = CHOL_MARGINAL; # target cholesterol - American Heart Association
+$glucose_target_low = GLUCOSE_OPTIMUM;# target cholesterol - American Heart Association
+$glucose_avg = 88; # U.S. average for cholesterol level - National Institutes of Health
+$glucose_target = GLUCOSE_MARGINAL; # target cholesterol - American Heart Association
+$glucose_low = GLUCOSE_LOW_MALE if $sex eq MALE;
+$glucose_low = GLUCOSE_LOW_FEMALE if $sex eq FEMALE;
+$hdl_avg = 45 if ($sex eq MALE); # U.S. average for cholesterol level men - National Institutes of Health
+$hdl_avg = 55 if ($sex eq FEMALE); # U.S. average for cholesterol level women - National Institutes of Health
+$hdl_target_low = HDL_LOW_FEMALE if $sex eq FEMALE; # minimum target HDL cholesterol - American Heart Association
+$hdl_target_low = HDL_LOW_MALE if $sex eq MALE; # minimum target HDL cholesterol - American Heart Association
+$hdl_target_high = HDL_HIGH_FEMALE if $sex eq FEMALE; # optimal target HDL cholesterol - American Heart Association
+$hdl_target_high = HDL_HIGH_MALE if $sex eq MALE; # optimal target HDL cholesterol - American Heart Association
+$exercise_avg = 1; # U.S. average 30 minute exercise sessions - Surgeon General
+$exercise_target = 3; # target 30 minute exercise sessions - Surgeon General
+$cig_avg = 4 if ($sex eq FEMALE);
+$cig_avg = 7 if ($sex eq MALE);
+$cig_target = .1;
+my $ldl_target = LDL_OPTIMUM;
+my $triglycerides_target = TRI_OPTIMUM;
+$triglycerides_target_high = TRI_HIGH;
+my $cholesterol_ratio_target = CHOL_RATIO_OPTIMUM;
+
+my $cardiac_risk_rounded  = sprintf( "%.0f", $cardiac_risk  * 1000 ) ||
+	sprintf("%.2f", $cardiac_risk    * 1000 );
+my $cardiac_average_risk_rounded = sprintf( "%.0f", $cardiac_average_risk * 1000 ) ||
+	sprintf("%.2f", $cardiac_average_risk * 1000 );
+
+my $personal_history = 0;
+
+if ($diabetes eq YES ) {
+	$diab_msg = "Follow your health care provider's recommendations to keep your diabetes under control.";
+}
+if ($family_heart_attack eq YES ) {
+	push (@personal_risks, "family history");
+	++$personal_history;
+}
+if ($heart_attack eq YES ) {
+	push (@personal_risks, "personal history");
+	++$personal_history;
+}
+my $personal_risk = do
+		{
+		($personal_history == 0) ? '':
+		($personal_history == 1) ? $personal_risks[0]:
+		($personal_history == 2) ? join(" and ", @personal_risks):
+					   join(", ", @personal_risks[0 .. ($#personal_risks-1)], "and $personal_risks[-1]");
+		};
+
+my @weightflg 		=  ('within', 'over', 'significantly over', 'under');
+@smoke_habits 	= ( 'not smoking','quit smoking','smoking','smoking heavily' );
+@weight_habits 	= ( 'healthy weight', 'slightly overweight', 'overweight', 'significantly overweight', 'under weight' );
+@fat_habits 	= ( '', 'eating too many fats', 'eating too many fats', '', 'low fat diet' );
+@bp_habits 	= ( 'safe blood pressure', 'don\'t know blood pressure', 'high blood pressure', 'high blood pressure' );
+@chol_habits 	= ( 'low cholesterol', 'unknown cholesterol', 'too low cholesterol', 'elevated cholesterol', 'high cholesterol' );
+@hdl_habits 	= ( 'healthy HDL', 'unknown HDL', 'low HDL' );
+@exer_habits 	= ( 'regular exercise', 'not enough regular exercise', 'not enough regular exercise', 'no regular exercise' );
+@fiber_habits 	= ( 'diet includes plenty of fiber', 'diet includes fiber', 'not enough fiber', 'very little fiber' );
+
+if($curr_page == 5){
+	$r2c_issues = 0;
+	$r2c_smoke_flag = 1 if ($smoke_status eq "Still smoke");
+	$r2c_fat_flag = 1 if ($fat_flag != 3);
+	$r2c_exercise_flag = 1 if ($exercise < 3);
+	$r2c_bp_flag = 1 if ($bp_sys > BP_OPTIMUM_SYSTOLIC || $bp_dias > BP_OPTIMUM_DIASTOLIC || $bp_check eq "Don't know" || $bp_check eq "High");
+	$r2c_cholesterol_flag = 1 if  ($cholesterol >= CHOL_MARGINAL || $cholesterol_check eq "Don't know" || $cholesterol_check eq "High");
+	$r2c_weight_flag = 1 if ($bmi > 25);
+	$r2c_stress_flag = 0 if ($stress == 7 || $stress == 3 );
+	$r2c_issues = 1 if ( $r2c_bp_flag || $r2c_cholesterol_flag || $r2c_exercise_flag || 
+				$r2c_fat_flag || $r2c_smoke_flag || $r2c_stress_flag || $r2c_weight);
+	}
+
+
+#### Fact paragraph
+my @messages;
+push @messages, "$name, there are some risk factors you cannot control - like that you are $lc_sex" unless $anonymous;
+push @messages, "There are some risk factors you cannot control - like that you are $lc_sex" if $anonymous;
+if (!$diabetes_flag && $family_heart_attack ne YES &&  $heart_attack ne YES) 	{ push @messages, " or " }
+elsif ($diabetes_flag || $family_heart_attack ne NO ||  $heart_attack ne NO)	{ push @messages, ", " }
+
+push @messages, " that you are $age";
+
+if ($diabetes_flag && $family_heart_attack ne YES &&  $heart_attack ne YES) 	{ push @messages, " or " }
+elsif ($diabetes_flag && ( $family_heart_attack ne NO ||  $heart_attack ne NO ) )			{ push @messages, ", " }
+
+if ($diabetes_flag) {
+	push @messages, " that you have diabetes";
+}
+
+if ($family_heart_attack eq YES &&  $heart_attack ne YES) 	{ push @messages, " or " }
+elsif ($heart_attack ne NO)					{ push @messages, ", " }
+
+if ($family_heart_attack eq YES ) {
+	push @messages, " your family history of heart disease";
+}
+if ($heart_attack eq YES ) {
+	push @messages, " or your previous heart attack";
+}
+push @messages, ". This report will stress the things that you can control.";
+
+$fact = join "", @messages;
+
+#### Blood Pressure message
+$bp_target =  119;
+
+$bp_dtarget = 79;
+
+
+$bp_message = do
+		{
+		if ($bp_sys >= BP_HIGH_SYSTOLIC ||
+			$bp_dias >= BP_HIGH_DIASTOLIC  ||
+			$bp_check eq HIGH ) 	        	{ "High blood pressure (hypertension) can be serious. It puts extra stress on your heart and blood vessels, which can cause heart disease or stroke. Consult your health care provider for ways to lower your blood pressure. These steps may include a low-fat diet, medication, and exercise." }
+		elsif ($bp_sys >= BP_MARGINAL_SYSTOLIC ||
+			$bp_dias >= BP_MARGINAL_DIASTOLIC  )    { "High blood pressure (hypertension) can be serious. It puts extra stress on your heart and blood vessels, which can cause heart disease or stroke. Your blood pressure is considered prehypertension.  This means that you don't have high blood pressure now but are at increased risk of developing it in the future.  Consult your health care provider for ways to lower your blood pressure. These steps may include a low-fat diet, exercise and other lifestyle changes." }
+		elsif ($bp_check eq DONT_KNOW )			{ "High blood pressure (hypertension) can be serious. It puts extra stress on your heart and blood vessels, which can cause heart disease or stroke. Ask your health care provider for ways to lower your blood pressure. These steps may include diet, medication, and exercise. Get your blood pressure checked as soon as possible. It's simple and quick." }
+		else						{ "High blood pressure (hypertension) can be serious. It puts extra stress on your heart and blood vessels, which can cause heart disease or stroke. You’re doing well by keeping your blood pressure this low." }
+		};
+
+#### Blood Pressure status
+$bp_status = do
+		{
+		if( $bp_check eq HIGH ) 			{ "You reported that your blood pressure is high. See your health care provider and get it checked soon." }
+		elsif( $bp_check eq DONT_KNOW )			{ "You reported that you do not know your blood pressure reading. Get it checked immediately." }
+		elsif( $bp_check eq NORMAL_OR_LOW ) 		{ "You reported that your blood pressure is normal." }
+		elsif( $bp_sys > BP_HIGH_SYSTOLIC ||
+			$bp_dias > BP_HIGH_DIASTOLIC  ||
+			$bp_check eq HIGH ) 	        	{ "Your blood pressure ($bp_sys/$bp_dias) is higher than recommended.  Check with your health care provider about what you can do to get it under 140/90 and ideally below 120/80." }
+		elsif( $bp_sys >= BP_MARGINAL_SYSTOLIC ||
+			$bp_dias >= BP_MARGINAL_DIASTOLIC )	{ "Your blood pressure ($bp_sys/$bp_dias) is higher than recommended.  Check with your health care provider about simple lifestyle changes you can make to get it under 120/80." }
+		elsif( $bp_sys > 1 )				{ "Your blood pressure ($bp_sys/$bp_dias) is in the right range, always keep it below 120/80." }
+		else						{ 'You did not enter a value for your blood pressure.' }
+		};
+
+
+#### Blood Pressure challenge
+$bp_challenge = do
+		{
+		if( $bp_sys >= BP_HIGH_SYSTOLIC ||
+			$bp_dias >= BP_HIGH_DIASTOLIC ||
+			$bp_check eq HIGH)			{ "Your target: Get your blood pressure below 140/90 and ideally below 120/80." }
+		elsif( $bp_sys >= BP_MARGINAL_SYSTOLIC ||
+			$bp_dias >= BP_MARGINAL_DIASTOLIC ||
+			$bp_check eq HIGH ) 			{ "Your target: Try to bring your blood pressure to the ideal reading of below 120/80." }
+		elsif( $bp_check eq DONT_KNOW )			{ "Your target: Find out your blood pressure." }
+		elsif( $bp_check eq NORMAL_OR_LOW ||
+			$bp_sys > 1)				{ "Your target: Keep your blood pressure below 120/80." }
+		else						{ 'Your target: No values were entered for blood pressure.' }
+		};
+
+
+#### Blood Pressure tag
+$bp_tag = do
+		{
+		if(	$bp_sys < 1 ||
+				$bp_check eq HIGH ||
+				$bp_check eq DONT_KNOW ) 	{ "Your blood pressure is unknown." }
+		elsif( 	$bp_check eq NORMAL_OR_LOW )		{ "You checked that your blood pressure is normal." }
+		else						{ "Your blood pressure is ($bp_sys/$bp_dias)." }
+		};
+
+
+#### Blood Pressure score
+$bp_score  = do
+		{
+		if(    $bp_sys >= BP_HIGH_SYSTOLIC ||
+			   $bp_dias >= BP_HIGH_DIASTOLIC )       { $red_risk }
+		elsif( $bp_check eq HIGH )      		 { $red_risk }
+		elsif(    $bp_sys >= BP_MARGINAL_SYSTOLIC ||
+			   $bp_dias >= BP_MARGINAL_DIASTOLIC )   { $yellow_risk }
+		elsif( $bp_check eq DONT_KNOW ) 		 { $yellow_risk }
+		else                                  		 { $green_risk }
+		};
+
+#### Cholesterol challange
+$cholesterol_challenge = do
+		{
+		if ($cholesterol_check eq HIGH) 		{"Your target: Lower your total cholesterol to under $cholesterol_target."}
+		elsif ($cholesterol_check eq DONT_KNOW) 	{"Your target: Find out your total cholesterol level."}
+		elsif ($cholesterol_check eq NORMAL_OR_LOW)	{"Your target: Keep your total cholesterol between $cholesterol_target_low and $cholesterol_target."}
+		elsif ($cholesterol < CHOL_MARGINAL &&
+			$cholesterol >= CHOL_LOW) 		{"Your target: Keep your total cholesterol between $cholesterol_target_low and $cholesterol_target."}
+		elsif ($cholesterol < CHOL_HIGH &&
+			$cholesterol >= CHOL_MARGINAL) 		{"Your target: Lower your total cholesterol to under $cholesterol_target."}
+		elsif ($cholesterol > CHOL_HIGH)		{"Your target: Lower your total cholesterol to under $cholesterol_target."}
+		elsif ($cholesterol < CHOL_LOW &&
+			$cholesterol > 1)			{"Your target: Get your total cholesterol between $cholesterol_target_low and $cholesterol_target."}
+		};
+
+#### Cholesterol message
+$cholesterol_message = do
+		{
+		if ($cholesterol_check eq HIGH) 		{ "You reported your total cholesterol level as high. Ask your health care provider about ways to lower your cholesterol. Check the stories and resources listed at the end of this report for more tips."}
+		elsif ($cholesterol_check eq "Don't know") 	{ "You reported that you do not know your total cholesterol level. To ensure your health, get this information from your health care provider. If you have not had your cholesterol checked, it's simple. Ideally your cholesterol should be under $cholesterol_target. Have your cholesterol checked to make sure you're under this level."}
+		elsif ($cholesterol_check eq NORMAL_OR_LOW)	{ "You reported your total cholesterol level as normal. Consult with your health care provider for recommendations on your cholesterol level."}
+		elsif ($cholesterol < CHOL_MARGINAL &&
+			$cholesterol >= CHOL_LOW) 		{ "$cholesterol was entered for your total cholesterol level. This is within the ideal level for cholesterol, which is below $cholesterol_target."}
+		elsif ($cholesterol < CHOL_HIGH &&
+			$cholesterol >= CHOL_MARGINAL) 		{ "$cholesterol was entered for your total cholesterol level. This is slightly above the ideal level for cholesterol, which is below $cholesterol_target. Ask your health care provider about ways to lower your cholesterol. Check the stories and resources listed at the end of this report for more tips."}
+		elsif ($cholesterol >= CHOL_HIGH)		{ "$cholesterol was entered for your total cholesterol level. This is significantly above the ideal level for cholesterol, which is below $cholesterol_target. Ask your health care provider about ways to lower your cholesterol. Check the stories and resources listed at the end of this report for more tips."}
+		elsif ($cholesterol < CHOL_LOW &&
+			$cholesterol >= 1)			{ "$cholesterol was entered for your total cholesterol level. This is below the ideal level for cholesterol, which is between $cholesterol_target_low and $cholesterol_target.  Check the stories and resources listed at the end of this report for more tips."}
+		elsif ($cholesterol < 1 &&
+			$cholesterol_check ne HIGH &&
+			$cholesterol_check ne DONT_KNOW &&
+			$cholesterol_check ne NORMAL_OR_LOW)	{ "To ensure your health, get this information from your health care provider. If you have not had your cholesterol checked, it's simple. Ideally your cholesterol should be under $cholesterol_target. Have your cholesterol checked to make sure you're under this level."}
+		};
+		if ($ldl_flag && $ldl) { 
+		$cholesterol_message .= " The bad component of cholesterol is LDL cholesterol, you entered $ldl as your current level.";
+		if ($ldl_flag == 1) { $cholesterol_message .= " This is an ideal level, good job!  Keep it below $ldl_target to minimize your risks."; }
+		elsif ($ldl_flag == 2)  { $cholesterol_message .= " This is an acceptable level.  Ideally it should be below $ldl_target  to minimize your risks."; }
+		elsif ($ldl_flag == 3)  { $cholesterol_message .= " This is a considered borderline high.  Ideally it should be below $ldl_target to minimize your risks." }
+		elsif ($ldl_flag == 4)  { $cholesterol_message .= " This is a considered a high level of LDL.  You should check with your health care provider for ways to lower your LDL."; }
+		}
+
+#### Cholesterol status
+$cholesterol_status = do
+		{
+		if ($cholesterol_check eq HIGH) 		{ "Your total cholesterol is unknown and you believe it is high."}
+		elsif ($cholesterol_check eq DONT_KNOW) 	{ "Your total cholesterol is unknown and you don't know the range."}
+		elsif ($cholesterol_check eq NORMAL_OR_LOW)	{ "Your total cholesterol is unknown and you believe it is normal."}
+		if ($cholesterol < CHOL_MARGINAL &&
+			$cholesterol >= CHOL_LOW) 		{ "Your total cholesterol is in the desirable range."}
+		elsif ($cholesterol < CHOL_HIGH &&
+			$cholesterol >= CHOL_MARGINAL) 		{ "Your total cholesterol is slightly high."}
+		elsif ($cholesterol >= CHOL_HIGH)		{ "Your total cholesterol is high."}
+		elsif ($cholesterol < CHOL_LOW &&
+			$cholesterol > 1)			{ "Your total cholesterol is low."}
+		};
+
+#### Cholesterol score
+$cholesterol_score  = do
+		{
+		if(    $cholesterol >= CHOL_HIGH ||
+			   $cholesterol < CHOL_LOW )		{ $red_risk }
+		elsif( $cholesterol_check eq HIGH )      	{ $red_risk }
+		elsif(    $cholesterol > CHOL_MARGINAL ||
+			   $cholesterol < CHOL_HIGH )   	{ $yellow_risk }
+		elsif( $cholesterol_check eq DONT_KNOW ) 	{ $yellow_risk }
+		else                                  		{ $green_risk }
+
+
+		if ($cholesterol_check eq HIGH) 		{ $red_risk }
+		elsif ($cholesterol_check eq DONT_KNOW) 	{ $red_risk }
+		elsif ($cholesterol_check eq NORMAL_OR_LOW)	{ $yellow_risk }
+		if ($cholesterol < CHOL_MARGINAL &&
+			$cholesterol >= CHOL_LOW) 		{ $green_risk }
+		elsif ($cholesterol < CHOL_HIGH &&
+			$cholesterol >= CHOL_MARGINAL) 		{ $yellow_risk }
+		elsif ($cholesterol >= CHOL_HIGH)		{ $red_risk }
+		elsif ($cholesterol < CHOL_LOW &&
+			$cholesterol > 1)			{ $yellow_risk }
+		};
+
+#### Glucose challange
+
+$glucose = sprintf "%.1f", $glucose;
+
+$glucose_challenge = do
+		{
+		if ($glucose_flag == 4 ) 			{"Your target: Lower your glucose level to under $glucose_target."}
+		elsif ($glucose_flag == 3 ) 			{"Your target: Lower your glucose level to between $glucose_target_low and $glucose_target."}
+		elsif ($glucose_flag == 2)			{"Your target: Keep your glucose level between $glucose_target_low and $glucose_target."}
+		elsif ($glucose_flag == 1)			{"Your target: Raise your glucose level to between $glucose_target_low and $glucose_target."}
+		elsif ($glucose_flag == 0)			{"Your target: Raise your glucose level to above $glucose_target_low."}
+		};
+
+#### Glucose message
+$glucose_message = do
+		{
+		if ($glucose_flag == 4) 			{"$glucose was entered as your glucose level.  This is significantly above the healthy level for glucose which is between $glucose_target_low and $glucose_target.  High glucose levels can indicate a number of health issues, you should talk to your physician or health care provider about this.  In the meantime, avoid foods with high sugar content such as soda and sweet snacks. "}
+		elsif ($glucose_flag == 3) 			{"$glucose was entered for your total glucose level. This is above the ideal level for glucose, which is between $glucose_target_low and $glucose_target. Avoid foods with high sugar content such as soda and sweet snacks and ask your health care provider about ways to lower your glucose. "}
+		elsif ($glucose_flag == 2)			{"$glucose was entered for your total glucose level. This is within the ideal level for glucose, which is between $glucose_target_low and $glucose_target.  Your system appears to be metabolizing sugars in a proper manner."}
+		elsif ($glucose_flag == 1)			{"$glucose was entered for your total glucose level. This is slightly below the ideal level for glucose which is between $glucose_target_low and $glucose_target.  You should talk to your physician or health care provider about this as it can be a serious issue. A candy bar or soda can boost your blood sugar for a short period of time."}
+		elsif ($glucose_flag == 0)			{"$glucose was entered for your total glucose level. This is below the safe level of glucose which is $glucose_low for $genders.  To be in the healthy range you need to raise your glucose level to between $glucose_target_low and $glucose_target.  You should talk to your physician or health care provider about this as it can be a serious issue. A candy bar or soda can boost your blood sugar for a short period of time."}
+
+		};
+
+#### Glucose status
+$glucose_status = do
+		{
+		if ($glucose_flag == 4 ) 			{"Your glucose level is very high."}
+		elsif ($glucose_flag == 3 ) 			{"Your glucose level is high."}
+		elsif ($glucose_flag == 2)			{"Your glucose level is in the healthy range."}
+		elsif ($glucose_flag == 1)			{"Your glucose level is slightly low."}
+		elsif ($glucose_flag == 0)			{"Your glucose level is low."}
+		};
+
+
+#### Glucose score
+$glucose_score  = do
+		{
+		if ($glucose_flag == 4 ) 			{ $red_risk }
+		elsif ($glucose_flag == 3 ) 			{ $red_risk }
+		elsif ($glucose_flag == 2)			{ $green_risk }
+		elsif ($glucose_flag == 1)			{ $yellow_risk }
+		elsif ($glucose_flag == 0)			{ $red_risk }
+		};
+
+$hdl_message = do
+		{
+		if ($hdl < HDL_LOW_MALE &&
+			$hdl >= 1 &&
+			$sex eq MALE) 		{ "Your HDL cholesterol (good cholesterol) was entered as $hdl. You are below the recommended level for HDL which is $hdl_target_low.  Foods such as orange juice, beans, fish, apples, grapes and other citrus can help raise your HDL."}
+		elsif ($hdl < HDL_LOW_FEMALE &&
+			$hdl >= 1 &&
+			$sex eq FEMALE) 	{ "Your HDL cholesterol (good cholesterol) was entered as $hdl. You are below the recommended level for HDL which is $hdl_target_low.  Foods such as orange juice, beans, fish, apples, grapes and other citrus can help raise your HDL."}		
+		elsif ($hdl >= HDL_LOW_MALE &&
+			$hdl < HDL_HIGH_MALE &&
+			$sex eq MALE) 		{ "Your HDL cholesterol (good cholesterol) was entered as $hdl. You are below the optimum level for HDL which is $hdl_target_high.  Foods such as orange juice, beans, fish, apples, grapes and other citrus can help raise your HDL."}
+		elsif ($hdl >= HDL_LOW_FEMALE &&
+			$hdl < HDL_HIGH_FEMALE &&
+			$sex eq FEMALE) 	{ "Your HDL cholesterol (good cholesterol) was entered as $hdl. You are below the optimum level for HDL which is $hdl_target_high."}
+		elsif ($hdl < 1 && $cholesterol > 1)	{ "You did not enter a value for your HDL cholesterol (good cholesterol).  The recommended level is above $hdl_target_low. Since you entered a value for your cholesterol we have used an estimated value for your HDL for some computations."}
+		elsif ($hdl < 1) 		{ "You did not enter a value for your HDL cholesterol (good cholesterol).  The recommended level is above $hdl_target_low."}
+		else 				{ "Your HDL cholesterol (good cholesterol) was entered as $hdl which is great.  The optimum level is $hdl_target_high or above."}
+		};
+
+$hdl_status = do
+		{
+		if ($hdl < HDL_LOW_FEMALE &&
+			$hdl >= 1 &&
+			$sex eq FEMALE) 	{ "Your HDL level is $hdl."}
+		elsif ($hdl < HDL_LOW_MALE &&
+			$hdl >= 1 &&
+			$sex eq MALE) 		{ "Your HDL level is $hdl."}
+		elsif ($hdl >= HDL_LOW_FEMALE &&
+			$hdl < HDL_HIGH_FEMALE &&
+			$sex eq FEMALE) 	{ "Your HDL level is $hdl."}
+		elsif ($hdl >= HDL_LOW_MALE &&
+			$hdl < HDL_HIGH_MALE &&
+			$sex eq MALE) 		{ "Your HDL level is $hdl."}
+		elsif ($hdl < 1) 		{ "Your HDL level is unknown."}
+		else 				{ "Your HDL level is $hdl."}
+		};
+
+
+$hdl_challenge = do
+		{
+		if ($hdl < HDL_LOW_FEMALE &&
+			$hdl >= 1 &&
+			$sex eq FEMALE) 		{ "Your target: Raise your HDL to above $hdl_target_low."}
+		elsif ($hdl < HDL_LOW_MALE &&
+			$hdl >= 1 &&
+			$sex eq MALE) 		{ "Your target: Raise your HDL to above $hdl_target_low."}
+		elsif ($hdl >= HDL_LOW_FEMALE &&
+			$hdl < HDL_HIGH_FEMALE &&
+			$sex eq FEMALE) 	{ "Your target: Improve your HDL to above $hdl_target_high."}
+		elsif ($hdl >= HDL_LOW_MALE &&
+			$hdl < HDL_HIGH_MALE &&
+			$sex eq MALE) 		{ "Your target: Improve your HDL to above $hdl_target_high."}
+		elsif ($hdl < 1) 		{ "Your target: Find out your HDL."}
+		else 				{ "Your target: Keep your HDL to above $hdl_target_high."}
+		};
+
+$hdl_score = do
+		{
+		if ($hdl < HDL_LOW_FEMALE &&
+			$hdl >= 1 &&
+			$sex eq FEMALE) 	{ $red_risk }
+		elsif ($hdl < HDL_LOW_MALE &&
+			$hdl >= 1 &&
+			$sex eq MALE) 	{ $red_risk }
+		elsif ($hdl >= HDL_LOW_FEMALE &&
+			$hdl < HDL_HIGH_FEMALE &&
+			$sex eq FEMALE) 	{ $green_risk }
+		elsif ($hdl >= HDL_LOW_MALE &&
+			$hdl < HDL_HIGH_MALE &&
+			$sex eq MALE) 		{ $green_risk }
+		elsif ($hdl < 1) 		{ $yellow_risk}
+		else 				{ $green_risk }
+		};
+
+
+
+#### triglycerides
+
+$triglycerides = sprintf "%.1f", $triglycerides;
+
+$triglycerides_challenge = do
+		{
+		if ($triglycerides_flag == 4 ) 			{"Your target: Lower your triglycerides level to under $triglycerides_target_high."}
+		elsif ($triglycerides_flag == 3 )		{"Your target: Lower your triglycerides level to under $triglycerides_target."}
+		elsif ($triglycerides_flag == 2)			{"Your target: Keep your triglycerides level between $glucose_target_low and $glucose_target."}
+		elsif ($triglycerides_flag == 1)		{"Your target: Keep your triglycerides level below  $triglycerides_target."}
+		elsif ($triglycerides_flag == 0)		{"Your target: Find out your triglycerides level it should be below $triglycerides_target."}
+		};
+
+$triglycerides_message = do
+		{
+		 if ($triglycerides_flag == 4 ) 	       { "Your triglycerides level was entered as $triglycerides. This is very high, the recommended level is $triglycerides_target, getting it below $triglycerides_target_high would reduce your risks some.  Exercise, eating foods with omega-3s, and reducing fat in your diet can lower your level."}
+		 elsif ($triglycerides_flag == 3 )	       { "Your triglycerides level was entered as $triglycerides. This is high, the recommended level is $triglycerides_target.  Exercise, eating foods with omega-3s, and reducing fat in your diet can lower your level."}
+		 elsif ($triglycerides_flag == 2)	       { "Your triglycerides level was entered as $triglycerides. This is good, you want to keep it below $triglycerides_target. Exercise, eating foods with omega-3s, and reducing fat in your diet can keep you at your  current level."}
+		 elsif ($triglycerides_flag == 1)	       { "Your triglycerides level was entered as $triglycerides. This is good, you want to keep it below $triglycerides_target. Exercise, eating foods with omega-3s, and reducing fat in your diet can keep you at your  current level."}
+		 elsif ($triglycerides_flag == 0)	       { "No value was entered for your triglycerides level. You should get this tested at your next opportunity.  You want to be below $triglycerides_target. Exercise, eating foods with omega-3s, and reducing fat in your diet can help your triglycerides level."}
+		};
+		
+$triglycerides_status = do
+		{				    
+		if ($triglycerides_flag == 4 ) 	    {"Your triglycerides level is very high."}
+		elsif ($triglycerides_flag == 3 )    {"Your triglycerides level is slightly high."}
+		elsif ($triglycerides_flag == 2)	    {"Your triglycerides level is in the healthy range."}
+		elsif ($triglycerides_flag == 1)    {"Your triglycerides level is in the healthy range."}
+		elsif ($triglycerides_flag == 0)    {"Your triglycerides level is unknown."}  	
+		
+		};
+		
+#### triglycerides score
+$triglycerides_score  = do
+		{
+		if ($triglycerides_flag == 4 ) 			{ $red_risk }
+		elsif ($triglycerides_flag == 3 ) 		{ $yellow_risk }
+		elsif ($triglycerides_flag == 2)			{ $yellow_risk }
+		elsif ($triglycerides_flag == 1)		{ $green_risk }
+		elsif ($triglycerides_flag == 0)		{ $yellow_risk }
+		};
+		
+		
+$exercise = 7 if $exercise > 7;
+$exercise_challenge = do
+		{
+			if ($exercise >= 3 ) 		{ "Your target: Keep your current level of exercise." }
+			elsif ($exercise == 2 ) 	{ "Your target: 3 or more times a week." }
+			elsif ( $exercise == 1) 	{ "Your target: 3 or more times a week." }
+			else				{ "Your target: Get some exercise every week." }
+		};
+
+$exercise_message = do
+		{
+			if ($exercise >= 3 &&
+				$weight_flag == 0) 	{ "Continue to exercise regularly, 3-5 times per week, to maintain ideal body weight and optimal health. Ideally, take a walk or get some aerobic exercise at least 30 minutes a day." }
+			elsif ($exercise >= 3 ) 	{ "Continue to exercise regularly, 3-5 times per week, to maintain optimal health. Ideally, take a walk or get some aerobic exercise at least 30 minutes a day." }
+			else  				{ "Fitness experts recommend exercising 3 to 5 times a week. Ideally, take a walk or get some aerobic exercise at least 30 minutes a day. But before embarking on an exercise program, consult your health care provider." }
+		};
+
+$exercise_status = do
+		{
+			if ( $exercise > 1) 		{ "You exercise $exercise times per week." }
+			elsif ( $exercise == 1) 	{ "You exercise $exercise time per week." }
+			else				{ "You don't exercise." }
+		};
+
+$exercise_score = do
+		{
+			if ($exercise >= 3 ) 		{ $green_risk }
+			elsif ($exercise == 2 ) 	{ $yellow_risk }
+			elsif ( $exercise == 1) 	{ $yellow_risk }
+			else				{ $red_risk }
+		};
+
+$weight_challenge = do
+		{
+			if($weight_flag == 0)	{ "Your target: Keep your weight between $low_weight and $high_weight $weight_units." }
+			elsif($weight_flag == 1){ "Your target: Reduce your weight to between  $low_weight and $high_weight $weight_units." }
+			elsif($weight_flag == 2){ "Your target: Get your weight to between $low_weight and $high_weight $weight_units." }
+			elsif($weight_flag == 3){ "Your target: Reduce your weight." }
+			elsif($weight_flag == 4){ "Your target: Get your weight between $low_weight and $high_weight $weight_units." }
+		};
+
+$weight_status = "Your weight is $weight $weight_units, which for you is a BMI of $bmi.";
+
+$weight_message = "Your weight of $weight $weight_units is ";
+$weight_message .= do
+		{
+		if	( $bmi <= BMI_LOW) 	{ 'under' }
+		elsif	( $bmi <= BMI_GOOD ) 	{ 'within' }
+		elsif   ( $bmi <= BMI_OBESE )	{ 'over' }
+		else				{ 'significantly over' }
+		};
+$weight_message .= " the recommended range for people $height tall.  ";  
+$weight_message .= " Your Body Mass Index (BMI) is $bmi; most professionals agree it should be between 19.5 and 25.  The healthy weight range for your height is $low_weight to $high_weight $weight_units.";
+
+$weight_score = do
+		{
+			if ( $weight_flag >= 3 ) 	{ $red_risk }
+			elsif ($weight_flag == 2 ) 	{ $yellow_risk }
+			elsif ( $weight_flag == 1) 	{ $yellow_risk }
+			else				{ $green_risk }
+		};
+
+$fat_challenge = do
+		{
+		if ($fat_flag == 3) 		{ 'Your target: Keep up this good dietary habit.' }
+		elsif ($fat_flag == 2) 		{ 'Your target: Limit the amount of fatty foods in your diet.' }
+		elsif ($fat_flag == 1) 		{ 'Your target: Limit the amount of fatty foods in your diet.' }
+		else 				{ 'Your target: Limit the amount of fatty foods in your diet.' }
+		};
+
+$fat_status = do
+		{
+		if ($fat_flag == 3) 		{ 'You seldom eat fat.' }
+		elsif ($fat_flag == 2) 		{ 'You eat fat several times a week.' }
+		elsif ($fat_flag == 1) 		{ 'You eat fat daily.' }
+		else 				{ 'You eat fat at every meal.' }
+		};
+
+$fat_message = do
+		{
+		if ($fat_flag == 3) 		{ 'You are keeping your diet low in saturated fats.  This is reducing your risk for heart disease and hardening of the arteries.  Keep up the good work!' }
+		elsif ($fat_flag == 2) 		{ 'You reported occasionally eating foods that are high in cholesterol and fat.  Try to reduce your intake of fat to once a week.' }
+		elsif ($fat_flag == 1) 		{ 'You reported eating foods daily that are high in dietary cholesterol and fat.  Fried foods, cheese, and whole milk are foods you should stay away from to reduce the amount of fat in your diet.' }
+		else 				{ 'You reported eating foods that are high in dietary cholesterol and fat. Fried foods, cheese, and whole milk are foods you should stay away from to reduce the amount of fat in your diet.' }
+		};
+$fat_message .=	'  (Because of your diabetes, make sure you check with your doctor.)'	if ($diabetes eq YES);
+
+$fat_score = do
+		{
+		if ($fat_flag == 3) 		{ $green_risk }
+		elsif ($fat_flag == 2) 		{ $yellow_risk }
+		elsif ($fat_flag == 1) 		{ $red_risk }
+		else 				{ $red_risk }
+		};
+
+$fiber_message = do
+		{
+		if ($fiber_flag == 3) 	{ "It's good to eat at least 25-30 grams of high-fiber foods every day. Bran cereal or whole-grain bread with breakfast, salads with lunch and dinner, and two servings of cooked vegetables a day would help you reach this goal." }
+		elsif ($fiber_flag == 2){ "It's good to eat at least 25-30 grams of high-fiber foods every day. Bran cereal or whole-grain bread with breakfast, salads with lunch and dinner, and two servings of cooked vegetables a day would help you reach this goal." }
+		elsif ($fiber_flag == 1){ "It's good to eat at least 25-30 grams of high-fiber foods every day. Bran cereal or whole-grain bread with breakfast, salads with lunch and dinner, and two servings of cooked vegetables a day would help you reach this goal." }
+		else 			{ "It's good to eat at least 25-30 grams of high-fiber foods every day. Bran cereal or whole-grain bread with breakfast, salads with lunch and dinner, and two servings of cooked vegetables a day would help you reach this goal." }
+		};
+
+$fiber_challenge = do
+		{
+		if ($fiber_flag == 3) 	{ "Your target: Try to get at least 25 to 30 grams of fiber daily." }
+		elsif ($fiber_flag == 2){ "Your target: Try to get at least 25 to 30 grams of fiber daily." }
+		elsif ($fiber_flag == 1){ "Your target: Congratulations! Make sure you're eating 25 to 30 grams of fiber daily." }
+		else 			{ "Your target: Congratulations! Make sure you're eating 25 to 30 grams of fiber daily." }
+		};
+
+$fiber_status = do
+		{
+		if ($fiber_flag == 3) 	{ "You seldom eat fiber." }
+		elsif ($fiber_flag == 2){ "You eat some fiber each week." }
+		elsif ($fiber_flag == 1){ "You eat some fiber every day." }
+		else 			{ "You eat some fiber each meal." }
+		};
+
+$fiber_score = do
+		{
+		if ($fiber_flag == 3) 	{ $red_risk }
+		elsif ($fiber_flag == 2){ $yellow_risk }
+		elsif ($fiber_flag == 1){ $green_risk }
+		else 			{ $green_risk }
+		};
+
+$smoke_status = do
+		{
+		if($smoke_flag == 0)				{ "You have never smoked." }
+		elsif($smoke_flag == 1)				{ "You used to smoke." }
+		elsif($smoke_flag == 2 && $cigs_a_day == 1)	{ "You smoke one cigarette a day!" }
+		elsif($smoke_flag == 2 && $cigs_a_day > 1)	{ "You smoke $cigs_a_day cigarettes a day!" }
+		elsif($smoke_flag == 3)				{ "Smoking $cigs_a_day cigarettes a day puts you at HIGH risk!" }
+		};
+
+$smoke_message = do
+		{
+		if($smoke_flag == 0)		{ "Great! By not smoking, you have avoided the number one cause of heart disease and cancer. You are also protecting those around you from the effects of passive smoking. " }
+		elsif($smoke_flag == 1)		{ "Great! You quit smoking. You have significantly reduced your risk of heart disease. You are also protecting those around you from the effects of passive smoking." }
+		elsif($smoke_flag == 2)		{ "Smoking is the number one preventable cause of heart disease and some cancers.  You are putting your heart at risk by continuing to smoke.  Even smoking $cigs_a_day cigarettes a day raises your risk. Get on a plan to quit soon. Check out the stories and resources at the end of this report for help on quitting." }
+		elsif($smoke_flag == 3)		{ "Smoking is the number one preventable cause of heart disease and some cancers.  You are putting your heart and lungs at risk by continuing to smoke. Get on a plan to quit soon. Check out the stories and resources at the end of this report for help on quitting." }
+		};
+
+$smoke_challenge = do
+		{
+		if($smoke_flag == 0)		{ "Your target: Stay a non-smoker." }
+		elsif($smoke_flag == 1)		{ "Your target: Stay an ex-smoker." }
+		elsif($smoke_flag == 2)		{ "Your target: Quit smoking." }
+		elsif($smoke_flag == 3)		{ "Your target: Quit smoking." }
+		};
+
+$smoke_score = do
+		{
+		if($smoke_flag == 0)		{ $green_risk }
+		elsif($smoke_flag == 1)		{ $green_risk }
+		elsif($smoke_flag == 2)		{ $red_risk }
+		elsif($smoke_flag == 3)		{ $red_risk }
+		};
+
+## Some generic messages based on the "other" questions asked
+$marketing_message = '';
+		if ($client10)	{ $marketing_message .= "Medical Coverage ^P  ^p ^P ";}
+		if ($client11)	{ $marketing_message .= "Dental Coverage ^P  ^p ^P ";}
+		if ($client3)	{ $marketing_message .= "Life and Accident Coverage ^P  ^p ^P ";}
+		if ($client4)	{ $marketing_message .= "Disability ^P  ^p ^P ";}
+		if ($client5)	{ $marketing_message .= "Long Term Care Insurance ^P  ^p ^P ";}
+		if ($client6)	{ $marketing_message .= "Property & Casualty for church ^P  ^p ^P ";}
+		if ($client7)	{ $marketing_message .= "Retirement Plan information ^P  ^p ^P ";}
+		if ($client8)	{ $marketing_message .= "Individual Retirement Account ^P  ^p ^P ";}
+		if ($client9)	{ $marketing_message .= "Personal Investments ^P  ^p ^P ";}
+if ($marketing_message ne ''){ $marketing_message = "You expressed interest in:  ^P  ^p ^P ". $marketing_message;}
+else				{ $marketing_message = "No interest expressed in GuideStone services.";}
+
+
+$stress_message = do
+		{
+		if ($stress == 7 || $stress == 3 )	{ "The stress you reported can add to your risk. Try to relax, and be gentle with yourself. ^P ^p ^P"}
+		else					{''}
+		};
+
+
+$loss_message = do
+		{
+		if ($loss ne NO )	{ "A personal loss can take a toll on your emotions as well as your body. Don't put undue pressure on yourself or withdraw. Speaking with a trusted friend, pastor, or counselor can help ease the stress. ^P ^p ^P"}
+		else			{''}
+		};
+
+$factors_message = do
+		{
+		if ($personal_history > 1 )		{ "You reported $personal_risk of health issues.   This makes it extra important to reach the target values in the areas you can control. ^P ^p ^P"}
+		elsif ($personal_history == 1 )	  	{ "You reported $personal_risk of health issues.   This makes it extra important to reach the target values in the areas you can control. ^P ^p ^P"}
+		else					{''}
+		};
+
+$crc_status = do
+		{
+		if ($cardiac_risk < ($cardiac_average_risk * .50)) 	{ "Very low risk for a $age-year-old $lc_sex" }
+		elsif ($cardiac_risk < ($cardiac_average_risk * .65))	{ "Half the risk for an average $age-year-old $lc_sex" }
+		elsif ($cardiac_risk < ($cardiac_average_risk * .85))	{ "Less than average risk for a $age-year-old $lc_sex" }
+		elsif ($cardiac_risk > ($cardiac_average_risk * 1.35))	{ "Significantly above average risk for a $age-year-old $lc_sex" }
+		elsif ($cardiac_risk > ($cardiac_average_risk * 1.15))	{ "Above average risk for a $age-year-old $lc_sex" }
+		else 							{ "About average risk for a $age-year-old $lc_sex" }
+		};
+$crc_status .= " with diabetes" if ($diabetes eq YES);
+$crc_status .= " and a history of family heart disease" if ($family_heart_attack eq YES);
+$crc_status .= ".";
+
+$crc_message = "Based on the answers you provided your chances of dying over the next 10 years from heart disease are $cardiac_risk_rounded in 1,000.  ";
+if ($appraised_age < $actual_age){
+	$crc_message .= "By looking at the responses you gave we are able to compute an appraised age, your appraised age is $appraised_age, that is great, it is less than your actual age. ";
+	}
+elsif($appraised_age > $actual_age){
+	$crc_message .= "By looking at the responses you gave we are able to compute an appraised age, your appraised age is $appraised_age, this is not very good, it is more than your actual age. ";
+	}
+else{
+	$crc_message .= "By looking at the responses you gave we are able to compute an appraised age, your appraised age is $appraised_age, it is the same as your actual age. ";
+	}
+
+$crc_message .= "If you modify your habits as outlined in this report, your appraised age could go lower! " if($achievable_age < $appraised_age);
+
+
+if ($gGood > 1) {
+	$crcMsg .= "</p><p>  The good habits which help to reduce your score are, ";
+	$crcMsg .= $Good_comma;
+	$crcMsg .= "."
+}
+if ($gBad > 1) {
+	$crcMsg .= "  Look at your targets and try to improve in these areas; ";
+	$crcMsg .= $Bad_comma;
+	$crcMsg .= "."
+}
+
+if($config{compare} && $old_user{bmi}){
+	$comp_bp_new = $bp_sys;
+	$comp_bp_old = $old_user{bp_sys};
+	$comp_bp_icon = do
+		{
+		if($comp_bp_new <= $comp_bp_old && $bp_sys <= BP_MARGINAL_SYSTOLIC) { 'check' }
+		elsif($comp_bp_new < $comp_bp_old && $bp_sys > BP_HIGH_DIASTOLIC) { 'plus' }
+		elsif($comp_bp_new > $comp_bp_old && $bp_sys <= BP_MARGINAL_SYSTOLIC) { 'check' }
+		elsif($comp_bp_new > $comp_bp_old && $bp_sys > BP_MARGINAL_SYSTOLIC) { 'minus' }
+		elsif($comp_bp_new < $comp_bp_old && $bp_sys > BP_MARGINAL_SYSTOLIC) { 'good' }
+		};
+	$comp_bp_message = do
+		{
+		if($comp_bp_new <= $comp_bp_old && $bp_sys <= BP_MARGINAL_SYSTOLIC) { 'You lowered your blood pressure and it is in the good range.' }
+		elsif($comp_bp_new < $comp_bp_old && $bp_sys > BP_HIGH_DIASTOLIC) { 'You lowered your blood pressure but it is still very high.' }
+		elsif($comp_bp_new > $comp_bp_old && $bp_sys <= BP_MARGINAL_SYSTOLIC) { 'Your blood pressure went up, but it is still ok.' }
+		elsif($comp_bp_new > $comp_bp_old && $bp_sys > BP_MARGINAL_SYSTOLIC) { 'Your blood pressure went up, and it is high.' }
+		elsif($comp_bp_new < $comp_bp_old && $bp_sys > BP_MARGINAL_SYSTOLIC) { 'You lowered your blood pressure but it is still a little high.' }
+		};
+	}	
+	
+
+
+
+'';
+}

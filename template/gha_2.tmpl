@@ -20,7 +20,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
 
 <div id="ass-bg" class="content">
 <p class="pad27">
-{$lang{$current_language}{gha_intro}}
+{$lang{gha_intro}{$current_language}}
 </p>
 </div> 
 
@@ -44,18 +44,18 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td colspan="2" >
-                  <p><b>{$date} {$lang{$current_language}{for}} {$name}</b></p><br>
-                  <p >{$lang{$current_language}{gha_msg1}} {$wellness}.</p><br>
+                  <p><b>{$date} {$lang{for}{$current_language}} {$name}</b></p><br>
+                  <p >{$lang{gha_msg1}{$current_language}} {$wellness}.</p><br>
       			<img src="{$wellness_bar}" border=0 align=center><br></p><br>
       		  <p >{$Wellness}</p>
 		  <table width=489 align=top border=0 cellspacing="0" cellpadding="0">
 		      <tr>
-			<td width=430 valign=top ><p><span><b>{$lang{$current_language}{gha_msg2}}</b></span></p><br>
+			<td width=430 valign=top ><p><span><b>{$lang{gha_msg2}{$current_language}}</b></span></p><br>
 					  <UL>{ foreach $i (@good_habits) {
 						    $OUT .= "<li>$i</li>";
 						  }
 						}</UL></td><br>
-        		<td width=228 valign=top ><p><span><b>{$lang{$current_language}{gha_msg3}}</b></span></p><br>
+        		<td width=228 valign=top ><p><span><b>{$lang{gha_msg3}{$current_language}}</b></span></p><br>
 					  <UL>{ foreach $i (@bad_habits) {
 							$OUT .= "<li>$i</li>";
 							}
@@ -65,7 +65,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
       		  <p><b>{$WeightLine}</b></p><br>
       		  <table width=456 align=top border=0 cellspacing="0" cellpadding="0">
       			<tr>
-      			  <td width=456 ><p><b>{$lang{$current_language}{gha_msg4}} {$genders}.</b></p>
+      			  <td width=456 ><p><b>{$lang{gha_msg4}{$current_language}} {$genders}.</b></p>
       			     {$risks_short}</p>
       			  </td>
       			</tr>

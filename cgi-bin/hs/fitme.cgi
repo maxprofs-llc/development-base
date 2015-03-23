@@ -95,7 +95,7 @@ if ($Debug) {
 
 my $cleared = $input->param('Cleared');
 my $page = $input->param('page');
-
+my $language = $input->param('language');
 my %configlist = ();
 
 foreach my $key ( $config->directives )

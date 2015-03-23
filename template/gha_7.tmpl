@@ -23,7 +23,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
 
 <div id="ass-bg" class="content">
 <p class="pad27">
-{$lang{$current_language}{gha_intro}} 
+{$lang{gha_intro}{$current_language}} 
 </p>
 </div> 
 
@@ -47,7 +47,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td colspan="2" >
-                 <p><b>{$date} {$lang{$current_language}{for}} {$name}</b></p><br>
+                 <p><b>{$date} {$lang{for}{$current_language}} {$name}</b></p><br>
                 </td>
               </tr>
               <tr>
@@ -55,7 +55,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
               </tr>
              <tr>
                 <td colspan="2" >
-                  <p><span ><b>{$lang{$current_language}{gha_msg10}}</b></span><BR><span ><b>{$lang{$current_language}{gha_msg11}} {$genders}  {$lang{$current_language}{gha_diab_msg12}}.</b></span></P><br>
+                  <p><span ><b>{$lang{gha_msg10}{$current_language}}</b></span><BR><span ><b>{$lang{gha_msg11}{$current_language}} {$genders}  {$lang{gha_diab_msg12}{$current_language}}.</b></span></P><br>
       			<UL>{ foreach $i (@recommendations) {
 				$OUT .= "<li>$i</li>";
 			        }

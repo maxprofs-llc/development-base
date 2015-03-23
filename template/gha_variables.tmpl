@@ -55,204 +55,215 @@ my $exercise_avg = 1; # U.S. average 30 minute exercise sessions - Surgeon Gener
 my $exercise_target = 3; # target 30 minute exercise sessions - Surgeon General
 
 
-my @weightflg 		=  ('within', 'over', 'significantly over', 'under');
-my @smoke_habits 	= ( 'not smoking','quit smoking','smoking','smoking heavily' );
-my @weight_habits 	= ( 'healthy weight', 'slightly overweight', 'overweight', 'significantly overweight', 'under weight' );
-my @fat_habits 		= ( '', 'eating too many fats', 'eating too many fats', '', 'low fat diet' );
-my @bp_habits 		= ( 'safe blood pressure', 'don\'t know blood pressure', 'high blood pressure', 'high blood pressure' );
-my @chol_habits 	= ( 'low cholesterol', 'unknown cholesterol', 'too low cholesterol', 'elevated cholesterol', 'high cholesterol' );
-my @hdl_habits 		= ( 'healthy HDL', 'unknown HDL', 'low HDL' );
-my @exer_habits 	= ( 'regular exercise', 'not enough regular exercise', 'not enough regular exercise', 'no regular exercise' );
-my @fiber_habits 	= ( 'diet includes plenty of fiber', 'diet includes fiber', 'not enough fiber', 'very little fiber' );
+# my @weightflg 		=  ('within', 'over', 'significantly over', 'under');
+# my @smoke_habits 		= ( 'not smoking','quit smoking','smoking','smoking heavily' );
+# my @weight_habits 	= ( 'healthy weight', 'slightly overweight', 'overweight', 'significantly overweight', 'under weight' );
+# my @fat_habits 		= ( '', 'eating too many fats', 'eating too many fats', '', 'low fat diet' );
+# my @bp_habits 		= ( 'safe blood pressure', 'don\'t know blood pressure', 'high blood pressure', 'high blood pressure' );
+# my @chol_habits 		= ( 'low cholesterol', 'unknown cholesterol', 'too low cholesterol', 'elevated cholesterol', 'high cholesterol' );
+# my @hdl_habits 		= ( 'healthy HDL', 'unknown HDL', 'low HDL' );
+# my @exer_habits 		= ( 'regular exercise', 'not enough regular exercise', 'not enough regular exercise', 'no regular exercise' );
+# my @fiber_habits 		= ( 'diet includes plenty of fiber', 'diet includes fiber', 'not enough fiber', 'very little fiber' );
+
+my @weightflg 		= ($lang{weight_msg1}{$current_language}, $lang{over}{$current_language}, $lang{weight_msg4}{$current_language}, $lang{under}{$current_language});
+my @smoke_habits 	= ( $lang{no_smoking}{$current_language},$lang{quit_smoking}{$current_language},$lang{smoking}{$current_language},$lang{heavily_smoking}{$current_language});
+my @weight_habits 	= ( $lang{healthy_weight}{$current_language}, $lang{slightly_overweight}{$current_language}, $lang{overweight}{$current_language}, $lang{significantly_overweight}{$current_language}, $lang{under_weight}{$current_language});
+my @fat_habits 		= ( '', $lang{healthy_weight}{$current_language}, $lang{healthy_weight}{$current_language}, '', $lang{low_fat_diet}{$current_language});
+my @bp_habits 		= ( $lang{safe_blood_pressure}{$current_language}, $lang{do_not_know}{$current_language}, $lang{blood_pressure}{$current_language}, $lang{high_bp}{$current_language}, $lang{high_bp}{$current_language});
+my @chol_habits 	= ( $lang{lower_cholesterol}{$current_language}, $lang{unknown_cholesterol}{$current_language}, $lang{too_low_cholesterol}{$current_language}, $lang{elevated_cholesterol}{$current_language}, $lang{high_cholesterol}{$current_language});
+my @hdl_habits 		= ( $lang{healthy_HDL}{$current_language}, $lang{unknown_HDL}{$current_language}, $lang{low_HDL}{$current_language});
+my @exer_habits 	= ( $lang{regular_exercise}{$current_language}, $lang{not_enough_regular_exercise}{$current_language}, $lang{not_enough_regular_exercise}{$current_language}, $lang{no_regular_exercise}{$current_language});
+my @fiber_habits 	= ( $lang{diet_includes_plenty_fiber}{$current_language}, $lang{diet_includes_fiber}{$current_language}, $lang{not_enough_fiber}{$current_language}, $lang{very_little_fiber}{$current_language});
+
 
 if($current_language eq 'spanish'){
-	 $exercise = $lang{$current_language}{less_than_one_time_per_week} if ($exercise   eq 'Less than one time per week') ;
-	 $exercise = $lang{$current_language}{one_or_two_times_per_week} if($exercise eq 'One or two times per week');
-	 $exercise = $lang{$current_language}{three_or_four_times_per_week} if($exercise eq 'Three or four times per week') ;
-	 $exercise = $lang{$current_language}{at_least_five_times_per_week} if($exercise eq 'At least five times per week');
+	 $exercise = $lang{less_than_one_time_per_week}{$current_language} if ($exercise   eq 'Less than one time per week') ;
+	 $exercise = $lang{one_or_two_times_per_week}{$current_language} if($exercise eq 'One or two times per week');
+	 $exercise = $lang{three_or_four_times_per_week}{$current_language} if($exercise eq 'Three or four times per week') ;
+	 $exercise = $lang{at_least_five_times_per_week}{$current_language} if($exercise eq 'At least five times per week');
 	 
-	 if ($overall_health   eq 'Excellent'){ $overall_health = $lang{$current_language}{excellent}}
-	 elsif($overall_health eq 'Good'){ $overall_health = $lang{$current_language}{good}}
-	 elsif($overall_health eq 'Fair'){ $overall_health = $lang{$current_language}{fair}}
-	 elsif($overall_health eq 'Poor'){ $overall_health = $lang{$current_language}{poor}}
+	 if ($overall_health   eq 'Excellent'){ $overall_health = $lang{excellent}{$current_language}}
+	 elsif($overall_health eq 'Good'){ $overall_health = $lang{good}{$current_language}}
+	 elsif($overall_health eq 'Fair'){ $overall_health = $lang{fair}{$current_language}}
+	 elsif($overall_health eq 'Poor'){ $overall_health = $lang{poor}{$current_language}}
 	 
-	 if ($life_satisfaction   eq 'Mostly satisfied'){ $life_satisfaction = $lang{$current_language}{mostly_satisfied}}
-	 elsif($life_satisfaction eq 'Partly satisfied'){ $life_satisfaction = $lang{$current_language}{partly_satisfied}}
-	 elsif($life_satisfaction eq 'Not satisfied'){ $life_satisfaction = $lang{$current_language}{not_satisfied}}
+	 if ($life_satisfaction   eq 'Mostly satisfied'){ $life_satisfaction = $lang{mostly_satisfied}{$current_language}}
+	 elsif($life_satisfaction eq 'Partly satisfied'){ $life_satisfaction = $lang{partly_satisfied}{$current_language}}
+	 elsif($life_satisfaction eq 'Not satisfied'){ $life_satisfaction = $lang{not_satisfied}{$current_language}}
 	 
-	 $loss = $lang{$current_language}{yes_serious_loss}  if ($loss   eq 'Yes, one serious loss or misfortune') ;
-	 $loss = $lang{$current_language}{yes_two_more} if($loss eq 'Yes, two or more');
-	 $loss = $lang{$current_language}{no} if($loss eq 'No');
+	 $loss = $lang{yes_serious_loss}{$current_language}  if ($loss   eq 'Yes, one serious loss or misfortune') ;
+	 $loss = $lang{yes_two_more}{$current_language} if($loss eq 'Yes, two or more');
+	 $loss = $lang{no}{$current_language} if($loss eq 'No');
 	 
-	 $fiber = $lang{$current_language}{yes} if($fiber eq 'Yes');
-	 $fiber = $lang{$current_language}{no} if($fiber eq 'No');
+	 $fiber = $lang{yes}{$current_language} if($fiber eq 'Yes');
+	 $fiber = $lang{no}{$current_language} if($fiber eq 'No');
 	 
-	 $fat = $lang{$current_language}{yes} if($fat eq 'Yes');
-	 $fat = $lang{$current_language}{no} if($fat eq 'No');
+	 $fat = $lang{$current_language} if($fat eq 'Yes');
+	 $fat = $lang{no}{$current_language} if($fat eq 'No');
 	 
-	 $hyst_female = $lang{$current_language}{yes} if($hyst_female eq 'Yes');
-	 $hyst_female = $lang{$current_language}{no} if($hyst_female eq 'No');
+	 $hyst_female = $lang{yes}{$current_language} if($hyst_female eq 'Yes');
+	 $hyst_female = $lang{no}{$current_language} if($hyst_female eq 'No');
 	 
-	 $fam_breast_cancer = $lang{$current_language}{none} if($fam_breast_cancer eq 'None');
-	 $fam_breast_cancer = $lang{$current_language}{no} if($fam_breast_cancer eq 'One');
-	 $fam_breast_cancer = $lang{$current_language}{two_or_more} if($fam_breast_cancer eq 'Two or more');
-	 $fam_breast_cancer = $lang{$current_language}{do_not_know} if($fam_breast_cancer eq 'Don\'t know');
+	 $fam_breast_cancer = $lang{none}{$current_language} if($fam_breast_cancer eq 'None');
+	 $fam_breast_cancer = $lang{no}{$current_language} if($fam_breast_cancer eq 'One');
+	 $fam_breast_cancer = $lang{two_or_more}{$current_language} if($fam_breast_cancer eq 'Two or more');
+	 $fam_breast_cancer = $lang{do_not_know}{$current_language} if($fam_breast_cancer eq 'Don\'t know');
 	 
-	 $menarche_female = "11 ".$lang{$current_language}{or_under} if($menarche_female eq '11 or under');
-	 $menarche_female = "14 ".$lang{$current_language}{or_older} if($menarche_female eq '14 or older');
+	 $menarche_female = "11 ".$lang{or_under}{$current_language} if($menarche_female eq '11 or under');
+	 $menarche_female = "14 ".$lang{or_older}{$current_language} if($menarche_female eq '14 or older');
 	 	 
-	 $rectal_male = $lang{$current_language}{less_than_one_year_ago} if($rectal_male eq 'Less than one year ago');
-	 $rectal_male = $lang{$current_language}{one_year_ago} if($rectal_male eq 'One year ago');
-	 $rectal_male = $lang{$current_language}{two_years_ago} if($rectal_male eq 'Two years ago');
-	 $rectal_male = $lang{$current_language}{three_or_more_years_ago} if($rectal_male eq 'Three or more years ago');
-	 $rectal_male = $lang{$current_language}{never} if($rectal_male eq 'Never');
+	 $rectal_male = $lang{less_than_one_year_ago}{$current_language} if($rectal_male eq 'Less than one year ago');
+	 $rectal_male = $lang{one_year_ago}{$current_language} if($rectal_male eq 'One year ago');
+	 $rectal_male = $lang{two_years_ago}{$current_language} if($rectal_male eq 'Two years ago');
+	 $rectal_male = $lang{three_or_more_years_ago}{$current_language} if($rectal_male eq 'Three or more years ago');
+	 $rectal_male = $lang{never}{$current_language} if($rectal_male eq 'Never');
 	 
-	 $rectal_female = $lang{$current_language}{less_than_one_year_ago} if($rectal_female eq 'Less than one year ago');
-	 $rectal_female = $lang{$current_language}{one_year_ago} if($rectal_female eq 'One year ago');
-	 $rectal_female = $lang{$current_language}{two_years_ago} if($rectal_female eq 'Two years ago');
-	 $rectal_female = $lang{$current_language}{three_or_more_years_ago} if($rectal_female eq 'Three or more years ago');
-	 $rectal_female = $lang{$current_language}{never} if($rectal_female eq 'Never');
+	 $rectal_female = $lang{less_than_one_year_ago}{$current_language} if($rectal_female eq 'Less than one year ago');
+	 $rectal_female = $lang{one_year_ago}{$current_language} if($rectal_female eq 'One year ago');
+	 $rectal_female = $lang{two_years_ago}{$current_language} if($rectal_female eq 'Two years ago');
+	 $rectal_female = $lang{three_or_more_years_ago}{$current_language} if($rectal_female eq 'Three or more years ago');
+	 $rectal_female = $lang{never}{$current_language} if($rectal_female eq 'Never');
 	 
-	 $pap_female = $lang{$current_language}{less_than_one_year_ago} if($pap_female eq 'Less than one year ago');
-	 $pap_female = $lang{$current_language}{one_year_ago} if($pap_female eq 'One year ago');
-	 $pap_female = $lang{$current_language}{two_years_ago} if($pap_female eq 'Two years ago');
-	 $pap_female = $lang{$current_language}{three_or_more_years_ago} if($pap_female eq 'Three or more years ago');
-	 $pap_female = $lang{$current_language}{never} if($pap_female eq 'Never');
+	 $pap_female = $lang{less_than_one_year_ago}{$current_language} if($pap_female eq 'Less than one year ago');
+	 $pap_female = $lang{one_year_ago}{$current_language} if($pap_female eq 'One year ago');
+	 $pap_female = $lang{two_years_ago}{$current_language} if($pap_female eq 'Two years ago');
+	 $pap_female = $lang{three_or_more_years_ago}{$current_language} if($pap_female eq 'Three or more years ago');
+	 $pap_female = $lang{never}{$current_language} if($pap_female eq 'Never');
 	 
-	 $mammogram_female = $lang{$current_language}{less_than_one_year_ago} if($mammogram_female eq 'Less than one year ago');
-	 $mammogram_female = $lang{$current_language}{one_year_ago} if($mammogram_female eq 'One year ago');
-	 $mammogram_female = $lang{$current_language}{two_years_ago} if($mammogram_female eq 'Two years ago');
-	 $mammogram_female = $lang{$current_language}{three_or_more_years_ago} if($mammogram_female eq 'Three or more years ago');
-	 $mammogram_female = $lang{$current_language}{never} if($mammogram_female eq 'Never');
+	 $mammogram_female = $lang{less_than_one_year_ago}{$current_language} if($mammogram_female eq 'Less than one year ago');
+	 $mammogram_female = $lang{one_year_ago}{$current_language} if($mammogram_female eq 'One year ago');
+	 $mammogram_female = $lang{two_years_ago}{$current_language} if($mammogram_female eq 'Two years ago');
+	 $mammogram_female = $lang{three_or_more_years_ago}{$current_language} if($mammogram_female eq 'Three or more years ago');
+	 $mammogram_female = $lang{never}{$current_language} if($mammogram_female eq 'Never');
 	 
-	 $clinic_breast_exam = $lang{$current_language}{less_than_one_year_ago} if($clinic_breast_exam eq 'Less than one year ago');
-	 $clinic_breast_exam = $lang{$current_language}{one_year_ago} if($clinic_breast_exam eq 'One year ago');
-	 $clinic_breast_exam = $lang{$current_language}{two_years_ago} if($clinic_breast_exam eq 'Two years ago');
-	 $clinic_breast_exam = $lang{$current_language}{three_or_more_years_ago} if($clinic_breast_exam eq 'Three or more years ago');
-	 $clinic_breast_exam = $lang{$current_language}{never} if($clinic_breast_exam eq 'Never');
+	 $clinic_breast_exam = $lang{less_than_one_year_ago}{$current_language} if($clinic_breast_exam eq 'Less than one year ago');
+	 $clinic_breast_exam = $lang{one_year_ago}{$current_language} if($clinic_breast_exam eq 'One year ago');
+	 $clinic_breast_exam = $lang{two_years_ago}{$current_language} if($clinic_breast_exam eq 'Two years ago');
+	 $clinic_breast_exam = $lang{three_or_more_years_ago}{$current_language} if($clinic_breast_exam eq 'Three or more years ago');
+	 $clinic_breast_exam = $lang{never}{$current_language} if($clinic_breast_exam eq 'Never');
 	 
-	 $self_breast_exam = $lang{$current_language}{monthly} if($self_breast_exam eq 'Monthly');
-	 $self_breast_exam = $lang{$current_language}{once_every_few_months} if($self_breast_exam eq 'Once every few months');
-	 $self_breast_exam = $lang{$current_language}{rarely_or_never} if($self_breast_exam eq 'Rarely or never');
+	 $self_breast_exam = $lang{monthly}{$current_language} if($self_breast_exam eq 'Monthly');
+	 $self_breast_exam = $lang{once_every_few_months}{$current_language} if($self_breast_exam eq 'Once every few months');
+	 $self_breast_exam = $lang{rarely_or_never}{$current_language} if($self_breast_exam eq 'Rarely or never');
 		
-	 $r2c_autosafety = $lang{$current_language}{yes} if($r2c_autosafety eq 'Yes');
-	 $r2c_autosafety = $lang{$current_language}{no} if($r2c_autosafety eq 'No');
-	 $r2c_autosafety = $lang{$current_language}{active} if($r2c_autosafety eq 'Active');
-	 $r2c_autosafety = $lang{$current_language}{do_not_know} if($r2c_autosafety eq 'Don\'t know');
+	 $r2c_autosafety = $lang{yes}{$current_language} if($r2c_autosafety eq 'Yes');
+	 $r2c_autosafety = $lang{no}{$current_language} if($r2c_autosafety eq 'No');
+	 $r2c_autosafety = $lang{active}{$current_language} if($r2c_autosafety eq 'Active');
+	 $r2c_autosafety = $lang{do_not_know}{$current_language} if($r2c_autosafety eq 'Don\'t know');
 	 
-	 $r2c_fat = $lang{$current_language}{yes} if($r2c_fat eq 'Yes');
-	 $r2c_fat = $lang{$current_language}{no} if($r2c_fat eq 'No');
-	 $r2c_fat = $lang{$current_language}{active} if($r2c_fat eq 'Active');
-	 $r2c_fat = $lang{$current_language}{do_not_know} if($r2c_fat eq 'Don\'t know');
+	 $r2c_fat = $lang{yes}{$current_language} if($r2c_fat eq 'Yes');
+	 $r2c_fat = $lang{no}{$current_language} if($r2c_fat eq 'No');
+	 $r2c_fat = $lang{active}{$current_language} if($r2c_fat eq 'Active');
+	 $r2c_fat = $lang{do_not_know}{$current_language} if($r2c_fat eq 'Don\'t know');
 	 
-	 $r2c_bp = $lang{$current_language}{yes} if($r2c_bp eq 'Yes');
-	 $r2c_bp = $lang{$current_language}{no} if($r2c_bp eq 'No');
-	 $r2c_bp = $lang{$current_language}{already_taking_action} if($r2c_bp eq 'Active');
-	 $r2c_bp = $lang{$current_language}{do_not_know} if($r2c_bp eq 'Don\'t know');
+	 $r2c_bp = $lang{yes}{$current_language} if($r2c_bp eq 'Yes');
+	 $r2c_bp = $lang{no}{$current_language} if($r2c_bp eq 'No');
+	 $r2c_bp = $lang{already_taking_action}{$current_language} if($r2c_bp eq 'Active');
+	 $r2c_bp = $lang{do_not_know}{$current_language} if($r2c_bp eq 'Don\'t know');
 	 
-	 $r2c_checkups = $lang{$current_language}{yes} if($r2c_checkups eq 'Yes');
-	 $r2c_checkups = $lang{$current_language}{no} if($r2c_checkups eq 'No');
-	 $r2c_checkups = $lang{$current_language}{already_taking_action} if($r2c_checkups eq 'Active');
-	 $r2c_checkups = $lang{$current_language}{do_not_know} if($r2c_checkups eq 'Don\'t know');
+	 $r2c_checkups = $lang{yes}{$current_language} if($r2c_checkups eq 'Yes');
+	 $r2c_checkups = $lang{no}{$current_language} if($r2c_checkups eq 'No');
+	 $r2c_checkups = $lang{already_taking_action}{$current_language} if($r2c_checkups eq 'Active');
+	 $r2c_checkups = $lang{do_not_know}{$current_language} if($r2c_checkups eq 'Don\'t know');
 	 
-	 $r2c_cholesterol = $lang{$current_language}{yes} if($r2c_cholesterol eq 'Yes');
-	 $r2c_cholesterol = $lang{$current_language}{no} if($r2c_cholesterol eq 'No');
-	 $r2c_cholesterol = $lang{$current_language}{already_taking_action} if($r2c_cholesterol eq 'Active');
-	 $r2c_cholesterol = $lang{$current_language}{do_not_know} if($r2c_cholesterol eq 'Don\'t know');
+	 $r2c_cholesterol = $lang{yes}{$current_language} if($r2c_cholesterol eq 'Yes');
+	 $r2c_cholesterol = $lang{no}{$current_language} if($r2c_cholesterol eq 'No');
+	 $r2c_cholesterol = $lang{already_taking_action}{$current_language} if($r2c_cholesterol eq 'Active');
+	 $r2c_cholesterol = $lang{do_not_know}{$current_language} if($r2c_cholesterol eq 'Don\'t know');
 	 
-	 $r2c_exercise = $lang{$current_language}{yes} if($r2c_exercise eq 'Yes');
-	 $r2c_exercise = $lang{$current_language}{no} if($r2c_exercise eq 'No');
-	 $r2c_exercise = $lang{$current_language}{already_taking_action} if($r2c_exercise eq 'Active');
-	 $r2c_exercise = $lang{$current_language}{do_not_know} if($r2c_exercise eq 'Don\'t know');
+	 $r2c_exercise = $lang{yes}{$current_language} if($r2c_exercise eq 'Yes');
+	 $r2c_exercise = $lang{no}{$current_language} if($r2c_exercise eq 'No');
+	 $r2c_exercise = $lang{already_taking_action}{$current_language} if($r2c_exercise eq 'Active');
+	 $r2c_exercise = $lang{do_not_know}{$current_language} if($r2c_exercise eq 'Don\'t know');
 	 
-	 $r2c_smoking = $lang{$current_language}{yes} if($r2c_smoking eq 'Yes');
-	 $r2c_smoking = $lang{$current_language}{no} if($r2c_smoking eq 'No');
-	 $r2c_smoking = $lang{$current_language}{already_taking_action} if($r2c_smoking eq 'Active');
-	 $r2c_smoking = $lang{$current_language}{do_not_know} if($r2c_smoking eq 'Don\'t know');
+	 $r2c_smoking = $lang{yes}{$current_language} if($r2c_smoking eq 'Yes');
+	 $r2c_smoking = $lang{no}{$current_language} if($r2c_smoking eq 'No');
+	 $r2c_smoking = $lang{already_taking_action}{$current_language} if($r2c_smoking eq 'Active');
+	 $r2c_smoking = $lang{do_not_know}{$current_language} if($r2c_smoking eq 'Don\'t know');
 }
 
-$WeightLine = $lang{$current_language}{gha_weightLine_msg1}	;
+$WeightLine = $lang{gha_weightLine_msg1}{$current_language};
 $WeightLine =~ s/HEIGHT_IMPERIAL/$height_imperial/;
 $WeightLine .= do
 		{
-		if	( $weight <= $low_weight) 	{ $lang{$current_language}{weight_msg5} }
-		elsif	( $weight <= $high_weight ) 	{ $lang{$current_language}{weight_msg1} }
-		elsif   ( $bmi <= BMI_OBESE )	{ $lang{$current_language}{weight_msg3} }
-		else				{ $lang{$current_language}{weight_msg4} }
+		if	( $weight <= $low_weight) 	{ $lang{weight_msg5}{$current_language} }
+		elsif	( $weight <= $high_weight ) 	{ $lang{weight_msg1}{$current_language} }
+		elsif   ( $bmi <= BMI_OBESE )	{ $lang{weight_msg3}{$current_language} }
+		else				{ $lang{weight_msg4}{$current_language}}
 		};
-$WeightLine .= $lang{$current_language}{gha_weightLine_msg2};
+$WeightLine .= $lang{gha_weightLine_msg2}{$current_language};
 
-my $start = "$name, $lang{$current_language}{gha_fact_msg1}";
+my $start = "$name, $lang{gha_fact_msg1}{$current_language}";
 $start =~ s/LC_SEX/$lc_sex/;
 $fact = do 	{
 		if ($diabetes eq YES &&
-			( $FBC_flag == 1 || $FBC_flag == 2 ) )	{ "$start, $lang{$current_language}{gha_fact_msg2} "}
-		elsif ($diabetes eq YES  ) 			{ "$start $lang{$current_language}{gha_fact_msg3}" }
-		elsif (( $FBC_flag == 1 || $FBC_flag == 2 )) 	{ "$start $lang{$current_language}{gha_fact_msg4}" }
+			( $FBC_flag == 1 || $FBC_flag == 2 ) )	{ "$start, $lang{gha_fact_msg2}{$current_language} "}
+		elsif ($diabetes eq YES  ) 			{ "$start $lang{gha_fact_msg3}{$current_language}" }
+		elsif (( $FBC_flag == 1 || $FBC_flag == 2 )) 	{ "$start $lang{gha_fact_msg4}{$current_language}" }
 		else						{ "$start." }
 		};
 
-push @good_habits, $lang{$current_language}{gha_good_habits1}  if ($weight >= $low_weight && $weight <= $high_weight);
-push @bad_habits, $lang{$current_language}{gha_bad_habits1} if ($weight <= $low_weight);
-push @bad_habits, $lang{$current_language}{gha_bad_habits2} if ($weight > $high_weight && $bmi <= BMI_OBESE);
-push @bad_habits, $lang{$current_language}{gha_bad_habits3} if ($weight_flag == 2);
-push @bad_habits, $lang{$current_language}{gha_bad_habits4} if ($waist_flag > 2 && $waist);
-push @good_habits, $lang{$current_language}{gha_good_habits2} if ($smoke_flag != 2 && !$smoke_other);
-push @good_habits, $lang{$current_language}{gha_good_habits3} if ($smoke_flag == 1);
-push @bad_habits, $lang{$current_language}{gha_bad_habits5} if ($smoke_flag == 2);
-push @bad_habits, $lang{$current_language}{gha_bad_habits6} if ($chews_flag == 1);
-push @bad_habits, $lang{$current_language}{gha_bad_habits7} if ($pipes_flag == 1);
-push @bad_habits, $lang{$current_language}{gha_bad_habits8} if ($cigars_flag == 1);
-push @good_habits, $lang{$current_language}{gha_good_habits4} if ($bp_flag == 0);
-push @bad_habits, $lang{$current_language}{gha_bad_habits9} if ($bp_flag == 1 || $bp_flag == 2);
-push @bad_habits, $lang{$current_language}{gha_bad_habits10} if ($bp_flag == 2 || $bp_flag == 3);
-push @good_habits, $lang{$current_language}{gha_good_habits5} if ($seat_belt_flag == 0);
-push @bad_habits, $lang{$current_language}{gha_bad_habits11} if ($seat_belt_flag == 1);
-push @good_habits, $lang{$current_language}{gha_good_habits6} if ($speed_flag == 0);
-push @bad_habits, $lang{$current_language}{gha_bad_habits12} if ($speed_flag == 1);
-push @good_habits, $lang{$current_language}{gha_good_habits7} if ($helmet_flag == 1);
-push @bad_habits, $lang{$current_language}{gha_bad_habits13} if ($helmet_flag == 2);
-push @bad_habits, $lang{$current_language}{gha_bad_habits14} if ($drink_and_drive_flag == 1);
-push @good_habits, $lang{$current_language}{gha_good_habits8} if ($pap_flag <= 1  && $sex eq FEMALE);
-push @bad_habits, $lang{$current_language}{gha_bad_habits15} if ($pap_flag > 1  && $sex eq FEMALE);
-push @good_habits, $lang{$current_language}{gha_good_habits9} if ($mammogram_flag <= 1  && $sex eq FEMALE);
-push @bad_habits, $lang{$current_language}{gha_bad_habits16} if ($mammogram_flag > 1  && $sex eq FEMALE && $age >= 50);
-push @bad_habits, $lang{$current_language}{gha_bad_habits16} if ($mammogram_flag > 2  && $sex eq FEMALE && $age >= 40 && $age < 50);
-push @bad_habits, $lang{$current_language}{gha_bad_habits17} if ($mammogram_flag > 2  && $sex eq FEMALE && $FBC_flag && $age < 40);
-push @good_habits, $lang{$current_language}{gha_good_habits10} if (!$self_breast_exam_flag  && $sex eq FEMALE);
-push @good_habits, $lang{$current_language}{gha_good_habits11} if ($self_breast_exam_flag == 1  && $sex eq FEMALE);
-push @bad_habits, $lang{$current_language}{gha_bad_habits18} if (self_breast_exam_flag == 2  && $sex eq FEMALE);
-push @good_habits, $lang{$current_language}{gha_good_habits12} if ($alcohol_flag == 0);
-push @good_habits, $lang{$current_language}{gha_good_habits13} if ($alcohol_flag == 1);
-push @bad_habits, $lang{$current_language}{gha_bad_habits19} if ($alcohol_flag == 2 && $sex eq MALE);
-push @bad_habits, $lang{$current_language}{gha_bad_habits20} if ($alcohol_flag == 3 && $sex eq MALE);
-push @bad_habits, $lang{$current_language}{gha_bad_habits21} if ($alcohol_flag == 3 && $sex eq MALE && $drinks_week >= (MALE_ALCOHOL_UPPER_LIMIT * 1.7));
-push @bad_habits, $lang{$current_language}{gha_bad_habits22} if ($alcohol_flag == 2 && $sex eq FEMALE);
-push @bad_habits, $lang{$current_language}{gha_bad_habits23} if ($alcohol_flag == 3 && $sex eq FEMALE);
-push @bad_habits, $lang{$current_language}{gha_bad_habits24} if ($alcohol_flag == 3 && $sex eq FEMALE && $drinks_week >= (FEMALE_ALCOHOL_UPPER_LIMIT * 1.7));
-push @good_habits, $lang{$current_language}{gha_good_habits14} if ($cholesterol_flag == 1);
-push @good_habits, $lang{$current_language}{gha_good_habits15} if ($ldl_flag == 1 && $ldl);
-push @good_habits, $lang{$current_language}{gha_good_habits16} if ($cholesterol_ratio_flag == 1);
-push @good_habits, $lang{$current_language}{gha_good_habits17} if ($glucose_flag == 1 && $glucose);
-push @good_habits, $lang{$current_language}{gha_good_habits18} if ($triglycerides_flag == 1 && $triglycerides);
-push @bad_habits, $lang{$current_language}{gha_bad_habits25} if ($triglycerides_flag >= 3  && $triglycerides);
-push @bad_habits, $lang{$current_language}{gha_bad_habits26} if ($glucose_flag >= 3  && $glucose);
-push @bad_habits, $lang{$current_language}{gha_bad_habits27} if ($ldl_flag >= 3  && $ldl);
-push @bad_habits, $lang{$current_language}{gha_bad_habits28} if ($hdl > 1 && $hdl < 55 && $sex eq FEMALE);
-push @bad_habits, $lang{$current_language}{gha_bad_habits28} if ($hdl > 1 && $hdl < 40 && $sex eq MALE);
-push @bad_habits, $lang{$current_language}{gha_bad_habits29} if ($hdl < 1 && $cholesterol > 1);
-push @bad_habits, $lang{$current_language}{gha_bad_habits30} if ($cholesterol_flag == 3);
-push @bad_habits, $lang{$current_language}{gha_bad_habits30} if ($cholesterol_flag == 2);
-push @bad_habits, $lang{$current_language}{gha_bad_habits31} if ($cholesterol_flag == 0);
-push @good_habits, $lang{$current_language}{gha_good_habits19} if ($exercise_flag == 0);
-push @bad_habits, $lang{$current_language}{gha_bad_habits32} if ($exercise_flag == 1);
-push @bad_habits, $lang{$current_language}{gha_bad_habits32} if ($exercise_flag == 2);
-push @good_habits, $lang{$current_language}{gha_good_habits20}  if ($fiber_flag == 1);
-push @bad_habits, $lang{$current_language}{gha_bad_habits33} if ($fiber_flag == 0);
-push @good_habits, $lang{$current_language}{gha_good_habits21} if ($fat_flag == 1);
-push @bad_habits, $lang{$current_language}{gha_bad_habits34} if ($fat_flag == 0);
-push @bad_habits, $lang{$current_language}{gha_bad_habits35} if ($violence_flag > 1);
-push @good_habits, $lang{$current_language}{gha_good_habits22} if ($diabetes eq YES);
+push @good_habits, $lang{gha_good_habits1}{$current_language}  if ($weight >= $low_weight && $weight <= $high_weight);
+push @bad_habits, $lang{gha_bad_habits1}{$current_language} if ($weight <= $low_weight);
+push @bad_habits, $lang{gha_bad_habits2}{$current_language} if ($weight > $high_weight && $bmi <= BMI_OBESE);
+push @bad_habits, $lang{gha_bad_habits3}{$current_language} if ($weight_flag == 2);
+push @bad_habits, $lang{gha_bad_habits4}{$current_language} if ($waist_flag > 2 && $waist);
+push @good_habits, $lang{gha_good_habits2}{$current_language} if ($smoke_flag != 2 && !$smoke_other);
+push @good_habits, $lang{gha_good_habits3}{$current_language} if ($smoke_flag == 1);
+push @bad_habits, $lang{gha_bad_habits5}{$current_language} if ($smoke_flag == 2);
+push @bad_habits, $lang{gha_bad_habits6}{$current_language} if ($chews_flag == 1);
+push @bad_habits, $lang{gha_bad_habits7}{$current_language} if ($pipes_flag == 1);
+push @bad_habits, $lang{gha_bad_habits8}{$current_language} if ($cigars_flag == 1);
+push @good_habits, $lang{gha_good_habits4}{$current_language} if ($bp_flag == 0);
+push @bad_habits, $lang{gha_bad_habits9}{$current_language} if ($bp_flag == 1 || $bp_flag == 2);
+push @bad_habits, $lang{gha_bad_habits10}{$current_language} if ($bp_flag == 2 || $bp_flag == 3);
+push @good_habits, $lang{gha_good_habits5}{$current_language} if ($seat_belt_flag == 0);
+push @bad_habits, $lang{gha_bad_habits11}{$current_language} if ($seat_belt_flag == 1);
+push @good_habits, $lang{gha_good_habits6}{$current_language} if ($speed_flag == 0);
+push @bad_habits, $lang{gha_bad_habits12}{$current_language} if ($speed_flag == 1);
+push @good_habits, $lang{gha_good_habits7} {$current_language} if ($helmet_flag == 1);
+push @bad_habits, $lang{gha_bad_habits13}{$current_language} if ($helmet_flag == 2);
+push @bad_habits, $lang{gha_bad_habits14}{$current_language} if ($drink_and_drive_flag == 1);
+push @good_habits, $lang{gha_good_habits8}{$current_language} if ($pap_flag <= 1  && $sex eq FEMALE);
+push @bad_habits, $lang{gha_bad_habits15}{$current_language} if ($pap_flag > 1  && $sex eq FEMALE);
+push @good_habits, $lang{gha_good_habits9}{$current_language} if ($mammogram_flag <= 1  && $sex eq FEMALE);
+push @bad_habits, $lang{gha_bad_habits16}{$current_language} if ($mammogram_flag > 1  && $sex eq FEMALE && $age >= 50);
+push @bad_habits, $lang{gha_bad_habits16}{$current_language} if ($mammogram_flag > 2  && $sex eq FEMALE && $age >= 40 && $age < 50);
+push @bad_habits, $lang{gha_bad_habits17}{$current_language} if ($mammogram_flag > 2  && $sex eq FEMALE && $FBC_flag && $age < 40);
+push @good_habits, $lang{gha_good_habits10}{$current_language} if (!$self_breast_exam_flag  && $sex eq FEMALE);
+push @good_habits, $lang{gha_good_habits11}{$current_language} if ($self_breast_exam_flag == 1  && $sex eq FEMALE);
+push @bad_habits, $lang{gha_bad_habits18}{$current_language} if (self_breast_exam_flag == 2  && $sex eq FEMALE);
+push @good_habits, $lang{gha_good_habits12}{$current_language} if ($alcohol_flag == 0);
+push @good_habits, $lang{gha_good_habits13}{$current_language} if ($alcohol_flag == 1);
+push @bad_habits, $lang{gha_bad_habits19}{$current_language} if ($alcohol_flag == 2 && $sex eq MALE);
+push @bad_habits, $lang{gha_bad_habits20}{$current_language} if ($alcohol_flag == 3 && $sex eq MALE);
+push @bad_habits, $lang{gha_bad_habits21}{$current_language} if ($alcohol_flag == 3 && $sex eq MALE && $drinks_week >= (MALE_ALCOHOL_UPPER_LIMIT * 1.7));
+push @bad_habits, $lang{gha_bad_habits22}{$current_language} if ($alcohol_flag == 2 && $sex eq FEMALE);
+push @bad_habits, $lang{gha_bad_habits23}{$current_language} if ($alcohol_flag == 3 && $sex eq FEMALE);
+push @bad_habits, $lang{gha_bad_habits24}{$current_language} if ($alcohol_flag == 3 && $sex eq FEMALE && $drinks_week >= (FEMALE_ALCOHOL_UPPER_LIMIT * 1.7));
+push @good_habits, $lang{gha_good_habits14}{$current_language} if ($cholesterol_flag == 1);
+push @good_habits, $lang{gha_good_habits15}{$current_language} if ($ldl_flag == 1 && $ldl);
+push @good_habits, $lang{gha_good_habits16}{$current_language} if ($cholesterol_ratio_flag == 1);
+push @good_habits, $lang{gha_good_habits17}{$current_language} if ($glucose_flag == 1 && $glucose);
+push @good_habits, $lang{gha_good_habits18}{$current_language} if ($triglycerides_flag == 1 && $triglycerides);
+push @bad_habits, $lang{gha_bad_habits25}{$current_language} if ($triglycerides_flag >= 3  && $triglycerides);
+push @bad_habits, $lang{gha_bad_habits26}{$current_language} if ($glucose_flag >= 3  && $glucose);
+push @bad_habits, $lang{gha_bad_habits27}{$current_language} if ($ldl_flag >= 3  && $ldl);
+push @bad_habits, $lang{gha_bad_habits28}{$current_language} if ($hdl > 1 && $hdl < 55 && $sex eq FEMALE);
+push @bad_habits, $lang{gha_bad_habits28}{$current_language} if ($hdl > 1 && $hdl < 40 && $sex eq MALE);
+push @bad_habits, $lang{gha_bad_habits29}{$current_language} if ($hdl < 1 && $cholesterol > 1);
+push @bad_habits, $lang{gha_bad_habits30}{$current_language} if ($cholesterol_flag == 3);
+push @bad_habits, $lang{gha_bad_habits30}{$current_language} if ($cholesterol_flag == 2);
+push @bad_habits, $lang{gha_bad_habits31}{$current_language} if ($cholesterol_flag == 0);
+push @good_habits, $lang{gha_good_habits19}{$current_language} if ($exercise_flag == 0);
+push @bad_habits, $lang{gha_bad_habits32}{$current_language} if ($exercise_flag == 1);
+push @bad_habits, $lang{gha_bad_habits32}{$current_language} if ($exercise_flag == 2);
+push @good_habits, $lang{gha_good_habits20}{$current_language}  if ($fiber_flag == 1);
+push @bad_habits, $lang{gha_bad_habits33}{$current_language} if ($fiber_flag == 0);
+push @good_habits, $lang{gha_good_habits21}{$current_language} if ($fat_flag == 1);
+push @bad_habits, $lang{gha_bad_habits34}{$current_language} if ($fat_flag == 0);
+push @bad_habits, $lang{gha_bad_habits35}{$current_language} if ($violence_flag > 1);
+push @good_habits, $lang{gha_good_habits22}{$current_language} if ($diabetes eq YES);
 
 if($curr_page == 7 && $config{r2c}){
 	$r2c_issues = 0;
@@ -275,161 +286,161 @@ if($curr_page == 7 && $config{r2c}){
 				$r2c_fat_flag || $r2c_smoke_flag || $r2c_stress_flag || $r2c_weight);
 	}
 
-push @ready_2_change, $lang{$current_language}{gha_ready_msg1} 			if ($r2c_autosafety eq YES);
-push @ready_2_change, $lang{$current_language}{gha_ready_msg2} 		if ($r2c_bp eq YES);
-push @ready_2_change, $lang{$current_language}{gha_ready_msg3} 		if ($r2c_checkups eq YES);
-push @ready_2_change, $lang{$current_language}{gha_ready_msg4} 		if ($r2c_cholesterol eq YES);
-push @ready_2_change, $lang{$current_language}{gha_ready_msg5} 	if ($r2c_drink eq YES);
-push @ready_2_change, $lang{$current_language}{gha_ready_msg6} 			if ($r2c_exercise eq YES);
-push @ready_2_change, $lang{$current_language}{gha_ready_msg7} if ($r2c_fat eq YES);
-push @ready_2_change, $lang{$current_language}{gha_ready_msg8} 				if ($r2c_smoke eq YES);
-push @ready_2_change, $lang{$current_language}{gha_ready_msg9}		if ($r2c_stress eq YES);
-push @ready_2_change, $lang{$current_language}{gha_ready_msg10}	 if ($r2c_weight eq YES);
+push @ready_2_change, $lang{gha_ready_msg1}{$current_language}		if ($r2c_autosafety eq YES);
+push @ready_2_change, $lang{gha_ready_msg2}{$current_language} 		if ($r2c_bp eq YES);
+push @ready_2_change, $lang{gha_ready_msg3}{$current_language} 		if ($r2c_checkups eq YES);
+push @ready_2_change, $lang{gha_ready_msg4}{$current_language} 		if ($r2c_cholesterol eq YES);
+push @ready_2_change, $lang{gha_ready_msg5}{$current_language} 		if ($r2c_drink eq YES);
+push @ready_2_change, $lang{gha_ready_msg6}{$current_language} 		if ($r2c_exercise eq YES);
+push @ready_2_change, $lang{gha_ready_msg7}{$current_language} 		if ($r2c_fat eq YES);
+push @ready_2_change, $lang{gha_ready_msg8}{$current_language} 		if ($r2c_smoke eq YES);
+push @ready_2_change, $lang{gha_ready_msg9}{$current_language}		if ($r2c_stress eq YES);
+push @ready_2_change, $lang{gha_ready_msg10}{$current_language}	 	if ($r2c_weight eq YES);
 
-push @ready_2_change_doc, $lang{$current_language}{gha_ready_msg1} 			if ($r2c_autosafety eq YES);
-push @ready_2_change_doc, $lang{$current_language}{gha_ready_msg16}		if ($r2c_bp eq YES);
-push @ready_2_change_doc, $lang{$current_language}{gha_ready_msg3} 		if ($r2c_checkups eq YES);
-push @ready_2_change_doc, $lang{$current_language}{gha_ready_msg11} 		if ($r2c_cholesterol eq YES);
-push @ready_2_change_doc, $lang{$current_language}{gha_ready_msg12} 	if ($r2c_drink eq YES);
-push @ready_2_change_doc, $lang{$current_language}{gha_ready_msg6} 			if ($r2c_exercise eq YES);
-push @ready_2_change_doc, $lang{$current_language}{gha_ready_msg13} if ($r2c_fat eq YES);
-push @ready_2_change_doc, $lang{$current_language}{gha_ready_msg8} 				if ($r2c_smoke eq YES);
-push @ready_2_change_doc, $lang{$current_language}{gha_ready_msg14}		if ($r2c_stress eq YES);
-push @ready_2_change_doc, $lang{$current_language}{gha_ready_msg15} if ($r2c_weight eq YES);
+push @ready_2_change_doc, $lang{gha_ready_msg1}{$current_language} 		if ($r2c_autosafety eq YES);
+push @ready_2_change_doc, $lang{gha_ready_msg16}{$current_language}		if ($r2c_bp eq YES);
+push @ready_2_change_doc, $lang{gha_ready_msg3}{$current_language} 		if ($r2c_checkups eq YES);
+push @ready_2_change_doc, $lang{gha_ready_msg11}{$current_language} 	if ($r2c_cholesterol eq YES);
+push @ready_2_change_doc, $lang{gha_ready_msg12}{$current_language} 	if ($r2c_drink eq YES);
+push @ready_2_change_doc, $lang{gha_ready_msg6}{$current_language} 		if ($r2c_exercise eq YES);
+push @ready_2_change_doc, $lang{gha_ready_msg13}{$current_language} 	if ($r2c_fat eq YES);
+push @ready_2_change_doc, $lang{gha_ready_msg8}{$current_language} 		if ($r2c_smoke eq YES);
+push @ready_2_change_doc, $lang{gha_ready_msg14}{$current_language}		if ($r2c_stress eq YES);
+push @ready_2_change_doc, $lang{gha_ready_msg15}{$current_language} 	if ($r2c_weight eq YES);
 
-push @ready_not_change, $lang{$current_language}{gha_ready_msg1} 	if ($r2c_autosafety eq NO);
-push @ready_not_change, $lang{$current_language}{gha_ready_msg2} if ($r2c_bp eq NO);
-push @ready_not_change, $lang{$current_language}{gha_ready_msg3} 		if ($r2c_checkups eq NO);
-push @ready_not_change, $lang{$current_language}{gha_ready_msg4} 		if ($r2c_cholesterol eq NO);
-push @ready_not_change, $lang{$current_language}{gha_ready_msg5} 	if ($r2c_drink eq NO);
-push @ready_not_change, $lang{$current_language}{gha_ready_msg6}			if ($r2c_exercise eq NO);
-push @ready_not_change, $lang{$current_language}{gha_ready_msg7} if ($r2c_fat eq NO);
-push @ready_not_change, $lang{$current_language}{gha_ready_msg8} 				if ($r2c_smoke eq NO);
-push @ready_not_change, $lang{$current_language}{gha_ready_msg9} 		if ($r2c_stress eq NO);
-push @ready_not_change, $lang{$current_language}{gha_ready_msg10} if ($r2c_weight eq NO);
+push @ready_not_change, $lang{gha_ready_msg1}{$current_language} 	if ($r2c_autosafety eq NO);
+push @ready_not_change, $lang{gha_ready_msg2}{$current_language} 	if ($r2c_bp eq NO);
+push @ready_not_change, $lang{gha_ready_msg3}{$current_language} 	if ($r2c_checkups eq NO);
+push @ready_not_change, $lang{gha_ready_msg4}{$current_language} 	if ($r2c_cholesterol eq NO);
+push @ready_not_change, $lang{gha_ready_msg5}{$current_language} 	if ($r2c_drink eq NO);
+push @ready_not_change, $lang{gha_ready_msg6}{$current_language}	if ($r2c_exercise eq NO);
+push @ready_not_change, $lang{gha_ready_msg7}{$current_language} 	if ($r2c_fat eq NO);
+push @ready_not_change, $lang{gha_ready_msg8}{$current_language} 	if ($r2c_smoke eq NO);
+push @ready_not_change, $lang{gha_ready_msg9}{$current_language} 	if ($r2c_stress eq NO);
+push @ready_not_change, $lang{gha_ready_msg10}{$current_language} 	if ($r2c_weight eq NO);
 
-push @ready_ignorant, $lang{$current_language}{gha_ready_msg1} 			if ($r2c_autosafety eq DONT_KNOW);
-push @ready_ignorant, $lang{$current_language}{gha_ready_msg2} 		if ($r2c_bp eq DONT_KNOW);
-push @ready_ignorant, $lang{$current_language}{gha_ready_msg3} 		if ($r2c_checkups eq DONT_KNOW);
-push @ready_ignorant, $lang{$current_language}{gha_ready_msg4} 		if ($r2c_cholesterol eq DONT_KNOW);
-push @ready_ignorant, $lang{$current_language}{gha_ready_msg5} 	if ($r2c_drink eq DONT_KNOW);
-push @ready_ignorant, $lang{$current_language}{gha_ready_msg6} 			if ($r2c_exercise eq DONT_KNOW);
-push @ready_ignorant, $lang{$current_language}{gha_ready_msg7} if ($r2c_fat eq DONT_KNOW);
-push @ready_ignorant, $lang{$current_language}{gha_ready_msg8} 				if ($r2c_smoke eq DONT_KNOW);
-push @ready_ignorant, $lang{$current_language}{gha_ready_msg9} 		if ($r2c_stress eq DONT_KNOW);
-push @ready_ignorant, $lang{$current_language}{gha_ready_msg10} if ($r2c_weight eq DONT_KNOW);
+push @ready_ignorant, $lang{gha_ready_msg1}{$current_language} 		if ($r2c_autosafety eq DONT_KNOW);
+push @ready_ignorant, $lang{gha_ready_msg2}{$current_language} 		if ($r2c_bp eq DONT_KNOW);
+push @ready_ignorant, $lang{gha_ready_msg3}{$current_language} 		if ($r2c_checkups eq DONT_KNOW);
+push @ready_ignorant, $lang{gha_ready_msg4}{$current_language} 		if ($r2c_cholesterol eq DONT_KNOW);
+push @ready_ignorant, $lang{gha_ready_msg5}{$current_language} 		if ($r2c_drink eq DONT_KNOW);
+push @ready_ignorant, $lang{gha_ready_msg6}{$current_language} 		if ($r2c_exercise eq DONT_KNOW);
+push @ready_ignorant, $lang{gha_ready_msg7}{$current_language} 		if ($r2c_fat eq DONT_KNOW);
+push @ready_ignorant, $lang{gha_ready_msg8}{$current_language} 		if ($r2c_smoke eq DONT_KNOW);
+push @ready_ignorant, $lang{gha_ready_msg9}{$current_language} 		if ($r2c_stress eq DONT_KNOW);
+push @ready_ignorant, $lang{gha_ready_msg10}{$current_language} 	if ($r2c_weight eq DONT_KNOW);
 
 my $well = '';
 if ($wellness >= 85 &&
-	$#bad_habits <= 2)	{ $well = $lang{$current_language}{gha_well_msg1} }
+	$#bad_habits <= 2)	{ $well = $lang{gha_well_msg1}{$current_language} }
 elsif ($wellness > 85 &&
 	$#bad_habits > 2)	{
-	$well = $lang{$current_language}{gha_well_msg2};
+	$well = $lang{gha_well_msg2}{$current_language};
 	if ($diabetes eq YES ||
-		( $FBC_flag == 1 || $FBC_flag == 2 )) 		{ $well .= $lang{$current_language}{gha_well_msg3} }
-	if ($smoke_flag == 2)	{ $well .= $lang{$current_language}{gha_well_msg4} }
+		( $FBC_flag == 1 || $FBC_flag == 2 )) 		{ $well .= $lang{gha_well_msg3}{$current_language} }
+	if ($smoke_flag == 2)	{ $well .= $lang{gha_well_msg4}{$current_language} }
 	if ($alcohol_flag >=1)	{
-		if ($smoke_flag == 2)	{ $well .= $lang{$current_language}{gha_well_msg5} }
-		else			{ $well .= $lang{$current_language}{gha_well_msg6} }
+		if ($smoke_flag == 2)	{ $well .= $lang{gha_well_msg5}{$current_language} }
+		else			{ $well .= $lang{gha_well_msg6}{$current_language} }
 	}
-	if ($smoke_flag == 2 || $alcohol_flag >=1) { $well .= $lang{$current_language}{gha_well_msg7} }
-	if ($days_missed ne "None" &&  $days_missed ne "One to five") { $well .= $lang{$current_language}{gha_well_msg18} }
-	$well .= $lang{$current_language}{gha_well_msg8}
+	if ($smoke_flag == 2 || $alcohol_flag >=1) { $well .= $lang{gha_well_msg7}{$current_language} }
+	if ($days_missed ne "None" &&  $days_missed ne "One to five") { $well .= $lang{gha_well_msg18}{$current_language} }
+	$well .= $lang{gha_well_msg8}{$current_language}
 	}
 elsif ($wellness < 70){
-	$well = $lang{$current_language}{gha_well_msg9};
-	if ($days_missed ne "None" &&  $days_missed ne "One to five") { $well .= $lang{$current_language}{gha_well_msg10}; }
+	$well = $lang{gha_well_msg9}{$current_language};
+	if ($days_missed ne "None" &&  $days_missed ne "One to five") { $well .= $lang{gha_well_msg10}{$current_language}; }
 	$well .= ". ";
 
 	if ($diabetes eq YES ||
-		( $FBC_flag == 1 || $FBC_flag == 2 ) ) 	{ $well .= $lang{$current_language}{gha_well_msg3} }
-	if ($smoke_flag == 2)				{ $well .= $lang{$current_language}{gha_well_msg4}}
+		( $FBC_flag == 1 || $FBC_flag == 2 ) ) 	{ $well .= $lang{gha_well_msg3}{$current_language} }
+	if ($smoke_flag == 2)				{ $well .= $lang{gha_well_msg4}{$current_language}}
 	if ($alcohol_flag >=1){
-		if ($smoke_flag == 2)			{ $well .= $lang{$current_language}{gha_well_msg5} }
-		else					{ $well .= $lang{$current_language}{gha_well_msg6} }
+		if ($smoke_flag == 2)			{ $well .= $lang{gha_well_msg5}{$current_language} }
+		else					{ $well .= $lang{gha_well_msg6}{$current_language} }
 	}
 	if ($smoke_flag == 2 ||
-		$alcohol_flag >=1)			{ $well .= $lang{$current_language}{gha_well_msg17} }
-	$well .= $lang{$current_language}{gha_well_msg11};
+		$alcohol_flag >=1)			{ $well .= $lang{gha_well_msg17}{$current_language} }
+	$well .= $lang{gha_well_msg11}{$current_language};
 	}
 else{
-	$well = $lang{$current_language}{gha_well_msg12};
+	$well = $lang{gha_well_msg12}{$current_language};
 	if ($diabetes eq YES ||
-		( $FBC_flag == 1 || $FBC_flag == 2 ) ) 	{ $well .= $lang{$current_language}{gha_well_msg3} }
-	if ($smoke_flag == 2)				{ $well .= $lang{$current_language}{gha_well_msg4} }
+		( $FBC_flag == 1 || $FBC_flag == 2 ) ) 	{ $well .= $lang{gha_well_msg3}{$current_language} }
+	if ($smoke_flag == 2)				{ $well .= $lang{gha_well_msg4}{$current_language} }
 	if ($alcohol_flag >=1)	{
-		if ($smoke_flag == 2)			{ $well .= $lang{$current_language}{gha_well_msg5} }
-		else					{ $well .= $lang{$current_language}{gha_well_msg6} }
+		if ($smoke_flag == 2)			{ $well .= $lang{gha_well_msg5}{$current_language} }
+		else					{ $well .= $lang{gha_well_msg6}{$current_language} }
 	}
 	if ($smoke_flag == 2 ||
-		$alcohol_flag >=1)			{ $well .= $lang{$current_language}{gha_well_msg17} }
-	$well .= $lang{$current_language}{gha_well_msg11};
+		$alcohol_flag >=1)			{ $well .= $lang{gha_well_msg17}{$current_language} }
+	$well .= $lang{gha_well_msg11}{$current_language};
 	}
 if ($appraised_age < $actual_age){
-	$well .= $lang{$current_language}{gha_well_msg13};
-	$well .= $lang{$current_language}{gha_well_msg14} if($achievable_age < $appraised_age);
+	$well .= $lang{gha_well_msg13}{$current_language};
+	$well .= $lang{gha_well_msg14}{$current_language} if($achievable_age < $appraised_age);
 	}
 elsif($appraised_age > $actual_age){
-	$well .= $lang{$current_language}{gha_well_msg15};
-	$well .= $lang{$current_language}{gha_well_msg14} if($achievable_age < $appraised_age);
+	$well .= $lang{gha_well_msg15}{$current_language};
+	$well .= $lang{gha_well_msg14}{$current_language} if($achievable_age < $appraised_age);
 	}
 else{
-	$well .= $lang{$current_language}{gha_well_msg16};
-	$well .= $lang{$current_language}{gha_well_msg14} if($achievable_age < $appraised_age);
+	$well .= $lang{gha_well_msg16}{$current_language};
+	$well .= $lang{gha_well_msg14}{$current_language} if($achievable_age < $appraised_age);
 	}
 $well =~ s/WELLNESS_SCORE/$wellness/g;
 $Wellness = $well;
 
 if(uc($output_format) eq 'PDF') {
-	$wellness_line = "^t ^f:size=12&color=BLACK ^P $lang{$current_language}{your_risk_level}: $lang{$current_language}{low} ^P ^F " if $wellness >= 85;
-	$wellness_line = "^t ^f:size=12&color=BLACK $lang{$current_language}{your_risk_level}: $lang{$current_language}{high} ^F " if $wellness < 70;
-	$wellness_line = "^t ^f:size=12&color=BLACK $lang{$current_language}{your_risk_level}: $lang{$current_language}{moderate} ^F " if ($wellness >=70 && $wellness < 85);
+	$wellness_line = "^t ^f:size=12&color=BLACK ^P $lang{your_risk_level}{$current_language}: $lang{low}{$current_language} ^P ^F " if $wellness >= 85;
+	$wellness_line = "^t ^f:size=12&color=BLACK $lang{your_risk_level}{$current_language}: $lang{high}{$current_language} ^F " if $wellness < 70;
+	$wellness_line = "^t ^f:size=12&color=BLACK $lang{your_risk_level}{$current_language}: $lang{moderate}{$current_language} ^F " if ($wellness >=70 && $wellness < 85);
 	}
 else	{
-	$wellness_line = q|<span class="HSbodytextbold">$lang{$current_language}{your_risk_level}: $lang{$current_language}{low}</span>| if $wellness >= 85;
-	$wellness_line = q|<span class="HSbodytextbold">$lang{$current_language}{your_risk_level}: $lang{$current_language}{high}</span>| if $wellness < 70;
-	$wellness_line = q|<span class="HSbodytextbold">$lang{$current_language}{your_risk_level}: $lang{$current_language}{moderate}</span>| if ($wellness >=70 && $wellness < 85);
+	$wellness_line = q|<span class="HSbodytextbold">$lang{your_risk_level}{$current_language}: $lang{low}{$current_language}</span>| if $wellness >= 85;
+	$wellness_line = q|<span class="HSbodytextbold">$lang{your_risk_level}{$current_language}: $lang{high}{$current_language}</span>| if $wellness < 70;
+	$wellness_line = q|<span class="HSbodytextbold">$lang{your_risk_level}{$current_language}: $lang{moderate}{$current_language}</span>| if ($wellness >=70 && $wellness < 85);
 	}
 # condition specific messages
 ## smoking
 my $smk ='';
 	{
-	if ($smoke_flag == 0)  					{ $smk .= $lang{$current_language}{gha_smk_msg1} }
+	if ($smoke_flag == 0)  					{ $smk .= $lang{gha_smk_msg1}{$current_language} }
 	elsif($smoke_flag == 1){
-				if ($cigarette_years_quit <= 2)	{ $smk .= $lang{$current_language}{gha_smk_msg2} }
-				else				{ $smk .= $lang{$current_language}{gha_smk_msg3} }
+				if ($cigarette_years_quit <= 2)	{ $smk .= $lang{gha_smk_msg2}{$current_language} }
+				else				{ $smk .= $lang{gha_smk_msg3}{$current_language} }
 				}
 	elsif($smoke_flag == 2){
-				if ($cigs_a_day == 1 )		{ $smk .= $lang{$current_language}{gha_smk_msg4} }
-				else 				{ $smk .= $lang{$current_language}{gha_smk_msg6} }
-				if ($cigs_a_day < 21) 		{ $smk .= $lang{$current_language}{gha_smk_msg7} }
-				else 				{ $smk .= $lang{$current_language}{gha_smk_msg8} }
-				$smk .= $lang{$current_language}{gha_smk_msg9};
-				$smk .= $lang{$current_language}{gha_smk_msg10};
-				$smk .= $lang{$current_language}{gha_smk_msg11};
-				$smk .= $lang{$current_language}{gha_smk_msg12};
+				if ($cigs_a_day == 1 )		{ $smk .= $lang{gha_smk_msg4}{$current_language} }
+				else 				{ $smk .= $lang{gha_smk_msg6}{$current_language} }
+				if ($cigs_a_day < 21) 		{ $smk .= $lang{gha_smk_msg7}{$current_language} }
+				else 				{ $smk .= $lang{gha_smk_msg8}{$current_language} }
+				$smk .= $lang{gha_smk_msg9}{$current_language};
+				$smk .= $lang{gha_smk_msg10}{$current_language};
+				$smk .= $lang{gha_smk_msg11}{$current_language};
+				$smk .= $lang{gha_smk_msg12}{$current_language};
 				}
 	};
 $smoke_message = $smk;
 
 ## smoking cigars, pipes or chewing tobacco
-$chew_message = $lang{$current_language}{gha_chew_msg}
+$chew_message = $lang{gha_chew_msg}{$current_language}
 	if $chews_flag;
 
 my $smk_other;
 	{
 		if ($cigars_flag ||
 			$pipes_flag) {
-					$smk_other = $lang{$current_language}{gha_smk_msg13};
-					if ($cigars_flag ) 		{ $smk_other .= " $lang{$current_language}{cigars}"}
+					$smk_other = $lang{gha_smk_msg13}{$current_language};
+					if ($cigars_flag ) 		{ $smk_other .= " $lang{cigars}{$current_language}"}
 					if ($pipes_flag &&
-						$cigars_flag) 		{ $smk_other .= " $lang{$current_language}{and}" }
-					if ($pipes_flag) 		{ $smk_other .= " $lang{$current_language}{a} $lang{$current_language}{pipe}.  " }
+						$cigars_flag) 		{ $smk_other .= " $lang{and}{$current_language}" }
+					if ($pipes_flag) 		{ $smk_other .= " $lang{a}{$current_language} $lang{pipe}{$current_language}.  " }
 					else 				{ $smk_other .= ".  " }
 				      }
 		if ( $cigars_flag ||
 			$pipes_flag ||
-			$chews_flag ) { $smk_other .= $lang{$current_language}{gha_smk_msg14} }
+			$chews_flag ) { $smk_other .= $lang{gha_smk_msg14}{$current_language} }
 	}
 $other_smoke_message = $smk_other;
 
@@ -437,31 +448,31 @@ $other_smoke_message = $smk_other;
 my $DiabMsg='';
 {	
 	if ($diabetes_flag == 1) {
-				$DiabMsg = $lang{$current_language}{gha_diab_msg1};
-				if ($bmi > 24.9) 	{ $DiabMsg .= $lang{$current_language}{gha_diab_msg2} }
-				else			{ $DiabMsg .= $lang{$current_language}{gha_diab_msg3} }
-				$DiabMsg .= $lang{$current_language}{gha_diab_msg4};
+				$DiabMsg = $lang{gha_diab_msg1}{$current_language};
+				if ($bmi > 24.9) 	{ $DiabMsg .= $lang{gha_diab_msg2}{$current_language} }
+				else			{ $DiabMsg .= $lang{gha_diab_msg3}{$current_language} }
+				$DiabMsg .= $lang{gha_diab_msg4}{$current_language};
 				}
 	elsif($diabetes_flag == 0 && ($glucose_flag >= 3 && $glucose)){
-				$DiabMsg = $lang{$current_language}{gha_diab_msg5};
-				if($glucose_flag == 3){ $DiabMsg .= $lang{$current_language}{gha_diab_msg6};}
-				else	{ $DiabMsg .= $lang{$current_language}{gha_diab_msg7};}
-				$DiabMsg .= $lang{$current_language}{gha_diab_msg8}
+				$DiabMsg = $lang{gha_diab_msg5}{$current_language};
+				if($glucose_flag == 3){ $DiabMsg .= $lang{gha_diab_msg6}{$current_language};}
+				else	{ $DiabMsg .= $lang{gha_diab_msg7}{$current_language};}
+				$DiabMsg .= $lang{gha_diab_msg8}{$current_language};
 				}
 	if($diabetes_flag == 0 && $family_diabetes eq YES) { 
-		push @messages, $lang{$current_language}{gha_diab_msg9};
+		push @messages, $lang{gha_diab_msg9}{$current_language};
 		if ($bmi > 24.9  || $age > 45 || $exercise_flag == 2) { 
-			push @messages, $lang{$current_language}{gha_diab_msg10}; 
-			if ($bmi > 24.9 ) { push @messages, $lang{$current_language}{gha_diab_msg11}; 
+			push @messages, $lang{gha_diab_msg10}{$current_language}; 
+			if ($bmi > 24.9 ) { push @messages, $lang{gha_diab_msg11}{$current_language}; 
 					if($age > 45 && $exercise_flag == 2){ push @messages, ", "; }
-					elsif($age > 45 || $exercise_flag == 2){ push @messages," $lang{$current_language}{and} "; }
+					elsif($age > 45 || $exercise_flag == 2){ push @messages," $lang{and}{$current_language} "; }
 					}
-			if ($age > 45 ) { push @messages, $lang{$current_language}{gha_diab_msg12}; 
-					if($exercise_flag == 2){ push @messages, " $lang{$current_language}{and} ";}
+			if ($age > 45 ) { push @messages, $lang{gha_diab_msg12}{$current_language}; 
+					if($exercise_flag == 2){ push @messages, " $lang{and}{$current_language} ";}
 					}			
-			if ($exercise_flag == 2 ) { push @messages, $lang{$current_language}{gha_diab_msg13}; }
+			if ($exercise_flag == 2 ) { push @messages, $lang{gha_diab_msg13}{$current_language}; }
 					}
-			push @messages,$lang{$current_language}{gha_diab_msg14}; 			
+			push @messages,$lang{gha_diab_msg14}{$current_language}; 			
 			$DiabMsg .= join "", @messages;
 		}
 
@@ -472,12 +483,12 @@ $diabetes_message = $DiabMsg;
 my $LossMsg='';
 {
 	if ($loss_flag > 0) {
-		$LossMsg = $lang{$current_language}{gha_loss_msg1};
-		if ($loss_flag == 1)	{ $LossMsg .= " $lang{$current_language}{a}" }
-		else 			{ $LossMsg .= $lang{$current_language}{gha_loss_msg2} }
-		$LossMsg .= $lang{$current_language}{gha_loss_msg3};
-		$LossMsg .= $lang{$current_language}{gha_loss_msg4};
-		$LossMsg .= $lang{$current_language}{gha_loss_msg5};
+		$LossMsg = $lang{gha_loss_msg1}{$current_language};
+		if ($loss_flag == 1)	{ $LossMsg .= " $lang{a}{$current_language}" }
+		else 			{ $LossMsg .= $lang{gha_loss_msg2}{$current_language} }
+		$LossMsg .= $lang{gha_loss_msg3}{$current_language};
+		$LossMsg .= $lang{gha_loss_msg4}{$current_language};
+		$LossMsg .= $lang{gha_loss_msg5}{$current_language};
 	}
 }
 $loss_message = $LossMsg;
@@ -505,17 +516,17 @@ my $depression_flag = do
 {
 if($stress_flag == 0)
 	{
-	$anxiety_message = $lang{$current_language}{hra_anxiety_msg1};
+	$anxiety_message = $lang{hra_anxiety_msg1}{$current_language};
 	$anxiety_message =~ s/BOLD_ON/$bold_on/;
 	$anxiety_message =~ s/BOLD_OFF/$bold_off/;
 	}
 elsif ($stress_flag == 2)
 	{
-	$anxiety_message = $lang{$current_language}{hra_anxiety_msg2};
+	$anxiety_message = $lang{hra_anxiety_msg2}{$current_language};
 	}
 else
 	{
-	$anxiety_message = $lang{$current_language}{hra_anxiety_msg3};
+	$anxiety_message = $lang{hra_anxiety_msg3}{$current_language};
 	}
 	$anxiety_message =~ s/PARA/$para/;
 	$anxiety_message = qq|| if ($r2c_stress eq YES);
@@ -523,17 +534,17 @@ else
 {
 if($depression_flag == 0)
 	{
-	$mood_message = $lang{$current_language}{hra_mood_msg1};
+	$mood_message = $lang{hra_mood_msg1}{$current_language};
 	$mood_message =~ s/BOLD_ON/$bold_on/;
 	$mood_message =~ s/BOLD_OFF/$bold_off/;
 	}
 elsif ($depression_flag == 2)
 	{
-	$mood_message = $lang{$current_language}{hra_mood_msg2};
+	$mood_message = $lang{hra_mood_msg2}{$current_language};
 	}
 else
 	{
-	$mood_message = $lang{$current_language}{hra_mood_msg2};
+	$mood_message = $lang{hra_mood_msg2}{$current_language};
 	}
 	$mood_message =~ s/PARA/$para/;
 }
@@ -541,40 +552,40 @@ else
 ## Nutrition Message
 $nutrition_short_risk = do
 		{
-		if(    $breads_check + $vegetables_check + $fruits_check + $meats_check + $fatty_meats_check + $rich_breads_check + $desserts_check >= 16) 	{ $lang{$current_language}{low_risk} }
-		elsif( $breads_check + $vegetables_check + $fruits_check + $meats_check + $fatty_meats_check + $rich_breads_check + $desserts_check >= 12 ) 	{ $lang{$current_language}{moderate_risk} }
-		else 																		{ $lang{$current_language}{high_risk} }
+		if(    $breads_check + $vegetables_check + $fruits_check + $meats_check + $fatty_meats_check + $rich_breads_check + $desserts_check >= 16) 	{ $lang{low_risk}{$current_language} }
+		elsif( $breads_check + $vegetables_check + $fruits_check + $meats_check + $fatty_meats_check + $rich_breads_check + $desserts_check >= 12 ) 	{ $lang{moderate_risk}{$current_language} }
+		else 																		{ $lang{high_risk}{$current_language} }
 		};
 
 $nutrition_message = do
 		{
-		if ($nutrition_short_risk eq 'Low risk') 	{ $lang{$current_language}{hra_nutrition_msg1} }
-		elsif ($nutrition_short_risk eq 'Moderate risk'){ $lang{$current_language}{hra_nutrition_msg2} }
-		else						{ $lang{$current_language}{hra_nutrition_msg3} }
+		if ($nutrition_short_risk eq 'Low risk') 	{ $lang{hra_nutrition_msg1}{$current_language} }
+		elsif ($nutrition_short_risk eq 'Moderate risk'){ $lang{hra_nutrition_msg2}{$current_language} }
+		else						{ $lang{hra_nutrition_msg3}{$current_language} }
 		};
 
 # body measure messages
 ## weight
-$weight_message = $lang{$current_language}{gha_weight_msg1};
+$weight_message = $lang{gha_weight_msg1}{$current_language};
 $weight_message .= do
 		{
-		if	( $weight <= $low_weight) 	{ $lang{$current_language}{weight_msg5} }
-		elsif	( $weight <= $high_weight ) 	{ $lang{$current_language}{weight_msg1} }
-		elsif   ( $bmi <= BMI_OBESE )	{ $lang{$current_language}{weight_msg3} }
-		else				{ $lang{$current_language}{weight_msg4} }
+		if	( $weight <= $low_weight) 	{ $lang{weight_msg5}{$current_language} }
+		elsif	( $weight <= $high_weight ) 	{ $lang{weight_msg1}{$current_language} }
+		elsif   ( $bmi <= BMI_OBESE )	{ $lang{weight_msg3}{$current_language} }
+		else				{ $lang{weight_msg4}{$current_language} }
 		};
-$weight_message .= $lang{$current_language}{gha_weight_msg2};
-$weight_message .= $lang{$current_language}{gha_weight_msg3} if ($waist_flag >= 3 && $waist);
+$weight_message .= $lang{gha_weight_msg2}{$current_language};
+$weight_message .= $lang{gha_weight_msg3}{$current_language} if ($waist_flag >= 3 && $waist);
 $weight_message =~ s/HEIGHT_IMPERIAL/$height_imperial/;
 if($bodyfat){
 	my $bfat = '';
 	if( $sex eq MALE )
 		{
-	$bfat = $lang{$current_language}{gha_bfat_msg1};
+	$bfat = $lang{gha_bfat_msg1}{$current_language};
 	}
 else
 	{
-	$bfat = $lang{$current_language}{gha_bfat_msg2};
+	$bfat = $lang{gha_bfat_msg2}{$current_language};
 	}
 	$weight_message .= $bfat;
 }
@@ -596,15 +607,15 @@ if($waist && $hip){
 			}
 		};
 
-my $w2hip = "$lang{$current_language}{gha_w2hip_msg1} $ratio.";  
+my $w2hip = "$lang{gha_w2hip_msg1}{$current_language} $ratio.";  
 
 if ( $shape eq 'pear' )
 		{
-$w2hip .= $lang{$current_language}{gha_w2hip_msg2};
+$w2hip .= $lang{gha_w2hip_msg2}{$current_language};
 		}
 else
 		{
-$w2hip .= $lang{$current_language}{gha_w2hip_msg3};
+$w2hip .= $lang{gha_w2hip_msg3}{$current_language};
 		}
 
 	$weight_message .= $w2hip;
@@ -616,21 +627,21 @@ my $BPMsg;
 {
 	$BPMsg = '';
 	my $bp_line = $bp_sys . "/" .$bp_dias if ($bp_sys && $bp_dias);
-	if ($bp_line eq '') { $bp_line = $lang{$current_language}{gha_bp_msg1} . lc($bp_check) }
-	if ($bp_flag == 3) 	{ $BPMsg = $lang{$current_language}{gha_bp_msg2} }
-	if ($bp_flag == 4) 	{ $BPMsg = $lang{$current_language}{gha_bp_msg3} }
-	elsif ($bp_flag == 2) 	{ $BPMsg = $lang{$current_language}{gha_bp_msg4} }
-	elsif ($bp_flag == 1)	{ $BPMsg = $lang{$current_language}{gha_bp_msg5}	 }
-	elsif ($bp_flag == 0)	{ $BPMsg = $lang{$current_language}{gha_bp_msg6} }
-	$BPMsg .= $lang{$current_language}{gha_bp_msg7};
+	if ($bp_line eq '') { $bp_line = $lang{gha_bp_msg1}{$current_language} . lc($bp_check) }
+	if ($bp_flag == 3) 	{ $BPMsg = $lang{gha_bp_msg2}{$current_language} }
+	if ($bp_flag == 4) 	{ $BPMsg = $lang{gha_bp_msg3}{$current_language} }
+	elsif ($bp_flag == 2) 	{ $BPMsg = $lang{gha_bp_msg4}{$current_language} }
+	elsif ($bp_flag == 1)	{ $BPMsg = $lang{gha_bp_msg5}{$current_language}	 }
+	elsif ($bp_flag == 0)	{ $BPMsg = $lang{gha_bp_msg6}{$current_language} }
+	$BPMsg .= $lang{gha_bp_msg7}{$current_language};
 	# since blood pressure people don't take their medicine too well add  some emphasis
-	if ($bp_meds eq YES) { $BPMsg .= $lang{$current_language}{gha_bp_msg8}	}
+	if ($bp_meds eq YES) { $BPMsg .= $lang{gha_bp_msg8}{$current_language}	}
 	if ($bp_flag) {
-			$BPMsg .= $lang{$current_language}{gha_bp_msg9}	;
-			if ($bp_meds eq YES) { $BPMsg .= $lang{$current_language}{gha_bp_msg10} }
-			$BPMsg .= $lang{$current_language}{gha_bp_msg11};
-			if ($bp_meds eq NO) { $BPMsg .= $lang{$current_language}{gha_bp_msg12} }
-			$BPMsg .= $lang{$current_language}{gha_bp_msg13};
+			$BPMsg .= $lang{gha_bp_msg9}{$current_language}	;
+			if ($bp_meds eq YES) { $BPMsg .= $lang{gha_bp_msg10}{$current_language} }
+			$BPMsg .= $lang{gha_bp_msg11}{$current_language};
+			if ($bp_meds eq NO) { $BPMsg .= $lang{gha_bp_msg12}{$current_language} }
+			$BPMsg .= $lang{gha_bp_msg13}{$current_language};
 		      }
 	$BPMsg =~  s/BP_LINE/$bp_line/;
 }
@@ -639,9 +650,9 @@ $bp_message = $BPMsg;
 if($pulse_rate_60_seconds){
 $pulse_message = do
 		{
-		if	( $pulse_rate_60_seconds <= 59.9) 	{ $lang{$current_language}{gha_pulse_msg1};  }
-		elsif	( $pulse_rate_60_seconds > 100 ) 	{ $lang{$current_language}{gha_pulse_msg2} }
-		else						{ $lang{$current_language}{gha_pulse_msg3} }
+		if	( $pulse_rate_60_seconds <= 59.9) 	{ $lang{gha_pulse_msg1}{$current_language};  }
+		elsif	( $pulse_rate_60_seconds > 100 ) 	{ $lang{gha_pulse_msg2}{$current_language} }
+		else						{ $lang{gha_pulse_msg3}{$current_language} }
 		};
 $pulse_message =~ s/PULSE_RATE_60_SECONDS/$pulse_rate_60_seconds/;
 $pulse_message =~ s/PARA/$para/;
@@ -652,54 +663,54 @@ my $CholMsg;
 {
 	$CholMsg='';
 	if ($cholesterol_flag == 0) {
-		$CholMsg = $lang{$current_language}{gha_chol_msg1};
+		$CholMsg = $lang{gha_chol_msg1}{$current_language};
 		if ($cholesterol_check eq DONT_KNOW) {
-			$CholMsg = $lang{$current_language}{gha_chol_msg2};
+			$CholMsg = $lang{gha_chol_msg2}{$current_language};
 		}
 	}
 	if ($cholesterol_flag == 1) {
-		my $t_chol = $cholesterol || $lang{$current_language}{normal_or_low};
+		my $t_chol = $cholesterol || $lang{normal_or_low}{$current_language};
 		if($t_chol ne "Normal or low"){
-			$CholMsg = "$t_chol $lang{$current_language}{gha_chol_msg3}"}
+			$CholMsg = "$t_chol $lang{gha_chol_msg3}{$current_language}"}
 		else	{
-			$CholMsg = "$t_chol $lang{$current_language}{gha_chol_msg4}"}
+			$CholMsg = "$t_chol $lang{gha_chol_msg4}{$current_language}"}
 		}
 	elsif ($cholesterol_flag == 2) {
-		$CholMsg = "$cholesterol $lang{$current_language}{gha_chol_msg5}";
-		$CholMsg .= $lang{$current_language}{gha_chol_msg6};}
+		$CholMsg = "$cholesterol $lang{gha_chol_msg5}{$current_language}";
+		$CholMsg .= $lang{gha_chol_msg6}{$current_language};}
 	elsif ($cholesterol_flag == 3){
 		my $t_chol = $cholesterol || "High";
 		if($t_chol ne "High"){
-			$CholMsg = "$t_chol $lang{$current_language}{gha_chol_msg7}";}
+			$CholMsg = "$t_chol $lang{gha_chol_msg7}{$current_language}";}
 		else	{
-			$CholMsg = "$t_chol $lang{$current_language}{gha_chol_msg8}";}
-		$CholMsg .= $lang{$current_language}{gha_chol_msg9};
-		$CholMsg .= $lang{$current_language}{gha_chol_msg10};}
+			$CholMsg = "$t_chol $lang{gha_chol_msg8}{$current_language}";}
+		$CholMsg .= $lang{gha_chol_msg9}{$current_language};
+		$CholMsg .= $lang{gha_chol_msg10}{$current_language};}
 	elsif ($cholesterol_flag == 4){
-		$CholMsg = "$cholesterol $lang{$current_language}{gha_chol_msg11}";
-		$CholMsg .= $lang{$current_language}{gha_chol_msg12};
-		$CholMsg .= $lang{$current_language}{gha_chol_msg13};	}
+		$CholMsg = "$cholesterol $lang{gha_chol_msg11}{$current_language}";
+		$CholMsg .= $lang{gha_chol_msg12}{$current_language};
+		$CholMsg .= $lang{gha_chol_msg13}{$current_language};	}
 	if ($ldl_flag && $ldl) { 
-		$CholMsg .= $lang{$current_language}{gha_chol_msg14};
-		if ($ldl_flag == 1) { $CholMsg .= $lang{$current_language}{gha_chol_msg15}; }
-		elsif ($ldl_flag == 2)  { $CholMsg .= $lang{$current_language}{gha_chol_msg16}; }
-		elsif ($ldl_flag == 3)  { $CholMsg .= $lang{$current_language}{gha_chol_msg17}; }
-		elsif ($ldl_flag == 4)  { $CholMsg .= $lang{$current_language}{gha_chol_msg18}; }
+		$CholMsg .= $lang{gha_chol_msg14}{$current_language};
+		if ($ldl_flag == 1) { $CholMsg .= $lang{gha_chol_msg15}{$current_language}; }
+		elsif ($ldl_flag == 2)  { $CholMsg .= $lang{gha_chol_msg16}{$current_language}; }
+		elsif ($ldl_flag == 3)  { $CholMsg .= $lang{gha_chol_msg17}{$current_language}; }
+		elsif ($ldl_flag == 4)  { $CholMsg .= $lang{gha_chol_msg18}{$current_language}; }
 		}
 		
-	if ($hdl_flag == 2) 	{ $CholMsg .= $lang{$current_language}{gha_chol_msg19} }
+	if ($hdl_flag == 2) 	{ $CholMsg .= $lang{gha_chol_msg19}{$current_language} }
 	elsif ($hdl_flag == 0 &&
-		$cholesterol > 1) 	{ $CholMsg .= $lang{$current_language}{gha_chol_msg20} }
-	elsif ($hdl_flag == 0) 	{ $CholMsg .= $lang{$current_language}{gha_chol_msg21} }
-	else 			{ $CholMsg .= $lang{$current_language}{gha_chol_msg22}}
+		$cholesterol > 1) 	{ $CholMsg .= $lang{gha_chol_msg20}{$current_language} }
+	elsif ($hdl_flag == 0) 	{ $CholMsg .= $lang{gha_chol_msg21}{$current_language} }
+	else 			{ $CholMsg .= $lang{gha_chol_msg22}{$current_language}}
 	if ( $cholesterol_ratio_flag ){
-		$CholMsg .= "$lang{$current_language}{gha_chol_msg23} $cholesterol_ratio.";
-		if($cholesterol_ratio_flag == 1) {$CholMsg .= $lang{$current_language}{gha_chol_msg24}; }
-		if($cholesterol_ratio_flag == 2) {$CholMsg .= $lang{$current_language}{gha_chol_msg25}; }
-		if($cholesterol_ratio_flag >= 3) {$CholMsg .= $lang{$current_language}{gha_chol_msg26}; }
+		$CholMsg .= "$lang{gha_chol_msg23}{$current_language} $cholesterol_ratio.";
+		if($cholesterol_ratio_flag == 1) {$CholMsg .= $lang{gha_chol_msg24}{$current_language}; }
+		if($cholesterol_ratio_flag == 2) {$CholMsg .= $lang{gha_chol_msg25}{$current_language}; }
+		if($cholesterol_ratio_flag >= 3) {$CholMsg .= $lang{gha_chol_msg26}{$current_language}; }
 		}
 	if ( $triglycerides_flag >= 3  && $triglycerides) {
-		$CholMsg .= $lang{$current_language}{gha_chol_msg27};
+		$CholMsg .= $lang{gha_chol_msg27}{$current_language};
 		}
 }
 $CholMsg =~ s/CHOLESTEROL_TARGET/$cholesterol_target/g;
@@ -716,11 +727,11 @@ my $hga1cMsg;
 		$hga1cMsg = do
 			{
 			if($diabetes_flag &&
-			   $HgA1C <= 6.5 )	{ $lang{$current_language}{gha_hga1c_msg1} }
+			   $HgA1C <= 6.5 )	{ $lang{gha_hga1c_msg1}{$current_language} }
 			elsif($diabetes_flag &&
-			   $HgA1C > 6.5 )	{ $lang{$current_language}{gha_hga1c_msg2} }
-			elsif($HgA1C <= 6.5)	{ $lang{$current_language}{gha_hga1c_msg3} }
-			elsif( $HgA1C > 6.5 )   { $lang{$current_language}{gha_hga1c_msg4} }
+			   $HgA1C > 6.5 )	{ $lang{gha_hga1c_msg2}{$current_language} }
+			elsif($HgA1C <= 6.5)	{ $lang{gha_hga1c_msg3}{$current_language} }
+			elsif( $HgA1C > 6.5 )   { $lang{gha_hga1c_msg4}{$current_language} }
 			};
 		$hga1cMsg =~ s/HGA1C/$HgA1C/g ;	
 		}
@@ -737,10 +748,10 @@ my $liverMsg;
 		++$lcount if (lc $liver_ggt eq 'fail');
 		$liverMsg = do
 			{
-			if($lcount == 0)	{ $lang{$current_language}{gha_liver_msg1} }
+			if($lcount == 0)	{ $lang{gha_liver_msg1}{$current_language} }
 			elsif($lcount == 3 ||
-				$lcount == 2 )	{ $lang{$current_language}{gha_liver_msg2} }
-			elsif($lcount == 1 )	{ $lang{$current_language}{gha_liver_msg3} }
+				$lcount == 2 )	{ $lang{gha_liver_msg2}{$current_language} }
+			elsif($lcount == 1 )	{ $lang{gha_liver_msg3}{$current_language} }
 			}
 		}
 		
@@ -749,30 +760,30 @@ $liver_message = $liverMsg;
 
 # Habits
 ## Driving related messages
-if($age < 41 && $seat_belt_flag) { $seat_belt_message = $lang{$current_language}{gha_seat_belt_msg1}}
-$seat_belt_message .= $lang{$current_language}{gha_seat_belt_msg2} 
+if($age < 41 && $seat_belt_flag) { $seat_belt_message = $lang{gha_seat_belt_msg1}{$current_language}}
+$seat_belt_message .= $lang{gha_seat_belt_msg2}{$current_language} 
 	if $seat_belt_flag ;
 $seat_belt_message =~ s/BOLD_ON/$bold_on/;
 $seat_belt_message =~ s/BOLD_OFF/$bold_off/;
-if ($speed_flag && $seat_belt_flag) {$speed_message = $lang{$current_language}{gha_speed_msg1}; }
-elsif ($speed_flag){$speed_message = $lang{$current_language}{gha_seat_belt_msg1} if $age < 41;
-	$speed_message .= $lang{$current_language}{gha_speed_msg2}; }
+if ($speed_flag && $seat_belt_flag) {$speed_message = $lang{gha_speed_msg1}{$current_language}; }
+elsif ($speed_flag){$speed_message = $lang{gha_seat_belt_msg1}{$current_language} if $age < 41;
+	$speed_message .= $lang{gha_speed_msg2}{$current_language}; }
 
-$drink_and_drive_message = $lang{$current_language}{gha_drink_and_drive_msg}
+$drink_and_drive_message = $lang{gha_drink_and_drive_msg}{$current_language}
 	if $drink_and_drive_flag ;
 
-$helmet_message = $lang{$current_language}{gha_helmet_msg}
+$helmet_message = $lang{gha_helmet_msg}{$current_language}
 	if $helmet_flag > 1;
 $helmet_message =~ s/BOLD_ON/$bold_on/;
 $helmet_message =~ s/BOLD_OFF/$bold_off/;
 ## Exercise
-my @ExerMsg = ( $lang{$current_language}{gha_exercise_msg0}, "", "", "", "");
+my @ExerMsg = ( $lang{gha_exercise_msg0}{$current_language}, "", "", "", "");
 $exercise_message = do
 		{
 		if ($exercise_flag == 0 ||
-			$exercise_flag == 3) 	{ $lang{$current_language}{gha_exercise_msg1} }
-		elsif ($exercise_flag == 1)	{ $lang{$current_language}{gha_exercise_msg2} }
-		else				{ $lang{$current_language}{gha_exercise_msg2} }
+			$exercise_flag == 3) 	{ $lang{gha_exercise_msg1}{$current_language} }
+		elsif ($exercise_flag == 1)	{ $lang{gha_exercise_msg2}{$current_language} }
+		else				{ $lang{gha_exercise_msg2}{$current_language} }
 		};
 
 $exercise_message =~ s/EXEC_MSG/$ExerMsg[$weight_flag]/;
@@ -783,11 +794,11 @@ $mammogram_message = do
 			{
 			if ($actual_age > 50 &&
 				($mammogram_female ne LESS_THAN_A_YEAR &&
-				 $mammogram_female ne ONE_YEAR_AGO)) 		{ $lang{$current_language}{gha_mammogram_msg1} }
+				 $mammogram_female ne ONE_YEAR_AGO)) 		{ $lang{gha_mammogram_msg1}{$current_language} }
 			elsif ($actual_age > 40 &&
 				($mammogram_female ne LESS_THAN_A_YEAR &&
 				 $mammogram_female ne ONE_YEAR_AGO &&
-				 $mammogram_female ne TWO_YEARS_AGO)) 		{ $lang{$current_language}{gha_mammogram_msg2} }
+				 $mammogram_female ne TWO_YEARS_AGO)) 		{ $lang{gha_mammogram_msg2}{$current_language} }
 			};
 
 ## Breast cancer
@@ -795,10 +806,10 @@ my $bc;
 {
 	if ($FBC_flag == 1 ||
 		$FBC_flag == 2){
-				$bc = $lang{$current_language}{gha_bc_msg1};
-				if($mammogram_flag < 2)		{ $bc .= $lang{$current_language}{gha_bc_msg2} }
+				$bc = $lang{gha_bc_msg1}{$current_language};
+				if($mammogram_flag < 2)		{ $bc .= $lang{gha_bc_msg2}{$current_language} }
 				elsif($actual_age >= 35 &&
-					$mammogram_flag > 1)	{ $bc .= $lang{$current_language}{gha_bc_msg3} }
+					$mammogram_flag > 1)	{ $bc .= $lang{gha_bc_msg3}{$current_language} }
 				}
 }
 $breast_cancer_message = $bc;
@@ -807,10 +818,10 @@ $breast_cancer_message = $bc;
 $pap_message = do
 		{
 		if ($hyst_female eq NO &&
-			$pap_flag > 1) 		{ $lang{$current_language}{gha_pap_msg1}}
+			$pap_flag > 1) 		{ $lang{gha_pap_msg1}{$current_language}}
 		elsif ($hyst_female eq NO &&
-			$pap_flag <= 1) 	{ $lang{$current_language}{gha_pap_msg2} }
-		elsif ($hyst_female eq YES)	{ $lang{$current_language}{gha_pap_msg3} }
+			$pap_flag <= 1) 	{ $lang{gha_pap_msg2}{$current_language} }
+		elsif ($hyst_female eq YES)	{ $lang{gha_pap_msg3}{$current_language} }
 		};
 
 # end of Female
@@ -819,16 +830,16 @@ else 	{
 # Male messages
 ## Prostate
 	my $ProstMsg;
-	if ($actual_age >= 40){ $ProstMsg = $lang{$current_language}{gha_prost_msg1}; }
+	if ($actual_age >= 40){ $ProstMsg = $lang{gha_prost_msg1}{$current_language}; }
 	if ($actual_age >= 40 && 
 		( $fat_flag == 0 ||
 		  $race eq AFRICAN_AMERICAN ||
 		  $actual_age >= 50 )){ 
-			$ProstMsg .= " $lang{$current_language}{gha_prost_msg2}";
-			if ($prostate_flag > 1){  $ProstMsg .= $lang{$current_language}{gha_prost_msg3}; }
+			$ProstMsg .= " $lang{gha_prost_msg2}{$current_language}";
+			if ($prostate_flag > 1){  $ProstMsg .= $lang{gha_prost_msg3}{$current_language}; }
 			}
 	if ($actual_age >= 40 && 
-		$prostate_flag <= 1){  $ProstMsg .= $lang{$current_language}{gha_prost_msg4} }
+		$prostate_flag <= 1){  $ProstMsg .= $lang{gha_prost_msg4}{$current_language} }
 
 	$prostate_message = $ProstMsg;
 	}
@@ -839,17 +850,17 @@ my $AlcMsg;
 {
 	if($alcohol_flag == 0)	{  }
 	elsif($alcohol_flag == 1){
-				if ($drinks_week == 1)	{ $AlcMsg = $lang{$current_language}{gha_alc_msg1} }
-				else 			{ $AlcMsg = $lang{$current_language}{gha_alc_msg2} }
-				$AlcMsg .= $lang{$current_language}{gha_alc_msg3};
+				if ($drinks_week == 1)	{ $AlcMsg .= $lang{gha_alc_msg1}{$current_language} }
+				else 			{ $AlcMsg .= $lang{gha_alc_msg2}{$current_language} }
+				$AlcMsg .= $lang{gha_alc_msg3}{$current_language};
 				}
 	elsif ($alcohol_flag == 2){
-				$AlcMsg = $lang{$current_language}{gha_alc_msg4};
+				$AlcMsg .= $lang{gha_alc_msg4}{$current_language};
 				}
 	elsif ($alcohol_flag == 3){
-				$AlcMsg = $lang{$current_language}{gha_alc_msg6};
-				$AlcMsg .= $lang{$current_language}{gha_alc_msg7};
-				$AlcMsg .= $lang{$current_language}{gha_alc_msg8};
+				$AlcMsg .= $lang{gha_alc_msg6}{$current_language};
+				$AlcMsg .= $lang{gha_alc_msg7}{$current_language};
+				$AlcMsg .= $lang{gha_alc_msg8}{$current_language};
 				}
 }
 $alcohol_message = $AlcMsg;
@@ -858,53 +869,53 @@ $drinks_week = 0 if ($drinks_week eq '' || $drinks_week < 1);
 ## Fiber
 $fiber_message = do
 		{
-		if ($fiber_flag == 0) 	{ $lang{$current_language}{gha_fiber_msg1} }
-		else 			{ $lang{$current_language}{gha_fiber_msg2} }
+		if ($fiber_flag == 0) 	{ $lang{gha_fiber_msg1}{$current_language} }
+		else 			{ $lang{gha_fiber_msg2}{$current_language} }
 		};
 
 ## Fat intake
 $fat_message = do
 		{
-		if ($fat_flag == 1) 	{ $lang{$current_language}{gha_fat_msg1} }
-		else 			{ $lang{$current_language}{gha_fat_msg2} }
+		if ($fat_flag == 1) 	{ $lang{gha_fat_msg1}{$current_language} }
+		else 			{ $lang{gha_fat_msg2}{$current_language} }
 		};
 
 # Recommendations for checkups
 #status messages
 @recommendations = ();
-@recommendations = ( $lang{$current_language}{gha_recommendation1},$lang{$current_language}{gha_recommendation2},$lang{$current_language}{gha_recommendation3},$lang{$current_language}{gha_recommendation4},$lang{$current_language}{gha_recommendation5},$lang{$current_language}{gha_recommendation6},$lang{$current_language}{gha_recommendation7} )
+@recommendations = ( $lang{gha_recommendation1}{$current_language},$lang{gha_recommendation2}{$current_language},$lang{gha_recommendation3}{$current_language},$lang{gha_recommendation4}{$current_language},$lang{gha_recommendation5}{$current_language},$lang{gha_recommendation6}{$current_language},$lang{gha_recommendation7}{$current_language} )
 	if $sex eq MALE &&
 		$actual_age < 40;
 
-@recommendations = ( $lang{$current_language}{gha_recommendation1},$lang{$current_language}{gha_recommendation2},$lang{$current_language}{gha_recommendation3},$lang{$current_language}{gha_recommendation4},$lang{$current_language}{gha_recommendation8},$lang{$current_language}{gha_recommendation6},$lang{$current_language}{gha_recommendation9} )
+@recommendations = ( $lang{gha_recommendation1}{$current_language},$lang{gha_recommendation2}{$current_language},$lang{gha_recommendation3}{$current_language},$lang{gha_recommendation4}{$current_language},$lang{gha_recommendation8}{$current_language},$lang{gha_recommendation6}{$current_language},$lang{gha_recommendation9}{$current_language} )
 	if $sex eq MALE &&
 		($actual_age >= 40 && $actual_age < 50);
 
-@recommendations = ( $lang{$current_language}{gha_recommendation1},$lang{$current_language}{gha_recommendation2},$lang{$current_language}{gha_recommendation3},$lang{$current_language}{gha_recommendation4},$lang{$current_language}{gha_recommendation8},$lang{$current_language}{gha_recommendation6},$lang{$current_language}{gha_recommendation9} )
+@recommendations = ( $lang{gha_recommendation1}{$current_language},$lang{gha_recommendation2}{$current_language},$lang{gha_recommendation3}{$current_language},$lang{gha_recommendation4}{$current_language},$lang{gha_recommendation8}{$current_language},$lang{gha_recommendation6}{$current_language},$lang{gha_recommendation9}{$current_language} )
 	if $sex eq MALE &&
 		($actual_age >= 50 && $actual_age < 65);
 
-@recommendations = ( $lang{$current_language}{gha_recommendation1},$lang{$current_language}{gha_recommendation3},$lang{$current_language}{gha_recommendation8},$lang{$current_language}{gha_recommendation6},$lang{$current_language}{gha_recommendation11},$lang{$current_language}{gha_recommendation9},$lang{$current_language}{gha_recommendation10} )
+@recommendations = ( $lang{gha_recommendation1}{$current_language},$lang{gha_recommendation3}{$current_language},$lang{gha_recommendation8}{$current_language},$lang{gha_recommendation6}{$current_language},$lang{gha_recommendation11}{$current_language},$lang{gha_recommendation9}{$current_language},$lang{gha_recommendation10}{$current_language} )
 	if $sex eq MALE &&
 		$actual_age >= 65;
 
-@recommendations = ( $lang{$current_language}{gha_recommendation1},$lang{$current_language}{gha_recommendation2},$lang{$current_language}{gha_recommendation3},$lang{$current_language}{gha_recommendation4},$lang{$current_language}{gha_recommendation12},$lang{$current_language}{gha_recommendation13},$lang{$current_language}{gha_recommendation6},$lang{$current_language}{gha_recommendation7} )
+@recommendations = ( $lang{gha_recommendation1}{$current_language},$lang{gha_recommendation2}{$current_language},$lang{gha_recommendation3}{$current_language},$lang{gha_recommendation4}{$current_language},$lang{gha_recommendation12}{$current_language},$lang{gha_recommendation13}{$current_language},$lang{gha_recommendation6}{$current_language},$lang{gha_recommendation7}{$current_language} )
 	if $sex eq FEMALE &&
 		$actual_age < 35;
 
-@recommendations = ( $lang{$current_language}{gha_recommendation1},$lang{$current_language}{gha_recommendation2},$lang{$current_language}{gha_recommendation3},$lang{$current_language}{gha_recommendation4},$lang{$current_language}{gha_recommendation12},$lang{$current_language}{gha_recommendation14},$lang{$current_language}{gha_recommendation13},$lang{$current_language}{gha_recommendation6},$lang{$current_language}{gha_recommendation7} )
+@recommendations = ( $lang{gha_recommendation1}{$current_language},$lang{gha_recommendation2}{$current_language},$lang{gha_recommendation3}{$current_language},$lang{gha_recommendation4}{$current_language},$lang{gha_recommendation12}{$current_language},$lang{gha_recommendation14}{$current_language},$lang{gha_recommendation13}{$current_language},$lang{gha_recommendation6}{$current_language},$lang{gha_recommendation7}{$current_language} )
 	if $sex eq FEMALE &&
 		($actual_age >= 35 && $actual_age < 40);
 
-@recommendations = ( $lang{$current_language}{gha_recommendation1},$lang{$current_language}{gha_recommendation2},$lang{$current_language}{gha_recommendation3},$lang{$current_language}{gha_recommendation4},$lang{$current_language}{gha_recommendation12},$lang{$current_language}{gha_recommendation15},$lang{$current_language}{gha_recommendation16},$lang{$current_language}{gha_recommendation9},$lang{$current_language}{gha_recommendation6} )
+@recommendations = ( $lang{gha_recommendation1}{$current_language},$lang{gha_recommendation2}{$current_language},$lang{gha_recommendation3}{$current_language},$lang{gha_recommendation4}{$current_language},$lang{gha_recommendation12}{$current_language},$lang{gha_recommendation15}{$current_language},$lang{gha_recommendation16}{$current_language},$lang{gha_recommendation9}{$current_language},$lang{gha_recommendation6}{$current_language} )
 	if $sex eq FEMALE &&
 		($actual_age >= 40 && $actual_age < 50);
 
-@recommendations = ( $lang{$current_language}{gha_recommendation1},$lang{$current_language}{gha_recommendation2},$lang{$current_language}{gha_recommendation3},$lang{$current_language}{gha_recommendation4},$lang{$current_language}{gha_recommendation12},$lang{$current_language}{gha_recommendation15},$lang{$current_language}{gha_recommendation17},$lang{$current_language}{gha_recommendation9},$lang{$current_language}{gha_recommendation6} )
+@recommendations = ( $lang{gha_recommendation1}{$current_language},$lang{gha_recommendation2}{$current_language},$lang{gha_recommendation3}{$current_language},$lang{gha_recommendation4}{$current_language},$lang{gha_recommendation12}{$current_language},$lang{gha_recommendation15}{$current_language},$lang{gha_recommendation17}{$current_language},$lang{gha_recommendation9}{$current_language},$lang{gha_recommendation6}{$current_language} )
 	if $sex eq FEMALE &&
 		($actual_age >= 50 && $actual_age < 65);
 
-@recommendations = ( $lang{$current_language}{gha_recommendation1},$lang{$current_language}{gha_recommendation3},$lang{$current_language}{gha_recommendation17},$lang{$current_language}{gha_recommendation15},$lang{$current_language}{gha_recommendation6},$lang{$current_language}{gha_recommendation9},$lang{$current_language}{gha_recommendation11},$lang{$current_language}{gha_recommendation10} )
+@recommendations = ( $lang{gha_recommendation1}{$current_language},$lang{gha_recommendation3}{$current_language},$lang{gha_recommendation17}{$current_language},$lang{gha_recommendation15}{$current_language},$lang{gha_recommendation6}{$current_language},$lang{gha_recommendation9}{$current_language},$lang{gha_recommendation11}{$current_language},$lang{gha_recommendation10}{$current_language} )
 	if $sex eq FEMALE &&
 		$actual_age >= 65;
 
@@ -917,26 +928,26 @@ $risks_short = "" if(uc($output_format) eq 'PDF');
 foreach (@risks_list){
 	$risks_hash = $risks_object->HealthStatus::CalcRisk::record($_);
 	
-	if($current_language eq 'spanish')
+	if(lc $current_language eq 'spanish' || lc $current_language eq 'espanol')
 	{
 		if($risks_hash->{name} eq 'All Other Causes'){
-			$risks_hash->{name} = $lang{$current_language}{All_Other_Causes};
+			$risks_hash->{name} = $lang{All_Other_Causes}{$current_language};
 		}elsif($risks_hash->{name} eq 'Heart Attack'){
-			$risks_hash->{name} = $lang{$current_language}{heart_attack};
+			$risks_hash->{name} = $lang{heart_attack}{$current_language};
 		}elsif($risks_hash->{name} eq 'Suicide'){
-			$risks_hash->{name} = $lang{$current_language}{Suicide};
+			$risks_hash->{name} = $lang{Suicide}{$current_language};
 		}elsif($risks_hash->{name} eq 'HIV/AIDS'){
-			$risks_hash->{name} = $lang{$current_language}{HIV_AIDS};
+			$risks_hash->{name} = $lang{HIV_AIDS}{$current_language};
 		}elsif($risks_hash->{name} eq 'Poisoning'){
-			$risks_hash->{name} = $lang{$current_language}{Poisoning};
+			$risks_hash->{name} = $lang{Poisoning}{$current_language};
 		}elsif($risks_hash->{name} eq 'Motor Vehicle Injury'){
-			$risks_hash->{name} = $lang{$current_language}{Motor_Vehicle_Injury};
+			$risks_hash->{name} = $lang{Motor_Vehicle_Injury}{$current_language};
 		}elsif($risks_hash->{name} eq 'Homicide/Assault'){
-			$risks_hash->{name} = $lang{$current_language}{Homicide_Assault};
+			$risks_hash->{name} = $lang{Homicide_Assault}{$current_language};
 		}elsif($risks_hash->{name} eq 'Liver Cirrhosis'){
-			$risks_hash->{name} = $lang{$current_language}{Liver_Cirrhosis};
+			$risks_hash->{name} = $lang{Liver_Cirrhosis}{$current_language};
 		}elsif($risks_hash->{name} eq 'All Other Unintentional Injury'){
-			$risks_hash->{name} = $lang{$current_language}{All_Other_Unintentional_Injury};
+			$risks_hash->{name} = $lang{All_Other_Unintentional_Injury}{$current_language};
 		}
 		
 	}
@@ -1003,7 +1014,7 @@ foreach (@risks_list){
 		target_score => sprintf("%.2f",$risks_hash->{achievable_risk} * 1000),
 		scope_text => "$risks_hash->{name} $calcgroup",
 		rate_text => 'Average score for ',
-		target_text => "$lang{$current_language}{gha_msg2}",
+		target_text => "$lang{gha_msg2}{$current_language}",
 		bar_scale => $scale,
 		title_text => ''
 	        );
@@ -1020,7 +1031,7 @@ foreach (@risks_list){
 	else	{
 		unless ($config{'risks3bar'}) {$bar = Text::Template::fill_in_file( "$config{template_directory}html_bar.tmpl", PACKAGE => __PACKAGE__ ) or die $Text::Template::ERROR;}
 		if ($config{'risks3bar'}){ $bar = Text::Template::fill_in_file( "$config{template_directory}html_bar_3bars.tmpl", PACKAGE => __PACKAGE__ ) or die $Text::Template::ERROR;}
-		$risks_bars .= qq|<li><span class="lbl">$risks_hash->{name}</span>&nbsp;-&nbsp;<strong>$lang{$current_language}{Your_risk_is} $vars{my_score}</strong><br />$bar<br />$lang{$current_language}{Achievable_score} $vars{target_score}<br />&nbsp;</li>|;
+		$risks_bars .= qq|<li><span class="lbl">$risks_hash->{name}</span>&nbsp;-&nbsp;<strong>$lang{Your_risk_is}{$current_language} $vars{my_score}</strong><br />$bar<br />$lang{Achievable_score}{$current_language} $vars{target_score}<br />&nbsp;</li>|;
 		}
 	last if($cntx >= $config{show_risks});
 	++$cntx;

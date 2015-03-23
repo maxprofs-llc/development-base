@@ -3,44 +3,44 @@ use vars qw(@links);
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 @links = ();
 
-push @links, [ $lang{$current_language}{National_Women_Health},
+push @links, [ $lang{National_Women_Health}{$current_language},
 	"http://www.4woman.org/"] if $sex eq FEMALE || $checkme;
 
-push @links, [ $lang{$current_language}{American_Diabetes_Association},
+push @links, [ $lang{American_Diabetes_Association}{$current_language},
 	"http://www.diabetes.org"] ;
 
-push @links, [ $lang{$current_language}{Aim_for_health_weight},
+push @links, [ $lang{Aim_for_health_weight}{$current_language},
 	$config{html_base}."resource/aim_for_healthy_weight.pdf" ]
 	if $bmi > 29.5 || $checkme;
 
-push @links, [ $lang{$current_language}{Overeaters_Anonymous},
+push @links, [ $lang{Overeaters_Anonymous}{$current_language},
 	"http://www.overeatersanonymous.org/"] if $bmi > 27 || $checkme;
 
-push @links, [ $lang{$current_language}{American_Heart_Association},
+push @links, [ $lang{American_Heart_Association}{$current_language},
 	"http://www.amhrt.org"] if $bmi > 25 || $checkme;
 
-push @links, [$lang{$current_language}{Dietary_Guidelines},
+push @links, [$lang{Dietary_Guidelines}{$current_language},
 	$config{html_base}."resource/dietaryguidelines.pdf"]
 	if $bmi > 25    || $bmi < 20 ||
 	   $fiber eq NO || $fats eq YES || $checkme;
 
-push @links, [ $lang{$current_language}{Getting_Older_Eating_Better},
+push @links, [ $lang{Getting_Older_Eating_Better}{$current_language},
 	$config{html_base}."resource/oldereating.pdf"]
 	if $age > 64 && ( $bmi > 25 || $bmi < 20 ) || $checkme;
 
-push @links, [ $lang{$current_language}{Staying_Healthy},
+push @links, [ $lang{Staying_Healthy}{$current_language},
 	$config{html_base}."resource/Staying_healthy_50plus.pdf"]
 	if $age >= 50 || $checkme;
 
-push @links, [ $lang{$current_language}{Staying_Healthy},
+push @links, [ $lang{Staying_Healthy}{$current_language},
 	$config{html_base}."resource/Staying_healthy_adult.pdf"]
 	if $age < 50 || $checkme;
 
-push @links, [ $lang{$current_language}{Keys_Choosing_Healthful_Foods},
+push @links, [ $lang{Keys_Choosing_Healthful_Foods}{$current_language},
 	$config{html_base}."resource/keytohealthfulfood.pdf"]
 	if $bmi > 25 || $bmi < 20 || $checkme;
 
-push @links, [ $lang{$current_language}{Indian_Health_Services},
+push @links, [ $lang{Indian_Health_Services}{$current_language},
 	"http://www.ihs.gov"]
 	if $race eq "Aleutian, Eskimo or American Indian" || $checkme;
 

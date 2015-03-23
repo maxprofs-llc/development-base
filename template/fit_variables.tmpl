@@ -21,8 +21,8 @@ $current_subtitle = $fit_subtitle;
 $current_subtitle_in = $fit_subtitle_in;
 $current_desc = qq|How fit are you? Measure your current level of fitness with our in-home assessment.|;
 
-@fitness_levels = ( "Very High", "High", "Moderate", "Low", "Very Low");
-@frame_sizes    = ( 'small', 'medium', 'large' );
+@fitness_levels = ( $lang{very_high}{$current_language}, $lang{high}{$current_language}, $lang{moderate}{$current_language}, $lang{low}{$current_language}, $lang{very_low}{$current_language});
+@frame_sizes    = ( $lang{small}{$current_language}, $lang{medium}{$current_language}, $lang{large}{$current_language} );
 @weights        = (  );
 
 $waist = sprintf("%.2f", $waist);
@@ -39,15 +39,16 @@ HERE
 my $bfat = '';
 if( $sex eq MALE )
 	{
-	$bfat = $lang{$current_language}{fit_bfat_msg1};
+	$bfat = $lang{fit_bfat_msg1}{$current_language};
 	}
 else
 	{
-	$bfat = $lang{$current_language}{fit_bfat_msg2};
+	$bfat = $lang{fit_bfat_msg2}{$current_language};
 	}
 
-$body_message = $lang{$current_language}{fit_body_message};
+$body_message = $lang{fit_body_message}{$current_language};
 $body_message =~ s/BFAT_MSG/$bfat/;
+
 $weight_message = <<"HERE";
 Your weight of $weight $weight_units is {$weightflg[$FLAG{'weight'}]}
 the recommended range for people {$HT{$lang{'measures'}}} tall.
@@ -87,27 +88,27 @@ $weight_challenge = do {
 	};
 
 my @Flexy_Target = (
-	$lang{$current_language}{fit_flexy_msg1},
-	$lang{$current_language}{fit_flexy_msg1},
-	$lang{$current_language}{fit_flexy_msg2},
-	$lang{$current_language}{fit_flexy_msg2},
-	$lang{$current_language}{fit_flexy_msg2}
+	$lang{fit_flexy_msg1}{$current_language},
+	$lang{fit_flexy_msg1}{$current_language},
+	$lang{fit_flexy_msg2}{$current_language},
+	$lang{fit_flexy_msg2}{$current_language},
+	$lang{fit_flexy_msg2}{$current_language}
 	);
 my @Push_Target  = (
-	$lang{$current_language}{fit_push_msg1} ,
-	$lang{$current_language}{fit_push_msg1} ,
-	$lang{$current_language}{fit_push_msg2},
-	$lang{$current_language}{fit_push_msg2},
-	$lang{$current_language}{fit_push_msg2}
+	$lang{fit_push_msg1}{$current_language} ,
+	$lang{fit_push_msg1} {$current_language},
+	$lang{fit_push_msg2}{$current_language},
+	$lang{fit_push_msg2}{$current_language},
+	$lang{fit_push_msg2}{$current_language}
 	);
 my @Sits_Target  = @Push_Target;
 
 my @Step_Target  = (
-	$lang{$current_language}{fit_step_msg1},
-	$lang{$current_language}{fit_step_msg1},
-	$lang{$current_language}{fit_step_msg2},
-	$lang{$current_language}{fit_step_msg2},
-	$lang{$current_language}{fit_step_msg2}
+	$lang{fit_step_msg1}{$current_language},
+	$lang{fit_step_msg1}{$current_language},
+	$lang{fit_step_msg2}{$current_language},
+	$lang{fit_step_msg2}{$current_language},
+	$lang{fit_step_msg2}{$current_language}
 	);
 
 $step_target  = $Step_Target[ $step_score ];
@@ -120,10 +121,10 @@ $sits_desc  = $fitness_levels[ $sit_up_score ];
 $push_desc  = $fitness_levels[ $push_up_score ];
 $flexy_desc = $fitness_levels[ $flexibility_score ];
 
-$Flexy_Detail = $lang{$current_language}{fit_flexy_detail_msg};
-$Push_Detail  = $lang{$current_language}{fit_push_detail_msg};
-$Sits_Detail  = $lang{$current_language}{fit_sits_detail_msg};
-$Step_Detail  =	$lang{$current_language}{fit_step_detail_msg};
+$Flexy_Detail = $lang{fit_flexy_detail_msg}{$current_language};
+$Push_Detail  = $lang{fit_push_detail_msg}{$current_language};
+$Sits_Detail  = $lang{fit_sits_detail_msg}{$current_language};
+$Step_Detail  =	$lang{fit_step_detail_msg}{$current_language};
 
 $body_graphic = $Graphic_Indicators[ $body_score ];
 $step_graphic = $Graphic_Indicators[ $step_score ];

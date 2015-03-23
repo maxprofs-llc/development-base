@@ -1,0 +1,135 @@
+{
+use vars qw( @fitness_levels @frame_sizes $body_message $body_fact
+	$weight_message $weight_challenge $step_target $sits_target
+	$push_target $flexy_target $step_desc $sits_desc $push_desc
+	$flexy_desc $step_graphic $body_graphic $sits_graphic
+	$push_graphic $flexy_graphic $Flexy_Detail $Push_Detail
+	$Sits_Detail $Step_Detail $fit_cover_letter
+	$waist_output
+	);
+
+my %fit_cover_letters;
+$fit_cover_letters{'html'} = $config{fit_cover_letter_html} || "/fit_cover_letter_html.tmpl";
+$fit_cover_letters{'pdf'} = $config{fit_cover_letter_pdf} || "/fit_cover_letter_pdf.tmpl";
+$fit_cover_letters{'pdfe'} = $config{fit_cover_letter_pdf} || "/fit_cover_letter_pdf.tmpl";
+
+$output_format = 'HTML' if ($output_format ne 'HTML' && $output_format ne 'PDF' && $output_format ne 'PDFE' && $output_format ne 'XML' && $output_format ne 'TEXT' );
+$fit_cover_letter = $fit_cover_letters{lc $output_format};
+
+$current_title = $fit_title;
+$current_subtitle = $fit_subtitle;
+$current_subtitle_in = $fit_subtitle_in;
+$current_desc = qq|How fit are you? Measure your current level of fitness with our in-home assessment.|;
+
+@fitness_levels = ( "Very High", "High", "Moderate", "Low", "Very Low");
+@frame_sizes    = ( 'small', 'medium', 'large' );
+@weights        = (  );
+
+$waist = sprintf("%.2f", $waist);
+$waist_output = $waist . ' cm' if ($units eq 'Metric');
+$waist_output = $waist . ' "' if ($units ne 'Metric');
+
+
+$body_fact = <<"HERE";
+$first_name, there are some factors you cannot control -
+like that you are $lc_sex, and you are $age.
+This report will stress the things that you can control.
+HERE
+
+my $bfat = '';
+if( $sex eq MALE )
+	{
+	$bfat = $lang{$current_language}{fit_bfat_msg1};
+	}
+else
+	{
+	$bfat = $lang{$current_language}{fit_bfat_msg2};
+	}
+
+$body_message = $lang{$current_language}{fit_body_message};
+$body_message =~ s/BFAT_MSG/$bfat/;
+$weight_message = <<"HERE";
+Your weight of $weight $weight_units is {$weightflg[$FLAG{'weight'}]}
+the recommended range for people {$HT{$lang{'measures'}}} tall.
+Your Body Mass Index (BMI) is {$bmi}. A healthy BMI is between
+19.5 and 25, but people with a low body fat percentage may score
+slightly higher. The healthy weight range for your height is
+{$low_weight} to {$high_weight} $weight_units.
+HERE
+
+my $body_fat_target = $sex eq MALE ? $config{male_body_fat_target} :
+	$config{female_body_fat_target};
+
+$weight_challenge = do {
+	my $range = "$low_weight and $high_weight";
+
+	if(    $weight_flag == 3 )
+		{
+		"Increase your weight to get your weight to between " .
+			"$range $weight_units.";
+		}
+	elsif( $weight_flag == 2 )
+		{
+		"Reduce your weight.";
+		}
+	elsif( $weight_flag == 1 && $body_fat_percent > $body_fat_target )
+		{
+		"Reduce your weight to between $range $weight_units.";
+		}
+	elsif( $weight_flag == 1 )
+		{
+		"Your healthy weight is between $range $weight_units.";
+		}
+	elsif( $weight_flag == 0 )
+		{
+		"Keep your weight between $range $weight_units.";
+		}
+	};
+
+my @Flexy_Target = (
+	$lang{$current_language}{fit_flexy_msg1},
+	$lang{$current_language}{fit_flexy_msg1},
+	$lang{$current_language}{fit_flexy_msg2},
+	$lang{$current_language}{fit_flexy_msg2},
+	$lang{$current_language}{fit_flexy_msg2}
+	);
+my @Push_Target  = (
+	$lang{$current_language}{fit_push_msg1} ,
+	$lang{$current_language}{fit_push_msg1} ,
+	$lang{$current_language}{fit_push_msg2},
+	$lang{$current_language}{fit_push_msg2},
+	$lang{$current_language}{fit_push_msg2}
+	);
+my @Sits_Target  = @Push_Target;
+
+my @Step_Target  = (
+	$lang{$current_language}{fit_step_msg1},
+	$lang{$current_language}{fit_step_msg1},
+	$lang{$current_language}{fit_step_msg2},
+	$lang{$current_language}{fit_step_msg2},
+	$lang{$current_language}{fit_step_msg2}
+	);
+
+$step_target  = $Step_Target[ $step_score ];
+$sits_target  = $Sits_Target[ $sit_up_score ];
+$push_target  = $Push_Target[ $push_up_score ];
+$flexy_target = $Flexy_Target[ $flexibility_score ];
+
+$step_desc  = $fitness_levels[ $step_score ];
+$sits_desc  = $fitness_levels[ $sit_up_score ];
+$push_desc  = $fitness_levels[ $push_up_score ];
+$flexy_desc = $fitness_levels[ $flexibility_score ];
+
+$Flexy_Detail = $lang{$current_language}{fit_flexy_detail_msg};
+$Push_Detail  = $lang{$current_language}{fit_push_detail_msg};
+$Sits_Detail  = $lang{$current_language}{fit_sits_detail_msg};
+$Step_Detail  =	$lang{$current_language}{fit_step_detail_msg};
+
+$body_graphic = $Graphic_Indicators[ $body_score ];
+$step_graphic = $Graphic_Indicators[ $step_score ];
+$sits_graphic = $Graphic_Indicators[ $sit_up_score ];
+$push_graphic = $Graphic_Indicators[ $push_up_score ];
+$flexy_graphic = $Graphic_Indicators[ $flexibility_score ];
+
+'';
+}

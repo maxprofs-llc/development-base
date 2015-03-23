@@ -1,6 +1,6 @@
 {
 # this part fills in a file that sets language variables we use later on.
-Text::Template::fill_in_file( "$config{template_directory}language.tmpl", PACKAGE => __PACKAGE__ );
+Text::Template::fill_in_file( "$config{template_directory}assessment_language.tmpl", PACKAGE => __PACKAGE__ );
 }{
 # this part fills in a file that sets variables we use later on.
 Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
@@ -19,7 +19,7 @@ Text::Template::fill_in_file("$config{template_directory}$header_file", PACKAGE 
 
 <div id="ass-bg" class="content">
 <p class="pad27">
-{$lang{$current_language}{fit_intro}}
+{$lang{fit_intro}{$current_language}}
 </p>
 </div>
 
@@ -32,7 +32,7 @@ Text::Template::fill_in_file("$config{template_directory}$header_file", PACKAGE 
 
 <!-- pagination section start here-->
 <div id="pagination" class="content">
-<p class="pad28">{$lang{$current_language}{curr_page_msg}} 1 &nbsp; </p>
+<p class="pad28">{$lang{curr_page_msg}{$current_language}} 1 &nbsp; </p>
 </div>
 <!-- pagination section end here-->
 
@@ -43,22 +43,22 @@ Text::Template::fill_in_file("$config{template_directory}$header_file", PACKAGE 
 <form METHOD="POST" action="{$cgi_dir}/fitme.cgi">
 
                     <tr>
-				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">Based on the answers you provided we recommend that you
-        			see a doctor prior to taking the fitness assessment.</td>
+				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">{$lang{fit_msg12}{$current_language}}</td>
 				        <td width=617 style="padding-top: 10px"></td>
 				    </tr>
 
 					<tr>
-				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">I have seen a doctor and have been cleared to take the assessment.</td>
+				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">{$lang{fit_msg13}{$current_language}}</td>
 				        <td width=617 style="padding-top: 10px"><input type="checkbox" name="Cleared" value="ON"></td>
 				    </tr>
                     <tr>
 								<td width=350>&nbsp;</td>
 								<td width=617 style="padding-top: 8px; padding-bottom: 10px; padding-right: 70px; text-align:right">
 									<input type="image" name="pretest" {$submit} />
-									<input type=hidden value="" name="units">
-									<input type=hidden value="" name="assessment">
-									<input type=hidden value="" name="qset">
+									<input type="hidden" value="" name="units">
+									<input type="hidden" value="" name="assessment">
+									<input type="hidden" value="" name="qset">
+									<input type="hidden" name="language" value="">
 							    </td>
 	                </tr>
    </form>

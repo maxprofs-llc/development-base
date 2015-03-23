@@ -23,7 +23,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
 
 <div id="ass-bg" class="content">
 <p class="pad27">
-{{$lang{$current_language}{drc_msg2}}}
+{{$lang{drc_msg2}{$current_language}}}
 </p>
 </div> 
 
@@ -46,26 +46,26 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td colspan="2" >
-                  <p><b>{$date} {$lang{$current_language}{for}} {$name}</b></p>
+                  <p><b>{$date} {$lang{for}{$current_language}} {$name}</b></p>
                 </td>
               </tr>
               <tr>
                 <td  colspan="2">&nbsp;</td>
               </tr>
               <tr>
-                <td  width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{$current_language}{body_composition}}</b></font></td>
+                <td  width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{body_composition}{$current_language}}</b></font></td>
                 <td height="30">&nbsp;</td>
               </tr>
               <tr>
                 <td valign="middle" align="right"><b>{$body_graphic}</b><img src="images/global/trans.gif" width="20" height="1"></td>
                 <td >
-                  <p><span><b>{$lang{$current_language}{baseline_information}}</b></span><br />
-	          {$lang{$current_language}{height}} = {$height}<br />
-	          {$lang{$current_language}{weight}} = {$weight} {$weight_units} - Ideal = {$low_weight} to {$high_weight} {$weight_units}<br />
-	          {$lang{$current_language}{bmi}} = {$bmi}<br />
-		  {$lang{$current_language}{race}} = {$race}<br />
-		  {$lang{$current_language}{sex}} = {$sex}
-		  {my $html; $html="<br />$lang{$current_language}{parents}: $parents_have_diabetes -- $lang{$current_language}{siblings}: $siblings_have_diabetes" unless $no_gina_question;$html;}
+                  <p><span><b>{$lang{baseline_information}{$current_language}}</b></span><br />
+	          {$lang{height}{$current_language}} = {$height}<br />
+	          {$lang{weight}{$current_language}} = {$weight} {$weight_units} - {$lang{Ideal}{$current_language}} = {$low_weight} {$lang{to}{$current_language}} {$high_weight} {$weight_units}<br />
+	          {$lang{bmi}{$current_language}} = {$bmi}<br />
+		  {$lang{race}{$current_language}} = {$race}<br />
+		  {$lang{sex}{$current_language}} = {$sex}
+		  {my $html; $html="<br />$lang{parents}{$current_language}: $parents_have_diabetes -- $lang{siblings}{$current_language}: $siblings_have_diabetes" unless $no_gina_question;$html;}
 		  </p>
                 </td>
               </tr>
@@ -73,14 +73,14 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
                 <td valign="middle" align="right" colspan="2" height="30">&nbsp;</td>
               </tr>
               <tr>
-                <td  width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{$current_language}{weight}}</b></font></td>
+                <td  width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{weight}{$current_language}}</b></font></td>
                 <td height="30">&nbsp;</td>
               </tr>
               <tr>
                 <td valign="middle" align="right">{$weight_graphic}<img src="images/global/trans.gif" width="20" height="1"></td>
                 <td >
                   <p><b>{$weight_target}</b></p>
-                  <p><span><b>{$lang{$current_language}{details}}</b></span><br>
+                  <p><span><b>{$lang{details}{$current_language}}</b></span><br>
                     {$weight_desc}</p>
                 </td>
               </tr>
@@ -88,14 +88,14 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
                 <td  colspan="2">&nbsp;</td>
               </tr>
               <tr>
-                <td  width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{$current_language}{exercise}}</b></font></td>
+                <td  width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{exercise}{$current_language}}</b></font></td>
                 <td height="30">&nbsp;</td>
               </tr>
               <tr>
                 <td valign="middle" align="right">{$exer_graphic}<img src="images/global/trans.gif" width="20" height="1"></td>
                 <td >
                   <p><b>{$exer_target}</b></p>
-                  <p><span><b>{$lang{$current_language}{details}}</b></span><br>
+                  <p><span><b>{$lang{details}{$current_language}}</b></span><br>
                     {$exer_desc}</p>
                 </td>
               </tr>
@@ -104,24 +104,24 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
                 <td  colspan="2">&nbsp;</td>
               </tr>
               <tr>
-                <td  width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>$lang{$current_language}{birth_related}</b></font></td>
+                <td  width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>$lang{birth_related}{$current_language}</b></font></td>
                 <td height="30">&nbsp;</td>
               </tr>
               <tr>
                 <td valign="middle" align="right"><b>$baby_graphic</b><img src="images/global/trans.gif" width="20" height="1"></td>
-                <td ><p><span><b>$lang{$current_language}{details}</b></span><br>
+                <td ><p><span><b>$lang{details}{$current_language}</b></span><br>
                   $female_desc</p>
                 </td>
               </tr>|;}
 }
               <tr>
-                <td  width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{$current_language}{predispositions}}</b></font></td>
+                <td  width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{predispositions}{$current_language}}</b></font></td>
                 <td height="30">&nbsp;</td>
               </tr>
               <tr>
                 <td valign="middle" align="right"><b>{$predisp_graphic}</b><img src="images/global/trans.gif" width="20" height="1"></td>
                 <td ><p>
-                  <span><b>{$lang{$current_language}{details}}</b></span><br>
+                  <span><b>{$lang{details}{$current_language}}</b></span><br>
                     {$disp_desc}</p>
                 </td>
               </tr>
@@ -130,7 +130,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
               </tr>
               <tr>
                 <td colspan="2" >
-                  <p><span><b>{$lang{$current_language}{additional_reading}}</b></span><br>
+                  <p><span><b>{$lang{additional_reading}{$current_language}}</b></span><br>
 			{
 			join "\r",
 				map { qq|<li><a target="_blank" href="$$_[1]">$$_[0]</a>| }
@@ -147,7 +147,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
 					<input type="hidden" name="language" value="$hidden_language">
 					{$hidden_cgi_fields}</form>
 				</td>
-                <td align="right" height="50">{my $html = qq|<a href="$member">$lang{$current_language}{assessment_records}</a>| unless $status eq 'retake';$html;}</td>
+                <td align="right" height="50">{my $html = qq|<a href="$member">$lang{assessment_records}{$current_language}</a>| unless $status eq 'retake';$html;}</td>
               </tr>
             </table>
 			</td>

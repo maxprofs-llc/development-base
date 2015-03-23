@@ -1,6 +1,6 @@
 {
 # this part fills in a file that sets language variables we use later on.
-Text::Template::fill_in_file( "$config{template_directory}language.tmpl", PACKAGE => __PACKAGE__ );
+Text::Template::fill_in_file( "$config{template_directory}assessment_language.tmpl", PACKAGE => __PACKAGE__ );
 }{
 # this part fills in a file that sets variables we use later on.
 Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
@@ -19,7 +19,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_in_file", PACK
 
 <div id="ass-bg" class="content">
 <p class="pad27">
-{$lang{$current_language}{fit_intro}}
+{$lang{fit_intro}{$current_language}}
 </p>
 </div>
 
@@ -32,7 +32,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_in_file", PACK
 
 <!-- pagination section start here-->
 <div id="pagination" class="content">
-<p class="pad28">{$lang{$current_language}{curr_page_msg}} 1 &nbsp; </p>
+<p class="pad28">{$lang{curr_page_msg}{$current_language}} 1 &nbsp; </p>
 </div>
 <!-- pagination section end here-->
 
@@ -43,48 +43,44 @@ Text::Template::fill_in_file( "$config{template_directory}$header_in_file", PACK
 <form METHOD="POST" name="theForm" action="{$cgi_dir}/fitme.cgi">
 
                     <tr>
-				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">Before taking a fitness assessment, you should determine whether you
-        			should see a physician prior to this or any physically demanding activity.<br />&nbsp;<br />Check all that apply:</td>
+				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">{$lang{fit_msg1}{$current_language}}<br />&nbsp;<br />{$lang{fit_msg2}{$current_language}}:</td>
 				        <td width=617 style="padding-top: 10px"></td>
 				    </tr>
 
 					<tr>
-				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">You have heart trouble, a heart murmur, or you have had a heart attack.</td>
+				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">{$lang{fit_msg3}{$current_language}}</td>
 				        <td width=617 style="padding-top: 10px"><input type="checkbox" name="C1" value="ON"></td>
 				    </tr>
 					<tr>
-				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">You frequently have pains or pressure in the left or mid-chest area, left side of the neck,
-          			shoulder, or arm - during or right after exercise.</td>
+				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">{$lang{fit_msg4}{$current_language}}</td>
 				        <td width=617 style="padding-top: 10px"><input type="checkbox" name="C2" value="ON"></td>
 				    </tr>
 					<tr>
-				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">You often feel faint or have severe dizzy spells.</td>
+				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">{$lang{fit_msg5}{$current_language}}</td>
 				        <td width=617 style="padding-top: 10px"><input type="checkbox" name="C3" value="ON"></td>
 				    </tr>
 					<tr>
-				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">You experience extreme breathlessness after mild exertion.</td>
+				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">{$lang{fit_msg6}{$current_language}}</td>
 				        <td width=617 style="padding-top: 10px"><input type="checkbox" name="C4" value="ON"></td>
 				    </tr>
 					<tr>
-				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">Your blood pressure is too high and isn't yet under control, or you don't know what your
-          			blood pressure is.</td>
+				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">{$lang{fit_msg7}{$current_language}}</td>
 				        <td width=617 style="padding-top: 10px"><input type="checkbox" name="C5" value="ON"></td>
 				    </tr>
 					<tr>
-				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">You have bone or joint problems such as arthritis.</td>
+				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">{$lang{fit_msg8}{$current_language}}</td>
 				        <td width=617 style="padding-top: 10px"><input type="checkbox" name="C6" value="ON"></td>
 				    </tr>
 					<tr>
-				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">You are over age 60 and not accustomed to vigorous exercise.</td>
+				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">{$lang{fit_msg9}{$current_language}}</td>
 				        <td width=617 style="padding-top: 10px"><input type="checkbox" name="C7" value="ON"></td>
 				    </tr>
 					<tr>
-				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">Your father, mother, brother or sister had  a heart attack before age 50.</td>
+				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">{$lang{fit_msg10}{$current_language}}</td>
 				        <td width=617 style="padding-top: 10px"><input type="checkbox" name="C8" value="ON"></td>
 				    </tr>
 					<tr>
-				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">You have a medical condition not mentioned here that might need special attention in an
-          			exercise program (e.g., insulin-dependent diabetes).</td>
+				        <td class="lb2" width=350 style="padding-top: 10px; padding-right: 20px">{$lang{fit_msg11}{$current_language}}</td>
 				        <td width=617 style="padding-top: 10px"><input type="checkbox" name="C9" value="ON"></td>
 				    </tr>
                     <tr>
@@ -95,6 +91,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_in_file", PACK
 									<input type="hidden" value="" name="assessment">
 									<input type="hidden" value="" name="qset">
 									<input type="hidden" value="1" name="curr_page">
+									<input type="hidden" name="language" value="">
 							    </td>
 	                </tr>
    </form>

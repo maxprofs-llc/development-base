@@ -1,0 +1,163 @@
+{
+# this part fills in a file that sets language variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}assessment_language.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}drc_variables.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}drc_links.tmpl", PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE => __PACKAGE__ );
+}       <!-- Template: drc_2.tmpl -->
+	<!-- Templates called: drc_variables.tmpl, drc_links.tmpl, {$footer_file}, {$config{variables_template}},  {$header_file} -->
+		<!-- ass-top-img section start here-->
+<div id="ass-top-img" class="steptxt">
+<p class="pad26">{$drc_title}</p>
+</div>
+<!-- ass-top-img section end here-->
+
+<div id="ass-bg" class="content">
+<p class="pad27">
+{{$lang{$current_language}{drc_msg2}}}
+</p>
+</div> 
+
+<!-- risk-top-img section start here-->
+<div id="risk-top-img" class="steptxt">
+
+<p class="pad26">{$drc_subtitle}{$continued}</p>
+</div>
+<!-- risk-top-img section end here-->
+
+
+<p><img src="images/ass_06.jpg" alt="" /></p> 
+<br/>
+
+	<div id="risk-bg">
+		<table width="967" cellspacing="0" style="margin-left: 30px">
+
+			<tr>
+			<td style="padding-top: 8px; padding-bottom: 10px; padding-right: 70px;" class="content">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td colspan="2" >
+                  <p><b>{$date} {$lang{$current_language}{for}} {$name}</b></p>
+                </td>
+              </tr>
+              <tr>
+                <td  colspan="2">&nbsp;</td>
+              </tr>
+              <tr>
+                <td  width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{$current_language}{body_composition}}</b></font></td>
+                <td height="30">&nbsp;</td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right"><b>{$body_graphic}</b><img src="images/global/trans.gif" width="20" height="1"></td>
+                <td >
+                  <p><span><b>{$lang{$current_language}{baseline_information}}</b></span><br />
+	          {$lang{$current_language}{height}} = {$height}<br />
+	          {$lang{$current_language}{weight}} = {$weight} {$weight_units} - Ideal = {$low_weight} to {$high_weight} {$weight_units}<br />
+	          {$lang{$current_language}{bmi}} = {$bmi}<br />
+		  {$lang{$current_language}{race}} = {$race}<br />
+		  {$lang{$current_language}{sex}} = {$sex}
+		  {my $html; $html="<br />$lang{$current_language}{parents}: $parents_have_diabetes -- $lang{$current_language}{siblings}: $siblings_have_diabetes" unless $no_gina_question;$html;}
+		  </p>
+                </td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right" colspan="2" height="30">&nbsp;</td>
+              </tr>
+              <tr>
+                <td  width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{$current_language}{weight}}</b></font></td>
+                <td height="30">&nbsp;</td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right">{$weight_graphic}<img src="images/global/trans.gif" width="20" height="1"></td>
+                <td >
+                  <p><b>{$weight_target}</b></p>
+                  <p><span><b>{$lang{$current_language}{details}}</b></span><br>
+                    {$weight_desc}</p>
+                </td>
+              </tr>
+              <tr>
+                <td  colspan="2">&nbsp;</td>
+              </tr>
+              <tr>
+                <td  width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{$current_language}{exercise}}</b></font></td>
+                <td height="30">&nbsp;</td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right">{$exer_graphic}<img src="images/global/trans.gif" width="20" height="1"></td>
+                <td >
+                  <p><b>{$exer_target}</b></p>
+                  <p><span><b>{$lang{$current_language}{details}}</b></span><br>
+                    {$exer_desc}</p>
+                </td>
+              </tr>
+{    if($sex eq FEMALE && $female_desc ne ''){
+              qq|<tr>
+                <td  colspan="2">&nbsp;</td>
+              </tr>
+              <tr>
+                <td  width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>$lang{$current_language}{birth_related}</b></font></td>
+                <td height="30">&nbsp;</td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right"><b>$baby_graphic</b><img src="images/global/trans.gif" width="20" height="1"></td>
+                <td ><p><span><b>$lang{$current_language}{details}</b></span><br>
+                  $female_desc</p>
+                </td>
+              </tr>|;}
+}
+              <tr>
+                <td  width="150" height="30" valign="bottom"><font color="#1C9EAF"><b>{$lang{$current_language}{predispositions}}</b></font></td>
+                <td height="30">&nbsp;</td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right"><b>{$predisp_graphic}</b><img src="images/global/trans.gif" width="20" height="1"></td>
+                <td ><p>
+                  <span><b>{$lang{$current_language}{details}}</b></span><br>
+                    {$disp_desc}</p>
+                </td>
+              </tr>
+              <tr>
+                <td  colspan="2">&nbsp;</td>
+              </tr>
+              <tr>
+                <td colspan="2" >
+                  <p><span><b>{$lang{$current_language}{additional_reading}}</b></span><br>
+			{
+			join "\r",
+				map { qq|<li><a target="_blank" href="$$_[1]">$$_[0]</a>| }
+				@links;
+			}</p>
+                </td>
+              </tr>
+              <tr>
+                <td valign="middle" align="right" colspan="2" height="30">&nbsp;</td>
+              </tr>
+              <tr valign="bottom">
+                <td height="50" align="left"><form method="post" action="{$pager}">
+					<input type="image" border=0 name="drc_1.tmpl" value="drc_1.tmpl" {$back}>
+					<input type="hidden" name="language" value="$hidden_language">
+					{$hidden_cgi_fields}</form>
+				</td>
+                <td align="right" height="50">{my $html = qq|<a href="$member">$lang{$current_language}{assessment_records}</a>| unless $status eq 'retake';$html;}</td>
+              </tr>
+            </table>
+			</td>
+			</tr>
+             
+		</table>
+	</div>
+
+    <!-- Template: drc_2.tmpl End -->
+{
+# this is the standard footer for the assessment output.
+Text::Template::fill_in_file( "$config{template_directory}$footer_file", PACKAGE => __PACKAGE__ );
+}

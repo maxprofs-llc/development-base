@@ -24,7 +24,9 @@ function checkWholeForm(theForm) {
     	}
 		
     	if ((theForm.assessment.value == "GHA")) {
-		    why += checkWaist(theForm.waist.value);
+			if(theForm.waist){
+				why += checkWaist(theForm.waist.value);
+			}
     		why += checkDropdown(theForm.smoke_status.value, "You did not enter your tobacco use.\n");
     	}
     }

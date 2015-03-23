@@ -19,15 +19,15 @@ $current_subtitle_in = $drc_subtitle_in;
 $current_desc = qq|This Diabetes Risk Appraisal is not a substitute for a check-up or physical exam that you get from a doctor or a nurse.&nbsp; It only gives you an idea if you have characteristics similar to those known to have diabetes. |;
 
 my $race_out	= $race;
-if ( $race eq HISPANIC ) { $race_out = $lang{$current_language}{latino}; }
+if ( $race eq HISPANIC ) { $race_out = $lang{latino}{$current_language}; }
 
-@weight_habits 	= ( $lang{$current_language}{weight_msg1}, $lang{$current_language}{weight_msg2}, $lang{$current_language}{weight_msg3}, $lang{$current_language}{weight_msg4}, $lang{$current_language}{weight_msg5} );
+@weight_habits 	= ( $lang{weight_msg1}{$current_language}, $lang{weight_msg2}{$current_language}, $lang{weight_msg3}{$current_language}, $lang{weight_msg4}{$current_language}, $lang{weight_msg5}{$current_language} );
 
 #### Predisposition paragraph
 my $disp_num = 0;
-my @messages = ($lang{$current_language}{drc_pred_msg1});
+my @messages = ($lang{drc_pred_msg1}{$current_language});
 
-if ($age > DIABETES_LOWER_AGE_LIMIT)		{ push @messages, "$lang{$current_language}{drc_pred_msg2} $age";++$disp_num; }
+if ($age > DIABETES_LOWER_AGE_LIMIT)		{ push @messages, "$lang{drc_pred_msg2}{$current_language} $age";++$disp_num; }
 
 if ((($race eq NATIVE_AMERICAN ||
 	$race eq AFRICAN_AMERICAN ||
@@ -35,7 +35,7 @@ if ((($race eq NATIVE_AMERICAN ||
 	$siblings_have_diabetes eq NO &&
 	$parents_have_diabetes eq NO &&
 	$big_kid ne NO ) &&
-	$disp_num ) 			{ push @messages, " $lang{$current_language}{or} " }
+	$disp_num ) 			{ push @messages, " $lang{or}{$current_language} " }
 elsif (($siblings_have_diabetes eq YES ||
 	$parents_have_diabetes eq YES ||
 	$big_kid eq YES ) &&
@@ -44,24 +44,24 @@ elsif (($siblings_have_diabetes eq YES ||
 if ( $race eq NATIVE_AMERICAN ||
 	$race eq AFRICAN_AMERICAN ||
 	$race eq HISPANIC ) {
-					push @messages, "$lang{$current_language}{drc_pred_msg2} $race_out";++$disp_num;
+					push @messages, "$lang{drc_pred_msg2}{$current_language} $race_out";++$disp_num;
 }
 
 if ((( $siblings_have_diabetes eq YES ||
 	$parents_have_diabetes eq YES )
 	&& $big_kid ne YES )
-	&& $disp_num ) 			{ push @messages, " $lang{$current_language}{or} " }
+	&& $disp_num ) 			{ push @messages, " $lang{or}{$current_language} " }
 elsif ( $big_kid eq YES
 	&& $disp_num )			{ push @messages, ", " }
 
 if ( $siblings_have_diabetes eq YES ||
 	$parents_have_diabetes eq YES ) {
-					push @messages, $lang{$current_language}{drc_pred_msg3};++$disp_num;
+					push @messages, $lang{drc_pred_msg3}{$current_language};++$disp_num;
 }
 if ( $big_kid eq YES &&
 	$disp_num ) {
-					push @messages, " $lang{$current_language}{or} " if ($disp_num);
-					push @messages, $lang{$current_language}{drc_pred_msg4};++$disp_num;
+					push @messages, " $lang{or}{$current_language} " if ($disp_num);
+					push @messages, $lang{drc_pred_msg4}{$current_language};++$disp_num;
 }
 push @messages, ". ";
 
@@ -75,13 +75,13 @@ my $weight_flag = do
 	};
 
 if ( $disp_num ) {
-	my $exercise_point = $lang{$current_language}{start};
-	$exercise_point = $lang{$current_language}{keep} if ( $exercise eq YES ); 
-	my $weight_point = $lang{$current_language}{lower};
-	$weight_point = $lang{$current_language}{watch} if ( $weight_flag == 0 || $weight_flag == 4); 
-	push @messages, $lang{$current_language}{drc_pred_msg5} if($disp_num == 1);
-	push @messages, $lang{$current_language}{drc_pred_msg6} if($disp_num > 1);
-	push @messages, $lang{$current_language}{drc_pred_msg7} if ($diabetes_points > 6 && $no_gina_question);
+	my $exercise_point = $lang{start}{$current_language};
+	$exercise_point = $lang{keep}{$current_language} if ( $exercise eq YES ); 
+	my $weight_point = $lang{lower}{$current_language};
+	$weight_point = $lang{watch}{$current_language} if ( $weight_flag == 0 || $weight_flag == 4); 
+	push @messages, $lang{drc_pred_msg5}{$current_language} if($disp_num == 1);
+	push @messages, $lang{drc_pred_msg6}{$current_language} if($disp_num > 1);
+	push @messages, $lang{drc_pred_msg7}{$current_language} if ($diabetes_points > 6 && $no_gina_question);
 	$disp_desc = join "", @messages;
 	$disp_desc =~ s/DISP_NUM/$disp_num/;
 	$disp_desc =~ s/EXERCISE_POINT/$exercise_point/;
@@ -91,11 +91,11 @@ if ( $disp_num ) {
 	}
 else
 	{
-	$disp_desc = $lang{$current_language}{drc_pred_msg8};
+	$disp_desc = $lang{drc_pred_msg8}{$current_language};
 	$predisp_graphic = $green_risk;
 	}
 
-$weight_desc = "$lang{$current_language}{drc_weight_desc}";
+$weight_desc = "$lang{drc_weight_desc}{$current_language}";
 $weight_desc =~ s/WEIGHT_HABITS/$weight_habits[$weight_flag]/;
 $weight_desc =~ s/HEIGHT/$height/;
 $weight_graphic = do
@@ -109,26 +109,26 @@ $weight_graphic = do
 
 $weight_target = do
 		{
-			if(    $weight_flag == 0 ) { $lang{$current_language}{drc_weight_msg1} }
-			elsif( $weight_flag == 1 ) { $lang{$current_language}{drc_weight_msg2} }
-			elsif( $weight_flag == 2 ) { $lang{$current_language}{drc_weight_msg3} }
-			elsif( $weight_flag == 3 ) { $lang{$current_language}{drc_weight_msg4} }
-			elsif( $weight_flag == 4 ) { $lang{$current_language}{drc_weight_msg5} }
+			if(    $weight_flag == 0 ) { $lang{drc_weight_msg1}{$current_language} }
+			elsif( $weight_flag == 1 ) { $lang{drc_weight_msg2}{$current_language} }
+			elsif( $weight_flag == 2 ) { $lang{drc_weight_msg3}{$current_language} }
+			elsif( $weight_flag == 3 ) { $lang{drc_weight_msg4}{$current_language} }
+			elsif( $weight_flag == 4 ) { $lang{drc_weight_msg5}{$current_language} }
 		};
 
 
 $exer_target = do
 		{
-			if ( $exercise eq YES )		{ $lang{$current_language}{drc_exercise_msg1} }
-			else  				{ $lang{$current_language}{drc_exercise_msg2} }
+			if ( $exercise eq YES )		{ $lang{drc_exercise_msg1}{$current_language} }
+			else  				{ $lang{drc_exercise_msg2}{$current_language} }
 		};
 
 $exer_desc = do
 		{
 			if (    $exercise eq YES &&
-				$weight_flag == 0 ) 	{ $lang{$current_language}{drc_exercise_msg3} }
-			elsif ( $exercise eq YES ) 	{ $lang{$current_language}{drc_exercise_msg4} }
-			else  				{ $lang{$current_language}{drc_exercise_msg5} }
+				$weight_flag == 0 ) 	{ $lang{drc_exercise_msg3}{$current_language} }
+			elsif ( $exercise eq YES ) 	{ $lang{drc_exercise_msg4}{$current_language} }
+			else  				{ $lang{drc_exercise_msg5}{$current_language} }
 		};
 
 $exer_graphic = do
@@ -142,23 +142,23 @@ $female_desc = do
 			if ( $diabetes_gdm eq YES &&
 				$big_kid ne YES &&
 				$sex eq FEMALE )
-					{ $lang{$current_language}{drc_female_desc_msg1} }
+					{ $lang{drc_female_desc_msg1}{$current_language} }
 			elsif ( $diabetes_gdm ne YES &&
 				$big_kid eq YES &&
 				$sex eq FEMALE )
-					{ $lang{$current_language}{drc_female_desc_msg2} }
+					{ $lang{drc_female_desc_msg2}{$current_language} }
 			elsif ( $diabetes_gdm eq YES &&
 				$big_kid eq YES &&
 				$sex eq FEMALE )
-					{ $lang{$current_language}{drc_female_desc_msg3} }
+					{ $lang{drc_female_desc_msg3}{$current_language} }
 			elsif ( $diabetes_points > 9 &&
 				$sex eq FEMALE &&
 				$age < 55 )
-					{ $lang{$current_language}{drc_female_desc_msg4} }
+					{ $lang{drc_female_desc_msg4}{$current_language} }
 			elsif ( $diabetes_points > 5 &&
 				$sex eq FEMALE &&
 				$age < 55 )
-					{ $lang{$current_language}{drc_female_desc_msg5} }
+					{ $lang{drc_female_desc_msg5}{$current_language} }
 			else
 					{ "" }
 		};
@@ -200,29 +200,29 @@ my $drc_flag = do {
 	else                          { 0 }
 	};
 
-my $risk = ( uc($lang{$current_language}{low}), uc($lang{$current_language}{moderate}), uc($lang{$current_language}{high}) )[ $drc_flag ] . " ".uc($lang{$current_language}{risk});
+my $risk = ( uc($lang{low}{$current_language}), uc($lang{moderate}{$current_language}), uc($lang{high}{$current_language}) )[ $drc_flag ] . " ".uc($lang{risk}{$current_language});
 
 $risk = do {
 	if( $format eq 'pdf' ) { "^b $risk ^B" }
 	else                   { $bold_on.$risk.$bold_off }
 	};
 
-my $symptoms         = $lang{$current_language}{drc_fact_msg1};
-my $regular_exercise = $lang{$current_language}{drc_fact_msg2};
-my $tested_regularly = $lang{$current_language}{drc_fact_msg3};
-my $tested_3years    = $lang{$current_language}{drc_fact_msg4};
-my $more_frequently  = $lang{$current_language}{drc_fact_msg5};
-my $over_45          = $lang{$current_language}{drc_fact_msg6};
-my $not_routine      = $lang{$current_language}{drc_fact_msg7};
-my $getting_older    = $lang{$current_language}{drc_fact_msg8};
-my $check_with_doc   = $lang{$current_language}{drc_fact_msg9};
-my $race_message     = $lang{$current_language}{drc_fact_msg10};
+my $symptoms         = $lang{drc_fact_msg1}{$current_language};
+my $regular_exercise = $lang{drc_fact_msg2}{$current_language};
+my $tested_regularly = $lang{drc_fact_msg3}{$current_language};
+my $tested_3years    = $lang{drc_fact_msg4}{$current_language};
+my $more_frequently  = $lang{drc_fact_msg5}{$current_language};
+my $over_45          = $lang{drc_fact_msg6}{$current_language};
+my $not_routine      = $lang{drc_fact_msg7}{$current_language};
+my $getting_older    = $lang{drc_fact_msg8}{$current_language};
+my $check_with_doc   = $lang{drc_fact_msg9}{$current_language};
+my $race_message     = $lang{drc_fact_msg10}{$current_language};
 
-my @messages_1 = ( "$name, $lang{$current_language}{drc_fact_msg11}" );
+my @messages_1 = ( "$name, $lang{drc_fact_msg11}{$current_language}" );
 
 if(    $drc_flag == 2 )
 	{
-	push @messages_1, $lang{$current_language}{drc_fact_msg12};
+	push @messages_1, $lang{drc_fact_msg12}{$current_language};
 	}
 elsif( $drc_flag == 1 )
 	{

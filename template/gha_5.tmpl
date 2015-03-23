@@ -23,7 +23,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
 
 <div id="ass-bg" class="content">
 <p class="pad27">
-{$lang{$current_language}{gha_intro}} 
+{$lang{gha_intro}{$current_language}} 
 </p>
 </div> 
 
@@ -47,7 +47,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td colspan="2" >
-                 <p><b>{$date} {$lang{$current_language}{for}} {$name}</b></p><br>
+                 <p><b>{$date} {$lang{for}{$current_language}} {$name}</b></p><br>
                 </td>
               </tr>
               <tr>
@@ -55,17 +55,17 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
               </tr>
              <tr>
                 <td colspan="2" >
-                  <p><span ><b>{$lang{$current_language}{risk_assessment}}</b></span><br>
-      			   <span >{$bp_message}</span></P><br>
-			   <P >{$cholesterol_message}</P><br>
-			   <p >{$exercise_message}</P><br>
-			   {my $output;
-			   if ($sex eq FEMALE) { $output = "<p >$mammogram_message $breast_cancer_message</p>";}
-			   else { $output = "<p >$prostate_message</p>";}
+                  <p><span ><b>{$lang{risk_assessment}{$current_language}}</b></span><br>
+      			  <span >{$bp_message}</span></P><br>
+				  <P >{$cholesterol_message}</P><br>
+				  <p >{$exercise_message}</P><br>
+				   {my $output;
+				   if ($sex eq FEMALE) { $output = "<p >$mammogram_message $breast_cancer_message</p>";}
+				   else { $output = "<p >$prostate_message</p>";}
 			   
-			   $output;
-			   }<p>&nbsp;</p>
-		</td>
+					$output;
+					}<p>&nbsp;</p>
+				</td>
               </tr>
               <tr>
 				<td width=200>
