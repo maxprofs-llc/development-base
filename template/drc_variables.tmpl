@@ -65,6 +65,12 @@ if ( $big_kid eq YES &&
 }
 push @messages, ". ";
 
+$parents_have_diabetes = $lang{no}{$current_language} if $parents_have_diabetes eq NO;
+$parents_have_diabetes = $lang{yes}{$current_language} if $parents_have_diabetes eq YES;
+
+$siblings_have_diabetes = $lang{no}{$current_language} if $siblings_have_diabetes eq NO;
+$siblings_have_diabetes = $lang{yes}{$current_language} if $siblings_have_diabetes eq YES;
+
 my $weight_flag = do
 	{
 	if(    $bmi < BMI_LOW ) 	{ 4 }

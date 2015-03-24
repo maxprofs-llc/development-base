@@ -46,8 +46,9 @@ Text::Template::fill_in_file( "$config{template_directory}gha_variables.tmpl", P
 		$html .= qq|<a href="$review?status=retake&assessment=$assessment&xnum=$xnum&output_format=PDF&language=spanish">[Espanol]</a>
 				&nbsp;&nbsp; <a href="$review?status=retake&assessment=$assessment&xnum=$xnum&output_format=PDF">[English]</a> |;
 	}else{
-		$html .= qq|<a href="$review?status=retake&assessment=$assessment&xnum=$xnum&language=spanish">[Espanol]</a>
-				&nbsp;&nbsp; <a href="$review?status=retake&assessment=$assessment&xnum=$xnum">[English]</a>|;
+		$html .= qq|<a href="$review?status=retake&assessment=$assessment&xnum=$xnum">[English]</a> 
+				&nbsp;&nbsp; <a href="$review?status=retake&assessment=$assessment&xnum=$xnum&language=spanish">[Espanol]</a>
+				&nbsp;&nbsp;<a href="$review?status=retake&assessment=$assessment&xnum=$xnum&language=chinese">[Chinese]</a>|;
 	}
 	$html;
 }

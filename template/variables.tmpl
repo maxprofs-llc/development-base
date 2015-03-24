@@ -207,22 +207,33 @@ $back = $config{button_back} || 'src="/images/global/back.jpg" class="HSbuttonBa
 $submit = $config{button_submit} || 'src="/images/global/submit.jpg" class="HSbutton"';
 $continued = "<span class=\"HSsubtitle\">($lang{continued}{$current_language})</span>";
 $close = 'src="/images/global/close.gif" class="HSbutton"';
+$copyright = '<img src="/images/global/copyright.gif">';
 my $member_back_image = "<img border=0 $back>";
 my $title_string = '';
+
+# convert race into specific language
+$race = $lang{african_american}{$current_language} if($race eq 'African American');
+$race = $lang{aleutian}{$current_language} if($race eq 'Aleutian, Eskimo or American Indian');
+$race = $lang{australian}{$current_language} if($race eq 'Caucasian');
+$race = $lang{asian}{$current_language} if($race eq 'Asian');
+$race = $lang{caucasian}{$current_language} if($race eq 'Caucasian');
+$race = $lang{hispanic_latino}{$current_language} if($race eq 'Hispanic');
+$race = $lang{other}{$current_language} if($race eq 'Other');
+$race = $lang{do_not_know}{$current_language} if($race eq 'Don\'t know');	
+
 $lc_race 	= lc $race;
 $lc_sex 	= lc $sex;
 if ($sex eq MALE){
 	$gender  = $lang{man}{$current_language};
 	$genders = $lang{men}{$current_language};
 	}
-else	{
+else{
 	$gender  =  $lang{woman}{$current_language};
 	$genders = $lang{women}{$current_language};
 	}
 	
 if(!defined $language || lc $language eq 'usenglish' || lc $current_language eq 'english'){
 	$print_me = qq|<a href="$review?status=retake&assessment=$assessment&xnum=$db_record&output_format=PDF" class="HSbodytext2" target="_blank">[Click here for a Printable PDF Version of this report]</a>|;
-	$copyright = '<img src="/images/global/copyright.gif">';
 	$copyright_pdf = "Copyright (c) 1998-$year HealthStatus.com, Inc. all rights reserved.";	
 	
 	$member_back = qq|<a href="$member">$member_back_image</a>|;	
@@ -242,7 +253,7 @@ if(!defined $language || lc $language eq 'usenglish' || lc $current_language eq 
 elsif( lc $language eq 'espanol' || lc $current_language eq 'spanish' || lc $current_language eq 'espanol')	{ 
 	$copyright = '<span class="HScopyright">Copyright (c) 1998-'.$year.' HealthStatus.com, Inc. Todos los derechos reservados.</span>';
 	$copyright_pdf = "Copyright (c) 1998-$year HealthStatus.com, Inc. Todos los derechos reservados.";
-	$hidden_language = $language;
+	
 	#Próximo
 	$next = 'src="images/global/proximo.gif" class="HSbuttonNext"';
 	$back = 'src="images/global/volver.gif" class="HSbuttonBack"';
@@ -262,7 +273,7 @@ elsif( lc $language eq 'espanol' || lc $current_language eq 'spanish' || lc $cur
 	
 	$reg_message = $config{ggr_adv_styles};
 }
-
+$hidden_language = $language;
 ########## Assessments titles and subtitles #####################
 $gha_title = $title_string . "<span class=\"HStitle\">$lang{gha_title}{$current_language}</span>";
 $gha_subtitle = "<span class=\"HSsubtitle\">$lang{gha_subtitle}{$current_language}</span>";
