@@ -1,26 +1,32 @@
 <!--
 // if(document.theForm.page.value > 1) { window.history.forward(1); };
-function checkWholeForm(theForm)
-{
-	if(theForm.qset.value == "espanol"){
-		return doSpanishHRAFormCheck(theForm, true);}
-	else	{
-		return doHRAFormCheck(theForm, true);}
-}
-function doHRAFormCheck(theForm, showAlert) {
+var doValidate=true;
+
+function checkWholeForm(theForm) {
+  if(doValidate){
     var why = "";
+		
     if ((theForm.page.value == 1) || (theForm.assessment.value == "FIT") || (theForm.assessment.value == "DRC")) {
+    	why += isEmpty(theForm.first_name.value, "You did not enter your first name.\n");
+    	why += isEmpty(theForm.last_name.value, "You did not enter your last name.\n");
      	why += checkYear(theForm.birth_year.value);
      	why += checkthisdate(theForm.birth_month.value, theForm.birth_date.value, theForm.birth_year.value);
     	why += checkSEX(theForm.sex.value);
     	if (theForm.assessment.value != "GWB") {
 			why += checkWeight(theForm.weight.value);
-			why += checkDropdown(theForm.height.value, "You did not enter your height.\n");		
+			why += checkDropdown(theForm.height.value, "You did not enter your height.\n");			
     	}
-    	if (theForm.assessment.value != "GWB" && theForm.assessment.value != "FIT") {
+		if (theForm.assessment.value == 'HRA') {
+    		why += isEmpty(theForm.frame_size.value, "You did not enter your frame size.\n");
+    	}
+    	if (theForm.assessment.value != "GWB" && theForm.assessment.value != "FIT" && !noRace) {
     		why += checkDropdown(theForm.race.value, "You did not enter your race.\n");
     	}
+		
     	if ((theForm.assessment.value == "GHA")) {
+			if(theForm.waist){
+				why += checkWaist(theForm.waist.value);
+			}
     		why += checkDropdown(theForm.smoke_status.value, "You did not enter your tobacco use.\n");
     	}
     }
@@ -34,8 +40,8 @@ function doHRAFormCheck(theForm, showAlert) {
     }
     if (theForm.assessment.value == "DRC") {
     		why += isEmpty(theForm.exercise.value, "You did not enter your exercise.\n");
-    		why += checkDropdown(theForm.siblings_have_diabetes.value, "You did not enter your sibling history.\n");
-    		why += checkDropdown(theForm.parents_have_diabetes.value, "You did not enter your parents history.\n");
+    		if(!noGina){why += checkDropdown(theForm.siblings_have_diabetes.value, "You did not enter your sibling history.\n");}
+    		if(!noGina){why += checkDropdown(theForm.parents_have_diabetes.value, "You did not enter your parents history.\n");}
     		if(theForm.sex.value == "Male"){
     			theForm.big_kid.value = 'No';
     			theForm.diabetes_gdm.value = 'No';
@@ -43,60 +49,82 @@ function doHRAFormCheck(theForm, showAlert) {
     		why += checkDropdown(theForm.big_kid.value, "You did not enter your childbirth information.\n");
     		why += checkDropdown(theForm.diabetes_gdm.value, "You did not enter your Gestational Diabetes information.\n");
     }
-    if ( ((theForm.page.value == 2) && (theForm.assessment.value == "HRA")) || ( (theForm.page.value == 5) && (theForm.assessment.value == "GHA")) ){
-    	if (theForm.sex.value == "Male"){
+    if ( ( theForm.page.value == 2 && theForm.assessment.value == "HRA" ) || ( theForm.page.value == 5 && theForm.assessment.value == "GHA" ) ){
+    	  
+		if (theForm.sex.value == "Male"){
     		why += checkDropdown(theForm.rectal_male.value, "You did not enter your prostate exam information.\n");
     	}
     	if (theForm.sex.value == "Female"){
     		why += checkDropdown(theForm.menarche_female.value, "You did not enter your menstrual information.\n");
     		why += checkDropdown(theForm.birth_age_female.value, "You did not enter your childbirth information.\n");
-    		why += checkDropdown(theForm.mammogram_female.value, "You did not enter your mammogram history.\n");
-    		why += checkDropdown(theForm.fam_breast_cancer.value, "You did not enter your family history.\n");
-    		why += checkDropdown(theForm.pap_female.value, "You did not enter your pap exam history.\n");
-    		why += checkDropdown(theForm.hyst_female.value, "You did not enter your hysterectomy status.\n");
+     		why += checkDropdown(theForm.pregnant_female.value, "You did not enter if you are pregnant.\n");
+   		why += checkDropdown(theForm.mammogram_female.value, "You did not enter your mammogram history.\n");
+  		if(!noGina){why += checkDropdown(theForm.fam_breast_cancer.value, "You did not enter your family history.\n");}
     		why += checkDropdown(theForm.self_breast_exam.value, "You did not enter your self breast exam information.\n");
     		why += checkDropdown(theForm.clinic_breast_exam.value, "You did not enter your clinical breast exam information.\n");
+    		why += checkDropdown(theForm.hyst_female.value, "You did not enter your hysterectomy status.\n");
+    		why += checkDropdown(theForm.pap_female.value, "You did not enter your pap exam history.\n");
     		why += checkDropdown(theForm.rectal_female.value, "You did not enter your rectal exam information.\n");
     	}
+    }
+    if ( (theForm.page.value == 2) && (theForm.assessment.value == "GHA") ){
+    		why += checkDropdown(theForm.diabetes.value, "You did not enter your diabetes status.\n");
+    		if(!noGina){why += checkDropdown(theForm.family_diabetes.value, "You did not enter your family history of diabetes.\n");}
+     		why += checkDropdown(theForm.heart_attack.value, "You did not enter your heart history.\n");
+    		if(!noGina){why += checkDropdown(theForm.family_heart_attack.value, "You did not enter your family history of heart attack.\n");}
+    		why += checkDropdown(theForm.bp_meds.value, "You did not enter your blood pressures medication status.\n");
     }
     if ( ( (theForm.page.value == 4) && (theForm.assessment.value == "HRA") ) || ( (theForm.page.value == 3) && (theForm.assessment.value == "CRC") ) || ( (theForm.page.value == 2) && (theForm.assessment.value == "GHA") ) ) {
      	why += checkSys(theForm.bp_sys.value);
      	why += checkDias(theForm.bp_dias.value);
      	why += checkChol(theForm.cholesterol.value);
+		why += checkLDL(theForm.ldl.value);
      	why += checkHDL(theForm.hdl.value);
+    }
+    
+    
+    if (  ( (theForm.page.value == 3) && (theForm.assessment.value == "CRC") ) || ( (theForm.page.value == 2) && (theForm.assessment.value == "GHA") ) ) {
+     	if(!noBio){why += checkLDL(theForm.ldl.value);}
+     	if(!noBio){why += checkGlucose(theForm.glucose.value);}
+     	if(!noBio){why += checkTri(theForm.triglycerides.value);}
     }
     if ( (theForm.page.value == 2) && (theForm.assessment.value == "CRC") ){
     		why += checkDropdown(theForm.diabetes.value, "You did not enter your diabetes status.\n");
      		why += checkDropdown(theForm.heart_attack.value, "You did not enter your heart history.\n");
-    		why += checkDropdown(theForm.family_heart_attack.value, "You did not enter your family history.\n");
+    		if(!noGina){why += checkDropdown(theForm.family_heart_attack.value, "You did not enter your family history.\n");}
     		why += checkDropdown(theForm.loss.value, "You did not enter information about recent loss.\n");
     		why += checkDropdown(theForm.stress.value, "You did not enter information about stress.\n");
     }
     if ( (theForm.page.value == 4) && (theForm.assessment.value == "CRC") ){
-    		why += checkDropdown(theForm.smoke_status.value, "You did not enter your tobacco use.\n");
+    		var smokeStatus = theForm.smoke_status.value;
+			why += checkDropdown(theForm.smoke_status.value, "You did not enter your tobacco use.\n");
+			if(smokeStatus == "Used to smoke" || smokeStatus == "Still smoke"){
+			why += checkRange(theForm.cigs_a_day.value, 1, 80, 0, "Your cigarettes smoke a day must be between 1 and 80.\n", "cigarettes a day");
+			}
     		why += isEmpty(theForm.exercise.value, "You did not enter your exercise.\n");
     		why += checkDropdown(theForm.fiber.value, "You did not enter your fiber.\n");
     		why += checkDropdown(theForm.fat.value, "You did not enter information about your fat intake.\n");
     }
     if ( ( (theForm.page.value == 5) && (theForm.assessment.value == "HRA") ) || ( (theForm.page.value == 3) && (theForm.assessment.value == "GHA") ) ){
+           var smokeStatus = theForm.smoke_status.value;
 		if ( (theForm.assessment.value == "HRA") ){
 			why += checkDropdown(theForm.smoke_status.value, "You did not enter your tobacco use.\n");
     		}
-    		if(theForm.smoke_status.value != "Never smoked"){
+    		if(smokeStatus != "Never smoked" ){
 			why += checkDropdown(theForm.cigars_day.value, "You did not enter how many cigars you smoke.\n");
 			why += checkDropdown(theForm.chews_day.value, "You did not enter if you use smokeless tobacco.\n");
 			why += checkDropdown(theForm.pipes_day.value, "You did not enter how many pipes you smoke.\n");
 		}
-    		if(theForm.smoke_status.value == "Never smoked"){
+    		if(smokeStatus == "Never smoked"){
     			if(theForm.cigars_day.value == ''){ theForm.cigars_day.value = 'None'; }
     			if(theForm.chews_day.value == ''){ theForm.chews_day.value = 'None'; }
     			if(theForm.pipes_day.value == ''){ theForm.pipes_day.value = 'None'; }
     		}
-    		if(theForm.smoke_status.value == "Used to smoke or chew"){
+    		if(smokeStatus == "Used to smoke"){
     			why += checkRange(theForm.cigarette_years_quit.value, 1, 80, 0, "Your cigarette years quit must be between 1 and 80.\n", "years quit");
     			why += checkRange(theForm.cigs_a_day.value, 1, 80, 0, "Your cigarettes smoke a day must be between 1 and 80.\n", "cigarettes a day");
     		}
-    		if(theForm.smoke_status.value == "Still smoke or chew"){
+    		if(smokeStatus == "Still smoke"){
     			why += checkRange(theForm.cigs_a_day.value, 1, 80, 0, "Your cigarettes smoke a day must be between 1 and 80.\n", "cigarettes a day");
     		}
     }
@@ -107,6 +135,7 @@ function doHRAFormCheck(theForm, showAlert) {
     if ( (theForm.page.value == 5) && (theForm.assessment.value == "GHA") ){
     		why += checkRange(theForm.drinks_week.value, 0, 100, 1, "Your alcoholic drinks in a week should be between 0 and 100.\n", "alcoholic drinks");
     		why += checkDropdown(theForm.exercise.value, "You did not enter your exercise information.\n");
+    		why += checkDropdown(theForm.general_exam.value, "You did not enter your general exam history.\n");
     }
     if ( (theForm.page.value == 6) && (theForm.assessment.value == "GHA") ){
     		why += checkDropdown(theForm.overall_health.value, "You did not enter your overall health status.\n");
@@ -126,13 +155,18 @@ function doHRAFormCheck(theForm, showAlert) {
     if ( (theForm.page.value == 8) && (theForm.assessment.value == "HRA") ){
     		why += checkRange(theForm.drinks_week.value, 0, 100, 1, "Your alcoholic drinks in a week should be between 0 and 100.\n", "alcoholic drinks");
     }
-    if ( ( (theForm.page.value == 9) && (theForm.assessment.value == "HRA") ) || ( (theForm.page.value == 4) && (theForm.assessment.value == "GHA") ) ){
-    		theForm.miles_car.value = niceNum(theForm.miles_car.value);
-  		theForm.miles_motorcycle.value = niceNum(theForm.miles_motorcycle.value);
+    if ( ( (theForm.page.value == 9) && (theForm.assessment.value == "HRA") ) || ( (theForm.page.value == 4) && (theForm.assessment.value == "GHA") && !noDrive) ){
+    		
+			theForm.miles_car.value = niceNum(theForm.miles_car.value);
+  		    theForm.miles_motorcycle.value = niceNum(theForm.miles_motorcycle.value);			
+			why += checkInt(theForm.miles_car.value,"Miles per year");
+			why += checkInt(theForm.miles_motorcycle.value,"Miles per year");
     		why += checkDropdown(theForm.travel_mode.value, "You did not enter your travel mode.\n");
     		why += checkDropdown(theForm.seat_belt.value, "You did not enter your seat belt habits.\n");
     		why += checkDropdown(theForm.helmet.value, "You did not enter your helmet information.\n");
     		why += checkDropdown(theForm.speed.value, "You did not enter your driving speed habits.\n");
+    }
+    if ( ( (theForm.page.value == 9) && (theForm.assessment.value == "HRA") ) || ( (theForm.page.value == 4) && (theForm.assessment.value == "GHA") ) ){
     		why += checkRange(theForm.drink_and_drive.value, 0, 25, 1, "Your riding with drunk drivers number should be between 0 and 25.\n", "riding with drunk drivers");
     }
     if ( (theForm.page.value == 10) && (theForm.assessment.value == "HRA") ){
@@ -151,114 +185,23 @@ function doHRAFormCheck(theForm, showAlert) {
     		why += checkDropdown(theForm.q19.value, "You did not enter about your feeling relaxed.\n");
     		why += checkDropdown(theForm.q22.value, "You did not enter about your feeling pressure.\n");
     }
-
     if (why != "") {
-       if (showAlert) {
-        alert(why);
-        }
+       alert(why);
        return false;
     }
-return true;
+    return true;
+  }
+  else{
+    return true; // submits without validation.
+  }
 }
 
-function doSpanishHRAFormCheck(theForm, showAlert) {
-    var why = "";
-    if ((theForm.page.value == 1) || (theForm.assessment.value == "FIT") || (theForm.assessment.value == "DRC")) {
-     	why += checkYear(theForm.birth_year.value);
-     	why += checkthisdate(theForm.birth_month.value, theForm.birth_date.value, theForm.birth_year.value);
-    	why += checkSEX(theForm.sex.value);
-    	if (theForm.assessment.value != "GWB") {
-			why += checkWeight(theForm.weight.value);
-			why += checkDropdown(theForm.height.value, "Usted no ingresó su altura.\n");		
-    	}
-    	if (theForm.assessment.value != "GWB" && theForm.assessment.value != "FIT") {
-    		why += checkDropdown(theForm.race.value, "Usted no ingresó su raza.\n");
-    	}
-    	if ((theForm.assessment.value == "GHA")) {
-    		why += checkDropdown(theForm.smoke_status.value, "Usted no ingresó su uso de tabaco.\n");
-    	}
-    }
-    if ( ((theForm.page.value == 2) && (theForm.assessment.value == "HRA")) || ( (theForm.page.value == 5) && (theForm.assessment.value == "GHA")) ){
-    	if (theForm.sex.value == "Male"){
-    		why += checkDropdown(theForm.rectal_male.value, "Usted no ingresó la información de su examen de próstata.\n");
-    	}
-    	if (theForm.sex.value == "Female"){
-    		why += checkDropdown(theForm.menarche_female.value, "Usted no ingresó su información menstrual.\n");
-    		why += checkDropdown(theForm.birth_age_female.value, "Usted no ingresó su información de parto.\n");
-    		why += checkDropdown(theForm.mammogram_female.value, "Usted no ingresó el historial de sus mamografías.\n");
-    		why += checkDropdown(theForm.fam_breast_cancer.value, "Usted no ingresó su historial familiar.\n");
-    		why += checkDropdown(theForm.pap_female.value, "Usted no ingresó el historial de su examen de Papanicolau.\n");
-    		why += checkDropdown(theForm.hyst_female.value, "Usted no ingresó el estado de su histerectomía.\n");
-    		why += checkDropdown(theForm.self_breast_exam.value, "Usted no ingresó la información de su autoexamen de mama.\n");
-    		why += checkDropdown(theForm.clinic_breast_exam.value, "Usted no ingresó la información de su examen clínico de mama.\n");
-    		why += checkDropdown(theForm.rectal_female.value, "Usted no ingresó la información de su examen rectal.\n");
-    	}
-    }
-    if ( ( (theForm.page.value == 4) && (theForm.assessment.value == "HRA") ) || ( (theForm.page.value == 3) && (theForm.assessment.value == "CRC") ) || ( (theForm.page.value == 2) && (theForm.assessment.value == "GHA") ) ) {
-     	why += checkSys(theForm.bp_sys.value);
-     	why += checkDias(theForm.bp_dias.value);
-     	why += checkChol(theForm.cholesterol.value);
-     	why += checkHDL(theForm.hdl.value);
-    }
-    if ( ( (theForm.page.value == 5) && (theForm.assessment.value == "HRA") ) || ( (theForm.page.value == 3) && (theForm.assessment.value == "GHA") ) ){
-    		if(theForm.smoke_status.value != "Never smoked"){
-			why += checkDropdown(theForm.cigars_day.value, "Usted no ingresó cuántos puros fuma.\n");
-			why += checkDropdown(theForm.chews_day.value, "Usted no ingresó si usa tabaco sin humo.\n");
-			why += checkDropdown(theForm.pipes_day.value, "Usted no ingresó cuántas pipas fuma.\n");
-		}
-    		if(theForm.smoke_status.value == "Never smoked"){
-    			if(theForm.cigars_day.value == ''){ theForm.cigars_day.value = 'None'; }
-    			if(theForm.chews_day.value == ''){ theForm.chews_day.value = 'None'; }
-    			if(theForm.pipes_day.value == ''){ theForm.pipes_day.value = 'None'; }
-    		}
-    		if(theForm.smoke_status.value == "Used to smoke or chew"){
-    			why += checkRange(theForm.cigarette_years_quit.value, 1, 80, 0, "Los años durante los que dejó de fumar deben fluctuar entre 1 y 80.\n", "año dejar de fumar ");
-    			why += checkRange(theForm.cigs_a_day.value, 1, 80, 0, "Los cigarrillos fumados por día deben fluctuar entre 1 y 80.\n", "cigarrillos al día");
-    		}
-    		if(theForm.smoke_status.value == "Still smoke or chew"){
-    			why += checkRange(theForm.cigs_a_day.value, 1, 80, 0, "Los cigarrillos fumados por día deben fluctuar entre 1 y 80.\n", "cigarrillos al día");
-    		}
-    }
-    if ( (theForm.page.value == 3) && (theForm.assessment.value == "GHA") ){
-    		why += checkDropdown(theForm.fat.value, "Usted no ingresó información sobre su consumo de grasas.\n");
-    		why += checkDropdown(theForm.fiber.value, "Usted no ingresó su consumo de fibra.\n");
-    }
-    if ( (theForm.page.value == 5) && (theForm.assessment.value == "GHA") ){
-    		why += checkRange(theForm.drinks_week.value, 0, 100, 1, "Los tragos que toma por semana deberían fluctuar entre 0 y 100.\n", "bebidas alcohólicas");
-    		why += checkDropdown(theForm.exercise.value, "Usted no ingresó información de su ejercicio.\n");
-    }
-    if ( (theForm.page.value == 6) && (theForm.assessment.value == "GHA") ){
-    		why += checkDropdown(theForm.overall_health.value, "Usted no ingresó su estado de salud en general.\n");
-    		why += checkDropdown(theForm.life_satisfaction.value, "Usted no ingresó el nivel de satisfacción con su vida.\n");
-    		why += checkDropdown(theForm.loss.value, "Usted no ingresó información sobre alguna pérdida.\n");
-    		why += checkDropdown(theForm.violence.value, "Usted no ingresó información sobre alguna violencia.\n");
-    }
-    if ( ( (theForm.page.value == 9) && (theForm.assessment.value == "HRA") ) || ( (theForm.page.value == 4) && (theForm.assessment.value == "GHA") ) ){
-    		theForm.miles_car.value = niceNum(theForm.miles_car.value);
-  		theForm.miles_motorcycle.value = niceNum(theForm.miles_motorcycle.value);
-    		why += checkDropdown(theForm.travel_mode.value, "Usted no ingresó su modalidad de viaje.\n");
-    		why += checkDropdown(theForm.seat_belt.value, "Usted no ingresó sus hábitos de uso del cinturón de seguridad.\n");
-    		why += checkDropdown(theForm.helmet.value, "Usted no ingresó información de su casco.\n");
-    		why += checkDropdown(theForm.speed.value, "Usted no ingresó sus hábitos de velocidad de manejo.\n");
-    		why += checkRange(theForm.drink_and_drive.value, 0, 25, 1, "Su número de viajes con conductores ebrios debería fluctuar entre 0 y 25.\n", "caballo con conductores ebrios");
-    }
 
-    if (why != "") {
-       if (showAlert) {
-        alert(why);
-        }
-       return false;
-    }
-return true;
-}
+
 function checkRange(entered, min, max, zero, msg, fldname) {
     var error = "";
     if (entered == "" && zero != '1') {
-    	if(theForm.qset.value == 'espanol'){
-    		error = "Usted no ingresó su " + fldname + ".\n";
-		}else{
-        	error = "You did not enter your " + fldname + ".\n";
-		}
+        error = "You did not enter your " + fldname + ".\n";
     }
     num = niceNum(entered);
     if (num < min || num > max) {
@@ -268,50 +211,34 @@ function checkRange(entered, min, max, zero, msg, fldname) {
 }
 
 function checkWeight(weight) {
-    var error = "";
-    if (weight == "") 
-    {
-    	if(theForm.qset.value == 'espanol'){
-    		error = "Usted no ingresó su peso.\n";}
-    	else	{
-        	error = "You did not enter your weight.\n";}
+    var error = "";	
+    if (weight == "") {
+        error = "You did not enter your weight.\n";
     }
-
+	var intRegex = /^\d+$/;
+	if(!intRegex.test(weight) && weight != "") {
+	  error += "The weight must be an integer value.\n";   
+	}
     num = niceNum(weight);
-
     if (num < 50 || num > 700) {
-    	if(theForm.qset.value == 'espanol'){
-    		error = "El peso debe fluctuar entre 50 y 700 para esta evaluación.\n";}
-    	else	{
-	    error += "The weight must be between 50 and 700 for this assessment.\n";}
-    }
+    	error += "The weight must be between 50 and 700 for this assessment.\n";
+	}
+	
     return error;
 }
 
 function checkWaist(waist) {
     var error = "";
     if (waist == "") {
-    	if(theForm.qset.value == 'espanol'){
-    		error = "Usted no ingresó el tamaño de su cintura.\n";}
-    	else	{
-       		error = "You didn't enter your waist size.\n";}
+        error = "You didn't enter your waist size.\n";
     }
-    num = niceNum(waist);
-   if(theForm.units.value == "Metric" && num < 10 || num >60 )
-	{
-    	if(theForm.qset.value == 'espanol'){
-    		error += "El tamaño de su cintura debe fluctuar entre 10 y 60 para esta evaluación.\n";}
-    	else	{
-      		error += "The waist must be between 10 and 60 for this assessment.\n";}
+	var intRegex = /^\d+$/;
+	if(!intRegex.test(waist) && waist != "") {
+	   error += "The waist must be an integer value.\n";	   
 	}
-	else
-	{
+    num = niceNum(waist);
     if (num < 10 || num > 90) {
-    	if(theForm.qset.value == 'espanol'){
-    		error += "El tamaño de su cintura debe fluctuar entre 10 y 90 para esta evaluación.\n";}
-    	else	{
-    		error += "The waist size must be between 10 and 90 for this assessment.\n";}
-    }
+    	error += "The waist size must be between 10 and 90 for this assessment.\n";
 	}
     return error;
 }
@@ -338,15 +265,9 @@ function checkYear(year) {
     num = niceNum(year);
     num = parseInt(num);
     if (num < 1900 || num > max_year) {
-    	if(theForm.qset.value == 'espanol'){
-    		error = "El año de su nacimiento debe fluctuar entre 1900 y ";}
-    	else	{
-    		error = "The year of birth must be between 1900 and ";}
+    	error = "The year of birth must be between 1900 and ";
     	error += max_year;
-    	if(theForm.qset.value == 'espanol'){
-    		error += "para esta evaluación.\n";}
-    	else	{
-    		error += " for this assessment.\n";}
+    	error += " for this assessment.\n";
     	document.theForm.birth_year.focus();
     }
     return error;
@@ -365,10 +286,7 @@ function checkthisdate(month, day, year) {
     if((day==dteDate.getDate()) && (monthminus==dteDate.getMonth()) && (year==dteDate.getFullYear())){
     	return error;}
     else	{
-    	if(theForm.qset.value == 'espanol'){
-    		error = "Usted no ingresó una fecha válida.\n";}
-    	else	{
-    		error = "You did not enter a valid date.\n";}
+    	error = "You did not enter a valid date.\n";
     	return error;}
 }
     	
@@ -376,19 +294,17 @@ function checkthisdate(month, day, year) {
 function checkSys(systolic) {
     var error = "";
     if (systolic == "" && (theForm.bp_check.value <= 0)) {
-    	if(theForm.qset.value == 'espanol'){
-    		error = "Usted no ingresó el valor de su presión arterial sistólica.\n";}
-    	else	{
-        	error = "You didn't enter your systolic blood pressure value.\n";}
+        error = "You didn't enter your systolic blood pressure value.\n";
     }
+	var intRegex = /^\d+$/;
+	if(!intRegex.test(systolic)) {
+	   error += "The systolic blood pressure number must be an integer value.\n";	   
+	}
     num = niceNum(systolic)
     num = parseInt(num);
   
     if ((num < 90 || num > 300) && (theForm.bp_check.value <= 0)) {
-    	if(theForm.qset.value == 'espanol'){
-    		error += "El número de su presión arterial sistólica debe fluctuar entre 90 y 300 para esta evaluación.\n";}
-    	else	{
-    		error += "The systolic blood pressure number must be between 90 and 300 for this assessment.\n";}
+    	error += "The systolic blood pressure number must be between 90 and 300 for this assessment.\n";
     }
 	
     return error;
@@ -397,17 +313,15 @@ function checkSys(systolic) {
 function checkDias(diastolic) {
     var error = "";
     if (diastolic == "" && (theForm.bp_check.value <= 0)) {
-    	if(theForm.qset.value == 'espanol'){
-    		error += "Usted no ingresó el valor de su presión arterial diastólica.\n";}
-    	else	{
-        	error = "You did not enter your diastolic blood pressure value.\n";}
+        error = "You did not enter your diastolic blood pressure value.\n";
     }
+	var intRegex = /^\d+$/;
+	if(!intRegex.test(diastolic)) {
+	   error += "The diastolic blood pressure number must be an integer value.\n";	   
+	}
     num = parseInt(diastolic);
     if ((num < 50 || num > 150) && (theForm.bp_check.value <= 0)) {
-    	if(theForm.qset.value == 'espanol'){
-    		error += "El número de su presión arterial diastólica debe fluctuar entre 50 y 150 para esta evaluación.\n";}
-    	else	{
-    		error += "The diastolic blood pressure number must be between 50 and 150 for this assessment.\n";}
+    	error += "The diastolic blood pressure number must be between 50 and 150 for this assessment.\n";
     }
     return error;
 }
@@ -415,40 +329,78 @@ function checkDias(diastolic) {
 function checkChol(cholesterol) {
     var error = "";
     if (cholesterol == "" && (theForm.cholesterol_check.value <= 0)) {
-    	if(theForm.qset.value == 'espanol'){
-    		error += "Usted no ingresó el valor total de su colesterol.\n";}
-    	else	{
-        	error = "You did not enter your total cholesterol value.\n";}
+        error = "You did not enter your total cholesterol value.\n";
     }
-
+	var intRegex = /^\d+$/;
+	if(!intRegex.test(cholesterol) && cholesterol != "" ) {
+	   error += "The total cholesterol number must be an integer value.\n";	   
+	}
     num = niceNum(cholesterol);
     num = parseInt(num);
-
-    if ((num < 80 || num > 350) && (theForm.cholesterol_check.value <= 0)){
-    	if(theForm.qset.value == 'espanol'){
-    		error += "El número de su colesterol total debe fluctuar entre 80 y 350 para esta evaluación.\n";}
-    	else	{
-	    	error += "The total cholesterol number must be between 80 and 350 for this assessment.\n";}
+    if ((num < 80 || num > 450) && (theForm.cholesterol_check.value <= 0)){
+    	error += "The total cholesterol number must be between 80 and 450 for this assessment.\n";
     }
-
     return error;
 }
 
 function checkHDL(hdl) {
     var error = "";
     if (hdl == "" && (theForm.cholesterol_check.value <= 0)) {
-    	if(theForm.qset.value == 'espanol'){
-    		error = "Usted no ingresó el valor de su colesterol LAD (bueno).\n";}
-    	else	{
-        	error = "You did not enter your HDL (good) cholesterol value.\n";}
+        error = "You did not enter your HDL (good) cholesterol value.\n";
     }
+	var intRegex = /^\d+$/;
+	if(!intRegex.test(hdl) && hdl!= "" ) {
+	   error += "The total cholesterol number must be an integer value.\n";	   
+	}
     num = niceNum(hdl);
     num = parseInt(num);
     if ((num < 5 || num > 150) && (theForm.cholesterol_check.value <= 0)){
-    	if(theForm.qset.value == 'espanol'){
-    		error += "El número de su colesterol total debe fluctuar entre 5 y 150 para esta evaluación.\n";}
-    	else	{
-    		error += "The total cholesterol number must be between 5 and 150 for this assessment.\n";}
+    	error += "The HDL cholesterol number must be between 5 and 150 for this assessment.\n";
+    }
+    return error;
+}
+
+function checkLDL(ldl) {
+    var error = "";
+    if (ldl == "" && (theForm.cholesterol_check.value <= 0)) {
+        error = "You did not enter your LDL (bad) cholesterol value.\n";
+    }
+	var intRegex = /^\d+$/;
+	if(!intRegex.test(ldl) && ldl != "" ) {
+	   error += "The LDL cholesterol number must be an integer value.\n";	   
+	}
+    num = niceNum(ldl);
+    num = parseInt(num);
+    if ((num < 5 || num > 450) && (theForm.cholesterol_check.value <= 0)){
+    	error += "The LDL cholesterol number must be between 5 and 450 for this assessment.\n";
+    }
+    return error;
+}
+
+function checkGlucose(glucose) {
+    var error = "";
+	var intRegex = /^\d+$/;
+	if(glucose != "" && !intRegex.test(glucose)) {
+	   error = "The glucose must be an integer value.\n";	   
+	}
+    num = niceNum(glucose);
+    num = parseInt(num);
+    if ((num < 0 || num > 650)){
+    	error += "The Glucose number must be between 1 and 650 for this assessment.\n";
+    }
+    return error;
+}
+
+function checkTri(tri) {
+    var error = "";
+	var intRegex = /^\d+$/;
+	if(tri != "" && !intRegex.test(tri)) {
+	   error = "The triglycerides number must be an integer value.\n";	   
+	}
+    num = niceNum(tri);
+    num = parseInt(num);
+    if ((num < 0 || num > 650)){
+    	error += "The Triglycerides number must be between 1 and 650 for this assessment.\n";
     }
     return error;
 }
@@ -462,10 +414,7 @@ if (strng == "") {
 }
 
     if (!(strng == "Male") && !(strng == "Female") ) {
-    	if(theForm.qset.value == 'espanol'){
-    		error = "El número de su colesterol total debe fluctuar entre 5 y 150 para esta evaluación.\n";}
-    	else	{
-       		error = "Usted no ingresó su sexo.\n";}
+       error = "You did not enter your gender.\n";
     }
 return error;
 }
@@ -476,26 +425,62 @@ function disable_smoke() {
 		document.theForm.cigs_a_day.disabled = true;
 		var notationS = document.getElementById("cigsdayStatus")
 		notationS.innerText = notationS.textContent = '  (Does not apply)'; 
+		document.theForm.exercise.focus();
 	}
-	if(document.theForm.assessment.value == "DRC" && document.theForm.sex.value != "Male"){
+	if(document.theForm.assessment.value == "CRC" && document.theForm.smoke_status.value != "Never smoked"){
 		document.theForm.cigs_a_day.disabled = false;
 		var notationS = document.getElementById("cigsdayStatus")
 		notationS.innerText = notationS.textContent = ''; 
+		document.theForm.cigs_a_day.focus();
+	}
+}
+
+function disable_smokeHRA() {
+		if(document.theForm.assessment.value == "HRA" && document.theForm.smoke_status.value == "Never smoked"){
+		document.theForm.cigarette_years_quit.disabled = true;
+		document.theForm.cigs_a_day.disabled = true;
+		var notationS = document.getElementById("cigyearsquitStatus")
+		notationS.innerText = notationS.textContent = '  (Does not apply)'; 
+		var notationS1 = document.getElementById("cigsdayStatus")
+		notationS1.innerText = notationS1.textContent = '  (Does not apply)'; 
+		document.theForm.exercise.focus();
+	}
+	if(document.theForm.assessment.value == "HRA" && document.theForm.smoke_status.value == "Still smoke"){
+		document.theForm.cigarette_years_quit.disabled = true;
+		document.theForm.cigs_a_day.disabled = false;
+		var notationS = document.getElementById("cigyearsquitStatus")
+		notationS.innerText = notationS.textContent = '  (Does not apply)'; 
+		var notationS1 = document.getElementById("cigsdayStatus")
+		notationS1.innerText = notationS1.textContent = ''; 
+		document.theForm.cigs_a_day.focus();
+	}
+	if(document.theForm.assessment.value == "HRA" && document.theForm.smoke_status.value == "Used to smoke"){
+		document.theForm.cigarette_years_quit.disabled = false;
+		document.theForm.cigs_a_day.disabled = false;
+		var notationS = document.getElementById("cigyearsquitStatus")
+		notationS.innerText = notationS.textContent = ''; 
+		var notationS1 = document.getElementById("cigsdayStatus")
+		notationS1.innerText = notationS1.textContent = ''; 
+		document.theForm.cigarette_years_quit.focus();
 	}
 }
 
 function disable_sex() {
 		if(document.theForm.assessment.value == "DRC" && document.theForm.sex.value == "Male"){
-		document.theForm.big_kid.disabled = true;
-		document.theForm.diabetes_gdm.disabled = true;
+		document.getElementById('big_kid').style.display='none';
+		document.getElementById('diabetes_gdm').style.display='none';
+		// document.theForm.big_kid.disabled = true;
+		// document.theForm.diabetes_gdm.disabled = true;
 		var notationS = document.getElementById("gdmStatus")
 		notationS.innerText = notationS.textContent = '  (Does not apply)'; 
 		var notationS = document.getElementById("bigkidStatus")
 		notationS.innerText = notationS.textContent = '  (Does not apply)'; 
 	}
 	if(document.theForm.assessment.value == "DRC" && document.theForm.sex.value != "Male"){
-		document.theForm.big_kid.disabled = false;
-		document.theForm.diabetes_gdm.disabled = false;
+		document.getElementById('big_kid').style.display='';
+		document.getElementById('diabetes_gdm').style.display='';
+		// document.theForm.big_kid.disabled = false;
+		// document.theForm.diabetes_gdm.disabled = false;
 		var notationS = document.getElementById("gdmStatus")
 		notationS.innerText = notationS.textContent = ''; 
 		var notationS = document.getElementById("bigkidStatus")
@@ -526,14 +511,12 @@ function r2c_exercise_check() {
 		document.theForm.r2c_exercise.disabled = true;
 		var notationS = document.getElementById("r2c_exerciseStatus")
 		notationS.innerText = notationS.textContent = '  (Does not apply)'; 
-         document.getElementById("dis").style.visibility="visible";
 		document.theForm.siblings_have_diabetes.focus();
 	}
 	if(  document.theForm.assessment.value == "DRC" && document.theForm.exercise.value != "Yes") {
 		document.theForm.r2c_exercise.disabled = false;
 		var notationS = document.getElementById("r2c_exerciseStatus")
 		notationS.innerText = notationS.textContent = ''; 
-          document.getElementById("dis").style.visibility="hidden"; 
 		document.theForm.r2c_exercise.focus();
 	}
 }
@@ -545,7 +528,7 @@ var error = "";
   if (strng.length == 0) {
      error = msg;
   }
-return error;
+  return error;
 }
 
 // was textbox altered
@@ -738,6 +721,7 @@ function gohome() {
 
 function checkRegForm(theForm) {
     var why = "";
+	why += checkRegnumber(theForm.db_employer.value);
     why += checkName(theForm.db_fullname.value);
     why += checkEmail(theForm.db_email.value);
     why += checkUsername(theForm.db_id.value);
@@ -749,6 +733,21 @@ function checkRegForm(theForm) {
 return true;
 }
 
+function checkRegFormCMOG(theForm) {
+    var why = "";
+    why += checkRegnum(theForm.db_employer.value);
+    why += checkName(theForm.db_fullname.value);
+    why += checkEmail(theForm.db_email.value);
+    why += checkUsername(theForm.db_id.value);
+    why += checkPassword(theForm.auth_password.value,theForm.auth_password_entry.value);
+    why += checkDropdown(theForm.db_relation.value, "You did not enter your status as employee or household member of employee.\n");
+    why += checkDropdown(theForm.client1.value, "You did not indicate whether you want to be asked questions about your family history.\n");
+    if (why != "") {
+       alert(why);
+       return false;
+    }
+return true;
+}
 function holdThis (theForm) {
 //    why += isEmptyString(theForm.siteid.value, "You do not have a valid site ID, check with your administrator.\n");
 //    why += checkRegnum(theForm.db_employer.value);
@@ -757,7 +756,6 @@ function holdThis (theForm) {
 
 function checkLoginForm(theForm) {
     var why = "";
-    why += checkUsername(theForm.db_id.value);
     why += checkPassword_in(theForm.auth_password_entry.value);
     if (why != "") {
        alert(why);
@@ -815,7 +813,7 @@ if (strng == "") {
 
     var illegalChars = /[\W_]/; // allow only letters and numbers
     
-    if ((strng.length < 6) || (strng.length > 24)) {
+    if ((strng.length < 6) || (strng.length > 25)) {
        error = "The password must be at least 6 characters long and less than 25.\n";
     }
     else if (illegalChars.test(strng)) {
@@ -834,7 +832,7 @@ if (strng == "") {
    error = "You didn't enter a password.\n";
 }
 
-    var illegalChars = /[\W]/; // allow only letters and numbers
+    var illegalChars = /\W/; // allow only letters and numbers
     
     if ((strng.length < 6) || (strng.length > 24)) {
        error = "The password must be at least 6 characters long and less than 25.\n";
@@ -844,7 +842,14 @@ if (strng == "") {
     }
 return error;    
 }    
-
+function checkRegnumber (strng) {
+	var error = "";
+	if (strng == "") {
+		error = "You didn't enter your registration number.\n";
+		return error;
+		}	
+return error;
+}      
 
 // username - 6 chars min, uc, lc, and underscore only.
 
@@ -907,5 +912,59 @@ if (strng == "") {
 	}
 return error;
 }       
+function confirmDelete()
+{
+var agree=confirm("Are you sure you wish to delete your account?");
+if (agree)
+	return true ;
+else
+	return false ;
+}
 
+function Confirm_password() { 
+	var pass1 = document.theForm.new1_password_entry.value; 
+	var pass2 = document.theForm.new2_password_entry.value;
+
+	if(pass1 == '' || pass2 == ''){
+	  alert("You did not enter password/confirm password!");
+	  return false;
+	}
+	else if(pass1.length<6 || pass2.length<6){
+	  alert("The password must be at least 6 characters long.");
+	  return false;
+	} 
+	if(pass1 == pass2){ 
+	 return true; 
+	} 
+	else { 
+	 alert("Two passwords do not match!"); 
+	 return false;
+	}
+} 
+
+function CheckCheckboxes(){
+     var c = document.getElementsByTagName('input');   
+     for (var i = 0; i < c.length; i++) {   
+		 if (c[i].type == 'checkbox' && c[i].checked == true) {   
+		   // At least one checkbox IS checked       
+			return true;   
+		  }   
+    }   
+	// Nothing has been checked 	 
+	var agree=confirm("Are you sure you wish to continue without checking any option?");
+    if (agree)
+	  return true ;
+    else
+	  return false ;
+}
+
+function checkInt(val, field){
+
+    var error = "";	    
+	var intRegex = /^\d+$/;
+	if(!intRegex.test(val)) {
+	   error = " " + field + " must be an integer value.\n";	   
+	}       
+	return error;	
+}
 -->
