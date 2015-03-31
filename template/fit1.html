@@ -1,4 +1,7 @@
 {
+# this part fills in a file that sets language variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}assessment_language.tmpl", PACKAGE => __PACKAGE__ );
+}{
 # this part fills in a file that sets variables we use later on.
 Text::Template::fill_in_file( "$config{template_directory}$config{variables_template}", PACKAGE => __PACKAGE__ );
 }{
@@ -9,13 +12,13 @@ Text::Template::fill_in_file( "$config{template_directory}fit_variables.tmpl", P
 Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE => __PACKAGE__ );
 }
 	 <div id="ass-top-img" class="steptxt">
-<p class="pad26"><a href="javascript:window.print()">PRINT THIS PAGE</a></p>
+<p class="pad26"><a href="javascript:window.print()">{$lang{PRINT_THIS_PAGE}{$current_language}}</a></p>
 </div>
 <!-- ass-top-img section end here-->
 
 <div id="ass-bg" class="content">
 <p class="pad27">
-How fit are you? Measure your current level of fitness with our in-home assessment.
+{$lang{fit_intro}{$current_language}}
 </p>
 </div>
 
@@ -29,61 +32,61 @@ How fit are you? Measure your current level of fitness with our in-home assessme
 
 <div id="risk-bg">
 <table cellspacing="0" class="content" style="margin-left: 30px">
-<tr><td><b>Instructions</b></td></tr>
+<tr><td><b>{$lang{Instructions}{$current_language}}</b></td></tr>
  <tr>
                 <td>
-                  <p>This fitness assessment will consist of four individual parts, the step test, sit-up test, push-up test and trunk flexibility.  Additionally, we will need several body measurements.  You should print this instruction page out on your printer.  There is a place for you to record your results for each component.  You will need the following: a yard stick, a tape measure, something to write with, a stopwatch, timer, or watch with a second hand, and a strip of masking tape.  The order you do the parts is not important, nor is it important to do them immediately after each other.  Do one part, record the results, take a break, or even wait until the next day to do the next.  It is recommended that you do some general stretching and warm-up exercises prior to doing each component.  Remember to keep breathing and drink lots of water.  You will enter the results and other information into the results page.  We will then calculate your fitness and produce a personalized report for you.</p>
+                  <p>{$lang{four_individual_parts}{$current_language}}</p>
                   <p>&nbsp; </p>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <p><b>Part #1 - Trunk Flexibility Test</b></span><br>
-					You will need a 7" strip of tape and yardstick for this procedure.  Place the tape on the floor.  Sit down on the floor with your legs straight out in front of you.  Place your heels on the near edge of the tape about 5" inches apart.  Now place the yardstick on the floor between your heels with the 1" measure closest to you and the 15" mark on the same edge of the tape as your heels (the tape and the yardstick make a + shape, your heels touch each end of the tape, use the overhead view as a reference). <img border="0" src="images/fit/man.gif">
-					Get on the floor in the described position with the tape, your heels, and the yardstick aligned.
-					Slowly reach forward with both of your hands as far as you can reach, hold the position for a moment then record the inches number your fingertips reach on the yardstick.
-					DO NOT jerk forward to get extra distance.
-					Repeat this a total of 3 times.
-					Write the greatest number you could reach here ________ this is your Flexibility Number.
-					You have completed this component.</p>
+                  <p><b>{$lang{Trunk_Flexibility_Test}{$current_language}}</b></span><br>
+					{$lang{strip_of_tape_yardstick}{$current_language}}  {$lang{tape_on_the_floor}{$current_language}}  {$lang{heels_on_near_edge}{$current_language}}  {$lang{yardstick_on_the_floor}{$current_language}} {$lang{heels_touch_each_end}{$current_language}} <img border="0" src="images/fit/man.gif">
+					{$lang{Get_on_the_floor}{$current_language}}
+					{$lang{Slowly_reach_forward}{$current_language}}
+					{$lang{DO_NOT_jerk}{$current_language}}
+					{$lang{Repeat_total_3_times}{$current_language}}
+					{$lang{Write_greatest_number}{$current_language}}
+					{$lang{completed_this_component}{$current_language}}</p>
                   <p>&nbsp; </p>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <p><b>Part #2 - Step Test</b></span><br>
-					Take a little time to warm up prior to this component, a few stretches or exercises.  You need a sturdy 8" step for this exercise.  You will step up, then down, alternating feet for three minutes at the rate of 24 steps per minute.  (About 2 steps each 5 seconds).
-					Set timer or stopwatch for 3 minutes.
-					Begin stepping, step up, then down, alternating feet, 2 steps per 5 seconds.
-					Stop at exactly three minutes.
-					Sit down immediately.
-					Exactly one minute after you complete the test, count your pulse for 30 seconds.
-					Write the number of beats here _____________ this is your Pulse Rate.
-					You have completed this component.</p>
+                  <p><b>{$lang{Part_2_Step_Test}{$current_language}}</b></span><br>
+					{$lang{Take_a_little_time}{$current_language}}
+					{$lang{Set_timer_or_stopwatch}{$current_language}}
+					{$lang{Begin_stepping}{$current_language}}
+					{$lang{Stop_at_three_minutes}{$current_language}}
+					{$lang{Sit_down_immediately}{$current_language}}
+					{$lang{Exactly_one_minute}{$current_language}}
+					{$lang{number_of_beats}{$current_language}}
+					{$lang{completed_this_component}{$current_language}}</p>
                   <p>&nbsp; </p>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <p><b>Part #3 - Sit-up Test</b></span><br>
-					You will perform sit-ups for sixty seconds.  Do as many as you can.  Lie flat on your back knees bent, feet flat on the floor, hands clasped behind your head (you can have someone hold your feet if you wish).  Touch your elbows to your knees or thighs and return to the starting position.
-					Set timer or stopwatch for 1 minute.
-					Begin sit-ups, count the number you perform.
-					Stop at exactly one minute
-					Write the number of sit-ups here__________ this is your Sit-up Number.
-					You have completed this component.</p>
+                  <p><b>{$lang{Part_3_Sit_up_Test}{$current_language}}</b></span><br>
+					{$lang{situps_for_sixty_seconds}{$current_language}}
+					{$lang{Set_timer_for_1_minute}{$current_language}}
+					{$lang{Begin_sit_ups}{$current_language}}
+					{$lang{Stop_at_exactly_one_minute}{$current_language}}
+					{$lang{Write_the_number_situps}{$current_language}}
+					{$lang{completed_this_component}{$current_language}}</p>
                   <p>&nbsp; </p>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <p><b>Part #4 - Push-up Test</b></span><br>
-					You will perform pushups for sixty seconds.  Do as many as you can.  Start in push-up position with arms straight, fingers forward, lower chest to floor with back straight, then return to the starting position.  Women, you use the modified push-up, where you support yourself from the knees instead of the toes.
-					Set timer or stopwatch for 1 minute.
-					Begin push-ups, count the number you perform.
-					Stop at exactly one minute
-					Write the number of push-ups here__________ this is your Push-up Number.
-					You have completed this component.</p>
+                  <p><b>{$lang{Part_4_Pushup_Test}{$current_language}}</b></span><br>
+					{$lang{perform_pushups_sixty_seconds}{$current_language}}
+					{$lang{Set_timer_stopwatch}{$current_language}}
+					{$lang{Begin_push_ups}{$current_language}}
+					{$lang{Stop_at_exactly_one_minute}{$current_language}}
+					{$lang{number_of_push_ups}{$current_language}}
+					{$lang{completed_this_component}{$current_language}}</p>
                   <p>&nbsp; </p>
                 </td>
               </tr>

@@ -1,5 +1,8 @@
 <?xml version="1.0" standalone="yes" ?>
 {
+# this part fills in a file that sets language variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}assessment_language.tmpl", PACKAGE => __PACKAGE__ );
+}{
 # this part fills in a file that sets variables we use later on.
 Text::Template::fill_in_file( $config{template_directory} . $config{variables_template}, PACKAGE => __PACKAGE__ );
 }{
@@ -19,8 +22,8 @@ Text::Template::fill_in_file( "$config{template_directory}gha_links.tmpl", PACKA
 <Graph Rect="0, 0, 612, 792" Name="Gr0">
 <ShowImage Name="ImBack" Left="0" Bottom="0" Width="620" Flip="0" />
 <ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
-<ShowText X="60" Y="685" Text="{$lang{Personalized_health_risk}{$current_language}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Width="320" Height="12" />
-<ShowText X="588" Y="90" Text="{$lang{gha_title}{$current_language}}" FontFace="Helvetica" Color="245081" Width="400" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+<ShowText X="60" Y="685" Text="{{$lang{$current_language}{Personalized_health_risk}}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Width="320" Height="12" />
+<ShowText X="588" Y="90" Text="{$lang{$current_language}{gha_title}}" FontFace="Helvetica" Color="245081" Width="400" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
 <ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 </Graph>
 <Text Name="Txt0" Rect="60, 60, 552, 670" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
@@ -42,15 +45,15 @@ $midtext;
 	<Graph Rect="0, 0, 612, 792" Name="Gr0a">
 	<ShowImage Name="ImBack" Left="0" Bottom="0" Width="620" Flip="0" />
 	<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
-	<ShowText X="588" Y="90" Text="{$lang{Personalized_health_risk}{$current_language}}" FontFace="Helvetica" Color="245081" Width="400" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />\
-	<ShowText X="60" Y="685" Text="{$lang{gha_title}{$current_language}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Width="320" Height="12" />
+	<ShowText X="588" Y="90" Text="{$lang{$current_language}{gha_title}}" FontFace="Helvetica" Color="245081" Width="400" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />\
+	<ShowText X="60" Y="685" Text="{$lang{$current_language}{Personalized_health_risk}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Width="320" Height="12" />
 	<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 	<ShowText X="490" Y="20" Text="Page 2" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 	</Graph>
 	<Text Name="Txt0" Rect="60, 448, 552, 660" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
 		<![CDATA[
 
-			^f:size=14&color={$config{brand_subtitle_color}} ^b  {$lang{gha_msg1}{$current_language}} {$wellness}. ^B ^F  ^P
+			^f:size=14&color={$config{brand_subtitle_color}} ^b  {$lang{$current_language}{gha_msg1}} {$wellness}. ^B ^F  ^P
 
 			^P
 
@@ -64,7 +67,7 @@ $midtext;
 	<Text Name="Txt0aa" Rect="60, 265, 295, 515" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Left" VerticalAlign="Top"  ExtraParaSpacing="0" TabPosition="0.3in">
 		<![CDATA[
 
-			^f:size=12&color={$config{brand_subtitle_color}}  {$lang{gha_msg2}{$current_language}}  ^F ^P ^p      ^P
+			^f:size=12&color={$config{brand_subtitle_color}}  {$lang{$current_language}{gha_msg2}}  ^F ^P ^p      ^P
 
 			{ foreach $i (@good_habits) {
 					    $OUT .= "^f:size=8&face=ZapfDingbats  ^F ^f:face=Arial&size=10 $i ^F ^P ^p      ^P ";
@@ -75,7 +78,7 @@ $midtext;
 	<Text Name="Txt0ab" Rect="340, 265, 530, 515" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Left" VerticalAlign="Top"  ExtraParaSpacing="0" TabPosition="0.3in">
 		<![CDATA[
 
-			^f:size=12&color={$config{brand_subtitle_color}}  {$lang{gha_msg3}{$current_language}}  ^F ^P ^p      ^P
+			^f:size=12&color={$config{brand_subtitle_color}}  {$lang{$current_language}{gha_msg3}}  ^F ^P ^p      ^P
 
 			{ foreach $i (@bad_habits) {
 					    $OUT .= "^f:size=8&face=ZapfDingbats  ^F ^f:face=Arial&size=10 $i ^F ^P ^p      ^P ";
@@ -86,7 +89,7 @@ $midtext;
 	<Text Name="Txt0ad" Rect="60, 75, 530, 280" FontFace="Arial" FontSize="9" Leading="12" FontColor="666666" TextJustify="Left" VerticalAlign="Top" PaddingRight="5" ExtraParaSpacing="0" TabPosition="0.3in">
 		<![CDATA[
 
-			^f:size=14&color={$config{brand_subtitle_color}} ^b {$lang{gha_msg4}{$current_language}} {$genders}. ^B ^F  ^P
+			^f:size=14&color={$config{brand_subtitle_color}} ^b {$lang{$current_language}{gha_msg4}} {$genders}. ^B ^F  ^P
 
 			^P
 
@@ -100,23 +103,23 @@ $midtext;
 	<ShowImage Name="ImBack" Left="0" Bottom="0" Width="620" Flip="0" />
 	<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
 	{if(!$config{'risks3bar'}) {'<ShowImage Name="Im9" Left="245" Bottom="645" Flip="0" />';}else{'';} }
-	<ShowText X="588" Y="90" Text="{$lang{Personalized_health_risk}{$current_language}}" FontFace="Helvetica" Color="245081" Width="400" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />\
-	<ShowText X="60" Y="685" Text="{$lang{gha_title}{$current_language}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Width="320" Height="12" />
+	<ShowText X="588" Y="90" Text="{$lang{$current_language}{gha_title}}" FontFace="Helvetica" Color="245081" Width="400" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />\
+	<ShowText X="60" Y="685" Text="{$lang{$current_language}{Personalized_health_risk}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Width="320" Height="12" />
 	<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 	<ShowText X="490" Y="20" Text="Page 3" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 	</Graph>
 	<Text Name="Txt0" Rect="60, 60, 552, 635" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
 	<![CDATA[
-		^f:size=14&color={$config{brand_subtitle_color}} ^b {$lang{gha_msg5}{$current_language}} ^B ^F ^P
+		^f:size=14&color={$config{brand_subtitle_color}} ^b {$lang{$current_language}{gha_msg5}} ^B ^F ^P
 
-		{$lang{gha_msg6}{$current_language}}. ^P 
+		{$lang{$current_language}{gha_msg6}}. ^P 
 		
 	]]>
 	</Text>
 	{$risks_bars}
 	<Text Name="Txt0" Rect="60, 60, 552, 80" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
 	<![CDATA[
-		{$lang{gha_msg6}{$current_language}}
+		{$lang{$current_language}{gha_msg6}}
 		
 	]]>
 	</Text>
@@ -125,22 +128,22 @@ $midtext;
 	<Graph Rect="0, 0, 612, 792" Name="Gr3a">
 	<ShowImage Name="ImBack" Left="0" Bottom="0" Width="620" Flip="0" />
 	<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
-	<ShowText X="588" Y="90" Text="{$lang{Personalized_health_risk}{$current_language}}" FontFace="Helvetica" Color="245081" Width="400" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />\
-	<ShowText X="60" Y="685" Text="{$lang{gha_title}{$current_language}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Width="320" Height="12" />
+	<ShowText X="588" Y="90" Text="{$lang{$current_language}{gha_title}}" FontFace="Helvetica" Color="245081" Width="400" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />\
+	<ShowText X="60" Y="685" Text="{$lang{$current_language}{Personalized_health_risk}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Width="320" Height="12" />
 	<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 	<ShowText X="490" Y="20" Text="Page 4" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 	</Graph>
 	<Text Name="Txt0" Rect="60, 60, 552, 670" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
 	<![CDATA[
 
-^f:size=14&color={$config{brand_subtitle_color}} ^b {$lang{gha_msg8}{$current_language}} ^B ^F ^f:size=12 {$lang{gha_msg9}{$current_language}} ^F ^P
+^f:size=14&color={$config{brand_subtitle_color}} ^b {$lang{$current_language}{gha_msg8}} ^B ^F ^f:size=12 {$lang{$current_language}{gha_msg9}} ^F ^P
 		{
 			$mz='';
-			$mz = "^p ^p $lang{weight}{$current_language}: $weight ^P   ^p $lang{height}{$current_language}: $height_imperial ^P   ^p $lang{bmi}{$current_language}: $bmi ^P ^p ";
-			$mz .= "$lang{waist}{$current_language}: $waist inches ^P ^p " if $waist;
-			$mz.= "$lang{hip}{$current_language}: $hip  - $lang{waist_hip_ratio}{$current_language}: $waist_to_hip ^P  ^p " if($hip);
-			$mz.= "$lang{body_fat1}{$current_language}: $bodyfat % ^P  ^p " if($bodyfat);
-			$mz.= "$lang{blood_pressure}{$current_language}:";
+			$mz = "^p ^p $lang{$current_language}{weight}: $weight ^P   ^p $lang{$current_language}{height}: $height_imperial ^P   ^p $lang{$current_language}{bmi}: $bmi ^P ^p ";
+			$mz .= "$lang{$current_language}{waist}: $waist inches ^P ^p " if $waist;
+			$mz.= "$lang{$current_language}{hip}: $hip  - $lang{$current_language}{waist_hip_ratio}: $waist_to_hip ^P  ^p " if($hip);
+			$mz.= "$lang{$current_language}{body_fat1}: $bodyfat % ^P  ^p " if($bodyfat);
+			$mz.= "$lang{$current_language}{blood_pressure}:";
 			if($bp_sys){
 				$mz.= " $bp_sys/$bp_dias ^P ^p ";
 				}
@@ -148,17 +151,17 @@ $midtext;
 				$mz.= " $bp_check ^P ^p ";
 				}
 			if($cholesterol){
-				$mz.= "$lang{total_cholesterol}{$current_language}: $cholesterol ^P ^p ";
+				$mz.= "$lang{$current_language}{total_cholesterol}: $cholesterol ^P ^p ";
 				}
 			else	{
-				$mz.= "$lang{total_cholesterol}{$current_language}: $cholesterol_check ^P ^p ";
+				$mz.= "$lang{$current_language}{total_cholesterol}: $cholesterol_check ^P ^p ";
 				}
-			$mz.= "$lang{hdl}{$current_language}: $hdl ^P ^p " if($hdl);
-			$mz.= "$lang{ldl}{$current_language}: $ldl ^P ^p " if($ldl);
-			$mz.= "$lang{cholesterol_ratio}{$current_language}: $cholesterol_ratio ^P ^p " if($cholesterol_ratio);
-			$mz.= "$lang{triglycerides}{$current_language}: $triglycerides ^P ^p " if($triglycerides);
-			$mz.= "$lang{glucose}{$current_language}: $glucose ^P ^p " if($glucose);
-			$mz.= "$lang{HgA1C}{$current_language}: $HgA1C ^P ^p " if($HgA1C);
+			$mz.= "$lang{$current_language}{hdl}: $hdl ^P ^p " if($hdl);
+			$mz.= "$lang{$current_language}{ldl}: $ldl ^P ^p " if($ldl);
+			$mz.= "$lang{$current_language}{cholesterol_ratio}: $cholesterol_ratio ^P ^p " if($cholesterol_ratio);
+			$mz.= "$lang{$current_language}{triglycerides}: $triglycerides ^P ^p " if($triglycerides);
+			$mz.= "$lang{$current_language}{glucose}: $glucose ^P ^p " if($glucose);
+			$mz.= "HgA1C: $HgA1C ^P ^p " if($HgA1C);
 			$mz .= " ^P ";
 			$mz;
 		}
@@ -167,7 +170,7 @@ $midtext;
 
 ^P
 
-^f:size=14&color={$config{brand_subtitle_color}} ^b {$lang{risk_assessment}{$current_language}} ^B ^F ^P
+^f:size=14&color={$config{brand_subtitle_color}} ^b Risk Assessment ^B ^F ^P
 
 ^P
 { 	$sm1='^p ';
@@ -188,8 +191,8 @@ $midtext;
 <Graph Rect="0, 0, 612, 792" Name="Gr10">
 	<ShowImage Name="ImBack" Left="0" Bottom="0" Width="620" Flip="0" />
 	<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
-	<ShowText X="588" Y="90" Text="{$lang{Personalized_health_risk}{$current_language}}" FontFace="Helvetica" Color="245081" Width="400" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />\
-	<ShowText X="60" Y="685" Text="{$lang{gha_title}{$current_language}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Width="320" Height="12" />
+	<ShowText X="588" Y="90" Text="{$lang{$current_language}{gha_title}}" FontFace="Helvetica" Color="245081" Width="400" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />\
+	<ShowText X="60" Y="685" Text="{$lang{$current_language}{Personalized_health_risk}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Width="320" Height="12" />
 	<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 	<ShowText X="490" Y="20" Text="Page 5" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 </Graph>
@@ -215,8 +218,8 @@ $midtext;
 <Graph Rect="0, 0, 612, 792" Name="Gr10">
 	<ShowImage Name="ImBack" Left="0" Bottom="0" Width="620" Flip="0" />
 	<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
-	<ShowText X="588" Y="90" Text="{$lang{Personalized_health_risk}{$current_language}}" FontFace="Helvetica" Color="245081" Width="400" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />\
-	<ShowText X="60" Y="685" Text="{$lang{gha_title}{$current_language}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Width="320" Height="12" />
+	<ShowText X="588" Y="90" Text="{$lang{$current_language}{gha_title}}" FontFace="Helvetica" Color="245081" Width="400" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />\
+	<ShowText X="60" Y="685" Text="{$lang{$current_language}{Personalized_health_risk}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Width="320" Height="12" />
 	<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 	<ShowText X="490" Y="20" Text="Page 6" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 </Graph>
@@ -247,15 +250,15 @@ $midtext;
 <Graph Rect="0, 0, 612, 792" Name="Gr10">
 	<ShowImage Name="ImBack" Left="0" Bottom="0" Width="620" Flip="0" />
 	<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
-	<ShowText X="588" Y="90" Text="{$lang{Personalized_health_risk}{$current_language}}" FontFace="Helvetica" Color="245081" Width="400" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />\
-	<ShowText X="60" Y="685" Text="{$lang{gha_title}{$current_language}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Width="320" Height="12" />
+	<ShowText X="588" Y="90" Text="{$lang{$current_language}{gha_title}}" FontFace="Helvetica" Color="245081" Width="400" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />\
+	<ShowText X="60" Y="685" Text="{$lang{$current_language}{Personalized_health_risk}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Width="320" Height="12" />
 	<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 	<ShowText X="490" Y="20" Text="Page 7" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 </Graph>
 	<Text Name="Txt0" Rect="60, 60, 552, 670" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
 	<![CDATA[
 
-^p ^f:size=14&color={$config{brand_subtitle_color}} ^b {$lang{gha_msg10}{$current_language}} ^B ^F ^f:size=12 {$lang{gha_msg11}{$current_language}} {$genders} {$lang{Your_age}{$current_language}}. ^F ^P ^p      ^P
+^p ^f:size=14&color={$config{brand_subtitle_color}} ^b {$lang{$current_language}{gha_msg10}} ^B ^F ^f:size=12 {$lang{$current_language}{gha_msg11}} {$genders} {$lang{$current_language}{Your_age}}. ^F ^P ^p      ^P
 { foreach $i (@recommendations) {
 		$OUT .= "$i ^P  ^p      ^P ";
 		}
@@ -265,7 +268,7 @@ $midtext;
 
 ^P
 
-^f:size=14&color={$config{brand_subtitle_color}} ^b {$lang{Internet_resources}{$current_language}}: ^B ^F ^P
+^f:size=14&color={$config{brand_subtitle_color}} ^b {$lang{$current_language}{Internet_resources}}: ^B ^F ^P
 {
 join "",
 	map { qq|^p ^f:size=8&face=ZapfDingbats  ^F ^f:size=9&face=Arial $$_[1] -- $$_[0] ^F ^P  | }
@@ -281,63 +284,63 @@ join "",
 <Graph Rect="0, 0, 612, 792" Name="Gr12">
 	<ShowImage Name="ImBack" Left="0" Bottom="0" Width="620" Flip="0" />
 	<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
-	<ShowText X="588" Y="90" Text="{$lang{gha_title}{$current_language}}" FontFace="Helvetica" Color="245081" Width="400" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />\
-	<ShowText X="60" Y="685" Text="{$lang{Personalized_health_risk}{$current_language}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Width="320" Height="12" />
+	<ShowText X="588" Y="90" Text="{$lang{$current_language}{gha_title}}" FontFace="Helvetica" Color="245081" Width="400" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />\
+	<ShowText X="60" Y="685" Text="{$lang{$current_language}{Personalized_health_risk}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Width="320" Height="12" />
 	<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 	<ShowText X="490" Y="20" Text="Page 8" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 </Graph>
 	<Text Name="Txt0" Rect="60, 60, 552, 670" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0" TabPosition="0.3in">
 	<![CDATA[
 
-^p ^f:size=14&color={$config{brand_title_color}} ^b {$lang{hra_msg19}{$current_language}}  ^B ^F ^P
-^p {$lang{date_of_birth}{$current_language}}: {$birth_month}/{$birth_date}/{$birth_year} ^P ^p {$lang{age}{$current_language}}: {$actual_age} ^P ^p {$gender} ^P ^p      ^P
+^p ^f:size=14&color={$config{brand_title_color}} ^b {$lang{$current_language}{hra_msg19}}  ^B ^F ^P
+^p {$lang{$current_language}{date_of_birth}}: {$birth_month}/{$birth_date}/{$birth_year} ^P ^p {$lang{$current_language}{age}}: {$actual_age} ^P ^p {$gender} ^P ^p      ^P
 
-^p ^f:size=14&color={$config{brand_subtitle_color}} ^b {$lang{gha_msg12}{$current_language}}  ^B ^F ^P
-^p {$lang{weight}{$current_language}}: ^b {$weight} ^B ^P
-^p {$lang{height}{$current_language}}: ^b {$height_imperial} ^B ^P
-{if($waist){'^p $lang{waist}{$current_language}: ^b '.$waist.'" ^B ^P ';}}
-{if($hip){'^p $lang{hip}{$current_language}: ^b '.$hip.'" ^B ^P ';}}
-{if($waist && $hip){'^p $lang{waist_hip_ratio}{$current_language}: ^b '.$waist_to_hip.' ^B ^P ';}}
-{if($bodyfat){'^p $lang{body_fat1}{$current_language}: ^b '.$bodyfat.'% ^B ^P ';}}
-^p {$lang{calculated_bmi}{$current_language}}: ^b {$bmi} ^B ^P
-{if ($pulse_rate_60_seconds){ qq|^p $lang{Pulse}{$current_language} ($lang{_60_second_resting}{$current_language}): ^b $pulse_rate_60_seconds ^B ^P |;}}
-^p {$lang{blood_pressure}{$current_language}}: ^b 
+^p ^f:size=14&color={$config{brand_subtitle_color}} ^b {$lang{$current_language}{gha_msg12}}  ^B ^F ^P
+^p {$lang{$current_language}{weight}}: ^b {$weight} ^B ^P
+^p {$lang{$current_language}{height}}: ^b {$height_imperial} ^B ^P
+{if($waist){'^p $lang{$current_language}{waist}: ^b '.$waist.'" ^B ^P ';}}
+{if($hip){'^p $lang{$current_language}{hip}: ^b '.$hip.'" ^B ^P ';}}
+{if($waist && $hip){'^p $lang{$current_language}{waist_hip_ratio}: ^b '.$waist_to_hip.' ^B ^P ';}}
+{if($bodyfat){'^p $lang{$current_language}{body_fat1}: ^b '.$bodyfat.'% ^B ^P ';}}
+^p {$lang{$current_language}{calculated_bmi}}: ^b {$bmi} ^B ^P
+{if ($pulse_rate_60_seconds){ qq|^p $lang{$current_language}{Pulse} ($lang{$current_language}{_60_second_resting}): ^b $pulse_rate_60_seconds ^B ^P |;}}
+^p {$lang{$current_language}{blood_pressure}}: ^b 
 	{my $html;
-	if($bp_sys) {$html = $bp_sys."/".$bp_dias;}else{$html= "$lang{gha_msg13}{$current_language} ". lc($bp_check)}
+	if($bp_sys) {$html = $bp_sys."/".$bp_dias;}else{$html= "$lang{$current_language}{gha_msg13} ". lc($bp_check)}
 	$html .= " ^B ^P";
 
 	$html;
 	}
-^p {$lang{bp_medicine}{$current_language}}: ^b {$bp_meds || $lang{no}{$current_language}} ^B ^P 
-^p {$lang{cholesterol}{$current_language}}: ^b {my $html;
-	if($cholesterol) {$html = $cholesterol;}else{$html= "$lang{gha_msg13}{$current_language} ". lc($cholesterol_check)}
+^p {$lang{$current_language}{bp_medicine}}: ^b {$bp_meds || $lang{$current_language}{no}} ^B ^P 
+^p {$lang{$current_language}{cholesterol}}: ^b {my $html;
+	if($cholesterol) {$html = $cholesterol;}else{$html= "$lang{$current_language}{gha_msg13} ". lc($cholesterol_check)}
 	$html .= " ^B ^P";
 		    
 	$html;
 	}
-{ if($ldl){ '^p $lang{ldl}{$current_language}: ^b '.$ldl.' ^B ^P';}}
-^p {$lang{hdl}{$current_language}}: ^b {$hdl || $lang{No_value_entered}{$current_language}} ^B ^P  
-{if($hdl && $cholesterol){ "^p $lang{cholesterol_ratio}{$current_language}: ^b ". sprintf("%.1f",$cholesterol/$hdl). " ^B ^P " }}
-{ if($triglycerides){ '^p $lang{triglycerides}{$current_language}: ^b '.$triglycerides.' ^B ^P';}}
-^p {$lang{Diabetes}{$current_language}}: ^b {$diabetes} ^B ^P
-{if($glucose){ "^p $lang{Fasting_Glucose}{$current_language}: ^b ".$glucose. " ^B ^P";}}
+{ if($ldl){ '^p $lang{$current_language}{ldl}: ^b '.$ldl.' ^B ^P';}}
+^p {$lang{$current_language}{hdl}}: ^b {$hdl || $lang{$current_language}{No_value_entered}} ^B ^P  
+{if($hdl && $cholesterol){ "^p $lang{$current_language}{cholesterol_ratio}: ^b ". sprintf("%.1f",$cholesterol/$hdl). " ^B ^P " }}
+{ if($triglycerides){ '^p $lang{$current_language}{triglycerides}: ^b '.$triglycerides.' ^B ^P';}}
+^p {$lang{$current_language}{Diabetes}}: ^b {$diabetes} ^B ^P
+{if($glucose){ "^p $lang{$current_language}{Fasting_Glucose}: ^b ".$glucose. " ^B ^P";}}
 {if($HgA1C){ "^p HgA1C:&nbsp; ^b ".$HgA1C. " ^B ^P";}}
-{if($liver_sgot){ "^p $lang{SGOT_analysis}{$current_language}: ^b ".$liver_sgot. " ^B ^P";}}
-{if($liver_sgpt){ "^p $lang{SGPT_analysis}{$current_language}: ^b ".$liver_sgpt. " ^B ^P";}}
-{if($liver_ggt){ "^p $lang{GGT_analysis}{$current_language}: ^b ".$liver_ggt. " ^B ^P";}}
-^p {$lang{tobacco_use}{$current_language}}: ^b { $sm='';
+{if($liver_sgot){ "^p $lang{$current_language}{SGOT_analysis}: ^b ".$liver_sgot. " ^B ^P";}}
+{if($liver_sgpt){ "^p $lang{$current_language}{SGPT_analysis}: ^b ".$liver_sgpt. " ^B ^P";}}
+{if($liver_ggt){ "^p $lang{$current_language}{GGT_analysis}: ^b ".$liver_ggt. " ^B ^P";}}
+^p {$lang{$current_language}{tobacco_use}}: ^b { $sm='';
 
 	     if ($smoke_flag == 0){
 
-		$sm=$lang{none}{$current_language};
+		$sm=$lang{$current_language}{none};
 
 	     }elsif($smoke_flag == 1){
 
-		$sm=$lang{gha_smk_msg15}{$current_language};
+		$sm=$lang{$current_language}{gha_smk_msg15};
 
 	     }elsif($smoke_flag == 2){
 
-		$sm=$lang{gha_smk_msg16}{$current_language};
+		$sm=$lang{$current_language}{gha_smk_msg16};
 
 	     }else{
 
@@ -347,30 +350,30 @@ join "",
 
 	     if ($smoke_other == 2){
 
-		if($chews_flag){$sm.= "; ". $lang{chew_tobacco}{$current_language}}
+		if($chews_flag){$sm.= "; ". $lang{$current_language}{chew_tobacco}}
 
-		if($pipes_flag){$sm.= "; ". $lang{smoke_a_pipe}{$current_language}}
+		if($pipes_flag){$sm.= "; ". $lang{$current_language}{smoke_a_pipe}}
 
-		if($cigars_flag){$sm.= "; ". $lang{smoke_cigars}{$current_language}}
+		if($cigars_flag){$sm.= "; ". $lang{$current_language}{smoke_cigars}}
 
 	     }
 
 	     '';
 
 	   }{$sm} ^B ^P
-^p {$lang{alcohol_use}{$current_language}}: ^b {$drinks_week || $lang{none}{$current_language}} {$lang{per_week}{$current_language}} ^B ^P
-^p {$lang{physical_activity}{$current_language}}: ^b {$exercise} ^B ^P
-^p {$lang{overall_health}{$current_language}}: ^b {$overall_health} ^B ^P
-{if ($life_satisfaction){"^p $lang{life_satisfaction}{$current_language}: ^b $life_satisfaction ^B ^P"}}
-^p {$lang{personal_loss}{$current_language}}: ^b {$loss} ^B
-{if ($fiber){"^p $lang{fiber_in_diet}{$current_language}: ^b $fiber ^B ^P"}}
-{if ($fat){"^p $lang{fat_in_diet}{$current_language}: ^b $fat ^B ^P"}}
+^p {$lang{$current_language}{alcohol_use}}: ^b {$drinks_week || $lang{$current_language}{none}} {$lang{$current_language}{per_week}} ^B ^P
+^p {$lang{$current_language}{physical_activity}}: ^b {$exercise} ^B ^P
+^p {$lang{$current_language}{overall_health}}: ^b {$overall_health} ^B ^P
+{if ($life_satisfaction){"^p $lang{$current_language}{life_satisfaction}: ^b $life_satisfaction ^B ^P"}}
+^p {$lang{$current_language}{personal_loss}}: ^b {$loss} ^B
+{if ($fiber){"^p $lang{$current_language}{fiber_in_diet}: ^b $fiber ^B ^P"}}
+{if ($fat){"^p $lang{$current_language}{fat_in_diet}: ^b $fat ^B ^P"}}
 
 { $mh='';
 	if($sex eq FEMALE){
-		$mh=qq|^p $lang{hysterectomy}{$current_language}: ^b $hyst_female ^B ^P |;
-		$mh.=qq|^p $lang{family_breast_cancer}{$current_language}: ^b $fam_breast_cancer ^B ^P | if ($no_gina_question == 0);
-		$mh.=qq|^p $lang{age_of_menarch}{$current_language}: ^b $menarche_female ^B ^P |;
+		$mh=qq|^p $lang{$current_language}{hysterectomy}: ^b $hyst_female ^B ^P |;
+		$mh.=qq|^p $lang{$current_language}{family_breast_cancer}: ^b $fam_breast_cancer ^B ^P | if ($no_gina_question == 0);
+		$mh.=qq|^p $lang{$current_language}{age_of_menarch}: ^b $menarche_female ^B ^P |;
 	}
 	$mh;
 
@@ -378,35 +381,35 @@ join "",
 
 ^P
 
-^p ^f:size=14&color={$config{brand_subtitle_color}} ^b {$lang{gha_msg14}{$current_language}}  ^B ^F ^P
+^p ^f:size=14&color={$config{brand_subtitle_color}} ^b {$lang{$current_language}{gha_msg14}}  ^B ^F ^P
 { $pm='';
 
 	if ($sex eq MALE){
-		$pm = qq| ^p $lang{last_rectal_exam}{$current_language}: ^b $rectal_male ^B ^P |;
+		$pm = qq| ^p $lang{$current_language}{last_rectal_exam}: ^b $rectal_male ^B ^P |;
 		}
 	else	{
-		$pm = qq| ^p $lang{last_pap_exam}{$current_language}: ^b $pap_female ^B ^P |;
-		$pm .= qq| ^p $lang{last_mammogram}{$current_language}: ^b $mammogram_female ^B ^P |;
-		$pm .= qq| ^p $lang{last_rectal_exam}{$current_language}: ^b $rectal_female ^B ^P |;
-		$pm .=  qq| ^p $lang{last_clinical_breast_exam}{$current_language}: ^b $clinic_breast_exam ^B ^P |;
-		$pm .= qq| ^p $lang{self_breast_exam}{$current_language}: ^b $self_breast_exam ^B ^P |;
+		$pm = qq| ^p $lang{$current_language}{last_pap_exam}: ^b $pap_female ^B ^P |;
+		$pm .= qq| ^p $lang{$current_language}{last_mammogram}: ^b $mammogram_female ^B ^P |;
+		$pm .= qq| ^p $lang{$current_language}{last_rectal_exam}: ^b $rectal_female ^B ^P |;
+		$pm .=  qq| ^p $lang{$current_language}{last_clinical_breast_exam}: ^b $clinic_breast_exam ^B ^P |;
+		$pm .= qq| ^p $lang{$current_language}{self_breast_exam}: ^b $self_breast_exam ^B ^P |;
 		}
 	$pm;
 }
 
 ^P
 
-^p ^f:size=14&color={$config{brand_subtitle_color}} ^b {$lang{gha_msg15}{$current_language}}  ^B ^F ^P
+^p ^f:size=14&color={$config{brand_subtitle_color}} ^b {$lang{$current_language}{gha_msg15}}  ^B ^F ^P
 { my $html='';
 
-	if ($r2c_autosafety){$html .= qq| ^p $lang{drive_more_safely}{$current_language}: ^b $r2c_autosafety ^B ^P |;}
-	if ($r2c_bp){$html .= qq| ^p $lang{lower_blood_pressure}{$current_language}: ^b $r2c_bp ^B ^P |;}
-	if ($r2c_checkups){$html .= qq| ^p $lang{regular_examinations}{$current_language}: ^b $r2c_checkups ^B ^P |;}
-	if ($r2c_cholesterol){$html .= qq| ^p $lang{lower_cholesterol}{$current_language}: ^b $r2c_cholesterol ^B ^P |;}
-	if ($r2c_exercise){$html .= qq| ^p $lang{exercise_more}{$current_language}: ^b $r2c_exercise ^B ^P |;}
-	if ($r2c_fat){$html .= qq| ^p $lang{reduce_dietary_fat}{$current_language}: ^b $r2c_fat ^B ^P |;}
-	if ($r2c_smoking){$html .= qq| ^p $lang{stop_smoking}{$current_language}: ^b $r2c_smoking ^B ^P |;}
-	if ($html eq ''){$html = " ^p $lang{gha_msg16}{$current_language}. ^B ^P "}
+	if ($r2c_autosafety){$html .= qq| ^p $lang{$current_language}{drive_more_safely}: ^b $r2c_autosafety ^B ^P |;}
+	if ($r2c_bp){$html .= qq| ^p $lang{$current_language}{lower_blood_pressure}: ^b $r2c_bp ^B ^P |;}
+	if ($r2c_checkups){$html .= qq| ^p $lang{$current_language}{regular_examinations}: ^b $r2c_checkups ^B ^P |;}
+	if ($r2c_cholesterol){$html .= qq| ^p $lang{$current_language}{lower_cholesterol}: ^b $r2c_cholesterol ^B ^P |;}
+	if ($r2c_exercise){$html .= qq| ^p $lang{$current_language}{exercise_more}: ^b $r2c_exercise ^B ^P |;}
+	if ($r2c_fat){$html .= qq| ^p $lang{$current_language}{reduce_dietary_fat}: ^b $r2c_fat ^B ^P |;}
+	if ($r2c_smoking){$html .= qq| ^p $lang{$current_language}{stop_smoking}: ^b $r2c_smoking ^B ^P |;}
+	if ($html eq ''){$html = " ^p $lang{$current_language}{gha_msg16}. ^B ^P "}
 
 	$html;
 	}

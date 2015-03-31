@@ -32,9 +32,6 @@ use vars qw($name $date $client $base $styles $height_imperial $copyright
 		$gha_glucose $exercise_unable $hidden_language
 	   );
 use HealthStatus::Constants;
-if(uc($output_format) eq 'PDF' || uc($output_format) eq 'PDFE'){
-	do "/usr/local/www/vhosts/managed2/base/template/assessment_language.tmpl";
-}
 
 my @batch_assessments = split /\s+/, $config{batch_assessments};
 my @common_assessments = split /\s+/, $config{ggr_adv_tables};
@@ -202,47 +199,90 @@ my( $year, $month, $day ) = (localtime)[5,4,3];
 
 $year  += 1900;
 $month += 1;
-$date = sprintf("$lang{As_of}{$current_language} %02d/%02d/%04d", $month, $day, $year);
-$todays_date = sprintf("%02d-%02d-%04d", $month, $day, $year);
-
-$next = $config{button_next} || 'src="/images/global/next.jpg" class="HSbuttonNext"';
-$back = $config{button_back} || 'src="/images/global/back.jpg" class="HSbuttonBack"';
-$submit = $config{button_submit} || 'src="/images/global/submit.jpg" class="HSbutton"';
-$continued = "<span class=\"HSsubtitle\">($lang{continued}{$current_language})</span>";
-$close = 'src="/images/global/close.gif" class="HSbutton"';
-$copyright = '<img src="/images/global/copyright.gif">';
-my $member_back_image = "<img border=0 $back>";
-my $title_string = '';
-
-# convert race into specific language
-$race = $lang{african_american}{$current_language} if($race eq 'African American');
-$race = $lang{aleutian}{$current_language} if($race eq 'Aleutian, Eskimo or American Indian');
-$race = $lang{australian}{$current_language} if($race eq 'Caucasian');
-$race = $lang{asian}{$current_language} if($race eq 'Asian');
-$race = $lang{caucasian}{$current_language} if($race eq 'Caucasian');
-$race = $lang{hispanic_latino}{$current_language} if($race eq 'Hispanic');
-$race = $lang{other}{$current_language} if($race eq 'Other');
-$race = $lang{do_not_know}{$current_language} if($race eq 'Don\'t know');	
-
-$lc_race 	= lc $race;
-$lc_sex 	= lc $sex;
-if ($sex eq MALE){
-	$gender  = $lang{man}{$current_language};
-	$genders = $lang{men}{$current_language};
-	}
-else{
-	$gender  =  $lang{woman}{$current_language};
-	$genders = $lang{women}{$current_language};
-	}
-	
+   
 if(!defined $language || lc $language eq 'usenglish' || lc $current_language eq 'english'){
 	$print_me = qq|<a href="$review?status=retake&assessment=$assessment&xnum=$db_record&output_format=PDF" class="HSbodytext2" target="_blank">[Click here for a Printable PDF Version of this report]</a>|;
-	$copyright_pdf = "Copyright (c) 1998-$year HealthStatus.com, Inc. all rights reserved.";	
+	$copyright = '<img src="/images/global/copyright.gif">';
+	$copyright_pdf = "Copyright (c) 1998-$year HealthStatus.com, Inc. all rights reserved.";
+	$next = $config{button_next} || 'src="/images/global/next.jpg" class="HSbuttonNext"';
+	$back = $config{button_back} || 'src="/images/global/back.jpg" class="HSbuttonBack"';
+	$submit = $config{button_submit} || 'src="/images/global/submit.jpg" class="HSbutton"';
+	$continued = "<span class=\"HSsubtitle\">($lang{continued}{$current_language})</span>";
+	$close = 'src="/images/global/close.gif" class="HSbutton"';
+	my $member_back_image = "<img border=0 $back>";
+	$member_back = qq|<a href="$member">$member_back_image</a>|;
+
+	$date = sprintf("$lang{As_of}{$current_language} %02d/%02d/%04d", $month, $day, $year);
+	$todays_date = sprintf("%02d-%02d-%04d", $month, $day, $year);
+
+	$lc_race 	= lc $race;
+	$lc_sex 	= lc $sex;
+	if ($sex eq MALE){
+		$gender = 'man';
+		$genders = 'men';
+		}
+	else	{
+		$gender =  'woman';
+		$genders = 'women';
+		}
 	
-	$member_back = qq|<a href="$member">$member_back_image</a>|;	
-	
-	$update_title = $title_string . '<br>&nbsp;<br><span class="HStitle">$lang{Update_Your_Account}{$current_language}</span>';
-	$reg_message = '';		
+	my $title_string = '';
+
+	$reg_title = $title_string . '<span class="HStitle">User Registration</span>';
+	$reg_subtitle = '<span class="HStitle">Edit a user</span>';
+	$reg_subtitle_in = '<span class="HStitle">Add new user</span>';
+	$reg_message = '';
+
+    $update_title = $title_string . '<br>&nbsp;<br><span class="HStitle">Update Your Account</span>';
+
+	$login_title = $title_string . '<br>&nbsp;<br><span class="HStitle">User Login</span>';
+	$login_subtitle = 'Edit a user';
+	$login_subtitle_in = 'Add new user';
+
+	$lost_title = $title_string . '<br>&nbsp;<br><span class="HStitle">Password retrieval</span>';
+	$lost_subtitle = 'Your password';
+	$lost_subtitle_in = 'Get your password';
+
+	$ar_title = $title_string . '<p><span class=HStitle>Assessment Records</span>';
+	$ar_color_guide = '<img src="images/global/color_guide.gif" width="309" height="13">';
+
+	$pt_title = $title_string . '<span class="HStitle">Personal Tracker</span>';
+	$pt_subtitle = '<span class="HSsubtitle">Personal Tracker Results</span>';
+	$pt_subtitle_in = '<span class="HSsubtitle">Personal Tracker Input</span>';
+
+	$gha_title = $title_string . "<span class=\"HStitle\">$lang{gha_title}{$current_language}</span>";
+	$gha_subtitle = "<span class=\"HSsubtitle\">$lang{gha_subtitle}{$current_language}</span>";
+	$gha_subtitle_in = "<span class=\"HSsubtitle\">$lang{gha_subtitle_in}{$current_language}</span>";
+	$gha_color_guide = '<img src="images/hra/color_guide.jpg">';
+
+	$hra_title = $title_string . "<span class=\"HStitle\">$lang{$current_language}{hra_title}</span>";
+	$hra_subtitle = "<span class=\"HSsubtitle\">$lang{$current_language}{hra_subtitle}</span>";
+	$hra_subtitle_in = "<span class=\"HSsubtitle\">$lang{$current_language}{hra_subtitle_in}</span>";
+	$hra_color_guide = '<img src="images/gha/color_guide.jpg">';
+
+	$gwb_title = $title_string . '<span class="HStitle">General Well-being Assessment</span>';
+	$gwb_subtitle = '<span class="HSsubtitle">General Well-being Results</span>';
+	$gwb_subtitle_in = '<span class="HSsubtitle">General Well-being Input</span>';
+
+	$fit_title = $title_string . "<span class=\"HStitle\">$lang{fit_title}{$current_language}</span>";
+	$fit_subtitle = "<span class=\"HSsubtitle\">$lang{fit_subtitle}{$current_language}</span>";
+	$fit_subtitle_in = "<span class=\"HSsubtitle\">$lang{fit_subtitle_in}{$current_language}</span>";
+	$fit_flex_graphic = '<img border="0" src="images/fit/man.gif" align="right" width="78" height="107">';
+
+	$drc_title = $title_string . "<span class=\"HStitle\">$lang{drc_title}{$current_language}</span>";
+	$drc_subtitle = "<span class=\"HSsubtitle\">$lang{drc_subtitle}{$current_language}</span>";
+	$drc_subtitle_in = "<span class=\"HSsubtitle\">$lang{drc_subtitle_in}{$current_language}</span>";
+	$drc_color_guide = '<img src="images/global/color_guide.jpg">';
+
+	$crc_title = $title_string . "<span class=\"HStitle\">$lang{crc_title}{$current_language}</span>";
+	$crc_subtitle = "<span class=\"HSsubtitle\">$lang{crc_subtitle}{$current_language}</span>";
+	$crc_subtitle_in = "<span class=\"HSsubtitle\">$lang{crc_subtitle_in}{$current_language}</span>";
+	$crc_color_guide = '<img src="images/crc/color_guide.jpg">';
+
+	$make_changes_title = $title_string . '<span class="HStitle">User Account</span>';
+	$make_changes_subtitle = '<span class="HStitle">Edit a user</span>';
+	$make_changes_subtitle_in = '<span class="HStitle">Change password</span>';
+	$make_changes_message = '';
 
 	# Sometimes wellness can actually be over a hundred, but this is confusing to the user, so we make it 100
 	if($wellness > 100) {$wellness = 100};
@@ -256,16 +296,33 @@ if(!defined $language || lc $language eq 'usenglish' || lc $current_language eq 
 elsif( lc $language eq 'espanol' || lc $current_language eq 'spanish' || lc $current_language eq 'espanol')	{ 
 	$copyright = '<span class="HScopyright">Copyright (c) 1998-'.$year.' HealthStatus.com, Inc. Todos los derechos reservados.</span>';
 	$copyright_pdf = "Copyright (c) 1998-$year HealthStatus.com, Inc. Todos los derechos reservados.";
-	
+	$hidden_language = $language;
 	#Próximo
 	$next = 'src="images/global/proximo.gif" class="HSbuttonNext"';
 	$back = 'src="images/global/volver.gif" class="HSbuttonBack"';
-	$submit = 'src="images/global/presentar.gif" class="HSbutton"';	
+	$submit = 'src="images/global/presentar.gif" class="HSbutton"';
+	#continuación
+	$continued = "<span class='HSsubtitle'> $lang{continued}{$current_language}</span>";
 	$close = 'src="images/global/close.gif" class="HSbutton"';
-	$member_back_image = "<img border=0 $back>";
-	$member_back = qq|<a href="$member">$member_back_image</a>|;	
+	my $member_back_image = "<img border=0 $back>";
+	$member_back = qq|<a href="$member">$member_back_image</a>|;
+
+	$date = sprintf("$lang{As_of}{$current_language} %02d/%02d/%04d", $month, $day, $year);
+
+	$lc_race 	= lc $race;
+	$lc_sex 	= lc $sex;
+	if ($sex eq MALE){
+		$gender = 'hombre';
+		$genders = 'hombres';
+		}
+	else	{
+		$gender =  'mujer';
+		$genders = 'mujeres';
+		}
 
 	#my $title_string = '<img src="images/global/hs_logo_77.jpg"><br>&nbsp;<br>';
+	my $title_string = '';
+
 	#sometimes wellness can actually be over a hundred, but this is confusing to the user, so we make it 100
 	if($wellness > 100) {$wellness = 100};
 	my $barswitch = sprintf("%.0f",$wellness);
@@ -273,66 +330,61 @@ elsif( lc $language eq 'espanol' || lc $current_language eq 'spanish' || lc $cur
 	$wellness_bar = 'images/wellness/well_';
 	$wellness = sprintf("%.0f", $wellness);
 	$wellness_bar .= "$barswitch.png";
-	
+
+	$reg_title = $title_string . '<span class="HStitle">User Registration</span>';
+	$reg_subtitle = '<span class="HStitle">Edit a user</span>';
+	$reg_subtitle_in = '<span class="HStitle">Add new user</span>';
 	$reg_message = $config{ggr_adv_styles};
-}
-$hidden_language = $language;
-########## Assessments titles and subtitles #####################
-$gha_title = $title_string . "<span class=\"HStitle\">$lang{gha_title}{$current_language}</span>";
-$gha_subtitle = "<span class=\"HSsubtitle\">$lang{gha_subtitle}{$current_language}</span>";
-$gha_subtitle_in = "<span class=\"HSsubtitle\">$lang{gha_subtitle_in}{$current_language}</span>";
-$gha_color_guide = '<img src="images/hra/color_guide.jpg">';
 
-$hra_title = $title_string . "<span class=\"HStitle\">$lang{hra_title}{$current_language}</span>";
-$hra_subtitle = "<span class=\"HSsubtitle\">$lang{hra_subtitle}{$current_language}</span>";
-$hra_subtitle_in = "<span class=\"HSsubtitle\">$lang{hra_subtitle_in}{$current_language}</span>";
-$hra_color_guide = '<img src="images/gha/color_guide.jpg">';
+	$login_title = $title_string . '<br>&nbsp;<br><span class="HStitle">User Login</span>';
+	$login_subtitle = 'Edit a user';
+	$login_subtitle_in = 'Add new user';
 
-$gwb_title = $title_string . '<span class="HStitle">General Well-being Assessment</span>';
-$gwb_subtitle = '<span class="HSsubtitle">General Well-being Results</span>';
-$gwb_subtitle_in = '<span class="HSsubtitle">General Well-being Input</span>';
+	$ar_title = $title_string . '<p><span class=HStitle>Assessment Records</span>';
 
-$fit_title = $title_string . "<span class=\"HStitle\">$lang{fit_title}{$current_language}</span>";
-$fit_subtitle = "<span class=\"HSsubtitle\">$lang{fit_subtitle}{$current_language}</span>";
-$fit_subtitle_in = "<span class=\"HSsubtitle\">$lang{fit_subtitle_in}{$current_language}</span>";
-$fit_flex_graphic = '<img border="0" src="images/fit/man.gif" align="right" width="78" height="107">';
-
-$drc_title = $title_string . "<span class=\"HStitle\">$lang{drc_title}{$current_language}</span>";
-$drc_subtitle = "<span class=\"HSsubtitle\">$lang{drc_subtitle}{$current_language}</span>";
-$drc_subtitle_in = "<span class=\"HSsubtitle\">$lang{drc_subtitle_in}{$current_language}</span>";
-$drc_color_guide = '<img src="images/global/color_guide.jpg">';
-
-$crc_title = $title_string . "<span class=\"HStitle\">$lang{crc_title}{$current_language}</span>";
-$crc_subtitle = "<span class=\"HSsubtitle\">$lang{crc_subtitle}{$current_language}</span>";
-$crc_subtitle_in = "<span class=\"HSsubtitle\">$lang{crc_subtitle_in}{$current_language}</span>";
-$crc_color_guide = '<img src="images/crc/color_guide.jpg">';
-
-$pt_title = $title_string . '<span class="HStitle">Personal Tracker</span>';
-$pt_subtitle = '<span class="HSsubtitle">Personal Tracker Results</span>';
-$pt_subtitle_in = '<span class="HSsubtitle">Personal Tracker Input</span>';
-
-$make_changes_title = $title_string . '<span class="HStitle">$lang{User_Account}{$current_language}</span>';
-$make_changes_subtitle = '<span class="HStitle">Edit a user</span>';
-$make_changes_subtitle_in = '<span class="HStitle">$lang{change_password}{$current_language}</span>';
-$make_changes_message = $config{ggr_adv_styles};
-
-$ar_title = $title_string . '<p><span class=HStitle>$lang{assessment_record}{$current_language}</span>';
-$mr_subtitle ='';
-$ar_color_guide = '<img src="images/global/color_guide.gif" width="309" height="13">';
-
-$lost_title = $title_string . '<br>&nbsp;<br><span class="HStitle">$lang{Password_retrieval}{$current_language}</span>';
-$lost_subtitle = 'Your password';
-$lost_subtitle_in = "$lang{Get_your_password}{$current_language}";
-
-$reg_title = $title_string . '<span class="HStitle">User Registration</span>';
-$reg_subtitle = '<span class="HStitle">Edit a user</span>';
-$reg_subtitle_in = '<span class="HStitle">Add new user</span>';
-
-$login_title = $title_string . '<br>&nbsp;<br><span class="HStitle">User Login</span>';
-$login_subtitle = 'Edit a user';
-$login_subtitle_in = 'Add new user';
+	$mr_subtitle ='';
+	$ar_color_guide = '<img src="images/global/color_guide.gif" width="309" height="13">';
 	
-##############################
+	$gha_title = $title_string . "<span class=\"HStitle\">$lang{gha_title}{$current_language}</span>";
+	$gha_subtitle = "<span class=\"HSsubtitle\">$lang{gha_subtitle}{$current_language}</span>";
+	$gha_subtitle_in = "<span class=\"HSsubtitle\">$lang{gha_subtitle_in}{$current_language}</span>";
+	$gha_color_guide = '<img src="images/hra/color_guide.jpg">';
+	
+	$hra_title = $title_string . "<span class=\"HStitle\">$lang{$current_language}{hra_title}</span>";
+	$hra_subtitle = "<span class=\"HSsubtitle\">$lang{$current_language}{hra_subtitle}</span>";
+	$hra_subtitle_in = "<span class=\"HSsubtitle\">$lang{$current_language}{hra_subtitle_in}</span>";
+	$hra_color_guide = '<img src="images/gha/color_guide.jpg">';
+
+
+	$gwb_title = $title_string . '<span class="HStitle">General Well-being Assessment</span>';
+	$gwb_subtitle = '<span class="HSsubtitle">General Well-being Results</span>';
+	$gwb_subtitle_in = '<span class="HSsubtitle">General Well-being Input</span>';
+	
+	$fit_title = $title_string . "<span class=\"HStitle\">$lang{fit_title}{$current_language}</span>";
+	$fit_subtitle = "<span class=\"HSsubtitle\">$lang{fit_subtitle}{$current_language}</span>";
+	$fit_subtitle_in = "<span class=\"HSsubtitle\">$lang{fit_subtitle_in}{$current_language}</span>";
+	$fit_flex_graphic = '<img border="0" src="images/fit/man.gif" align="right" width="78" height="107">';
+	
+	$drc_title = $title_string . "<span class=\"HStitle\">$lang{drc_title}{$current_language}</span>";
+	$drc_subtitle = "<span class=\"HSsubtitle\">$lang{drc_subtitle}{$current_language}</span>";
+	$drc_subtitle_in = "<span class=\"HSsubtitle\">$lang{drc_subtitle_in}{$current_language}</span>";
+	$drc_color_guide = '<img src="images/global/color_guide.jpg">';
+	
+	$crc_title = $title_string . "<span class=\"HStitle\">$lang{crc_title}{$current_language}</span>";
+	$crc_subtitle = "<span class=\"HSsubtitle\">$lang{crc_subtitle}{$current_language}</span>";
+	$crc_subtitle_in = "<span class=\"HSsubtitle\">$lang{crc_subtitle_in}{$current_language}</span>";
+	$crc_color_guide = '<img src="images/crc/color_guide.jpg">';
+
+	$pt_title = $title_string . '<span class="HStitle">Personal Tracker</span>';
+	$pt_subtitle = '<span class="HSsubtitle">Personal Tracker Results</span>';
+	$pt_subtitle_in = '<span class="HSsubtitle">Personal Tracker Input</span>';
+
+	$make_changes_title = $title_string . '<span class="HStitle">User Account</span>';
+	$make_changes_subtitle = '<span class="HStitle">Edit a user</span>';
+	$make_changes_subtitle_in = '<span class="HStitle">Change password</span>';
+	$make_changes_message = $config{ggr_adv_styles};
+	}
+
 
 $bar3_avg = 'images/global/3bar_avg.jpg';
 $bar3_score  = 'images/global/3bar_score.jpg';

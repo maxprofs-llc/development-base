@@ -1,5 +1,8 @@
 <?xml version="1.0" standalone="yes" ?>
 {
+# this part fills in a file that sets language variables we use later on.
+Text::Template::fill_in_file( "$config{template_directory}language.tmpl", PACKAGE => __PACKAGE__ );
+}{
 # this part fills in a file that sets variables we use later on.
 Text::Template::fill_in_file( $config{template_directory} . $config{variables_template}, PACKAGE => __PACKAGE__ );
 }{
@@ -16,10 +19,10 @@ Text::Template::fill_in_file( "$config{template_directory}fit_links.tmpl", PACKA
 <Image Width="2550" Height="3300" File="{$config{pdf_base}}/images/global/pdf-background-256.png" Name="ImBack" />
 <Page Name="Pg0" Width="612" Height="792" Bookmark="Cover Letter">
 <Graph Rect="0, 0, 612, 792" Name="Gr0">
-<ShowImage Name="ImBack" Left="0" Bottom="0" Width="620" Flip="0" />
+	<ShowImage Name="ImBack" Left="0" Bottom="0" Width="620" Flip="0" />
 <ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
-<ShowText X="60" Y="685" Text="{$lang{fit_cover_letter1}{$current_language}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
-<ShowText X="588" Y="90" Text="{$lang{fitness_assessment}{$current_language}}" FontFace="Helvetica" Color="245081" Width="300" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+<ShowText X="60" Y="685" Text="Your Personalized Fitness Assessment" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
+<ShowText X="588" Y="90" Text="Fitness Assessment" FontFace="Helvetica" Color="245081" Width="300" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
 <ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 </Graph>
 <Text Name="Txt0" Rect="60, 60, 552, 670" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0">
@@ -42,15 +45,15 @@ $midtext;
 	<ShowImage Name="ImBack" Left="0" Bottom="0" Width="620" Flip="0" />
 <Graph Rect="0, 0, 612, 792" Name="Gr1">
 <ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
-<ShowText X="60" Y="685" Text="{$lang{fit_cover_letter1}{$current_language}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
-<ShowText X="588" Y="90" Text="{$lang{fitness_assessment}{$current_language}}" FontFace="Helvetica" Color="245081" Width="300" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+<ShowText X="60" Y="685" Text="Your Personalized Fitness Assessment" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
+<ShowText X="588" Y="90" Text="Fitness Assessment" FontFace="Helvetica" Color="245081" Width="300" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
 <ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 <ShowText X="490" Y="20" Text="Page 2" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 </Graph>
-<Text Name="Txt1" Rect="60, 565, 210, 650" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" ContentPadding="5mm" VerticalAlign="Bottom" PaddingRight="25" ExtraParaSpacing="0">
+<Text Name="Txt1" Rect="60, 565, 210, 650" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Bottom" PaddingRight="25" ExtraParaSpacing="0">
 <![CDATA[
-^f:size=12&color={$config{brand_subtitle_color}} ^b {$lang{body_composition}{$current_language}} ^B ^F ^P
-^P ^p  ^P 
+^f:size=12&color={$config{brand_subtitle_color}} ^b Body Composition ^B ^F ^P
+
 ^P
 
 ^P
@@ -68,23 +71,23 @@ $midtext;
 
 ^P
 
-{$lang{height}{$current_language}} = {$height_imperial} ^P
+Height = {$height_imperial} ^P
 
-{$lang{waist}{$current_language}} = {$waist} ^P
+Waist = {$waist} ^P
 
-{$lang{frame_size}{$current_language}} = {$frame_sizes[$frame_size] } ^P
+Frame size = {$frame_sizes[$frame_size] } ^P
 
-{$lang{weight}{$current_language}} = {$weight} - {$lang{Ideal}{$current_language}} = {$low_weight} {$lang{to}{$current_language}} {$high_weight} ^P
+Weight = {$weight} - Ideal = {$low_weight} to {$high_weight} ^P
 
-{$lang{bmi}{$current_language}} = {$bmi} ^P
+Body Mass Index = {$bmi} ^P
 
-{$lang{body_fat}{$current_language}} % = {$body_fat_percent} ^P
+Estimated Body Fat % = {$body_fat_percent} ^P
 
-{$lang{daily_energy_exp}{$current_language}} = {$daily_caloric_requirements} {$lang{Calories}{$current_language}} ^P
+Daily energy expenditure = {$daily_caloric_requirements} calories ^P
 
 ^P
 
-^f:size=9&color={$config{brand_subtitle_color}} ^b {$lang{details}{$current_language}}  ^B ^F ^P
+^f:size=9&color={$config{brand_subtitle_color}} ^b Details  ^B ^F ^P
 
 {$body_message} ^P
 
@@ -92,7 +95,7 @@ $midtext;
 </Text>
 <Text Name="Txt3" Rect="60, 290, 210, 380" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Bottom" PaddingRight="25" ExtraParaSpacing="0">
 <![CDATA[
-^f:size=12&color={$config{brand_subtitle_color}} ^b {$lang{Cardiorespiratory_Endurance}{$current_language}} ^B ^F ^P
+^f:size=12&color={$config{brand_subtitle_color}} ^b Cardiorespiratory Endurance ^B ^F ^P
 
 ^P
 
@@ -111,9 +114,9 @@ $midtext;
 
 ^P
 
-{$lang{fit_msg22}{$current_language}} = {$pulse_rate_30_seconds} ^P
+30 second pulse rate = {$pulse_rate_30_seconds} ^P
 
-{$lang{fitness_level}{$current_language}} = {$step_desc} ^P
+Fitness Level = {$step_desc} ^P
 
 ^P
 
@@ -121,7 +124,7 @@ $midtext;
 
 ^P
 
-^f:size=9&color={$config{brand_subtitle_color}} ^b {$lang{details}{$current_language}}  ^B ^F ^P
+^f:size=9&color={$config{brand_subtitle_color}} ^b Details  ^B ^F ^P
 
 {$Step_Detail} ^P
 
@@ -132,16 +135,16 @@ $midtext;
 <Graph Rect="0, 0, 612, 792" Name="Gr3a">
 	<ShowImage Name="ImBack" Left="0" Bottom="0" Width="620" Flip="0" />
 <ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
-<ShowText X="60" Y="685" Text="{$lang{fit_cover_letter1}{$current_language}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
-<ShowText X="588" Y="90" Text="{$lang{fitness_assessment}{$current_language}}" FontFace="Helvetica" Color="245081" Width="300" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+<ShowText X="60" Y="685" Text="Your Personalized Fitness Assessment" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
+<ShowText X="588" Y="90" Text="Fitness Assessment" FontFace="Helvetica" Color="245081" Width="300" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
 <ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 <ShowText X="490" Y="20" Text="Page 3" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 </Graph>
 <Text Name="Txt1" Rect="60, 560, 210, 650" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Bottom" PaddingRight="5" ExtraParaSpacing="0">
 <![CDATA[
-^f:size=12&color={$config{brand_subtitle_color}} ^b {$lang{muscular_endurance}{$current_language}} ^P
+^f:size=12&color={$config{brand_subtitle_color}} ^b Muscular Endurance ^P
 
-({$lang{sit_ups}{$current_language}})  ^B ^F ^P
+(Sit-ups)  ^B ^F ^P
 
 ^P
 
@@ -160,9 +163,9 @@ $midtext;
 
 ^P
 
-{$lang{sit_ups}{$current_language}} {$lang{performed}{$current_language}} = {$sit_up} ^P
+Sit-ups performed = {$sit_up} ^P
 
-{$lang{fitness_level}{$current_language}} = {$sits_desc} ^P
+Fitness Level = {$sits_desc} ^P
 
 ^P
 
@@ -170,7 +173,7 @@ $midtext;
 
 ^P
 
-^f:size=9&color={$config{brand_subtitle_color}} ^b {$lang{details}{$current_language}}  ^B ^F ^P
+^f:size=9&color={$config{brand_subtitle_color}} ^b Details  ^B ^F ^P
 
 {$Sits_Detail} ^P
 
@@ -178,9 +181,9 @@ $midtext;
 </Text>
 <Text Name="Txt7" Rect="60, 380, 210, 470" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Bottom" PaddingRight="5" ExtraParaSpacing="0">
 <![CDATA[
-^f:size=12&color={$config{brand_subtitle_color}} ^b {$lang{muscular_endurance}{$current_language}} ^P
+^f:size=12&color={$config{brand_subtitle_color}} ^b Muscular Endurance ^P
 
-({$lang{push_ups}{$current_language}}) ^B ^F ^P
+(Push-ups) ^B ^F ^P
 
 ^P
 
@@ -199,9 +202,9 @@ $midtext;
 
 ^P
 
-{$lang{push_ups}{$current_language}} {$lang{performed}{$current_language}} = {$push_ups} ^P
+Push-ups performed = {$push_ups} ^P
 
-{$lang{fitness_level}{$current_language}} = {$push_desc} ^P
+Fitness Level = {$push_desc} ^P
 
 ^P
 
@@ -211,7 +214,7 @@ $midtext;
 </Text>
 <Text Name="Txt9" Rect="60, 190, 210, 280" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Bottom" PaddingRight="25" ExtraParaSpacing="0">
 <![CDATA[
-^f:size=12&color={$config{brand_subtitle_color}} ^b {$lang{flexibility}{$current_language}} ^B ^F ^P
+^f:size=12&color={$config{brand_subtitle_color}} ^b Flexibility ^B ^F ^P
 
 ^P
 
@@ -230,9 +233,9 @@ $midtext;
 
 ^P
 
-{$lang{reach}{$current_language}} = {$flexibility} inches ^P
+Reach = {$flexibility} inches ^P
 
-{$lang{fitness_level}{$current_language}} = {$flexy_desc} ^P
+Fitness Level = {$flexy_desc} ^P
 
 ^P
 
@@ -240,7 +243,7 @@ $midtext;
 
 ^P
 
-^f:size=9&color={$config{brand_subtitle_color}} ^b {$lang{details}{$current_language}}  ^B ^F ^P
+^f:size=9&color={$config{brand_subtitle_color}} ^b Details  ^B ^F ^P
 
 {$Flexy_Detail}
   ]]>
@@ -250,8 +253,8 @@ $midtext;
 <Graph Rect="0, 0, 612, 792" Name="Gr10">
 	<ShowImage Name="ImBack" Left="0" Bottom="0" Width="620" Flip="0" />
 <ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
-<ShowText X="60" Y="685" Text="{$lang{fit_cover_letter1}{$current_language}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
-<ShowText X="588" Y="90" Text="{$lang{fitness_assessment}{$current_language}}" FontFace="Helvetica" Color="245081" Width="300" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+<ShowText X="60" Y="685" Text="Your Personalized Fitness Assessment" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
+<ShowText X="588" Y="90" Text="Fitness Assessment" FontFace="Helvetica" Color="245081" Width="300" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
 <ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 <ShowText X="490" Y="20" Text="Page 4" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 </Graph>
@@ -261,7 +264,7 @@ $midtext;
 
 ^P
 
-^f:size=14&color={$config{brand_subtitle_color}} ^b {$lang{Internet_resources}{$current_language}}: ^B ^F ^P
+^f:size=14&color={$config{brand_subtitle_color}} ^b Internet resources for more information: ^B ^F ^P
 
 {
 join "",

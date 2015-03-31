@@ -22,8 +22,8 @@ Text::Template::fill_in_file( "$config{template_directory}crc_links.tmpl", PACKA
 <Graph Rect="0, 0, 612, 792" Name="Gr0">
 	<ShowImage Name="ImBack" Left="0" Bottom="0" Width="620" Flip="0" />
 <ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
-<ShowText X="60" Y="685" Text="{$lang{Personalized_CRC}{$current_language}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
-<ShowText X="588" Y="90" Text="{$lang{crc_title}{$current_language}}" FontFace="Helvetica" Color="245081" Width="400" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+<ShowText X="60" Y="685" Text="Your Personalized Cardiac Risk Results" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
+<ShowText X="588" Y="90" Text="Cardiac Risk Assessment" FontFace="Helvetica" Color="245081" Width="400" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
 		<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 </Graph>
 <Text Name="Txt0" Rect="60, 60, 552, 670" FontFace="Arial" FontSize="11" Leading="14" FontColor="666666" TextJustify="Uniform" VerticalAlign="Top" PaddingRight="25" ExtraParaSpacing="0">
@@ -44,15 +44,15 @@ $midtext;
 <Page Name="Pg1" Width="612" Height="792">
 	<Graph Rect="0, 0, 612, 792" Name="Gr1">
 		<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
-		<ShowText X="60" Y="685" Text="{$lang{Personalized_CRC}{$current_language}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
+		<ShowText X="60" Y="685" Text="Your Personalized Cardiac Risk Results" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
 		<ShowImage Name="Im9" Left="245" Bottom="658" Flip="0" />
-		<ShowText X="588" Y="90" Text="{$lang{crc_title}{$current_language}}" FontFace="Helvetica" Color="245081" Width="400" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+		<ShowText X="588" Y="90" Text="Cardiac Risk Assessment" FontFace="Helvetica" Color="245081" Width="400" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
 		<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 		<ShowText X="490" Y="20" Text="Page 2" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 	</Graph>
 	<Text Name="Txt1" Rect="60, 565, 210, 650" FontFace="Arial" FontSize="11" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Bottom" ExtraParaSpacing="0">
 		<![CDATA[
-^f:size=12&color={$config{brand_subtitle_color}} ^b {$lang{Blood_Pressure}{$current_language}} ^B ^F ^P
+^f:size=12&color={$config{brand_subtitle_color}} ^b Blood Pressure ^B ^F ^P
 
 ^P
 
@@ -85,13 +85,13 @@ $midtext;
 
 		^P
 
-		^P ^f:size=9&color=Black ^b {$lang{details}{$current_language}} ^B ^F ^P
+		^P ^f:size=9&color=Black ^b Details ^B ^F ^P
 
 		{$bp_message} ^P
 
 		^P
 
-		{$lang{crc_bp_msg}{$current_language}} ^P
+		If you have suffered renal failure or heart failure, your target blood pressure may be lower.  Get the recommended levels from your physician.^P
 
 		  ]]>
 	</Text>
@@ -103,10 +103,10 @@ $midtext;
 			my_score => $bp_sys,
 			avg_score => $bp_avg,
 			target_score => $bp_target,
-			scope_text => $lang{systolic_blood_pressure}{$current_language}.'('.$lang{less_yellow_is_better}{$current_language}.')',
-			rate_text => $lang{US_average}{$current_language},
+			scope_text => 'systolic blood pressure (less yellow is better)',
+			rate_text => 'Average US',
 			level => '',
-			target_text => $lang{Your_target}{$current_language},
+			target_text => 'Your target',
 			title_text => ''
 		     );
                      }
@@ -116,11 +116,11 @@ $midtext;
                      	my_score => $bp_dias,
                      	avg_score => $bp_davg,
                      	target_score => $bp_dtarget,
-                     	scope_text => $lang{diastolic_blood_pressure}{$current_language}.'('.$lang{less_yellow_is_better}{$current_language}.')',
-						rate_text => $lang{US_average}{$current_language},
-						level => '',
-						target_text => $lang{Your_target}{$current_language},
-						title_text => ''
+                     	scope_text => 'diastolic blood pressure (less yellow is better)',
+			rate_text => 'Average US',
+			level => '',
+			target_text => 'Your target',
+			title_text => ''
 		     );
 		     }
 		     if( $bp_sys < 150) {$vars{bar_scale} = 2;}else{$vars{bar_scale} = 1.2;}
@@ -131,7 +131,7 @@ $midtext;
 	</Graph>
 <Text Name="Txt3" Rect="60, 295, 210, 380" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Bottom" ExtraParaSpacing="0">
 <![CDATA[
-^f:size=12&color={$config{brand_subtitle_color}} ^b {$lang{cholesterol}{$current_language}} ^B ^F ^P
+^f:size=12&color={$config{brand_subtitle_color}} ^b Cholesterol ^B ^F ^P
 
 ^P
 
@@ -164,7 +164,7 @@ $midtext;
 
 		^P
 
-		^P ^f:size=9&color=Black ^b {$lang{details}{$current_language}} ^B ^F ^P
+		^P ^f:size=9&color=Black ^b Details ^B ^F ^P
 
 		{$cholesterol_message} ^P
 
@@ -178,9 +178,9 @@ $midtext;
 			my_score => $cholesterol,
 			avg_score => $cholesterol_avg,
 			target_score => $cholesterol_target,
-			scope_text => $lang{total_cholesterol}{$current_language}.'('.$lang{less_yellow_is_better}{$current_language}.')',
-			rate_text => $lang{US_average}{$current_language},
-			target_text => $lang{Your_target}{$current_language},
+			scope_text => 'total cholesterol (less yellow is better)',
+			rate_text => 'Average US',
+			target_text => 'Your target',
 			level => '',
 			bar_scale => 1,
 			title_text => ''
@@ -194,15 +194,15 @@ $midtext;
 <Page Name="Pg2" Width="612" Height="792">
 	<Graph Rect="0, 0, 612, 792" Name="Gr3a">
 		<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
-		<ShowText X="60" Y="685" Text="{$lang{Personalized_CRC}{$current_language}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
+		<ShowText X="60" Y="685" Text="Your Personalized Cardiac Risk Results" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
 		<ShowImage Name="Im9" Left="245" Bottom="658" Flip="0" />
-		<ShowText X="588" Y="90" Text="{$lang{crc_title}{$current_language}}" FontFace="Helvetica" Color="245081" Width="400" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+		<ShowText X="588" Y="90" Text="Cardiac Risk Assessment" FontFace="Helvetica" Color="245081" Width="400" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
 		<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 		<ShowText X="490" Y="20" Text="Page 3" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 	</Graph>
 	<Text Name="Txt5" Rect="60, 565, 230, 650" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Bottom" ExtraParaSpacing="0">
 		<![CDATA[
-^f:size=12&color={$config{brand_subtitle_color}} ^b {$lang{HDL_cholesterol}{$current_language}} ^B ^F ^P
+^f:size=12&color={$config{brand_subtitle_color}} ^b HDL Cholesterol ^B ^F ^P
 
 ^P
 
@@ -246,9 +246,9 @@ $midtext;
 			my_score => $hdl,
 			avg_score => $hdl_avg,
 			target_score => $hdl_target_high,
-			scope_text => $lang{HDL_level}{$current_language}.'('.$lang{good_cholesterol}{$current_language}.')',
-			rate_text => $lang{US_average}{$current_language},
-			target_text => $lang{Your_target}{$current_language},
+			scope_text => 'HDL level (good cholesterol)',
+			rate_text => 'Average US',
+			target_text => 'Your target',
 			level => '+',
 			title_text => '',
 			bar_scale => 4
@@ -263,7 +263,7 @@ $midtext;
 	</Graph>
 	<Text Name="Txt7" Rect="60, 385, 230, 470" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Bottom" ExtraParaSpacing="0">
 		<![CDATA[
-^f:size=12&color={$config{brand_subtitle_color}} ^b {$lang{exercise}{$current_language}} ^B ^F ^P
+^f:size=12&color={$config{brand_subtitle_color}} ^b Exercise ^B ^F ^P
 
 ^P
 
@@ -307,9 +307,9 @@ $midtext;
 			my_score => $exercise,
 			avg_score => $exercise_avg,
 			target_score => $exercise_target,
-			scope_text => $lang{exercise_sessions_each_week}{$current_language},
-			rate_text => $lang{US_average}{$current_language},
-			target_text => $lang{Your_target}{$current_language},
+			scope_text => 'exercise sessions each week',
+			rate_text => 'Average US',
+			target_text => 'Your target',
 			title_text => '',
 			level => '',
 			bar_scale => 40
@@ -321,7 +321,7 @@ $midtext;
 	</Graph>
 	<Text Name="Txt9" Rect="60, 195, 230, 280" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Bottom" ExtraParaSpacing="0">
 		<![CDATA[
-^f:size=12&color={$config{brand_subtitle_color}} ^b {$lang{weight}{$current_language}} ^B ^F ^P
+^f:size=12&color={$config{brand_subtitle_color}} ^b Weight ^B ^F ^P
 
 ^P
 
@@ -365,9 +365,9 @@ $midtext;
 			my_score => $bmi,
 			avg_score => 29,
 			target_score => 23,
-			scope_text => $lang{bmi}{$current_language},
-			rate_text => $lang{US_average}{$current_language},
-			target_text => $lang{Your_target}{$current_language},
+			scope_text => 'body mass index',
+			rate_text => 'Average US',
+			target_text => 'Your target',
 			level => '',
 			bar_scale => 8,
 			title_text => ''
@@ -381,15 +381,15 @@ $midtext;
 <Page Name="Pg3" Width="612" Height="792">
 	<Graph Rect="0, 0, 612, 792" Name="Gr7a">
 		<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
-		<ShowText X="60" Y="685" Text="{$lang{Personalized_CRC}{$current_language}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
+		<ShowText X="60" Y="685" Text="Your Personalized Cardiac Risk Results" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
 		<ShowImage Name="Im9" Left="245" Bottom="658" Flip="0" />
-		<ShowText X="588" Y="90" Text="{$lang{crc_title}{$current_language}}" FontFace="Helvetica" Color="245081" Width="400" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+		<ShowText X="588" Y="90" Text="Cardiac Risk Assessment" FontFace="Helvetica" Color="245081" Width="400" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
 		<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 		<ShowText X="490" Y="20" Text="Page 4" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 	</Graph>
 	<Text Name="Txt11" Rect="60, 565, 230, 650" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Bottom" ExtraParaSpacing="0">
 		<![CDATA[
-^f:size=12&color={$config{brand_subtitle_color}} ^b {$lang{Fat_Intake}{$current_language}} ^B ^F ^P
+^f:size=12&color={$config{brand_subtitle_color}} ^b Fat Intake ^B ^F ^P
 
 ^P
 
@@ -433,9 +433,9 @@ $midtext;
 			my_score => $fat_number,
 			avg_score => 2.2,
 			target_score => .5,
-			scope_text => $lang{Fat_Intake}{$current_language}.'('.$lang{less_is_better}{$current_language}.')',
-			rate_text => $lang{US_average}{$current_language},
-			target_text => $lang{Your_target}{$current_language},
+			scope_text => 'fat intake (less is better)',
+			rate_text => 'Average US',
+			target_text => 'Your target',
 			level => '',
 			bar_scale => 75,
 			title_text => ''
@@ -447,7 +447,7 @@ $midtext;
 	</Graph>
 	<Text Name="Txt13" Rect="60, 385, 230, 470" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Bottom" ExtraParaSpacing="0">
 		<![CDATA[
-^f:size=12&color={$config{brand_subtitle_color}} ^b {$lang{Fiber_Intake}{$current_language}} ^B ^F ^P
+^f:size=12&color={$config{brand_subtitle_color}} ^b Fiber Intake ^B ^F ^P
 
 ^P
 
@@ -491,9 +491,9 @@ $midtext;
 			my_score => $fiber_number,
 			avg_score => 2,
 			target_score => 3,
-			scope_text => $lang{Fiber_Intake}{$current_language}.'('.$lang{more_is_better}{$current_language}.')',
-			rate_text => $lang{US_average}{$current_language},
-			target_text => $lang{Your_target}{$current_language},
+			scope_text => 'fiber intake (more is better)',
+			rate_text => 'Average US',
+			target_text => 'Your target',
 			level => '',
 			bar_scale => 25,
 			title_text => ''
@@ -505,7 +505,7 @@ $midtext;
 	</Graph>
 	<Text Name="Txt15" Rect="60, 195, 230, 280" FontFace="Arial" FontSize="10" Leading="12" FontColor="666666" TextJustify="Uniform" VerticalAlign="Bottom" ExtraParaSpacing="0">
 		<![CDATA[
-^f:size=12&color={$config{brand_subtitle_color}} ^b {$lang{smoking}{$current_language}} ^B ^F ^P
+^f:size=12&color={$config{brand_subtitle_color}} ^b Smoking ^B ^F ^P
 
 ^P
 
@@ -549,9 +549,9 @@ $midtext;
 			my_score => $cigs_a_day,
 			avg_score => $cig_avg,
 			target_score => $cig_target,
-			scope_text => $lang{number_of_cigarettes}{$current_language},
-			rate_text => $lang{US_average}{$current_language},
-			target_text => $lang{Your_target}{$current_language},
+			scope_text => 'number of cigarettes',
+			rate_text => 'Average US',
+			target_text => 'Your target',
 			level => '',
 			bar_scale => 8,
 			title_text => ''
@@ -565,8 +565,8 @@ $midtext;
 <Page Name="Pg4" Width="612" Height="792">
 <Graph Rect="0, 0, 612, 792" Name="Gr10">
 		<ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
-		<ShowText X="60" Y="685" Text="{$lang{Personalized_CRC}{$current_language}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
-		<ShowText X="588" Y="90" Text="{$lang{crc_title}{$current_language}}" FontFace="Helvetica" Color="245081" Width="400" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+		<ShowText X="60" Y="685" Text="Your Personalized Cardiac Risk Results" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
+		<ShowText X="588" Y="90" Text="Cardiac Risk Assessment" FontFace="Helvetica" Color="245081" Width="400" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
 		<ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 		<ShowText X="490" Y="20" Text="Page 5" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 </Graph>
@@ -574,7 +574,7 @@ $midtext;
 <![CDATA[
 ^P
 
-^P ^f:size=14&color={$config{brand_subtitle_color}} ^b {$lang{summary}{$current_language}} ^B ^F ^P
+^P ^f:size=14&color={$config{brand_subtitle_color}} ^b Summary ^B ^F ^P
 {$crc_status} ^P
 
 ^P
@@ -598,7 +598,7 @@ if(defined $vars{Factors_Msg}){$x.="$factors_message ^P
 {$x}
 ^P
 
-^f:size=14&color={$config{brand_subtitle_color}} ^b {$lang{Internet_resources}{$current_language}}: ^B ^F ^P
+^f:size=14&color={$config{brand_subtitle_color}} ^b Internet resources for more information: ^B ^F ^P
 
 {
 join "",

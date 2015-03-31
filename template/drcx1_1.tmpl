@@ -15,8 +15,8 @@ Text::Template::fill_in_file( "$config{template_directory}drc_links.tmpl", PACKA
 <Graph Rect="0, 0, 612, 792" Name="Gr0">
 <ShowImage Name="ImBack" Left="0" Bottom="0" Width="620" Flip="0" />
 <ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
-<ShowText X="60" Y="685" Text="Your Personalized Diabetes Risk Results" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
-<ShowText X="588" Y="90" Text="Diabetes Assessment" FontFace="Helvetica" Color="245081" Width="300" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+<ShowText X="60" Y="685" Text="{$lang{diabetes_risk_result}{$current_language}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
+<ShowText X="588" Y="90" Text="{$lang{diabetes_assessment}{$current_language}}" FontFace="Helvetica" Color="245081" Width="300" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
 <ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 </Graph>
 <Text Name="Txt0" Rect="60, 60, 552, 660" FontFace="Arial" FontSize="10" Leading="12" FontColor="Slategray" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
@@ -37,36 +37,36 @@ $midtext;
 <Page Name="Pg2" Width="612" Height="792" Bookmark="Details">
 <Graph Rect="0, 0, 612, 792" Name="Gr0">
 <ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
-<ShowText X="60" Y="685" Text="Your Personalized Diabetes Risk Results" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
-<ShowText X="588" Y="90" Text="Diabetes Assessment" FontFace="Helvetica" Color="245081" Width="300" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+<ShowText X="60" Y="685" Text="{$lang{diabetes_risk_result}{$current_language}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
+<ShowText X="588" Y="90" Text="{$lang{diabetes_assessment}{$current_language}}" FontFace="Helvetica" Color="245081" Width="300" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
 <ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 </Graph>
 <Text Name="Txt0" Rect="60, 60, 552, 660" FontFace="Arial" FontSize="10" Leading="12" FontColor="Slategray" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
 <![CDATA[
-^f:size=12&color={$config{brand_subtitle_color}} ^b Body Composition ^B ^F ^P
+^f:size=12&color={$config{brand_subtitle_color}} ^b {$lang{body_composition}{$current_language}} ^B ^F ^P
 
 ^P
 
-Height = {$height_imperial} ^P
+{$lang{height}{$current_language}} = {$height_imperial} ^P
 
-Weight = {$weight} - Ideal = {$low_weight} to {$high_weight} ^P
+{$lang{weight}{$current_language}} = {$weight} - {$lang{Ideal}{$current_language}} = {$low_weight} {$lang{to}{$current_language}} {$high_weight} ^P
 
-Body Mass Index = {$bmi} ^P
+{$lang{bmi}{$current_language}} = {$bmi} ^P
 
-Race = {$race} ^P
+{$lang{race}{$current_language}} = {$race} ^P
 
-Sex = {$sex} ^P
+{$lang{sex}{$current_language}} = {$sex} ^P
 
 { 
 my $text;
 if($parents_have_diabetes  || $siblings_have_diabetes){
 
-$tp = $parents_have_diabetes  || 'Not available';
-$ts = $siblings_have_diabetes || 'Not available';
+$tp = $parents_have_diabetes  || {$lang{Not_available}{$current_language}};
+$ts = $siblings_have_diabetes || {$lang{Not_available}{$current_language}};
 
-$text = qq|Family occurrence = ^P 
+$text = qq| $lang{parents}{$current_language} = $tp -- $lang{siblings}{$current_language}: $ts ^P 
 
-^t Parents: $tp -- Siblings: $ts ^P
+^t 
 
 ^P|;}
 
@@ -77,7 +77,7 @@ $text;
 
 ^P
 
-^P ^f:size=12&color={$config{brand_subtitle_color}} ^b Weight ^B ^F ^P
+^P ^f:size=12&color={$config{brand_subtitle_color}} ^b {$lang{weight}{$current_language}} ^B ^F ^P
 
 ^P
 
@@ -93,7 +93,7 @@ $text;
 
 ^P
 
-^P ^f:size=12&color={$config{brand_subtitle_color}} ^b Exercise ^B ^F ^P
+^P ^f:size=12&color={$config{brand_subtitle_color}} ^b {$lang{exercise}{$current_language}} ^B ^F ^P
 
 ^P
 
@@ -110,7 +110,7 @@ qq|^P
 
 ^P
 
-^P ^f:size=12&color=$config{brand_subtitle_color} ^b Birth related ^B ^F ^P
+^P ^f:size=12&color=$config{brand_subtitle_color} ^b {$lang{birth_related}{$current_language}} ^B ^F ^P
 
 ^P
 
@@ -123,7 +123,7 @@ $female_desc ^P |;}
 
 ^P
 
-^P ^f:size=12&color={$config{brand_subtitle_color}} ^b Predispositions ^B ^F ^P
+^P ^f:size=12&color={$config{brand_subtitle_color}} ^b {$lang{predispositions}{$current_language}} ^B ^F ^P
 
 ^P
 
@@ -139,15 +139,15 @@ $female_desc ^P |;}
 <Page Name="Pg3" Width="612" Height="792" Bookmark="Internet Resources">
 <Graph Rect="0, 0, 612, 792" Name="Gr0">
 <ShowImage Name="Im0" Left="{$brand_logo_pdf_left}" Bottom="{$brand_logo_pdf_base}" Width="{$brand_logo_pdf_width}"  Flip="0" />
-<ShowText X="60" Y="685" Text="Your Personalized Diabetes Risk Results" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
-<ShowText X="588" Y="90" Text="Diabetes Assessment" FontFace="Helvetica" Color="245081" Width="300" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
+<ShowText X="60" Y="685" Text="{$lang{diabetes_risk_result}{$current_language}}" FontFace="Helvetica-Bold" Color="{$config{brand_title_color}}" BorderColor="{$config{brand_title_color}}" Height="12"  />
+<ShowText X="588" Y="90" Text="{$lang{diabetes_assessment}{$current_language}}" FontFace="Helvetica" Color="245081" Width="300" Height="20" FitWidth="CharScaling" FitHeight="Stretch" Rotation="90" />
 <ShowText X="60" Y="20" Text="{$copyright_pdf}" FontFace="Arial" FontSize="8" Leading="8" Color="666666" />
 </Graph>
 <Text Name="Txt0" Rect="60, 60, 552, 660" FontFace="Arial" FontSize="10" Leading="12" FontColor="Slategray" BgColor="White" TextJustify="Uniform" VerticalAlign="Top" ContentPadding="3mm" PaddingRight="25" ExtraParaSpacing="0">
 <![CDATA[
 ^P
 
-^f:size=14&color={$config{brand_subtitle_color}} ^b Internet resources for more information: ^B ^F ^P
+^f:size=14&color={$config{brand_subtitle_color}} ^b {$lang{Internet_resources}{$current_language}}: ^B ^F ^P
 
 {
 join "",

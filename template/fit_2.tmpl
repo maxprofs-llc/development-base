@@ -158,7 +158,7 @@ Text::Template::fill_in_file( "$config{template_directory}$header_file", PACKAGE
                 <td height="50" align="left"><form method="post" action="{$pager}">
                 <input type="image" border=0 name="fit_1.tmpl" value="fit_1.tmpl" src="images/back_05.jpg">
 				{$hidden_cgi_fields}
-				 <input type="hidden" name="language" value="">
+				 <input type="hidden" name="language" value="{$hidden_language}">
                 </form>
 		</td>
                 <td align="right" height="50">{my $html = qq|<a href="$member">$lang{assessment_records}{$current_language}</a>| unless $status eq 'retake';$html;}</td>
