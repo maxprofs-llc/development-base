@@ -76,7 +76,7 @@ my @exer_habits 	= ( $lang{regular_exercise}{$current_language}, $lang{not_enoug
 my @fiber_habits 	= ( $lang{diet_includes_plenty_fiber}{$current_language}, $lang{diet_includes_fiber}{$current_language}, $lang{not_enough_fiber}{$current_language}, $lang{very_little_fiber}{$current_language});
 
 
-if($current_language eq 'spanish'){
+if($current_language eq 'es'){
 	 $exercise = $lang{less_than_one_time_per_week}{$current_language} if ($exercise   eq 'Less than one time per week') ;
 	 $exercise = $lang{one_or_two_times_per_week}{$current_language} if($exercise eq 'One or two times per week');
 	 $exercise = $lang{three_or_four_times_per_week}{$current_language} if($exercise eq 'Three or four times per week') ;
@@ -928,7 +928,7 @@ $risks_short = "" if(uc($output_format) eq 'PDF');
 foreach (@risks_list){
 	$risks_hash = $risks_object->HealthStatus::CalcRisk::record($_);
 	
-	if(lc $current_language eq 'spanish' || lc $current_language eq 'espanol')
+	if(lc $current_language eq 'es')
 	{
 		if($risks_hash->{name} eq 'All Other Causes'){
 			$risks_hash->{name} = $lang{All_Other_Causes}{$current_language};

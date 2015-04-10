@@ -123,11 +123,15 @@ foreach (@ggr_style_parts){
 $useFolder = 0;
 
 if(lc $language eq 'espanol' || lc $language eq 'spanish'){
-	$current_language = "spanish";
-}elsif(lc $language eq 'chinese'){
-	$current_language = "chinese";
+	$current_language = "es";
+}elsif(lc $language eq 'chinese' || lc $language eq 'Chinese'){
+	$current_language = "zh";
+}elsif(lc $language eq 'german' || lc $language eq 'German'){
+	$current_language = "de";
+}elsif(lc $language eq 'french' || lc $language eq 'French'){
+	$current_language = "fr";
 }else{
-	$current_language = "english";
+	$current_language = "en";
 }
 $base = $config{html_base};
 $styles = $config{html_styles};
@@ -235,7 +239,7 @@ else{
 	$genders = $lang{women}{$current_language};
 	}
 	
-if(!defined $language || lc $language eq 'usenglish' || lc $current_language eq 'english'){
+if(!defined $language || lc $language eq 'usenglish' || lc $current_language eq 'en'){
 	$print_me = qq|<a href="$review?status=retake&assessment=$assessment&xnum=$db_record&output_format=PDF" class="HSbodytext2" target="_blank">[Click here for a Printable PDF Version of this report]</a>|;
 	$copyright_pdf = "Copyright (c) 1998-$year HealthStatus.com, Inc. all rights reserved.";	
 	
@@ -253,7 +257,7 @@ if(!defined $language || lc $language eq 'usenglish' || lc $current_language eq 
 	$wellness_bar .= "$barswitch.png";
 
 	}
-elsif( lc $language eq 'espanol' || lc $current_language eq 'spanish' || lc $current_language eq 'espanol')	{ 
+elsif( lc $language eq 'espanol' || lc $current_language eq 'es' )	{ 
 	$copyright = '<span class="HScopyright">Copyright (c) 1998-'.$year.' HealthStatus.com, Inc. Todos los derechos reservados.</span>';
 	$copyright_pdf = "Copyright (c) 1998-$year HealthStatus.com, Inc. Todos los derechos reservados.";
 	

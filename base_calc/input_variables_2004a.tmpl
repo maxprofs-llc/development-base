@@ -1,0 +1,351 @@
+{ # set the values we will use below
+
+use vars qw( $title $form_title $intro $back $styles $trans $hs_java
+             $submit $popup $menu_img $qmark $cal_input_body
+             $menu_body $tip $menu $image_root $faq $link);
+
+my $snum_link;
+if ($snum){
+	$snum_link = '&snum=' . $snum;
+	}
+else	{
+	$snum_link = '';
+	}
+
+#links to the other calculators
+$menu = $link_dir . $cgi . "calc.cgi?calc=men" . $snum_link;
+$menu = $menu_page if ($menu_page gt '');
+
+$link = $link_dir . $cgi;
+
+$styles = $html . $css ;
+$hs_java = $html . $java;
+
+if (!$faq) { $faq = $html . 'calcquest.html'}
+$color_set = "" if ($color_set eq '');
+
+$image_root = $html . "images/" .$color_set;
+
+$trans = "src=$image_root/trans.gif";
+$submit = "src=$image_root/calculate.gif";
+$back = "src=$image_root/back.gif";
+$menu_img = "src=$image_root/menu.gif ";
+$qmark = "src=$image_root/qmark.gif ";
+
+$popup = "";
+########Calculator Specific Sections
+
+######### blood alcohol concentration estimator ####
+if ( $calc eq 'bac' )
+	{
+
+$title = 'Blood Alcohol Concentration (BAC) Estimate';
+$form_title = 'About the Blood Alcohol Concentration Estimate';
+
+$intro = <<"HERE";
+See how little alcohol is required to change the alcohol content of your blood stream. <b>Do NOT drink and drive!</b>
+HERE
+
+$tip = "Drinking alcohol increases your risk for liver problems.";
+	}
+######### END OF blood alcohol #####################
+
+######### body fat percentage #########################
+if ( $calc eq 'bfc' || $calc eq 'bfn' || $calc eq 'bfb' )
+	{
+
+$title = 'Body Fat Estimator';
+
+$form_title = 'About the Body Fat Estimator';
+
+$intro = <<"HERE";
+How much body fat are you carrying? Use the Body Fat Estimator to find out if you are in the healthy range.
+HERE
+
+if ($calc eq 'bfc')
+	{
+	$intro .= " This calculator is based on the YMCA formula.";
+	}
+elsif ($calc eq 'bfn')
+	{
+	$intro .= " This calculator is based on the U.S. Navy formula.";
+	}
+else	{
+	$intro .= " This calculator computes using formulas developed by the U.S. Navy and the YMCA.";
+	}
+
+$tip = "If you place 1 pound of muscle next to 1 pound of fat, the muscle would be 22% smaller in size.";
+	}
+######### END OF body fat section #########################
+
+######### body mass index (BMI) ###########################
+if ( $calc eq 'bmi' )
+	{
+
+$title = 'Body Mass Index (BMI) Calculator';
+
+$form_title = 'About the Body Mass Index (BMI) Calculator';
+
+$intro = <<"HERE";
+Do you have more mass than your heart can handle? Use this calculator to determine your body mass index.
+HERE
+
+$tip = "If you place 1 pound of muscle next to 1 pound of fat, the muscle would be 22% smaller in size.";
+
+	}
+######### END OF body mass index ##########################
+
+######### calories burned estimation  ##########################
+if ( $calc eq 'cbc' )
+	{
+
+$title = 'Calories Burned Estimator';
+
+$form_title = 'About the Calories Burned Estimator';
+
+$intro = <<"HERE";
+Use this estimator to find out how many calories you burn doing your favorite activities.<br /><br />Enter your weight and then enter the number of minutes you spend doing each different activity. Click on &quot;Calculate&quot; at the bottom of the form for your personal report.
+HERE
+
+my $table_start = <<"HERE";
+<table cellpadding="2" cellspacing="0" border="0">
+<tr><td height="40" width="70%" class="h3">Activities</td><td height="40" width="30%" class="h3">Minutes</td></tr>
+HERE
+
+my $table_middle;
+my $even = 0;
+
+my( $cals, $desc ) = main::get_calorie_data();
+
+my %desc_hash = %{$desc};
+
+my @num_sort = sort {
+		$desc_hash{$a} cmp $desc_hash{$b}
+		} keys %desc_hash;
+foreach my $key ( @num_sort)
+	{
+	if ( $even )
+		{
+		$even = 0;
+		$td = qq|bgcolor="#CCCCCC"|;
+		$td1 = qq||;
+		}
+	else
+		{
+		$even = 1;
+		$td = qq|bgcolor="#FFFFFF"|;
+		$td1 = qq||;
+		}
+	$table_middle .= qq|<tr $td><td $td1>$desc_hash{$key}</td><td $td1><input type="text" name="$key" id="$key" size="4" maxlength="3" value="0" /></td></tr>\n|;
+	}
+
+my $table_end = <<"HERE";
+</table>
+HERE
+
+$cal_input_body = "$table_start\n$table_middle\n$table_end";
+
+$tip="Take the results of this for one day and add it to the results of the Daily Energy calculator and you will know how many total calories you burn each day.";
+	}
+######### END OF calories burned estimation  ##########################
+
+######### daily energy expenditure  ##########################
+if ( $calc eq 'dee' )
+	{
+
+$title = 'Daily Energy Expenditure - Basal Energy';
+
+$form_title = 'About the Daily Energy Expenditure';
+
+$intro = <<"HERE";
+Use the Daily Energy Expenditure to calculate how many calories your body needs to burn to function properly.
+HERE
+
+$tip="Add the results of this calculation to the results of the Calories Burned calculator and you will know how many total calories you burn each day.";
+
+	}
+######### END OF daily energy expenditure  ##########################
+
+######### due date calculator  ##########################
+if ( $calc eq 'due' )
+	{
+
+$form_title = 'About the Due Date Estimator';
+
+$intro = <<"HERE";
+Pregnant? Think you are? Use the Due Date Estimator to find out when the baby is due and key dates for your pregnancy. <i>Only 5% of women have their baby on their due date</i>.
+HERE
+
+$tip = "Only 5% of women have their baby on their due date.";
+
+	}
+######### END OF due date calculator   ##########################
+
+######### frame size calculator  ##########################
+if ( $calc eq 'fsz' )
+	{
+
+$title = 'Frame Size Calculator';
+
+$form_title = 'About the Frame Size Calculator';
+
+$intro = <<"HERE";
+This calculator uses standard tables to calculate your frame size.
+HERE
+
+$tip = "The medical profession does not look at this measure as often as they once did.";
+
+	}
+######### END OF frame size calculator  ##########################
+
+######### ideal weight calculation  ##########################
+if ( $calc eq 'iwc' )
+	{
+
+$title = 'Ideal Weight Calculator';
+
+$form_title = 'About the Ideal Weight Calculator';
+
+$intro = <<"HERE";
+Use the Ideal Weight Calculator to determine your healthiest weight. This calculator will compute your ideal healthy weight, not the weight you look good at.
+HERE
+
+$tip = "This will compute your ideal healthy weight, not the weight you look good at.";
+	}
+######### END OF ideal weight calculation  ##########################
+
+######### lean body mass  ##########################
+if ( $calc eq 'lbm' )
+	{
+
+$title = 'Lean Body Mass Estimator';
+
+$form_title = 'About the Lean Body Mass Estimator';
+
+$intro = <<"HERE";
+Increasing your lean mass while reducing your fats is key to looking great. The Lean Body Mass Estimator will help you determine the healthy amount of lean mass for your body.
+HERE
+
+$tip = "If you place 1 pound of muscle next to 1 pound of fat, the muscle would be 22% smaller in size.";
+	}
+######### END OF lean body mass  ##########################
+
+######### lose one pound  ##########################
+if ( $calc eq 'lop' )
+	{
+
+$title = 'Lose One Pound Calculator';
+
+$form_title = 'About the Lose One Pound Calculator';
+
+$intro = <<"HERE";
+Use the Lose One Pound Calculator to find out how long it take to lose a pound doing your favorite activity.
+HERE
+
+$tip = "You have to burn 3500 more calories than you take in to lose one pound.";
+	}
+######### END OF lose one pound  ##########################
+
+######### ovulation calculator  ##########################
+if ( $calc eq 'ova' )
+	{
+
+$title = 'Ovulation Estimator';
+
+$form_title = 'About the Ovulation Estimator';
+
+$intro = <<"HERE";
+Trying to get pregnant?  Use the Ovulation Estimator to help determine your most fertile times. <i>Do not use this estimator as a means of birth control</i>
+HERE
+
+$tip = "Abstinance is the only 100% effective birth control.";
+	}
+######### END OF ovulation calculator ##########################
+
+######### smoking costs calculator  ##########################
+if ( $calc eq 'smc' )
+	{
+
+$title = 'Cost of Smoking Cigarettes Calculator';
+
+$form_title = 'About the Cost of Smoking Cigarettes Calculator';
+
+$intro = <<"HERE";
+Use the Cost of Smoking Cigarettes Calculator to find out just how much is this habit costing you in hard dollars.
+HERE
+
+$tip = "Smoking is the number one preventable cause of death.";
+	}
+######### END OF smoking costs calculator  ##########################
+
+######### target heart rate  ##########################
+if ( $calc eq 'thr' )
+	{
+
+$title = 'Target Heart Rate Calculator';
+
+$form_title = 'About the Target Heart Rate Calculator';
+
+$intro = <<"HERE";
+The Target Heart Rate Calculator will help you determine your target heart rate. Achieving your target heart rate is key to maximizing the effectiveness of your aerobic work out.
+HERE
+
+$tip = "To burn more fat do workouts that raise your heart rate to the average level and do them longer.";
+	}
+######### END OF target heart rate  ##########################
+
+######### waist to hip ratio  ##########################
+if ( $calc eq 'whr' )
+	{
+
+$title = 'Waist to Hip Ratio Calculator';
+
+$form_title = 'About the Waist to Hip Ratio Calculator';
+
+$intro = <<"HERE";
+The Waist-to-Hip Ratio Calculator will help you find out if you have a higher risk of heart disease because of your shape.
+HERE
+
+$tip = 'This is one of the "hot" measures in all the magazines.';
+		}
+
+######### END OF waist to hip ratio  ##########################
+
+######### menu  ##########################
+if ( $calc eq 'men' )
+	{
+
+$title = 'Health Calculators';
+
+$form_title = 'Calculator Menu';
+
+$intro ='Welcome, feel free to use our calculators.  They are for use as guidelines only and should not be construed as medical advice.';
+
+$menu_body = '<div class="calc_menu"><UL>';
+$menu_body .= '<li><a href="' . $link . 'calc.cgi?calc=bac">Blood Alcohol Estimation</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=bfn">Body Fat Estimator (U.S. Navy)</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=bfc">Body Fat Estimator (YMCA)</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=bmi">Body Mass Index</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=cbc">Calories Burned</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=dee">Daily Energy Expenditure</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=due">Due Date Calculator</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=fsz">Frame Size</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=iwc">Ideal Weight Calculator</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=lbm">Lean Body Mass</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=lop">Lose One Pound</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=ova">Ovulation Estimator</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=smc">Smoking Costs</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=thr">Target Heart Rate</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=whr">Waist to Hip Ratio</a></li>';
+$menu_body .= '</UL></div>';;
+
+$tip = "If you are having trouble, click the more info button at the bottom of each calculator input screen.";
+	}
+
+######### END OF menu  ##########################
+######### END OF calculator specific sections #################
+
+###### DO NOT REMOVE THESE EMPTY QUOTES ###################################
+
+'';
+}

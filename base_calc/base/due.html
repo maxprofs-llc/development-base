@@ -1,0 +1,100 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( $directory . $input_variables, PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $header_file, PACKAGE => __PACKAGE__ );
+}
+						<!--Form and form table START here. Table max width no more than 560 pixels.-->
+						<form  method="POST" action="{$link_dir}{$cgi}calculator.cgi" name="theForm" onSubmit="return checkWholeForm(this)">
+						  <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+						
+							<tr><td colspan="2"><img src="/hs/images/title_due.gif" width="179" height="20" border="0" alt="" /><br /><br /></td></tr>
+
+							<tr>
+								<td colspan="2">
+									<i>{$form_title}</i> &#151;<br />
+									{$intro}<br /><br />
+								</td>
+							</tr>
+						
+						<div class="calc_quest">
+							<tr valign="middle">
+								<td nowrap="nowrap"><img src="/images/spacer.gif" width="25" height="1" border="0" alt="" />{$first_day_menstrual_question}</td>
+								<td nowrap="nowrap">&nbsp;&nbsp;
+					                    <select name="month" id="month" size="1">
+											<option value="01">{$common{month}{$curr_lang}{$curr_lang."_jan"}}</option>
+											<option value="02">{$common{month}{$curr_lang}{$curr_lang."_feb"}}</option>
+											<option value="03">{$common{month}{$curr_lang}{$curr_lang."_mar"}}</option>
+											<option value="04">{$common{month}{$curr_lang}{$curr_lang."_apr"}}</option>
+											<option value="05">{$common{month}{$curr_lang}{$curr_lang."_may"}}</option>
+											<option value="06">{$common{month}{$curr_lang}{$curr_lang."_jun"}}</option>
+											<option value="07">{$common{month}{$curr_lang}{$curr_lang."_jul"}}</option>
+											<option value="08">{$common{month}{$curr_lang}{$curr_lang."_aug"}}</option>
+											<option value="09">{$common{month}{$curr_lang}{$curr_lang."_sep"}}</option>
+											<option value="10">{$common{month}{$curr_lang}{$curr_lang."_oct"}}</option>
+											<option value="11">{$common{month}{$curr_lang}{$curr_lang."_nov"}}</option>
+											<option value="12">{$common{month}{$curr_lang}{$curr_lang."_dec"}}</option>
+										</select>
+										<select name="day" id="day" size="1">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+											<option value="5">5</option>
+											<option value="6">6</option>
+											<option value="7">7</option>
+											<option value="8">8</option>
+											<option value="9">9</option>
+											<option value="10">10</option>
+											<option value="11">11</option>
+											<option value="12">12</option>
+											<option value="13">13</option>
+											<option value="14">14</option>
+											<option value="15">15</option>
+											<option value="16">16</option>
+											<option value="17">17</option>
+											<option value="18">18</option>
+											<option value="19">19</option>
+											<option value="20">20</option>
+											<option value="21">21</option>
+											<option value="22">22</option>
+											<option value="23">23</option>
+											<option value="24">24</option>
+											<option value="25">25</option>
+											<option value="26">26</option>
+											<option value="27">27</option>
+											<option value="28">28</option>
+											<option value="29">29</option>
+											<option value="30">30</option>
+											<option value="31">31</option>
+							  			</select>
+						  				<input name="year" id="year" size="4" maxlength="4" value=""> <span class="smallblue">[YYYY]</span>
+				 					</td>
+								</tr>
+						</div>
+
+					<tr><td colspan="2"><img src="/images/spacer.gif" width="1" height="20" border="0" alt="" /></td></tr>
+
+						<tr>
+							<td colspan="2">
+								<!-- <img {$trans} height="15" width="1"><a href="{$menu}"><img {$menu_img} border="0" alt="back" align=left></a> -->
+								<br/><input type="image" border="0" name="submit" {$submit} align="right" style="margin-right:22px">
+								<input type="hidden" name="measure" value="Imperial">
+								<input type="hidden" name="calculator" value="due">
+								<input type="hidden" name="snum" value="{$snum}">
+								<input type="hidden" name="lang" value="{$lang}">
+						  	</td>
+						</tr>
+						
+	<!-- 				<tr>
+							<td><img {$trans} height="7" width="1"><br><a href="javascript:doNothing()" onclick="popuphelp('{$faq}');return false;"><img {$qmark} border=0 align=left></a></td>
+						</tr> -->
+	
+				  </table>
+				</form>
+				<!--Form and form table END here.-->
+{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $footer_file, PACKAGE => __PACKAGE__ );
+}

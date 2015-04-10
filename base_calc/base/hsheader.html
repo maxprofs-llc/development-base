@@ -1,0 +1,36 @@
+{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $header_file, PACKAGE => __PACKAGE__ );
+}
+<!--Form and form table START here. Table max width no more than 560 pixels.-->
+<table border="0" cellspacing="0" cellpadding="0" width=380>
+	<tr>
+		<td><p class="calc_title"><strong>{$form_title}</strong></p></td>
+	</tr>
+    <tr>
+    	<td><div class="calc_results">{$calc_results}</div></td>
+   	</tr>
+	<tr>
+	  <td><img {$trans} height="7" width="1"></td>
+	</tr>
+	<tr valign=center>
+	  <td>
+		<form  method="POST" action="{$cgi}reload.pl">
+		<img {$trans} height="15" width="1">
+		<!--<a href="{$menu}"><img {$menu_img} border="0" alt="menu" align=left></a>-->
+		<input type="image" name="submit" class="HSButton" {$back} border="0" align="right"/>
+		{$hiddens}
+		</form>
+	  </td>
+	</tr>
+	<tr>
+		<td><img {$trans} height="20" width="1"><br></td>
+	</tr>
+	<!--<tr>
+		<td><img {$trans} height="7" width="1"><a href="javascript:doNothing()" onclick="popuphelp('{$faq}');return false;"><img {$qmark} border=0 align=left></a></td>
+	</tr>-->
+</table>
+{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $footer_file, PACKAGE => __PACKAGE__ );
+}

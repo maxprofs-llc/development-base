@@ -1,0 +1,72 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( $directory . $input_variables, PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $header_file, PACKAGE => __PACKAGE__ );
+}
+					<!--Form and form table START here. Table max width no more than 560 pixels.-->
+					<form  method="POST" action="{$link_dir}{$cgi}calculator.cgi" name="theForm" onSubmit="return checkWholeForm(this)">
+						  <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+						
+							<tr><td colspan="2"><img src="/hs/images/title_bfn.gif" width="172" height="21" border="0" alt="" /><br /><br /></td></tr>
+
+							<tr>
+								<td colspan="2">
+									<i>{$form_title}</i> &#151;<br />
+									{$intro}<br /><br />
+								</td>
+							</tr>
+
+					<div class="calc_quest">
+							<tr>
+								<td><img src="/images/spacer.gif" width="25" height="1" border="0" alt="" />{$gender_question}</td>
+								<td>
+									<select name="sex" id="sex" size="1">
+										<option selected>{$gender_question}</option>
+										<option value="Male">{$gender_option_male}</option>
+										<option value="Female">{$gender_option_female}</option>
+									</select>
+								</td>
+							</tr>
+
+					<tr><td colspan="2"><img src="/images/spacer.gif" width="1" height="8" border="0" alt="" /></td></tr>
+
+							<tr>
+					          	<td><img src="/images/spacer.gif" width="25" height="1" border="0" alt="" />{$waist_question}</td>
+								<td><input type="text" name="abd2" id="abd2" size="3" maxlength="6"> {$inches_common}</td>
+							</tr>
+
+					<tr><td colspan="2"><img src="/images/spacer.gif" width="1" height="8" border="0" alt="" /></td></tr>
+
+						<tr>
+							<td><img src="/images/spacer.gif" width="25" height="1" border="0" alt="" />{$weight_question}</td>
+							<td>
+								<input type="text" name="weight" id="weight" size="4" maxlength="3"> lbs
+							</td>
+						</tr>
+					</div>
+
+					<tr><td colspan="2"><img src="/images/spacer.gif" width="1" height="8" border="0" alt="" /></td></tr>
+
+					<tr>
+						<td colspan="2">
+							<!-- <img {$trans} height="15" width="1"><a href="{$menu}"><img {$menu_img} border="0" alt="back" align=left></a> -->
+							<input type="image" border="0" name="submit" {$submit} align="right" style="margin-right:22px">
+							<input type="hidden" name="measure" value="Imperial">
+							<input type="hidden" name="calculator" value="bfc">
+							<input type="hidden" name="snum" value="{$snum}">
+							<input type="hidden" name="lang" value="{$lang}">
+					  	</td>
+					</tr>
+					
+<!-- 				<tr>
+						<td><img {$trans} height="7" width="1"><br><a href="javascript:doNothing()" onclick="popuphelp('{$faq}');return false;"><img {$qmark} border=0 align=left></a></td>
+					</tr> -->
+						</table>
+					</form>
+					<!--Form and form table END here.-->
+{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $footer_file, PACKAGE => __PACKAGE__ );
+}

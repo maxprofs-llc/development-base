@@ -1,0 +1,65 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( $directory . $input_variables, PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $header_file, PACKAGE => __PACKAGE__ );
+}
+<!--Form and form table START here. Table max width no more than 560 pixels.-->
+<form  method="POST" action="{$link_dir}{$cgi}calculator.cgi" name="theForm" onSubmit="return checkWholeForm(this)">
+	  <table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+	
+		<tr><td colspan="2"><img src="/hs/images/title_smc.gif" width="132" height="21" border="0" alt="" /><br /><br /></td></tr>
+		<tr>
+			<td colspan="2">
+				<i>{$form_title}</i> &#151;<br />
+				{$intro}<br /><br />
+			</td>
+		</tr>
+		<div class="calc_quest">
+			<tr>
+				<td><img src="/images/spacer.gif" width="25" height="1" border="0" alt="" />{$cigarettes_smoked_question}</td>
+				<td><input type="text" name="cigarettesperday" id="cigarettesperday" value="0" size="3" maxlength="3"></td>
+			</tr>
+
+			<tr><td colspan="2"><img src="/images/spacer.gif" width="1" height="8" border="0" alt="" /></td></tr>
+
+			<tr>
+				<td><img src="/images/spacer.gif" width="25" height="1" border="0" alt="" />{$cigarettes_in_pack_question}</td>
+				<td><input type="text" name="cigarettesperpack" id="cigarettesperpack" value="20" size="3" maxlength="2"></td>
+			</tr>
+
+			<tr><td colspan="2"><img src="/images/spacer.gif" width="1" height="8" border="0" alt="" /></td></tr>
+
+			<tr>
+				<td><img src="/images/spacer.gif" width="25" height="1" border="0" alt="" />{$Price_per_pack_question}</td>
+				<td><input type="text" name="priceperpack" id="priceperpack" value="0.00" size="5" maxlength="5"></td>
+			</tr>
+		</div>
+
+		<tr><td colspan="2"><img src="/images/spacer.gif" width="1" height="20" border="0" alt="" /></td></tr>
+
+		<tr>
+			<td colspan="2">
+				<!-- <img {$trans} height="15" width="1"><a href="{$menu}"><img {$menu_img} border="0" alt="back" align=left></a> -->
+				<br/><input type="image" border="0" name="submit" {$submit} align="right" style="margin-right:22px">
+				<input type="hidden" name="measure" value="Imperial">
+				<input type="hidden" name="calculator" value="smc">
+				<input type="hidden" name="snum" value="{$snum}">
+				<input type="hidden" name="lang" value="{$lang}">
+			</td>
+		</tr>
+	<tr>
+		<td><img {$trans} height="20" width="1"><br></td>
+	</tr>
+	<!--<tr>
+		<td><img {$trans} height="7" width="1"><br><a href="javascript:doNothing()" onclick="popuphelp('{$faq}');return false;"><img {$qmark} border=0 align=left></a></td>
+	</tr> -->
+
+	</table>
+</form>
+<!--Form and form table END here.-->
+{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $footer_file, PACKAGE => __PACKAGE__ );
+}

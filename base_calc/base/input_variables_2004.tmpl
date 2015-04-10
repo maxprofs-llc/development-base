@@ -1,0 +1,450 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( $directory."calc_language.tmpl", PACKAGE => __PACKAGE__ );
+}
+{ # set the values we will use below
+
+use vars qw( $title $form_title $intro $back $styles $trans $hs_java
+             $submit $popup $menu_img $qmark $cal_input_body
+             $menu_body $tip $menu $image_root $faq $link $height_question $weight_question $curr_lang
+			 $gender_question $gender_option_female $gender_option_male $waist_question $hip_question
+			 $inches_common $age_question $years_common $waist_naval_question $neck_question $or_common
+			 $Welcome_to $Instructions $calculator_selected
+			 );
+
+
+$curr_lang = lc $lang || 'en';
+$measure = lc $measure || 'imperial';
+my $snum_link;
+if ($snum){
+	$snum_link = '&snum=' . $snum;
+	}
+else	{
+	$snum_link = '';
+	}
+
+#links to the other calculators
+$menu = $link_dir . $cgi . "calc.cgi?calc=men" . $snum_link;
+$menu = $menu_page if ($menu_page gt '');
+
+$link = $link_dir . $cgi;
+
+$styles = $html . $css ;
+$hs_java = $html . $java;
+
+if (!$faq) { $faq = $html . 'calcquest.html'}
+$color_set = "" if ($color_set eq '');
+
+$image_root = $html . "images/" .$color_set;
+
+
+$trans = "src=$image_root/trans.gif";
+#$submit = "src=$image_root/calculate.gif"
+$submit = "src=$image_root/submit_en.gif" ;
+$submit = "src=$image_root/submit_es.gif" if ($curr_lang eq 'es');
+$submit = "src=$image_root/submit_de.gif" if ($curr_lang eq 'de');
+$submit = "src=$image_root/submit_fr.gif" if ($curr_lang eq 'fr');
+$submit = "src=$image_root/submit_nl.gif" if ($curr_lang eq 'nl');
+$submit = "src=$image_root/submit_no.gif" if ($curr_lang eq 'no');
+$submit = "src=$image_root/submit_sv.gif" if ($curr_lang eq 'sv');
+$back = "src=$image_root/back.gif";
+$menu_img = "src=$image_root/menu.gif ";
+$qmark = "src=$image_root/qmark.gif ";
+
+$popup = "";
+
+########### Common stuff #############################
+$inches_common = $common{inches}{$curr_lang};
+$years_common = $common{years}{$curr_lang};
+$hours_common = $common{hours}{$curr_lang};
+$or_common = $common{or}{$curr_lang};
+$Welcome_to = $common{Welcome_to}{$curr_lang};
+$Instructions = $common{Instructions}{$curr_lang};
+$calculator_selected = $common{calculator_selected}{$curr_lang};
+########### End Common stuff #########################
+
+########### Common Questions #########################
+$age_question = $question{age}{label}{$curr_lang};
+$height_question = $question{height}{label}{$curr_lang};
+$weight_question = $question{weight}{label}{$curr_lang};
+$waist_question = $question{waist}{label}{$curr_lang};
+$waist_naval_question = $question{waist_naval}{label}{$curr_lang};
+$hip_question = $question{hip}{label}{$curr_lang};
+$neck_question = $question{neck}{label}{$curr_lang};
+$beverage_question = $question{beverage}{label}{$curr_lang};
+$beverage_type_question = $question{beverage}{label}{$curr_lang};
+$how_many_beverage_question = $question{how_many}{label}{$curr_lang};
+$timespan_beverage_question = $question{timespan}{label}{$curr_lang};
+$Wrist_circumference_question = $question{Wrist_circumference}{label}{$curr_lang};
+$Elbow_breadth_question = $question{Elbow_breadth}{label}{$curr_lang};
+$first_day_menstrual_question = $question{first_day_menstrual}{label}{$curr_lang};
+$menstrual_date_question = $question{menstrual_date}{label}{$curr_lang};
+$first_day_next_period_question = $question{first_day_next_period}{label}{$curr_lang};
+$cigarettes_smoked_question = $question{cigarettes_smoked_per_day}{label}{$curr_lang};
+$cigarettes_in_pack_question = $question{cigarettes_in_a_pack}{label}{$curr_lang};
+$Price_per_pack_question = $question{Price_per_pack}{label}{$curr_lang};
+$gender_question = $question{gender}{label}{$curr_lang};
+($gender_option_female,$gender_option_male) = split /\|/,$question{gender}{options}{show}{$curr_lang};
+##### End Questions ###################################
+
+########Calculator Specific Sections
+
+######### blood alcohol concentration estimator ####
+if ( $calc eq 'bac' )
+	{
+
+ # $title = 'Blood Alcohol Concentration (BAC) Estimate';
+ # $form_title = 'About the Blood Alcohol Concentration Estimate';
+# $intro = <<"HERE";
+# See how little alcohol is required to change the alcohol content of your blood stream. <b>Do NOT drink and drive!</b>
+# HERE
+
+$title = $headings{BAC}{title}{$curr_lang};
+
+$form_title = $headings{BAC}{subtitle}{$curr_lang};
+$intro = $headings{BAC}{intro}{$curr_lang};
+
+$tip = "Drinking alcohol increases your risk for liver problems.";
+	}
+######### END OF blood alcohol #####################
+
+######### body fat percentage #########################
+if ( $calc eq 'bfc' || $calc eq 'bfn' || $calc eq 'bfb' )
+	{
+
+# $title = 'Body Fat Estimator';
+# $form_title = 'About the Body Fat Estimator';
+# $intro = <<"HERE";
+# How much body fat are you carrying? Use the Body Fat Estimator to find out if you are in the healthy range.
+# HERE
+
+$title = $headings{BFB}{title}{$curr_lang};
+
+$form_title = $headings{BFB}{subtitle}{$curr_lang};
+
+$intro =  $headings{BFB}{intro}{$curr_lang}{$curr_lang."_1"};
+
+if ($calc eq 'bfc')
+	{
+	#$intro .= " This calculator is based on the YMCA formula.";
+	$intro .=  $headings{BFB}{intro}{$curr_lang}{$curr_lang."_2"};
+	}
+elsif ($calc eq 'bfn')
+	{
+	#$intro .= " This calculator is based on the U.S. Navy formula.";
+	$intro .=  $headings{BFB}{intro}{$curr_lang}{$curr_lang."_3"};
+	}
+else	{
+	#$intro .= " This calculator computes using formulas developed by the U.S. Navy and the YMCA.";
+	$intro .=  $headings{BFB}{intro}{$curr_lang}{$curr_lang."_4"};
+	}
+
+$tip = "If you place 1 pound of muscle next to 1 pound of fat, the muscle would be 22% smaller in size.";
+	}
+######### END OF body fat section #########################
+
+######### body mass index (BMI) ###########################
+if ( $calc eq 'bmi' )
+	{
+
+# $title = 'Body Mass Index (BMI) Calculator';
+# $form_title = 'About the Body Mass Index (BMI) Calculator';
+
+$title = $headings{BMI}{title}{$curr_lang};
+
+$form_title = $headings{BMI}{subtitle}{$curr_lang};
+	
+$intro = $headings{BMI}{intro}{$curr_lang};
+
+# $intro = <<"HERE";
+# Do you have more mass than your heart can handle? Use this calculator to determine your body mass index.
+# HERE
+
+$tip = "If you place 1 pound of muscle next to 1 pound of fat, the muscle would be 22% smaller in size.";
+
+	}
+######### END OF body mass index ##########################
+
+######### calories burned estimation  ##########################
+if ( $calc eq 'cbc' )
+	{
+
+# $title = 'Calories Burned Estimator';
+# $form_title = 'About the Calories Burned Estimator';
+# $intro = <<"HERE";
+# Use this estimator to find out how many calories you burn doing your favorite activities.<br /><br />
+# Enter your weight and then enter the number of minutes you spend doing each different activity. Click on &quot;Calculate&quot; at the bottom of the form for your personal report.
+# HERE
+
+$title = $headings{CBC}{title}{$curr_lang};
+
+$form_title = $headings{CBC}{subtitle}{$curr_lang};
+
+$intro .= $headings{CBC}{intro}{$curr_lang}{$curr_lang."_1"};
+$intro .= $headings{CBC}{intro}{$curr_lang}{$curr_lang."_2"};
+
+my $table_start = <<"HERE";
+<table cellpadding="2" cellspacing="0" border="0">
+<tr><td height="40" width="70%" class="h3">$headings{CBC}{intro}{$curr_lang}{$curr_lang."_3"}</td><td height="40" width="30%" class="h3">$headings{CBC}{intro}{$curr_lang}{$curr_lang."_4"}</td></tr>
+HERE
+
+my $table_middle;
+my $even = 0;
+
+require "calorie_data_lang.pl";
+my( $cals, $desc ) = &get_calorie_data($measure,$curr_lang);
+
+my %desc_hash = %{$desc};
+
+my @num_sort = sort {
+		$desc_hash{$a} cmp $desc_hash{$b}
+		} keys %desc_hash;
+foreach my $key ( @num_sort)
+	{
+	if ( $even )
+		{
+		$even = 0;
+		$td = qq|bgcolor="#CCCCCC"|;
+		$td1 = qq||;
+		}
+	else
+		{
+		$even = 1;
+		$td = qq|bgcolor="#FFFFFF"|;
+		$td1 = qq||;
+		}
+	$table_middle .= qq|<tr $td><td $td1>$desc_hash{$key}</td><td $td1><input type="text" name="$key" id="$key" size="4" maxlength="3" value="0" /></td></tr>\n|;
+	}
+
+my $table_end = <<"HERE";
+</table>
+HERE
+
+$cal_input_body = "$table_start\n$table_middle\n$table_end";
+
+$tip="Take the results of this for one day and add it to the results of the Daily Energy calculator and you will know how many total calories you burn each day.";
+	}
+######### END OF calories burned estimation  ##########################
+
+######### daily energy expenditure  ##########################
+if ( $calc eq 'dee' )
+	{
+
+# $title = 'Daily Energy Expenditure';
+# $form_title = 'About the Daily Energy Expenditure';
+# $intro = <<"HERE";
+# Use the Daily Energy Expenditure to calculate how many calories your body needs to burn to function properly.
+# HERE
+
+$title = $headings{DEE}{title}{$curr_lang};
+
+$form_title = $headings{DEE}{subtitle}{$curr_lang};
+	
+$intro = $headings{DEE}{intro}{$curr_lang};
+
+$tip="Add the results of this calculation to the results of the Calories Burned calculator and you will know how many total calories you burn each day.";
+
+	}
+######### END OF daily energy expenditure  ##########################
+
+######### due date calculator  ##########################
+if ( $calc eq 'due' )
+	{
+
+# $form_title = 'About the Due Date Estimator';
+# $intro = <<"HERE";
+# Pregnant? Think you are? Use the Due Date Estimator to find out when the baby is due and key dates for your pregnancy. <i>Only 5% of women have their baby on their due date</i>.
+# HERE
+
+$title = $headings{DUE}{title}{$curr_lang};	
+$form_title = $headings{DUE}{subtitle}{$curr_lang};	
+$intro = $headings{DUE}{intro}{$curr_lang};
+
+$tip = "Only 5% of women have their baby on their due date.";
+
+	}
+######### END OF due date calculator   ##########################
+
+######### frame size calculator  ##########################
+if ( $calc eq 'fsz' )
+	{
+
+# $title = 'Frame Size Calculator';
+# $form_title = 'About the Frame Size Calculator';
+# $intro = <<"HERE";
+# This calculator uses standard tables to calculate your frame size.
+# HERE
+
+$title = $headings{FSZ}{title}{$curr_lang};	
+$form_title = $headings{FSZ}{subtitle}{$curr_lang};	
+$intro = $headings{FSZ}{intro}{$curr_lang};
+
+$tip = "The medical profession does not look at this measure as often as they once did.";
+
+	}
+######### END OF frame size calculator  ##########################
+
+######### ideal weight calculation  ##########################
+if ( $calc eq 'iwc' )
+	{
+
+# $title = 'Ideal Weight Calculator';
+# $form_title = 'About the Ideal Weight Calculator';
+
+$title = $headings{IWC}{title}{$curr_lang};
+$form_title = $headings{IWC}{subtitle}{$curr_lang};
+$intro = $headings{IWC}{intro}{$curr_lang};;
+
+# $intro = <<"HERE";
+# Use the Ideal Weight Calculator to determine your healthiest weight. This calculator will compute your ideal healthy weight, not the weight you look good at.
+# HERE
+
+$tip = "This will compute your ideal healthy weight, not the weight you look good at.";
+	}
+######### END OF ideal weight calculation  ##########################
+
+######### lean body mass  ##########################
+if ( $calc eq 'lbm' )
+	{
+
+# $title = 'Lean Body Mass Estimator';
+# $form_title = 'About the Lean Body Mass Estimator';
+# $intro = <<"HERE";
+# Increasing your lean mass while reducing your fats is key to looking great. The Lean Body Mass Estimator will help you determine the healthy amount of lean mass for your body.
+# HERE
+
+$title = $headings{LBM}{title}{$curr_lang};
+$form_title = $headings{LBM}{subtitle}{$curr_lang};
+$intro = $headings{LBM}{intro}{$curr_lang};
+
+$tip = "If you place 1 pound of muscle next to 1 pound of fat, the muscle would be 22% smaller in size.";
+	}
+######### END OF lean body mass  ##########################
+
+######### lose one pound  ##########################
+if ( $calc eq 'lop' )
+	{
+
+# $title = 'Lose One Pound Calculator';
+# $form_title = 'About the Lose One Pound Calculator';
+# $intro = <<"HERE";
+# Use the Lose One Pound Calculator to find out how long it take to lose a pound doing your favorite activity.
+# HERE
+$title = $headings{LOP}{title}{$curr_lang};
+$form_title = $headings{LOP}{subtitle}{$curr_lang};
+$intro = $headings{LOP}{intro}{$curr_lang};
+
+$tip = "You have to burn 3500 more calories than you take in to lose one pound.";
+	}
+######### END OF lose one pound  ##########################
+
+######### ovulation calculator  ##########################
+if ( $calc eq 'ova' )
+	{
+
+# $title = 'Ovulation Estimator';
+# $form_title = 'About the Ovulation Estimator';
+# $intro = <<"HERE";
+# Trying to get pregnant?  Use the Ovulation Estimator to help determine your most fertile times. <i>Do not use this estimator as a means of birth control</i>
+# HERE
+
+$title = $headings{OVA}{title}{$curr_lang};
+$form_title = $headings{OVA}{subtitle}{$curr_lang};
+$intro = $headings{OVA}{intro}{$curr_lang};
+
+$tip = "Abstinance is the only 100% effective birth control.";
+	}
+######### END OF ovulation calculator ##########################
+
+######### smoking costs calculator  ##########################
+if ( $calc eq 'smc' )
+	{
+
+# $title = 'Cost of Smoking Cigarettes Calculator';
+# $form_title = 'About the Cost of Smoking Cigarettes Calculator';
+# $intro = <<"HERE";
+# Use the Cost of Smoking Cigarettes Calculator to find out just how much is this habit costing you in hard dollars.
+# HERE
+
+$title = $headings{SMC}{title}{$curr_lang};
+$form_title = $headings{SMC}{subtitle}{$curr_lang};
+$intro = $headings{SMC}{intro}{$curr_lang};
+
+$tip = "Smoking is the number one preventable cause of death.";
+	}
+######### END OF smoking costs calculator  ##########################
+
+######### target heart rate  ##########################
+if ( $calc eq 'thr' )
+	{
+
+# $title = 'Target Heart Rate Calculator';
+# $form_title = 'About the Target Heart Rate Calculator';
+# $intro = <<"HERE";
+# The Target Heart Rate Calculator will help you determine your target heart rate. Achieving your target heart rate is key to maximizing the effectiveness of your aerobic work out.
+# HERE
+
+$title	=	$headings{THR}{title}{$curr_lang};
+$form_title = $headings{THR}{subtitle}{$curr_lang};
+$intro = $headings{THR}{intro}{$curr_lang};
+
+$tip = "To burn more fat do workouts that raise your heart rate to the average level and do them longer.";
+	}
+######### END OF target heart rate  ##########################
+
+######### waist to hip ratio  ##########################
+if ( $calc eq 'whr' )
+	{
+
+# $title = 'Waist to Hip Ratio Calculator';
+# $form_title = 'About the Waist to Hip Ratio Calculator';
+# $intro = <<"HERE";
+# The Waist-to-Hip Ratio Calculator will help you find out if you have a higher risk of heart disease because of your shape.
+# HERE
+$title	=	$headings{WHR}{title}{$curr_lang};
+$form_title	=	$headings{WHR}{subtitle}{$curr_lang};
+$intro	=	$headings{WHR}{intro}{$curr_lang};
+
+$tip = 'This is one of the "hot" measures in all the magazines.';
+		}
+
+######### END OF waist to hip ratio  ##########################
+
+######### menu  ##########################
+if ( $calc eq 'men' )
+	{
+
+$title = 'Health Calculators';
+
+$form_title = 'Calculator Menu';
+
+$intro ='Welcome, feel free to use our calculators.  They are for use as guidelines only and should not be construed as medical advice.';
+
+$menu_body = '<div class="calc_menu"><UL>';
+$menu_body .= '<li><a href="' . $link . 'calc.cgi?calc=bac">$answer{BAC}{output_title}{$curr_lang}</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=bfn">$headings{BFC}{title}{$curr_lang} (U.S. Navy)</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=bfc">$headings{BFC}{title}{$curr_lang} (YMCA)</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=bmi">$headings{BMI}{title}{$curr_lang}</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=cbc">$headings{CBC}{title}{$curr_lang}</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=dee">$headings{DEE}{title}{$curr_lang}</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=due">$headings{DUE}{title}{$curr_lang}</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=fsz">$headings{FSZ}{title}{$curr_lang}</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=iwc">$headings{IWC}{title}{$curr_lang}</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=lbm">$headings{LBM}{title}{$curr_lang}</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=lop">$headings{LOP}{title}{$curr_lang}</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=ova">$headings{OVA}{title}{$curr_lang}</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=smc">$headings{SMC}{title}{$curr_lang}</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=thr">$headings{THR}{title}{$curr_lang}</a></li>';
+$menu_body .= '<li><a href="'. $link . 'calc.cgi?calc=whr">$headings{WHR}{title}{$curr_lang}</a></li>';
+$menu_body .= '</UL></div>';;
+
+$tip = "If you are having trouble, click the more info button at the bottom of each calculator input screen.";
+	}
+
+######### END OF menu  ##########################
+######### END OF calculator specific sections #################
+
+###### DO NOT REMOVE THESE EMPTY QUOTES ###################################
+
+'';
+}

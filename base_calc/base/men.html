@@ -1,0 +1,26 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( $input_variables, PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file("$header_file", PACKAGE => __PACKAGE__ );
+}
+<table border="0" cellspacing="0" cellpadding="0" width=380>
+	<tr>
+		<td align="right" class="headline">{$form_title}<br><img {$trans} height="4" width="1"><br><span class="calc_body">{$intro}</span></td>
+	</tr>
+	<tr>
+		<td><img {$trans} height="7" width="1"></td>
+	</tr>
+	<tr>
+		<td class="calc_heading" align=right>
+				<UL>
+					{$menu_body}
+				</UL>
+		</td>
+	</tr>
+</table>
+{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file("$footer_file", PACKAGE => __PACKAGE__ );
+}

@@ -1,0 +1,115 @@
+{
+# this part fills in a file that sets variables we use later on.
+Text::Template::fill_in_file( $directory . $input_variables, PACKAGE => __PACKAGE__ );
+}{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $header_file, PACKAGE => __PACKAGE__ );
+}
+	<!--Form and form table START here. Table max width no more than 560 pixels.-->
+		<form  method="POST" action="{$link_dir}{$cgi}calculator.cgi" name="theForm" onSubmit="return checkWholeForm(this)">
+			<table border="0" cellspacing="0" cellpadding="0" width="100%" align="center">
+				
+					<tr><td colspan="2"><img src="/hs/images/title_bac.gif" width="230" height="18" border="0" alt="" /><br /><br /></td></tr>
+
+					<tr>
+						<td colspan="2">
+							<i>{$form_title}</i> &#151;<br />
+							{$intro}<br />
+						</td>
+					</tr>
+
+				<div class="calc_quest">
+					<tr>
+						<td><img src="/images/spacer.gif" width="25" height="1" border="0" alt="" />{$gender_question}</td>
+						<td>
+							<select name="sex" id="sex" size="1">
+								<option selected>{$gender_question}</option>
+								<option value="Male">{$gender_option_male}</option>
+								<option value="Female">{$gender_option_female}</option>
+							</select>
+						</td>
+					</tr>
+
+			<tr><td colspan="2"><img src="/images/spacer.gif" width="1" height="8" border="0" alt="" /></td></tr>
+
+				<tr>
+					<td><img src="/images/spacer.gif" width="25" height="1" border="0" alt="" />{$weight_question}</td>
+					<td>
+						<input type="text" name="weight" id="weight" size="4" maxlength="3"> lbs
+					</td>
+				</tr>
+
+			<tr><td colspan="2"><img src="/images/spacer.gif" width="1" height="8" border="0" alt="" /></td></tr>
+
+					<tr>
+					  <td><img src="/images/spacer.gif" width="25" height="1" border="0" alt="" />{$beverage_question}</td>
+					  <td>
+						<select size="1" name="type" id="type">
+							<option value="airline miniature bottle||airline miniature bottles||.7">{$question{beverage}{type}{$curr_lang}{$curr_lang."_1"}}</option>
+							<option value="pint of ale||pints of ale||.81">{$question{beverage}{type}{$curr_lang}{$curr_lang."_2"}}</option>
+							<option value="beer||beers||.54">{$question{beverage}{type}{$curr_lang}{$curr_lang."_3"}}</option>
+							<option value="beer||beers||.72">{$question{beverage}{type}{$curr_lang}{$curr_lang."_4"}}</option>
+							<option value="light beer||light beers||.44">{$question{beverage}{type}{$curr_lang}{$curr_lang."_5"}}</option>
+							<option value="light beer||light beers||.59">{$question{beverage}{type}{$curr_lang}{$curr_lang."_6"}}</option>
+							<option value="reduced alcohol beer||reduced alcohol beers||.28">{$question{beverage}{type}{$curr_lang}{$curr_lang."_7"}}</option>
+							<option value="snifter of brandy||snifters of brandy||.9">{$question{beverage}{type}{$curr_lang}{$curr_lang."_8"}}</option>
+							<option value="martini||martinis||1">{$question{beverage}{type}{$curr_lang}{$curr_lang."_9"}}</option>
+							<option value="drink of gin||drinks of gin||.645">{$question{beverage}{type}{$curr_lang}{$curr_lang."_10"}}</option>
+							<option value="higball||highballs||.6">{$question{beverage}{type}{$curr_lang}{$curr_lang."_11"}}</option>
+							<option value="malt liquor||malt liqours||.71">{$question{beverage}{type}{$curr_lang}{$curr_lang."_12"}}</option>
+							<option value="manhattan||manhattans||1.15">{$question{beverage}{type}{$curr_lang}{$curr_lang."_13"}}</option>
+							<option value="pint of port||pints of port||1.1">{$question{beverage}{type}{$curr_lang}{$curr_lang."_14"}}</option>
+							<option value="drink of rum||drinks of rum||.645">{$question{beverage}{type}{$curr_lang}{$curr_lang."_15"}}</option>
+							<option value="drink of sake||drinks of sake||.8">{$question{beverage}{type}{$curr_lang}{$curr_lang."_16"}}</option>
+							<option value="pint of stout||pints of stout||1.3">{$question{beverage}{type}{$curr_lang}{$curr_lang."_17"}}</option>
+							<option value="drink of tequila||drinks of tequila||.645">{$question{beverage}{type}{$curr_lang}{$curr_lang."_18"}}</option>
+							<option value="drink of vodka||drinks of vodka||.645">{$question{beverage}{type}{$curr_lang}{$curr_lang."_19"}}</option>
+							<option value="drink of whiskey||drinks of whiskey||.645">{$question{beverage}{type}{$curr_lang}{$curr_lang."_21"}}</option>
+							<option value="half a glass of wine||half glasses of wine||.55">{$question{beverage}{type}{$curr_lang}{$curr_lang."_21"}}</option>
+						</select>
+					  </td>
+					</tr>
+
+			<tr><td colspan="2"><img src="/images/spacer.gif" width="1" height="8" border="0" alt="" /></td></tr>
+
+					<tr>
+					  <td><img src="/images/spacer.gif" width="25" height="1" border="0" alt="" />{$how_many_beverage_question}</td>
+					  <td>
+						<input type="text" name="number" id="number" size="3" maxlength="3">
+					  </td>
+					</tr>
+
+			<tr><td colspan="2"><img src="/images/spacer.gif" width="1" height="8" border="0" alt="" /></td></tr>
+
+					<tr>
+					  <td><img src="/images/spacer.gif" width="25" height="1" border="0" alt="" />{$timespan_beverage_question}</td>
+					  <td>
+						<input type="text" name="time" id="time" size="3" maxlength="5"> {$hours_common}
+					  </td>
+					</tr>
+				</div>
+
+			<tr><td colspan="2"><img src="/images/spacer.gif" width="1" height="20" border="0" alt="" /></td></tr>
+
+			<tr>
+			  <td colspan="2">
+				<!-- <img {$trans} height="15" width="1"><a href="{$menu}"><img {$menu_img} border="0" alt="back" align=left></a> -->
+				<input type="image" border="0" name="submit" {$submit} align="right" style="margin-right:22px">
+				<input type="hidden" name="snum" value="{$snum}">
+				<input type="hidden" name="measure" value="Imperial">
+				<input type="hidden" name="calculator" value="bac">
+				<input type="hidden" name="lang" value="{$lang}">
+			  </td>
+			</tr>
+
+			<tr>
+				<td><img {$trans} height="20" width="1"><br></td>
+			</tr>
+
+		</table>
+	</form>
+						<!--Form and form table END here.-->
+{
+# this is the standard header for the assessment output.
+Text::Template::fill_in_file($directory . $footer_file, PACKAGE => __PACKAGE__ );
+}

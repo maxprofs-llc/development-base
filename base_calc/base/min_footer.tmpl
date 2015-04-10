@@ -1,0 +1,85 @@
+
+</div>
+<!-- center-left section end here-->
+</td>
+<td valign="top" width="320" background="images/healthstatus_22.jpg">
+<!-- center-right section start here-->
+<div id="center-right">
+
+<!-- license our tools section start here-->
+<div id="license-topimg" class="licensetxt">
+<p class="pad9">{$Instructions}</p>
+</div>
+<div id="license-bg" class="rightcontent">
+<p class="pad10">
+{my $html; 
+	if ($output){
+		if ($calc ne 'SMC' && $calc ne 'BMI' && $calc ne 'THR'  && $calc ne 'FSZ' && $calc ne 'WHR'){
+			$html = 'The calculator you have used is merely an estimate.  Your health care provider can give you additional information in this area that may be more accurate.';
+			}
+		else	{
+			$html = 'The calculator you have used has provided an accurate answer based on your input.  Your health care provider can give you additional information about the results.';
+			}
+		}
+	else{
+		if ($calc ne 'SMC' && $calc ne 'BMI' && $calc ne 'THR'  && $calc ne 'FSZ' && $calc ne 'WHR'){
+			#$html = 'The calculator you have selected will provide you with an estimated result based on your inputs.  Your health care provider can give you additional information on more accurate testing options that are available to you.';
+			 $html = $calculator_selected;
+			}
+		else	{
+			$html = 'The calculator you have selected will provide you with an exact result based on your inputs.  Your health care provider can give you additional information about the results.';
+			}
+		}
+	$html;
+}
+		
+</p>
+<p class="pad10">
+If you have any questions, give us a call at 888-726-4683.
+</p>
+</div>
+<!-- license our tools section end here-->
+
+
+</div>
+<!-- center-right section end here-->
+</td>
+</tr>
+</table>
+</div>
+<!-- center section end here-->
+
+<!-- footer-menu section start here-->
+<div id="footer-menu" class="footer_link">
+<p class="pad15">
+<a href="/cgi-bin/hs/calc.cgi?calc=bmi" class="footer_link">Body Mass Index</a>|
+<a href="/cgi-bin/hs/calc.cgi?calc=dee" class="footer_link">Daily Energy Expenditure</a>|
+<a href="/cgi-bin/hs/calc.cgi?calc=iwc" class="footer_link">Ideal Weight Calculator</a>|
+<a href="/cgi-bin/hs/calc.cgi?calc=thr" class="footer_link">Target Heart Rate</a>|
+<a href="/cgi-bin/hs/calc.cgi?calc=whr" class="footer_link">Waist to Hip Ratio</a>|
+<a href="/cgi-bin/hs/calc.cgi?calc=bac" class="footer_link">Blood Alcohol Estimation</a>|
+<a href="/cgi-bin/hs/calc.cgi?calc=bfb" class="footer_link">Body Fat Estimator</a>|<br />
+<a href="/cgi-bin/hs/calc.cgi?calc=due" class="footer_link">Due Date Calculator</a>|
+<a href="/cgi-bin/hs/calc.cgi?calc=cbc" class="footer_link">Calories Burned</a>|
+<a href="/cgi-bin/hs/calc.cgi?calc=fsz" class="footer_link">Frame Size</a>|
+<a href="/cgi-bin/hs/calc.cgi?calc=lbm" class="footer_link">Lean Body Mass</a>|
+<a href="/cgi-bin/hs/calc.cgi?calc=lop" class="footer_link">Lose One Pound</a>|
+<a href="/cgi-bin/hs/calc.cgi?calc=ova" class="footer_link">Ovulation Estimator</a>|
+<a href="/cgi-bin/hs/calc.cgi?calc=smc" class="footer_link">Smoking Costs</a>
+</p>
+</div>
+<!-- footer-menu section end here-->
+
+<!-- footer section start here-->
+<div id="footer" class="copyTxt">
+<p class="pad16">
+Copyright &copy; 1998-2011 HealthStatus.com, Inc., All rights reserved.
+</p>
+</div>
+<!-- footer section end here-->
+
+</div>
+<!-- main section end here-->
+
+</body>
+</html>
